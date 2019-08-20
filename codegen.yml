@@ -1,0 +1,19 @@
+overwrite: true
+schema:
+    - ${SCHEMA_PATH}:
+          headers:
+              Authorization: ${CINNAMON_TOKEN}
+documents: null
+config:
+    skipTypename: true
+hooks:
+    afterAllFileWrite:
+        - prettier --write
+generates:
+    src/generated/graphql.ts:
+        plugins:
+            - 'typescript'
+            - 'typescript-resolvers'
+    ./graphql.schema.json:
+        plugins:
+            - 'introspection'
