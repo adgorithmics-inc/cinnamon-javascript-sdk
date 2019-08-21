@@ -335,7 +335,6 @@ export type MediaChannelInput = {
 export type MediaChannelUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
     platform?: Maybe<Platform>;
-    remoteId?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {

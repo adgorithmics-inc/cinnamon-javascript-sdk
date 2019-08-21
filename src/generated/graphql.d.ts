@@ -283,7 +283,6 @@ export declare type MediaChannelInput = {
 export declare type MediaChannelUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
     platform?: Maybe<Platform>;
-    remoteId?: Maybe<Scalars['String']>;
 };
 export declare type Mutation = {
     createCatalog?: Maybe<Catalog>;
