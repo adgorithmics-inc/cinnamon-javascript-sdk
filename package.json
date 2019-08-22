@@ -5,6 +5,11 @@
   "main": "index.node.js",
   "browser": "index.web.js",
   "types": "src/index.d.ts",
+  "files": [
+    "/src",
+    "/index.web.js",
+    "/index.node.js"
+  ],
   "scripts": {
     "build": "npm run build-types && npm run build-ts",
     "build-ts": "webpack",
