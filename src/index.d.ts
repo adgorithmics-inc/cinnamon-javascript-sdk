@@ -13,14 +13,16 @@ export interface Error {
         code?: codes;
     };
 }
+export declare type APIKey = keyof (Query & Mutation);
+export declare type APIResult<T extends APIKey, U extends string = T> = {
+    data: Record<U, NonNullable<Partial<(Query & Mutation)[T]>>>;
+};
 export declare class Cinnamon {
     config: Config;
     refreshToken: string;
     token: string;
     constructor(config: Config);
-    api<T extends keyof (Query & Mutation), U extends string = T>(query: string, variables?: object, headers?: Headers, token?: string): Promise<{
-        data: Record<U, NonNullable<Partial<(Query & Mutation)[T]>>>;
-    }>;
+    api<T extends APIKey, U extends string = T>(query: string, variables?: object, headers?: Headers, token?: string): Promise<APIResult<T, U>>;
     apiPaging<T>(query: string, variables: object | undefined, headers: Headers, token?: string): Promise<Partial<T>[]>;
     login(input: UserLoginInput): Promise<Partial<import("./generated/graphql").Token>>;
     refreshLogin(input: RefreshTokenInput): Promise<Partial<import("./generated/graphql").Token>>;
