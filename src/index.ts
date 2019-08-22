@@ -58,6 +58,11 @@ export interface Error {
     extentions?: { code?: codes };
 }
 
+export type APIKey = keyof (Query & Mutation);
+export type APIResult<T extends APIKey, U extends string = T> = {
+    data: Record<U, NonNullable<Partial<(Query & Mutation)[T]>>>;
+};
+
 export class Cinnamon {
     config: Config;
     refreshToken = '';
@@ -67,14 +72,12 @@ export class Cinnamon {
         this.config = config;
     }
 
-    async api<T extends keyof (Query & Mutation), U extends string = T>(
+    async api<T extends APIKey, U extends string = T>(
         query: string,
         variables: object = {},
         headers: Headers = {},
         token?: string,
-    ): Promise<{
-        data: Record<U, NonNullable<Partial<(Query & Mutation)[T]>>>;
-    }> {
+    ): Promise<APIResult<T, U>> {
         const response = await fetch(this.config.url, {
             method: 'POST',
             headers: {
