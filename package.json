@@ -1,6 +1,6 @@
 {
   "name": "@adgorithmics/cinnamon-javascript-sdk",
-  "version": "0.0.4-rc.0",
+  "version": "0.0.4-rc.1",
   "description": "",
   "main": "index.node.js",
   "browser": "index.web.js",
@@ -37,6 +37,7 @@
     "@types/lodash.get": "4.4.6",
     "@typescript-eslint/eslint-plugin": "2.0.0",
     "@typescript-eslint/parser": "2.0.0",
+    "acorn": "^6.3.0",
     "concurrently": "4.1.2",
     "eslint": "6.2.0",
     "eslint-config-prettier": "6.1.0",
