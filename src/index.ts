@@ -10,22 +10,42 @@ import {
     UserLoginInput,
     UserUpdateInput,
     RefreshTokenInput,
+    Organization,
     OrganizationInput,
+    OrganizationsFilterInput,
     OrganizationUpdateInput,
+    Marketplace,
     MarketplaceInput,
+    MarketplacesFilterInput,
     MarketplaceUpdateInput,
+    MediaChannel,
     MediaChannelInput,
+    MediaChannelsFilterInput,
     MediaChannelUpdateInput,
     CampaignTemplate,
+    Vendor,
     VendorInput,
+    VendorsFilterInput,
     VendorUpdateInput,
+    Catalog,
     CatalogInput,
+    CatalogsFilterInput,
     CatalogUpdateInput,
+    Product,
     ProductInput,
+    ProductsFilterInput,
     ProductUpdateInput,
+    MarketingCampaign,
     MarketingCampaignInput,
+    MarketingCampaignsFilterInput,
     MarketingCampaignUpdateInput,
+    MarketingAd,
+    MarketingAdsFilterInput,
+    Result,
+    ResultsFilterInput,
+    Entitlement,
     EntitlementInput,
+    EntitlementsFilterInput,
     EntitlementUpdateInput,
 } from './generated/graphql';
 
@@ -248,6 +268,35 @@ export class Cinnamon {
         )).data.organization;
     }
 
+    organizations(
+        filter: OrganizationsFilterInput = {},
+        fields: Array<keyof OrganizationFields> = [
+            OrganizationFields.id,
+            OrganizationFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Organization>(
+            `query($filter: OrganizationsFilterInput, $after: ID!) {
+                organizations(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
+    }
+
     async createOrganization(
         input: OrganizationInput,
         fields: Array<keyof OrganizationFields> = [
@@ -314,6 +363,35 @@ export class Cinnamon {
             headers,
             token,
         )).data.marketplace;
+    }
+
+    marketplaces(
+        filter: MarketplacesFilterInput = {},
+        fields: Array<keyof MarketplaceFields> = [
+            MarketplaceFields.id,
+            MarketplaceFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Marketplace>(
+            `query($filter: MarketplacesFilterInput, $after: ID!) {
+                marketplaces(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
     }
 
     async createMarketplace(
@@ -399,6 +477,35 @@ export class Cinnamon {
             headers,
             token,
         )).data.mediaChannel;
+    }
+
+    mediaChannels(
+        filter: MediaChannelsFilterInput = {},
+        fields: Array<keyof MediaChannelFields> = [
+            MediaChannelFields.id,
+            MediaChannelFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<MediaChannel>(
+            `query($filter: MediaChannelsFilterInput!, $after: ID!) {
+                mediaChannels(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
     }
 
     async createMediaChannel(
@@ -539,6 +646,35 @@ export class Cinnamon {
         )).data.vendor;
     }
 
+    vendors(
+        filter: VendorsFilterInput = {},
+        fields: Array<keyof VendorFields> = [
+            VendorFields.id,
+            VendorFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Vendor>(
+            `query($filter: VendorsFilterInput, $after: ID!) {
+                vendors(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
+    }
+
     async createVendor(
         input: VendorInput,
         fields: Array<keyof VendorFields> = [
@@ -622,6 +758,35 @@ export class Cinnamon {
             headers,
             token,
         )).data.catalog;
+    }
+
+    catalogs(
+        filter: CatalogsFilterInput = {},
+        fields: Array<keyof CatalogFields> = [
+            CatalogFields.id,
+            CatalogFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Catalog>(
+            `query($filter: CatalogsFilterInput, $after: ID!) {
+                catalogs(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
     }
 
     async createCatalog(
@@ -709,6 +874,35 @@ export class Cinnamon {
         )).data.product;
     }
 
+    products(
+        filter: ProductsFilterInput = {},
+        fields: Array<keyof ProductFields> = [
+            ProductFields.id,
+            ProductFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Product>(
+            `query($filter: ProductsFilterInput, $after: ID!) {
+                products(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
+    }
+
     async createProduct(
         input: ProductInput,
         fields: Array<keyof ProductFields> = [
@@ -792,6 +986,35 @@ export class Cinnamon {
             headers,
             token,
         )).data.marketingCampaign;
+    }
+
+    marketingCampaigns(
+        filter: MarketingCampaignsFilterInput = {},
+        fields: Array<keyof MarketingCampaignFields> = [
+            MarketingCampaignFields.id,
+            MarketingCampaignFields.status,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<MarketingCampaign>(
+            `query($filter: MarketingCampaignsFilterInput, $after: ID!) {
+                marketingCampaigns(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
     }
 
     async createMarketingCampaign(
@@ -879,6 +1102,35 @@ export class Cinnamon {
         )).data.marketingAd;
     }
 
+    marketingAds(
+        filter: MarketingAdsFilterInput = {},
+        fields: Array<keyof MarketingAdFields> = [
+            MarketingAdFields.id,
+            MarketingAdFields.remoteId,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<MarketingAd>(
+            `query($filter: MarketingAdsFilterInput, $after: ID!) {
+                marketingAds(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
+    }
+
     // ####################################
     // Result
     // ####################################
@@ -904,6 +1156,35 @@ export class Cinnamon {
         )).data.result;
     }
 
+    results(
+        filter: ResultsFilterInput = {},
+        fields: Array<keyof ResultFields> = [
+            ResultFields.id,
+            ResultFields.date,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Result>(
+            `query($filter: ResultsFilterInput, $after: ID!) {
+                results(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
+    }
+
     // ####################################
     // Entitlement
     // ####################################
@@ -927,6 +1208,35 @@ export class Cinnamon {
             headers,
             token,
         )).data.entitlement;
+    }
+
+    entitlements(
+        filter: EntitlementsFilterInput = {},
+        fields: Array<keyof EntitlementFields> = [
+            EntitlementFields.id,
+            EntitlementFields.permissions,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.apiPaging<Entitlement>(
+            `query($filter: EntitlementsFilterInput, $after: ID!) {
+                entitlements(filter: $filter, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            { filter },
+            headers,
+            token,
+        );
     }
 
     async createEntitlement(
