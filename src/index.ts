@@ -23,6 +23,7 @@ import {
     MediaChannelsFilterInput,
     MediaChannelUpdateInput,
     CampaignTemplate,
+    CampaignTemplatesFilterInput,
     Vendor,
     VendorInput,
     VendorsFilterInput,
@@ -128,31 +129,24 @@ export class Cinnamon {
         return json;
     }
 
-    async apiPaging<T>(
-        query: string,
-        variables: object = {},
-        headers: Headers,
-        token?: string,
+    async allPages<T>(
+        fetchRelayConnection: (
+            after: PageInfo['endCursor'],
+        ) => Promise<{
+            pageInfo?: PageInfo;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            edges?: any;
+        }>,
     ) {
         const result: Partial<T>[] = [];
         const getPage = async (
             after: PageInfo['endCursor'] = '',
         ): Promise<void> => {
-            const { data } = await this.api(
-                query,
-                { ...variables, after },
-                headers,
-                token,
-            );
-
-            const { edges, pageInfo } = Object.values(data)[0] as {
-                pageInfo: PageInfo;
-                edges: Array<{ node: T }>;
-            };
+            const { edges, pageInfo } = await fetchRelayConnection(after);
 
             result.push(...edges.map(({ node }: { node: T }) => node));
 
-            if (pageInfo.hasNextPage) {
+            if (pageInfo && pageInfo.hasNextPage) {
                 await getPage(pageInfo.endCursor);
             }
         };
@@ -268,8 +262,9 @@ export class Cinnamon {
         )).data.organization;
     }
 
-    organizations(
+    async organizations(
         filter: OrganizationsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
@@ -277,7 +272,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Organization>(
+        return (await this.api<'organizations'>(
             `query($filter: OrganizationsFilterInput, $after: ID!) {
                 organizations(filter: $filter, after: $after) {
                     pageInfo {
@@ -291,9 +286,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.organizations;
+    }
+
+    organizationsAll(
+        filter: OrganizationsFilterInput = {},
+        fields: Array<keyof OrganizationFields> = [
+            OrganizationFields.id,
+            OrganizationFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Organization>((after: PageInfo['endCursor']) =>
+            this.organizations(filter, after, fields, headers, token),
         );
     }
 
@@ -365,8 +374,9 @@ export class Cinnamon {
         )).data.marketplace;
     }
 
-    marketplaces(
+    async marketplaces(
         filter: MarketplacesFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
@@ -374,7 +384,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Marketplace>(
+        return (await this.api<'marketplaces'>(
             `query($filter: MarketplacesFilterInput, $after: ID!) {
                 marketplaces(filter: $filter, after: $after) {
                     pageInfo {
@@ -388,9 +398,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.marketplaces;
+    }
+
+    marketplacesAll(
+        filter: MarketplacesFilterInput = {},
+        fields: Array<keyof MarketplaceFields> = [
+            MarketplaceFields.id,
+            MarketplaceFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Marketplace>((after: PageInfo['endCursor']) =>
+            this.marketplaces(filter, after, fields, headers, token),
         );
     }
 
@@ -479,8 +503,9 @@ export class Cinnamon {
         )).data.mediaChannel;
     }
 
-    mediaChannels(
+    async mediaChannels(
         filter: MediaChannelsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
@@ -488,7 +513,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<MediaChannel>(
+        return (await this.api<'mediaChannels'>(
             `query($filter: MediaChannelsFilterInput!, $after: ID!) {
                 mediaChannels(filter: $filter, after: $after) {
                     pageInfo {
@@ -502,9 +527,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.mediaChannels;
+    }
+
+    mediaChannelsAll(
+        filter: MediaChannelsFilterInput = {},
+        fields: Array<keyof MediaChannelFields> = [
+            MediaChannelFields.id,
+            MediaChannelFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<MediaChannel>((after: PageInfo['endCursor']) =>
+            this.mediaChannels(filter, after, fields, headers, token),
         );
     }
 
@@ -593,7 +632,9 @@ export class Cinnamon {
         )).data.campaignTemplate;
     }
 
-    campaignTemplates(
+    async campaignTemplates(
+        filter: CampaignTemplatesFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof CampaignTemplateFields> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
@@ -601,9 +642,9 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<CampaignTemplate>(
-            `query($after: ID!) {
-                campaignTemplates(after: $after) {
+        return (await this.api<'campaignTemplates'>(
+            `query($filter: CampaignTemplatesFilterInput, $after: ID!) {
+                campaignTemplates(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
                         endCursor
@@ -615,9 +656,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            {},
+            { filter, after },
             headers,
             token,
+        )).data.campaignTemplates;
+    }
+
+    campaignTemplatesAll(
+        filter: CampaignTemplatesFilterInput = {},
+        fields: Array<keyof CampaignTemplateFields> = [
+            CampaignTemplateFields.id,
+            CampaignTemplateFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<CampaignTemplate>((after: PageInfo['endCursor']) =>
+            this.campaignTemplates(filter, after, fields, headers, token),
         );
     }
 
@@ -646,8 +701,9 @@ export class Cinnamon {
         )).data.vendor;
     }
 
-    vendors(
+    async vendors(
         filter: VendorsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
@@ -655,7 +711,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Vendor>(
+        return (await this.api<'vendors'>(
             `query($filter: VendorsFilterInput, $after: ID!) {
                 vendors(filter: $filter, after: $after) {
                     pageInfo {
@@ -669,9 +725,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.vendors;
+    }
+
+    vendorsAll(
+        filter: VendorsFilterInput = {},
+        fields: Array<keyof VendorFields> = [
+            VendorFields.id,
+            VendorFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Vendor>((after: PageInfo['endCursor']) =>
+            this.vendors(filter, after, fields, headers, token),
         );
     }
 
@@ -760,8 +830,9 @@ export class Cinnamon {
         )).data.catalog;
     }
 
-    catalogs(
+    async catalogs(
         filter: CatalogsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
@@ -769,7 +840,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Catalog>(
+        return (await this.api<'catalogs'>(
             `query($filter: CatalogsFilterInput, $after: ID!) {
                 catalogs(filter: $filter, after: $after) {
                     pageInfo {
@@ -783,9 +854,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.catalogs;
+    }
+
+    catalogsAll(
+        filter: CatalogsFilterInput = {},
+        fields: Array<keyof CatalogFields> = [
+            CatalogFields.id,
+            CatalogFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Catalog>((after: PageInfo['endCursor']) =>
+            this.catalogs(filter, after, fields, headers, token),
         );
     }
 
@@ -874,8 +959,9 @@ export class Cinnamon {
         )).data.product;
     }
 
-    products(
+    async products(
         filter: ProductsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
@@ -883,7 +969,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Product>(
+        return (await this.api<'products'>(
             `query($filter: ProductsFilterInput, $after: ID!) {
                 products(filter: $filter, after: $after) {
                     pageInfo {
@@ -897,9 +983,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.products;
+    }
+
+    productsAll(
+        filter: ProductsFilterInput = {},
+        fields: Array<keyof ProductFields> = [
+            ProductFields.id,
+            ProductFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Product>((after: PageInfo['endCursor']) =>
+            this.products(filter, after, fields, headers, token),
         );
     }
 
@@ -988,8 +1088,9 @@ export class Cinnamon {
         )).data.marketingCampaign;
     }
 
-    marketingCampaigns(
+    async marketingCampaigns(
         filter: MarketingCampaignsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
@@ -997,7 +1098,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<MarketingCampaign>(
+        return (await this.api<'marketingCampaigns'>(
             `query($filter: MarketingCampaignsFilterInput, $after: ID!) {
                 marketingCampaigns(filter: $filter, after: $after) {
                     pageInfo {
@@ -1011,9 +1112,24 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.marketingCampaigns;
+    }
+
+    marketingCampaignsAll(
+        filter: MarketingCampaignsFilterInput = {},
+        fields: Array<keyof MarketingCampaignFields> = [
+            MarketingCampaignFields.id,
+            MarketingCampaignFields.status,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<MarketingCampaign>(
+            (after: PageInfo['endCursor']) =>
+                this.marketingCampaigns(filter, after, fields, headers, token),
         );
     }
 
@@ -1102,8 +1218,9 @@ export class Cinnamon {
         )).data.marketingAd;
     }
 
-    marketingAds(
+    async marketingAds(
         filter: MarketingAdsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof MarketingAdFields> = [
             MarketingAdFields.id,
             MarketingAdFields.remoteId,
@@ -1111,7 +1228,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<MarketingAd>(
+        return (await this.api<'marketingAds'>(
             `query($filter: MarketingAdsFilterInput, $after: ID!) {
                 marketingAds(filter: $filter, after: $after) {
                     pageInfo {
@@ -1125,9 +1242,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.marketingAds;
+    }
+
+    marketingAdsAll(
+        filter: MarketingAdsFilterInput = {},
+        fields: Array<keyof MarketingAdFields> = [
+            MarketingAdFields.id,
+            MarketingAdFields.remoteId,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<MarketingAd>((after: PageInfo['endCursor']) =>
+            this.marketingAds(filter, after, fields, headers, token),
         );
     }
 
@@ -1156,8 +1287,9 @@ export class Cinnamon {
         )).data.result;
     }
 
-    results(
+    async results(
         filter: ResultsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof ResultFields> = [
             ResultFields.id,
             ResultFields.date,
@@ -1165,7 +1297,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Result>(
+        return (await this.api<'results'>(
             `query($filter: ResultsFilterInput, $after: ID!) {
                 results(filter: $filter, after: $after) {
                     pageInfo {
@@ -1179,9 +1311,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.results;
+    }
+
+    resultsAll(
+        filter: ResultsFilterInput = {},
+        fields: Array<keyof ResultFields> = [
+            ResultFields.id,
+            ResultFields.date,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Result>((after: PageInfo['endCursor']) =>
+            this.results(filter, after, fields, headers, token),
         );
     }
 
@@ -1210,8 +1356,9 @@ export class Cinnamon {
         )).data.entitlement;
     }
 
-    entitlements(
+    async entitlements(
         filter: EntitlementsFilterInput = {},
+        after: PageInfo['endCursor'] = '',
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
@@ -1219,7 +1366,7 @@ export class Cinnamon {
         headers: Headers = {},
         token?: string,
     ) {
-        return this.apiPaging<Entitlement>(
+        return (await this.api<'entitlements'>(
             `query($filter: EntitlementsFilterInput, $after: ID!) {
                 entitlements(filter: $filter, after: $after) {
                     pageInfo {
@@ -1233,9 +1380,23 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter },
+            { filter, after },
             headers,
             token,
+        )).data.entitlements;
+    }
+
+    entitlementsAll(
+        filter: EntitlementsFilterInput = {},
+        fields: Array<keyof EntitlementFields> = [
+            EntitlementFields.id,
+            EntitlementFields.permissions,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return this.allPages<Entitlement>((after: PageInfo['endCursor']) =>
+            this.entitlements(filter, after, fields, headers, token),
         );
     }
 
