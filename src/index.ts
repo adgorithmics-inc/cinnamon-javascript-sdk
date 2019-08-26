@@ -23,6 +23,7 @@ import {
     MediaChannelsFilterInput,
     MediaChannelUpdateInput,
     CampaignTemplate,
+    CampaignTemplatesFilterInput,
     Vendor,
     VendorInput,
     VendorsFilterInput,
@@ -632,6 +633,7 @@ export class Cinnamon {
     }
 
     async campaignTemplates(
+        filter: CampaignTemplatesFilterInput = {},
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof CampaignTemplateFields> = [
             CampaignTemplateFields.id,
@@ -641,8 +643,8 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'campaignTemplates'>(
-            `query($after: ID!) {
-                campaignTemplates(after: $after) {
+            `query($filter: CampaignTemplatesFilterInput, $after: ID!) {
+                campaignTemplates(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
                         endCursor
@@ -654,13 +656,14 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { after },
+            { filter, after },
             headers,
             token,
         )).data.campaignTemplates;
     }
 
     campaignTemplatesAll(
+        filter: CampaignTemplatesFilterInput = {},
         fields: Array<keyof CampaignTemplateFields> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
@@ -669,7 +672,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return this.allPages<CampaignTemplate>((after: PageInfo['endCursor']) =>
-            this.campaignTemplates(after, fields, headers, token),
+            this.campaignTemplates(filter, after, fields, headers, token),
         );
     }
 
