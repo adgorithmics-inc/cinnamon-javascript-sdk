@@ -130,7 +130,7 @@ export class Cinnamon {
     }
 
     async allPages<T>(
-        func: (
+        fetchRelayConnection: (
             after: PageInfo['endCursor'],
         ) => Promise<{
             pageInfo?: PageInfo;
@@ -142,7 +142,7 @@ export class Cinnamon {
         const getPage = async (
             after: PageInfo['endCursor'] = '',
         ): Promise<void> => {
-            const { edges, pageInfo } = await func(after);
+            const { edges, pageInfo } = await fetchRelayConnection(after);
 
             result.push(...edges.map(({ node }: { node: T }) => node));
 
