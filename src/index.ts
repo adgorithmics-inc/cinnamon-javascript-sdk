@@ -81,7 +81,7 @@ export interface Error {
 
 export type APIKey = keyof (Query & Mutation);
 export type APIResult<T extends APIKey, U extends string = T> = {
-    data: Record<U, NonNullable<Partial<(Query & Mutation)[T]>>>;
+    data: Record<U, NonNullable<(Query & Mutation)[T]>>;
 };
 
 export class Cinnamon {
@@ -138,7 +138,7 @@ export class Cinnamon {
             edges?: any;
         }>,
     ) {
-        const result: Partial<T>[] = [];
+        const result: T[] = [];
         const getPage = async (
             after: PageInfo['endCursor'] = '',
         ): Promise<void> => {
