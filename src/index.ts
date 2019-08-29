@@ -29,9 +29,10 @@ import {
     VendorsFilterInput,
     VendorUpdateInput,
     Catalog,
-    CatalogInput,
-    CatalogsFilterInput,
+    CatalogCreateInput,
+    CatalogImportInput,
     CatalogUpdateInput,
+    CatalogsFilterInput,
     Product,
     ProductInput,
     ProductsFilterInput,
@@ -875,7 +876,7 @@ export class Cinnamon {
     }
 
     async createCatalog(
-        input: CatalogInput,
+        input: CatalogCreateInput,
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
@@ -884,7 +885,28 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'createCatalog'>(
-            `mutation($input: CatalogInput!) {
+            `mutation($input: CatalogCreateInput!) {
+                createCatalog(input: $input) {
+                    ${fields.join(' ')}
+                }
+            }`,
+            { input },
+            headers,
+            token,
+        )).data.createCatalog;
+    }
+
+    async importCatalog(
+        input: CatalogImportInput,
+        fields: Array<keyof CatalogFields> = [
+            CatalogFields.id,
+            CatalogFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return (await this.api<'createCatalog'>(
+            `mutation($input: CatalogImportInput!) {
                 createCatalog(input: $input) {
                     ${fields.join(' ')}
                 }

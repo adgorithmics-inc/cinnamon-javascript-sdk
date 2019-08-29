@@ -101,6 +101,8 @@ export declare type Catalog = {
     mediaChannel: MediaChannel;
     remoteId?: Maybe<Scalars["String"]>;
     products?: Maybe<ProductConnection>;
+    systemStatus: SystemStatus;
+    errors?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 export declare type CatalogProductsArgs = {
     first?: Maybe<Scalars["Int"]>;
@@ -110,14 +112,17 @@ export declare type CatalogConnection = {
     edges?: Maybe<Array<Maybe<CatalogEdge>>>;
     pageInfo: PageInfo;
 };
+export declare type CatalogCreateInput = {
+    name: Scalars["NonEmptyString"];
+    mediaChannelId: Scalars["ID"];
+};
 export declare type CatalogEdge = {
     cursor: Scalars["ID"];
     node?: Maybe<Catalog>;
 };
-export declare type CatalogInput = {
-    name: Scalars["NonEmptyString"];
+export declare type CatalogImportInput = {
     mediaChannelId: Scalars["ID"];
-    remoteId?: Maybe<Scalars["String"]>;
+    remoteId: Scalars["String"];
 };
 export declare type CatalogsFilterInput = {
     name?: Maybe<Scalars["String"]>;
@@ -309,6 +314,10 @@ export declare type MediaChannel = {
     catalogs: CatalogConnection;
     marketplace: Marketplace;
 };
+export declare type MediaChannelCatalogsArgs = {
+    first?: Maybe<Scalars["Int"]>;
+    after?: Maybe<Scalars["ID"]>;
+};
 export declare type MediaChannelConnection = {
     edges?: Maybe<Array<Maybe<MediaChannelEdge>>>;
     pageInfo: PageInfo;
@@ -338,6 +347,7 @@ export declare type MediaChannelUpdateInput = {
 };
 export declare type Mutation = {
     createCatalog?: Maybe<Catalog>;
+    importCatalog?: Maybe<Catalog>;
     deleteCatalog?: Maybe<Deletion>;
     updateCatalog?: Maybe<Catalog>;
     createEntitlement?: Maybe<Entitlement>;
@@ -365,7 +375,10 @@ export declare type Mutation = {
     deleteVendor?: Maybe<Deletion>;
 };
 export declare type MutationCreateCatalogArgs = {
-    input: CatalogInput;
+    input: CatalogCreateInput;
+};
+export declare type MutationImportCatalogArgs = {
+    input: CatalogImportInput;
 };
 export declare type MutationDeleteCatalogArgs = {
     id: Scalars["ID"];
@@ -511,6 +524,8 @@ export declare type Product = {
     catalog: Catalog;
     metadata: Scalars["JSONObject"];
     vendor: Vendor;
+    systemStatus: SystemStatus;
+    errors?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 export declare type ProductMarketingCampaignsArgs = {
     first?: Maybe<Scalars["Int"]>;
@@ -527,7 +542,6 @@ export declare type ProductEdge = {
 export declare type ProductInput = {
     name: Scalars["NonEmptyString"];
     sku: Scalars["String"];
-    remoteState: Scalars["JSONObject"];
     vendorId: Scalars["ID"];
     catalogId: Scalars["ID"];
     metadata?: Maybe<Scalars["JSONObject"]>;
@@ -544,7 +558,6 @@ export declare type ProductsFilterInput = {
 export declare type ProductUpdateInput = {
     name?: Maybe<Scalars["NonEmptyString"]>;
     sku?: Maybe<Scalars["String"]>;
-    remoteState?: Maybe<Scalars["JSONObject"]>;
     metadata?: Maybe<Scalars["JSONObject"]>;
 };
 export declare type Query = {
@@ -688,11 +701,18 @@ export declare enum ResultResourceTypeEnum {
     MarketingCampaign = "MarketingCampaign"
 }
 export declare type ResultsFilterInput = {
-    ids__in?: Maybe<Array<Scalars["ID"]>>;
+    id__in?: Maybe<Array<Scalars["ID"]>>;
     type?: Maybe<ResultResourceTypeEnum>;
     resourceId?: Maybe<Scalars["ID"]>;
     vendorId?: Maybe<Scalars["ID"]>;
 };
+export declare enum SystemStatus {
+    Pending = "PENDING",
+    Processing = "PROCESSING",
+    Processed = "PROCESSED",
+    Error = "ERROR",
+    Deleted = "DELETED"
+}
 export declare type Token = {
     token: Scalars["String"];
     refreshToken: Scalars["String"];
@@ -843,6 +863,7 @@ export declare type ResolversTypes = {
     ResultResourceTypeEnum: ResultResourceTypeEnum;
     ResultResource: ResolversTypes["MarketingAd"] | ResolversTypes["MarketingCampaign"];
     Vendor: ResolverTypeWrapper<Vendor>;
+    SystemStatus: SystemStatus;
     AuthPermission: AuthPermission;
     MarketplaceConnection: ResolverTypeWrapper<MarketplaceConnection>;
     MarketplaceEdge: ResolverTypeWrapper<MarketplaceEdge>;
@@ -865,7 +886,8 @@ export declare type ResolversTypes = {
     ResultsFilterInput: ResultsFilterInput;
     VendorsFilterInput: VendorsFilterInput;
     Mutation: ResolverTypeWrapper<{}>;
-    CatalogInput: CatalogInput;
+    CatalogCreateInput: CatalogCreateInput;
+    CatalogImportInput: CatalogImportInput;
     Deletion: ResolverTypeWrapper<Deletion>;
     CatalogUpdateInput: CatalogUpdateInput;
     EntitlementInput: EntitlementInput;
@@ -940,6 +962,7 @@ export declare type ResolversParentTypes = {
     ResultResourceTypeEnum: ResultResourceTypeEnum;
     ResultResource: ResolversTypes["MarketingAd"] | ResolversTypes["MarketingCampaign"];
     Vendor: Vendor;
+    SystemStatus: SystemStatus;
     AuthPermission: AuthPermission;
     MarketplaceConnection: MarketplaceConnection;
     MarketplaceEdge: MarketplaceEdge;
@@ -962,7 +985,8 @@ export declare type ResolversParentTypes = {
     ResultsFilterInput: ResultsFilterInput;
     VendorsFilterInput: VendorsFilterInput;
     Mutation: {};
-    CatalogInput: CatalogInput;
+    CatalogCreateInput: CatalogCreateInput;
+    CatalogImportInput: CatalogImportInput;
     Deletion: Deletion;
     CatalogUpdateInput: CatalogUpdateInput;
     EntitlementInput: EntitlementInput;
@@ -1026,6 +1050,8 @@ export declare type CatalogResolvers<ContextType = any, ParentType extends Resol
     mediaChannel?: Resolver<ResolversTypes["MediaChannel"], ParentType, ContextType>;
     remoteId?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
     products?: Resolver<Maybe<ResolversTypes["ProductConnection"]>, ParentType, ContextType, CatalogProductsArgs>;
+    systemStatus?: Resolver<ResolversTypes["SystemStatus"], ParentType, ContextType>;
+    errors?: Resolver<Maybe<Array<Maybe<ResolversTypes["String"]>>>, ParentType, ContextType>;
 };
 export declare type CatalogConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes["CatalogConnection"] = ResolversParentTypes["CatalogConnection"]> = {
     edges?: Resolver<Maybe<Array<Maybe<ResolversTypes["CatalogEdge"]>>>, ParentType, ContextType>;
@@ -1126,7 +1152,7 @@ export declare type MediaChannelResolvers<ContextType = any, ParentType extends 
     name?: Resolver<ResolversTypes["NonEmptyString"], ParentType, ContextType>;
     platform?: Resolver<ResolversTypes["Platform"], ParentType, ContextType>;
     remoteId?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-    catalogs?: Resolver<ResolversTypes["CatalogConnection"], ParentType, ContextType>;
+    catalogs?: Resolver<ResolversTypes["CatalogConnection"], ParentType, ContextType, MediaChannelCatalogsArgs>;
     marketplace?: Resolver<ResolversTypes["Marketplace"], ParentType, ContextType>;
 };
 export declare type MediaChannelConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes["MediaChannelConnection"] = ResolversParentTypes["MediaChannelConnection"]> = {
@@ -1139,6 +1165,7 @@ export declare type MediaChannelEdgeResolvers<ContextType = any, ParentType exte
 };
 export declare type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]> = {
     createCatalog?: Resolver<Maybe<ResolversTypes["Catalog"]>, ParentType, ContextType, RequireFields<MutationCreateCatalogArgs, "input">>;
+    importCatalog?: Resolver<Maybe<ResolversTypes["Catalog"]>, ParentType, ContextType, RequireFields<MutationImportCatalogArgs, "input">>;
     deleteCatalog?: Resolver<Maybe<ResolversTypes["Deletion"]>, ParentType, ContextType, RequireFields<MutationDeleteCatalogArgs, "id">>;
     updateCatalog?: Resolver<Maybe<ResolversTypes["Catalog"]>, ParentType, ContextType, RequireFields<MutationUpdateCatalogArgs, "id" | "input">>;
     createEntitlement?: Resolver<Maybe<ResolversTypes["Entitlement"]>, ParentType, ContextType, RequireFields<MutationCreateEntitlementArgs, "input">>;
@@ -1201,6 +1228,8 @@ export declare type ProductResolvers<ContextType = any, ParentType extends Resol
     catalog?: Resolver<ResolversTypes["Catalog"], ParentType, ContextType>;
     metadata?: Resolver<ResolversTypes["JSONObject"], ParentType, ContextType>;
     vendor?: Resolver<ResolversTypes["Vendor"], ParentType, ContextType>;
+    systemStatus?: Resolver<ResolversTypes["SystemStatus"], ParentType, ContextType>;
+    errors?: Resolver<Maybe<Array<Maybe<ResolversTypes["String"]>>>, ParentType, ContextType>;
 };
 export declare type ProductConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes["ProductConnection"] = ResolversParentTypes["ProductConnection"]> = {
     edges?: Resolver<Maybe<Array<Maybe<ResolversTypes["ProductEdge"]>>>, ParentType, ContextType>;

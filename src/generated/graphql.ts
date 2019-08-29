@@ -115,6 +115,8 @@ export type Catalog = {
   mediaChannel: MediaChannel;
   remoteId?: Maybe<Scalars["String"]>;
   products?: Maybe<ProductConnection>;
+  systemStatus: SystemStatus;
+  errors?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
 export type CatalogProductsArgs = {
@@ -127,15 +129,19 @@ export type CatalogConnection = {
   pageInfo: PageInfo;
 };
 
+export type CatalogCreateInput = {
+  name: Scalars["NonEmptyString"];
+  mediaChannelId: Scalars["ID"];
+};
+
 export type CatalogEdge = {
   cursor: Scalars["ID"];
   node?: Maybe<Catalog>;
 };
 
-export type CatalogInput = {
-  name: Scalars["NonEmptyString"];
+export type CatalogImportInput = {
   mediaChannelId: Scalars["ID"];
-  remoteId?: Maybe<Scalars["String"]>;
+  remoteId: Scalars["String"];
 };
 
 export type CatalogsFilterInput = {
@@ -364,6 +370,11 @@ export type MediaChannel = {
   marketplace: Marketplace;
 };
 
+export type MediaChannelCatalogsArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+};
+
 export type MediaChannelConnection = {
   edges?: Maybe<Array<Maybe<MediaChannelEdge>>>;
   pageInfo: PageInfo;
@@ -398,6 +409,7 @@ export type MediaChannelUpdateInput = {
 
 export type Mutation = {
   createCatalog?: Maybe<Catalog>;
+  importCatalog?: Maybe<Catalog>;
   deleteCatalog?: Maybe<Deletion>;
   updateCatalog?: Maybe<Catalog>;
   createEntitlement?: Maybe<Entitlement>;
@@ -426,7 +438,11 @@ export type Mutation = {
 };
 
 export type MutationCreateCatalogArgs = {
-  input: CatalogInput;
+  input: CatalogCreateInput;
+};
+
+export type MutationImportCatalogArgs = {
+  input: CatalogImportInput;
 };
 
 export type MutationDeleteCatalogArgs = {
@@ -609,6 +625,8 @@ export type Product = {
   catalog: Catalog;
   metadata: Scalars["JSONObject"];
   vendor: Vendor;
+  systemStatus: SystemStatus;
+  errors?: Maybe<Array<Maybe<Scalars["String"]>>>;
 };
 
 export type ProductMarketingCampaignsArgs = {
@@ -629,7 +647,6 @@ export type ProductEdge = {
 export type ProductInput = {
   name: Scalars["NonEmptyString"];
   sku: Scalars["String"];
-  remoteState: Scalars["JSONObject"];
   vendorId: Scalars["ID"];
   catalogId: Scalars["ID"];
   metadata?: Maybe<Scalars["JSONObject"]>;
@@ -648,7 +665,6 @@ export type ProductsFilterInput = {
 export type ProductUpdateInput = {
   name?: Maybe<Scalars["NonEmptyString"]>;
   sku?: Maybe<Scalars["String"]>;
-  remoteState?: Maybe<Scalars["JSONObject"]>;
   metadata?: Maybe<Scalars["JSONObject"]>;
 };
 
@@ -822,11 +838,19 @@ export enum ResultResourceTypeEnum {
 }
 
 export type ResultsFilterInput = {
-  ids__in?: Maybe<Array<Scalars["ID"]>>;
+  id__in?: Maybe<Array<Scalars["ID"]>>;
   type?: Maybe<ResultResourceTypeEnum>;
   resourceId?: Maybe<Scalars["ID"]>;
   vendorId?: Maybe<Scalars["ID"]>;
 };
+
+export enum SystemStatus {
+  Pending = "PENDING",
+  Processing = "PROCESSING",
+  Processed = "PROCESSED",
+  Error = "ERROR",
+  Deleted = "DELETED"
+}
 
 export type Token = {
   token: Scalars["String"];
@@ -1075,6 +1099,7 @@ export type ResolversTypes = {
     | ResolversTypes["MarketingAd"]
     | ResolversTypes["MarketingCampaign"];
   Vendor: ResolverTypeWrapper<Vendor>;
+  SystemStatus: SystemStatus;
   AuthPermission: AuthPermission;
   MarketplaceConnection: ResolverTypeWrapper<MarketplaceConnection>;
   MarketplaceEdge: ResolverTypeWrapper<MarketplaceEdge>;
@@ -1097,7 +1122,8 @@ export type ResolversTypes = {
   ResultsFilterInput: ResultsFilterInput;
   VendorsFilterInput: VendorsFilterInput;
   Mutation: ResolverTypeWrapper<{}>;
-  CatalogInput: CatalogInput;
+  CatalogCreateInput: CatalogCreateInput;
+  CatalogImportInput: CatalogImportInput;
   Deletion: ResolverTypeWrapper<Deletion>;
   CatalogUpdateInput: CatalogUpdateInput;
   EntitlementInput: EntitlementInput;
@@ -1178,6 +1204,7 @@ export type ResolversParentTypes = {
     | ResolversTypes["MarketingAd"]
     | ResolversTypes["MarketingCampaign"];
   Vendor: Vendor;
+  SystemStatus: SystemStatus;
   AuthPermission: AuthPermission;
   MarketplaceConnection: MarketplaceConnection;
   MarketplaceEdge: MarketplaceEdge;
@@ -1200,7 +1227,8 @@ export type ResolversParentTypes = {
   ResultsFilterInput: ResultsFilterInput;
   VendorsFilterInput: VendorsFilterInput;
   Mutation: {};
-  CatalogInput: CatalogInput;
+  CatalogCreateInput: CatalogCreateInput;
+  CatalogImportInput: CatalogImportInput;
   Deletion: Deletion;
   CatalogUpdateInput: CatalogUpdateInput;
   EntitlementInput: EntitlementInput;
@@ -1317,6 +1345,16 @@ export type CatalogResolvers<
     ParentType,
     ContextType,
     CatalogProductsArgs
+  >;
+  systemStatus?: Resolver<
+    ResolversTypes["SystemStatus"],
+    ParentType,
+    ContextType
+  >;
+  errors?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
   >;
 };
 
@@ -1602,7 +1640,8 @@ export type MediaChannelResolvers<
   catalogs?: Resolver<
     ResolversTypes["CatalogConnection"],
     ParentType,
-    ContextType
+    ContextType,
+    MediaChannelCatalogsArgs
   >;
   marketplace?: Resolver<
     ResolversTypes["Marketplace"],
@@ -1644,6 +1683,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationCreateCatalogArgs, "input">
+  >;
+  importCatalog?: Resolver<
+    Maybe<ResolversTypes["Catalog"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationImportCatalogArgs, "input">
   >;
   deleteCatalog?: Resolver<
     Maybe<ResolversTypes["Deletion"]>,
@@ -1889,6 +1934,16 @@ export type ProductResolvers<
   catalog?: Resolver<ResolversTypes["Catalog"], ParentType, ContextType>;
   metadata?: Resolver<ResolversTypes["JSONObject"], ParentType, ContextType>;
   vendor?: Resolver<ResolversTypes["Vendor"], ParentType, ContextType>;
+  systemStatus?: Resolver<
+    ResolversTypes["SystemStatus"],
+    ParentType,
+    ContextType
+  >;
+  errors?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["String"]>>>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type ProductConnectionResolvers<
