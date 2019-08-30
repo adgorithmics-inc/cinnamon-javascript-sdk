@@ -6,6 +6,9 @@ schema:
 documents: null
 config:
     skipTypename: true
+    scalars:
+        ObjectId: string
+        NonEmptyString: string
 hooks:
     afterAllFileWrite:
         - prettier --write
