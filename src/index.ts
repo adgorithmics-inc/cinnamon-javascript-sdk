@@ -115,7 +115,7 @@ export class Cinnamon {
             if (
                 json.errors.some(
                     (error: Error) =>
-                        get(error, 'extentions.code') === codes.TOKEN_EXPIRED,
+                        get(error, 'extensions.code') === codes.TOKEN_EXPIRED,
                 ) &&
                 !token
             ) {
