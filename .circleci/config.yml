@@ -1,0 +1,83 @@
+version: 2
+
+references:
+    pin-npm-version: &pin-npm-version
+        run:
+            name: Pin NPM to specified version
+            command: sudo npm install -g npm@6.4.1
+
+jobs:
+    test:
+        docker:
+            - image: circleci/node:10.13.0
+
+        steps:
+            - *pin-npm-version
+            - checkout
+
+            - restore_cache:
+                  keys:
+                      - jscache-{{ checksum "package.json" }}
+                      - jscache-
+
+            - run: npm ci
+
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: jscache-{{ checksum "package.json" }}
+
+            - run: npm run lint
+
+    publish:
+        docker:
+            - image: circleci/node:10.13.0
+
+        steps:
+            - *pin-npm-version
+            - checkout
+            - add_ssh_keys:
+                  fingerprints:
+                      - 'ba:c3:f4:48:21:3a:c5:6b:b2:d9:06:e8:bc:ba:7b:e3'
+
+            - run: npm version --no-git-tag-version ${CIRCLE_TAG}
+            - run: git add package.json package-lock.json
+            - run: git commit -m "Automatic NPM version bump ${CIRCLE_TAG}"
+            - run: git checkout -b temp
+            - run: git push origin temp:master
+            - run: npm publish
+
+    publish-hot:
+        docker:
+            - image: circleci/node:10.13.0
+
+        steps:
+            - *pin-npm-version
+            - checkout
+            - run: npm version --no-git-tag-version ${CIRCLE_TAG}
+            - run: npm publish
+
+workflows:
+    version: 2
+    test-and-publish:
+        jobs:
+            - test:
+                  filters:
+                      tags:
+                          only: /.*/
+            - publish:
+                  requires:
+                      - test
+                  filters:
+                      tags:
+                          only: /^v[0-9]+(\.[0-9]+)*(-rc[0-9]*)*/
+                      branches:
+                          ignore: /.*/
+            - publish-hot:
+                  requires:
+                      - test
+                  filters:
+                      tags:
+                          only: /^v[0-9]+(\.[0-9]+)*-hot/
+                      branches:
+                          ignore: /.*/
