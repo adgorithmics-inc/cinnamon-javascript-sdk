@@ -115,7 +115,7 @@ export class Cinnamon {
             if (
                 json.errors.some(
                     (error: Error) =>
-                        get(error, 'extentions.code') === codes.TOKEN_EXPIRED,
+                        get(error, 'extensions.code') === codes.TOKEN_EXPIRED,
                 ) &&
                 !token
             ) {
@@ -242,7 +242,7 @@ export class Cinnamon {
     // ####################################
 
     async organization(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
@@ -251,7 +251,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'organization'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 organization(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -273,7 +273,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'organizations'>(
-            `query($filter: OrganizationsFilterInput, $after: ID!) {
+            `query($filter: OrganizationsFilterInput, $after: ObjectId!) {
                 organizations(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -328,7 +328,7 @@ export class Cinnamon {
     }
 
     async updateOrganization(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: OrganizationUpdateInput,
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
@@ -338,7 +338,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateOrganization'>(
-            `mutation($id: ID!, $input: OrganizationUpdateInput!) {
+            `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
                 updateOrganization(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -354,7 +354,7 @@ export class Cinnamon {
     // ####################################
 
     async marketplace(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
@@ -363,7 +363,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketplace'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 marketplace(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -385,7 +385,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketplaces'>(
-            `query($filter: MarketplacesFilterInput, $after: ID!) {
+            `query($filter: MarketplacesFilterInput, $after: ObjectId!) {
                 marketplaces(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -440,7 +440,7 @@ export class Cinnamon {
     }
 
     async updateMarketplace(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: MarketplaceUpdateInput,
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
@@ -450,7 +450,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateMarketplace'>(
-            `mutation($id: ID!, $input: MarketplaceUpdateInput!) {
+            `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
                 updateMarketplace(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -462,12 +462,12 @@ export class Cinnamon {
     }
 
     async deleteMarketplace(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteMarketplace'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteMarketplace(id: $id) {
                     id
                 }
@@ -483,7 +483,7 @@ export class Cinnamon {
     // ####################################
 
     async mediaChannel(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
@@ -492,7 +492,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'mediaChannel'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 mediaChannel(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -514,7 +514,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'mediaChannels'>(
-            `query($filter: MediaChannelsFilterInput!, $after: ID!) {
+            `query($filter: MediaChannelsFilterInput!, $after: ObjectId!) {
                 mediaChannels(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -569,7 +569,7 @@ export class Cinnamon {
     }
 
     async updateMediaChannel(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: MediaChannelUpdateInput,
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
@@ -579,7 +579,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateMediaChannel'>(
-            `mutation($id: ID!, $input: MediaChannelUpdateInput!) {
+            `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
                 updateMediaChannel(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -591,12 +591,12 @@ export class Cinnamon {
     }
 
     async deleteMediaChannel(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteMediaChannel'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteMediaChannel(id: $id) {
                     id
                 }
@@ -612,7 +612,7 @@ export class Cinnamon {
     // ####################################
 
     async campaignTemplate(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof CampaignTemplateFields> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
@@ -621,7 +621,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'campaignTemplate'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 campaignTemplate(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -643,7 +643,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'campaignTemplates'>(
-            `query($filter: CampaignTemplatesFilterInput, $after: ID!) {
+            `query($filter: CampaignTemplatesFilterInput, $after: ObjectId!) {
                 campaignTemplates(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -681,7 +681,7 @@ export class Cinnamon {
     // ####################################
 
     async vendor(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
@@ -690,7 +690,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'vendor'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 vendor(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -712,7 +712,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'vendors'>(
-            `query($filter: VendorsFilterInput, $after: ID!) {
+            `query($filter: VendorsFilterInput, $after: ObjectId!) {
                 vendors(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -767,7 +767,7 @@ export class Cinnamon {
     }
 
     async updateVendor(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: VendorUpdateInput,
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
@@ -777,7 +777,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateVendor'>(
-            `mutation($id: ID!, $input: VendorUpdateInput!) {
+            `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
                 updateVendor(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -789,12 +789,12 @@ export class Cinnamon {
     }
 
     async deleteVendor(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteVendor'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteVendor(id: $id) {
                     id
                 }
@@ -810,7 +810,7 @@ export class Cinnamon {
     // ####################################
 
     async catalog(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
@@ -819,7 +819,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'catalog'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 catalog(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -841,7 +841,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'catalogs'>(
-            `query($filter: CatalogsFilterInput, $after: ID!) {
+            `query($filter: CatalogsFilterInput, $after: ObjectId!) {
                 catalogs(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -896,7 +896,7 @@ export class Cinnamon {
     }
 
     async updateCatalog(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: CatalogUpdateInput,
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
@@ -906,7 +906,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateCatalog'>(
-            `mutation($id: ID!, $input: CatalogUpdateInput!) {
+            `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
                 updateCatalog(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -918,12 +918,12 @@ export class Cinnamon {
     }
 
     async deleteCatalog(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteCatalog'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteCatalog(id: $id) {
                     id
                 }
@@ -939,7 +939,7 @@ export class Cinnamon {
     // ####################################
 
     async product(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
@@ -948,7 +948,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'product'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 product(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -970,7 +970,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'products'>(
-            `query($filter: ProductsFilterInput, $after: ID!) {
+            `query($filter: ProductsFilterInput, $after: ObjectId!) {
                 products(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1025,7 +1025,7 @@ export class Cinnamon {
     }
 
     async updateProduct(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: ProductUpdateInput,
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
@@ -1035,7 +1035,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateProduct'>(
-            `mutation($id: ID!, $input: ProductUpdateInput!) {
+            `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
                 updateProduct(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -1047,12 +1047,12 @@ export class Cinnamon {
     }
 
     async deleteProduct(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteProduct'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteProduct(id: $id) {
                     id
                 }
@@ -1068,7 +1068,7 @@ export class Cinnamon {
     // ####################################
 
     async marketingCampaign(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
@@ -1077,7 +1077,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketingCampaign'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 marketingCampaign(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -1099,7 +1099,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketingCampaigns'>(
-            `query($filter: MarketingCampaignsFilterInput, $after: ID!) {
+            `query($filter: MarketingCampaignsFilterInput, $after: ObjectId!) {
                 marketingCampaigns(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1155,7 +1155,7 @@ export class Cinnamon {
     }
 
     async updateMarketingCampaign(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: MarketingCampaignUpdateInput,
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
@@ -1165,7 +1165,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateMarketingCampaign'>(
-            `mutation($id: ID!, $input: MarketingCampaignUpdateInput!) {
+            `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
                 updateMarketingCampaign(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -1177,12 +1177,12 @@ export class Cinnamon {
     }
 
     async deleteMarketingCampaign(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteMarketingCampaign'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteMarketingCampaign(id: $id) {
                     id
                 }
@@ -1198,7 +1198,7 @@ export class Cinnamon {
     // ####################################
 
     async marketingAd(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof MarketingAdFields> = [
             MarketingAdFields.id,
             MarketingAdFields.remoteId,
@@ -1207,7 +1207,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketingAd'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 marketingAd(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -1229,7 +1229,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketingAds'>(
-            `query($filter: MarketingAdsFilterInput, $after: ID!) {
+            `query($filter: MarketingAdsFilterInput, $after: ObjectId!) {
                 marketingAds(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1267,7 +1267,7 @@ export class Cinnamon {
     // ####################################
 
     async result(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof ResultFields> = [
             ResultFields.id,
             ResultFields.results,
@@ -1276,7 +1276,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'result'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 result(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -1298,7 +1298,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'results'>(
-            `query($filter: ResultsFilterInput, $after: ID!) {
+            `query($filter: ResultsFilterInput, $after: ObjectId!) {
                 results(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1336,7 +1336,7 @@ export class Cinnamon {
     // ####################################
 
     async entitlement(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
@@ -1345,7 +1345,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'entitlement'>(
-            `query($id: ID!) {
+            `query($id: ObjectId!) {
                 entitlement(id: $id) {
                     ${fields.join(' ')}
                 }
@@ -1367,7 +1367,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'entitlements'>(
-            `query($filter: EntitlementsFilterInput, $after: ID!) {
+            `query($filter: EntitlementsFilterInput, $after: ObjectId!) {
                 entitlements(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1422,7 +1422,7 @@ export class Cinnamon {
     }
 
     async updateEntitlement(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         input: EntitlementUpdateInput,
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
@@ -1432,7 +1432,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'updateEntitlement'>(
-            `mutation($id: ID!, $input: EntitlementUpdateInput!) {
+            `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
                 updateEntitlement(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
@@ -1444,12 +1444,12 @@ export class Cinnamon {
     }
 
     async deleteEntitlement(
-        id: Scalars['ID'],
+        id: Scalars['ObjectId'],
         headers: Headers = {},
         token?: string,
     ) {
         return (await this.api<'deleteEntitlement'>(
-            `mutation($id: ID!) {
+            `mutation($id: ObjectId!) {
                 deleteEntitlement(id: $id) {
                     id
                 }
