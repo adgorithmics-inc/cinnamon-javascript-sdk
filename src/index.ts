@@ -19,9 +19,10 @@ import {
     MarketplacesFilterInput,
     MarketplaceUpdateInput,
     MediaChannel,
-    MediaChannelInput,
-    MediaChannelsFilterInput,
+    MediaChannelCreateInput,
     MediaChannelUpdateInput,
+    MediaChannelImportInput,
+    MediaChannelsFilterInput,
     CampaignTemplate,
     CampaignTemplatesFilterInput,
     Vendor,
@@ -549,7 +550,7 @@ export class Cinnamon {
     }
 
     async createMediaChannel(
-        input: MediaChannelInput,
+        input: MediaChannelCreateInput,
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
@@ -558,7 +559,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'createMediaChannel'>(
-            `mutation($input: MediaChannelInput!) {
+            `mutation($input: MediaChannelCreateInput!) {
                 createMediaChannel(input: $input) {
                     ${fields.join(' ')}
                 }
@@ -567,6 +568,27 @@ export class Cinnamon {
             headers,
             token,
         )).data.createMediaChannel;
+    }
+
+    async importMediaChannel(
+        input: MediaChannelImportInput,
+        fields: Array<keyof MediaChannelFields> = [
+            MediaChannelFields.id,
+            MediaChannelFields.name,
+        ],
+        headers: Headers = {},
+        token?: string,
+    ) {
+        return (await this.api<'importMediaChannel'>(
+            `mutation($input: MediaChannelImportInput!) {
+                importMediaChannel(input: $input) {
+                    ${fields.join(' ')}
+                }
+            }`,
+            { input },
+            headers,
+            token,
+        )).data.importMediaChannel;
     }
 
     async updateMediaChannel(

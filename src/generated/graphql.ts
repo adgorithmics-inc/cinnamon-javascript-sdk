@@ -86,7 +86,7 @@ export type CampaignTemplate = {
 
 export type CampaignTemplateMarketingCampaignsArgs = {
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['ObjectId']>;
 };
 
 export type CampaignTemplateConnection = {
@@ -111,19 +111,21 @@ export type CampaignTemplatesFilterInput = {
 
 export type Catalog = {
     id: Scalars['ObjectId'];
+    name: Scalars['NonEmptyString'];
+    catalogType: CatalogType;
     creationDate: Scalars['String'];
     lastChangeDate: Scalars['String'];
-    name: Scalars['NonEmptyString'];
-    mediaChannel: MediaChannel;
     remoteId?: Maybe<Scalars['String']>;
-    products?: Maybe<ProductConnection>;
     systemStatus: SystemStatus;
-    errors?: Maybe<Array<Maybe<Scalars['String']>>>;
+    remoteState: Scalars['JSONObject'];
+    error?: Maybe<Scalars['JSONObject']>;
+    mediaChannel: MediaChannel;
+    products?: Maybe<ProductConnection>;
 };
 
 export type CatalogProductsArgs = {
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['ObjectId']>;
 };
 
 export type CatalogConnection = {
@@ -134,6 +136,7 @@ export type CatalogConnection = {
 export type CatalogCreateInput = {
     name: Scalars['NonEmptyString'];
     mediaChannelId: Scalars['ObjectId'];
+    catalogType: CatalogType;
 };
 
 export type CatalogEdge = {
@@ -150,10 +153,25 @@ export type CatalogsFilterInput = {
     name?: Maybe<Scalars['String']>;
     name__contains?: Maybe<Scalars['String']>;
     name__icontains?: Maybe<Scalars['String']>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
     id__in?: Maybe<Array<Scalars['ObjectId']>>;
     mediaChannelId?: Maybe<Scalars['ObjectId']>;
     remoteId?: Maybe<Scalars['ObjectId']>;
 };
+
+export enum CatalogType {
+    Bookable = 'bookable',
+    Commerce = 'commerce',
+    Destinations = 'destinations',
+    Flights = 'flights',
+    HomeListings = 'home_listings',
+    Hotels = 'hotels',
+    OfflineCommerce = 'offline_commerce',
+    TicketedExperiences = 'ticketed_experiences',
+    TransactableItems = 'transactable_items',
+    Vehicles = 'vehicles',
+}
 
 export type CatalogUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
@@ -367,10 +385,15 @@ export type MediaChannel = {
     lastChangeDate: Scalars['String'];
     name: Scalars['NonEmptyString'];
     platform: Platform;
-    remoteId: Scalars['String'];
+    remoteId?: Maybe<Scalars['String']>;
+    remoteState: Scalars['JSONObject'];
+    currency?: Maybe<Scalars['NonEmptyString']>;
+    timezone?: Maybe<Scalars['NonEmptyString']>;
+    tokenStatus: TokenStatus;
+    systemStatus: SystemStatus;
+    error?: Maybe<Scalars['JSONObject']>;
     catalogs: CatalogConnection;
     marketplace: Marketplace;
-    tokenStatus: TokenStatus;
 };
 
 export type MediaChannelCatalogsArgs = {
@@ -383,23 +406,33 @@ export type MediaChannelConnection = {
     pageInfo: PageInfo;
 };
 
+export type MediaChannelCreateInput = {
+    name: Scalars['NonEmptyString'];
+    marketplaceId: Scalars['ObjectId'];
+    platform: Platform;
+    token: Scalars['NonEmptyString'];
+};
+
 export type MediaChannelEdge = {
     cursor: Scalars['ObjectId'];
     node?: Maybe<MediaChannel>;
 };
 
-export type MediaChannelInput = {
-    name: Scalars['NonEmptyString'];
+export type MediaChannelImportInput = {
     marketplaceId: Scalars['ObjectId'];
     platform: Platform;
     remoteId: Scalars['String'];
-    token?: Maybe<Scalars['NonEmptyString']>;
+    token: Scalars['NonEmptyString'];
 };
 
 export type MediaChannelsFilterInput = {
     name?: Maybe<Scalars['String']>;
     name__contains?: Maybe<Scalars['String']>;
     name__icontains?: Maybe<Scalars['String']>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
+    tokenStatus?: Maybe<TokenStatus>;
+    tokenStatus__in?: Maybe<Array<TokenStatus>>;
     platform?: Maybe<Platform>;
     remoteId?: Maybe<Scalars['String']>;
     id__in?: Maybe<Array<Scalars['ObjectId']>>;
@@ -408,7 +441,6 @@ export type MediaChannelsFilterInput = {
 
 export type MediaChannelUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
-    platform?: Maybe<Platform>;
     token?: Maybe<Scalars['NonEmptyString']>;
 };
 
@@ -427,6 +459,7 @@ export type Mutation = {
     updateMarketplace?: Maybe<Marketplace>;
     deleteMarketplace?: Maybe<Deletion>;
     createMediaChannel?: Maybe<MediaChannel>;
+    importMediaChannel?: Maybe<MediaChannel>;
     updateMediaChannel?: Maybe<MediaChannel>;
     deleteMediaChannel?: Maybe<Deletion>;
     createOrganization?: Maybe<Organization>;
@@ -499,7 +532,11 @@ export type MutationDeleteMarketplaceArgs = {
 };
 
 export type MutationCreateMediaChannelArgs = {
-    input: MediaChannelInput;
+    input: MediaChannelCreateInput;
+};
+
+export type MutationImportMediaChannelArgs = {
+    input: MediaChannelImportInput;
 };
 
 export type MutationUpdateMediaChannelArgs = {
@@ -661,6 +698,8 @@ export type ProductsFilterInput = {
     name?: Maybe<Scalars['String']>;
     name__contains?: Maybe<Scalars['String']>;
     name__icontains?: Maybe<Scalars['String']>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
     id__in?: Maybe<Array<Scalars['ObjectId']>>;
     sku?: Maybe<Scalars['String']>;
     catalogId?: Maybe<Scalars['ObjectId']>;
@@ -865,9 +904,10 @@ export type Token = {
 };
 
 export enum TokenStatus {
+    Pending = 'PENDING',
     Missing = 'MISSING',
-    Vaild = 'VAILD',
-    Invaild = 'INVAILD',
+    Valid = 'VALID',
+    Invalid = 'INVALID',
 }
 
 export type User = {
@@ -1086,13 +1126,16 @@ export type ResolversTypes = {
         | ResolversTypes['Organization']
         | ResolversTypes['MediaChannel'];
     MediaChannel: ResolverTypeWrapper<MediaChannel>;
+    JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
+    TokenStatus: TokenStatus;
+    SystemStatus: SystemStatus;
     CatalogConnection: ResolverTypeWrapper<CatalogConnection>;
     CatalogEdge: ResolverTypeWrapper<CatalogEdge>;
     Catalog: ResolverTypeWrapper<Catalog>;
+    CatalogType: CatalogType;
     ProductConnection: ResolverTypeWrapper<ProductConnection>;
     ProductEdge: ResolverTypeWrapper<ProductEdge>;
     Product: ResolverTypeWrapper<Product>;
-    JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
     MarketingCampaignConnection: ResolverTypeWrapper<
         MarketingCampaignConnection
     >;
@@ -1114,8 +1157,6 @@ export type ResolversTypes = {
         | ResolversTypes['MarketingAd']
         | ResolversTypes['MarketingCampaign'];
     Vendor: ResolverTypeWrapper<Vendor>;
-    SystemStatus: SystemStatus;
-    TokenStatus: TokenStatus;
     AuthPermission: AuthPermission;
     MarketplaceConnection: ResolverTypeWrapper<MarketplaceConnection>;
     MarketplaceEdge: ResolverTypeWrapper<MarketplaceEdge>;
@@ -1148,7 +1189,8 @@ export type ResolversTypes = {
     MarketingCampaignUpdateInput: MarketingCampaignUpdateInput;
     MarketplaceInput: MarketplaceInput;
     MarketplaceUpdateInput: MarketplaceUpdateInput;
-    MediaChannelInput: MediaChannelInput;
+    MediaChannelCreateInput: MediaChannelCreateInput;
+    MediaChannelImportInput: MediaChannelImportInput;
     MediaChannelUpdateInput: MediaChannelUpdateInput;
     OrganizationInput: OrganizationInput;
     OrganizationUpdateInput: OrganizationUpdateInput;
@@ -1196,13 +1238,16 @@ export type ResolversParentTypes = {
         | ResolversTypes['Organization']
         | ResolversTypes['MediaChannel'];
     MediaChannel: MediaChannel;
+    JSONObject: Scalars['JSONObject'];
+    TokenStatus: TokenStatus;
+    SystemStatus: SystemStatus;
     CatalogConnection: CatalogConnection;
     CatalogEdge: CatalogEdge;
     Catalog: Catalog;
+    CatalogType: CatalogType;
     ProductConnection: ProductConnection;
     ProductEdge: ProductEdge;
     Product: Product;
-    JSONObject: Scalars['JSONObject'];
     MarketingCampaignConnection: MarketingCampaignConnection;
     MarketingCampaignEdge: MarketingCampaignEdge;
     MarketingCampaign: MarketingCampaign;
@@ -1220,8 +1265,6 @@ export type ResolversParentTypes = {
         | ResolversTypes['MarketingAd']
         | ResolversTypes['MarketingCampaign'];
     Vendor: Vendor;
-    SystemStatus: SystemStatus;
-    TokenStatus: TokenStatus;
     AuthPermission: AuthPermission;
     MarketplaceConnection: MarketplaceConnection;
     MarketplaceEdge: MarketplaceEdge;
@@ -1254,7 +1297,8 @@ export type ResolversParentTypes = {
     MarketingCampaignUpdateInput: MarketingCampaignUpdateInput;
     MarketplaceInput: MarketplaceInput;
     MarketplaceUpdateInput: MarketplaceUpdateInput;
-    MediaChannelInput: MediaChannelInput;
+    MediaChannelCreateInput: MediaChannelCreateInput;
+    MediaChannelImportInput: MediaChannelImportInput;
     MediaChannelUpdateInput: MediaChannelUpdateInput;
     OrganizationInput: OrganizationInput;
     OrganizationUpdateInput: OrganizationUpdateInput;
@@ -1352,15 +1396,15 @@ export type CatalogResolvers<
     ParentType extends ResolversParentTypes['Catalog'] = ResolversParentTypes['Catalog']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    catalogType?: Resolver<
+        ResolversTypes['CatalogType'],
         ParentType,
         ContextType
     >;
-    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    mediaChannel?: Resolver<
-        ResolversTypes['MediaChannel'],
+    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['String'],
         ParentType,
         ContextType
     >;
@@ -1369,21 +1413,31 @@ export type CatalogResolvers<
         ParentType,
         ContextType
     >;
-    products?: Resolver<
-        Maybe<ResolversTypes['ProductConnection']>,
-        ParentType,
-        ContextType,
-        CatalogProductsArgs
-    >;
     systemStatus?: Resolver<
         ResolversTypes['SystemStatus'],
         ParentType,
         ContextType
     >;
-    errors?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['String']>>>,
+    remoteState?: Resolver<
+        ResolversTypes['JSONObject'],
         ParentType,
         ContextType
+    >;
+    error?: Resolver<
+        Maybe<ResolversTypes['JSONObject']>,
+        ParentType,
+        ContextType
+    >;
+    mediaChannel?: Resolver<
+        ResolversTypes['MediaChannel'],
+        ParentType,
+        ContextType
+    >;
+    products?: Resolver<
+        Maybe<ResolversTypes['ProductConnection']>,
+        ParentType,
+        ContextType,
+        CatalogProductsArgs
     >;
 };
 
@@ -1689,7 +1743,41 @@ export type MediaChannelResolvers<
     >;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     platform?: Resolver<ResolversTypes['Platform'], ParentType, ContextType>;
-    remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    remoteId?: Resolver<
+        Maybe<ResolversTypes['String']>,
+        ParentType,
+        ContextType
+    >;
+    remoteState?: Resolver<
+        ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    currency?: Resolver<
+        Maybe<ResolversTypes['NonEmptyString']>,
+        ParentType,
+        ContextType
+    >;
+    timezone?: Resolver<
+        Maybe<ResolversTypes['NonEmptyString']>,
+        ParentType,
+        ContextType
+    >;
+    tokenStatus?: Resolver<
+        ResolversTypes['TokenStatus'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    error?: Resolver<
+        Maybe<ResolversTypes['JSONObject']>,
+        ParentType,
+        ContextType
+    >;
     catalogs?: Resolver<
         ResolversTypes['CatalogConnection'],
         ParentType,
@@ -1698,11 +1786,6 @@ export type MediaChannelResolvers<
     >;
     marketplace?: Resolver<
         ResolversTypes['Marketplace'],
-        ParentType,
-        ContextType
-    >;
-    tokenStatus?: Resolver<
-        ResolversTypes['TokenStatus'],
         ParentType,
         ContextType
     >;
@@ -1819,6 +1902,12 @@ export type MutationResolvers<
         ParentType,
         ContextType,
         RequireFields<MutationCreateMediaChannelArgs, 'input'>
+    >;
+    importMediaChannel?: Resolver<
+        Maybe<ResolversTypes['MediaChannel']>,
+        ParentType,
+        ContextType,
+        RequireFields<MutationImportMediaChannelArgs, 'input'>
     >;
     updateMediaChannel?: Resolver<
         Maybe<ResolversTypes['MediaChannel']>,
