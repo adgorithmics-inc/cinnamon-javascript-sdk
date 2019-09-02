@@ -40,11 +40,16 @@ jobs:
                   fingerprints:
                       - 'ba:c3:f4:48:21:3a:c5:6b:b2:d9:06:e8:bc:ba:7b:e3'
 
+            - run:
+                  name: Set branch environemnt variable
+                  command: |
+                      echo '(echo "$CIRCLE_TAG" | grep -Eq  ^.*-rc.*$) && export BRANCH=$(echo "$CIRCLE_TAG" | sed "s/^v//" | sed "s/-rc.*//") || export BRANCH="master"' >> $BASH_ENV
+                      source $BASH_ENV
             - run: npm version --no-git-tag-version ${CIRCLE_TAG}
             - run: git add package.json package-lock.json
             - run: git commit -m "Automatic NPM version bump ${CIRCLE_TAG}"
             - run: git checkout -b temp
-            - run: git push origin temp:master
+            - run: git push origin temp:$BRANCH
             - run: npm publish
 
     publish-hot:
