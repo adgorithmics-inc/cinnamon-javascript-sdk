@@ -1,5 +1,5 @@
 import { codes } from '@adgorithmics/graphql-errors';
-import { PageInfo, Scalars, Mutation, Query, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationsFilterInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplacesFilterInput, MarketplaceUpdateInput, MediaChannel, MediaChannelInput, MediaChannelsFilterInput, MediaChannelUpdateInput, CampaignTemplate, CampaignTemplatesFilterInput, Vendor, VendorInput, VendorsFilterInput, VendorUpdateInput, Catalog, CatalogInput, CatalogsFilterInput, CatalogUpdateInput, Product, ProductInput, ProductsFilterInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignsFilterInput, MarketingCampaignUpdateInput, MarketingAd, MarketingAdsFilterInput, Result, ResultsFilterInput, Entitlement, EntitlementInput, EntitlementsFilterInput, EntitlementUpdateInput } from './generated/graphql';
+import { PageInfo, Scalars, Mutation, Query, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationsFilterInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplacesFilterInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, MediaChannelsFilterInput, CampaignTemplate, CampaignTemplatesFilterInput, Vendor, VendorInput, VendorsFilterInput, VendorUpdateInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, CatalogsFilterInput, Product, ProductInput, ProductsFilterInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignsFilterInput, MarketingCampaignUpdateInput, MarketingAd, MarketingAdsFilterInput, Result, ResultsFilterInput, Entitlement, EntitlementInput, EntitlementsFilterInput, EntitlementUpdateInput } from './generated/graphql';
 import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields } from './inputFields';
 export interface Config {
     url: string;
@@ -45,7 +45,8 @@ export declare class Cinnamon {
     mediaChannel(id: Scalars['ObjectId'], fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<MediaChannel>;
     mediaChannels(filter?: MediaChannelsFilterInput, after?: PageInfo['endCursor'], fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<import("./generated/graphql").MediaChannelConnection>;
     mediaChannelsAll(filter?: MediaChannelsFilterInput, fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<MediaChannel[]>;
-    createMediaChannel(input: MediaChannelInput, fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<MediaChannel>;
+    createMediaChannel(input: MediaChannelCreateInput, fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<MediaChannel>;
+    importMediaChannel(input: MediaChannelImportInput, fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<MediaChannel>;
     updateMediaChannel(id: Scalars['ObjectId'], input: MediaChannelUpdateInput, fields?: Array<keyof MediaChannelFields>, headers?: Headers, token?: string): Promise<MediaChannel>;
     deleteMediaChannel(id: Scalars['ObjectId'], headers?: Headers, token?: string): Promise<import("./generated/graphql").Deletion>;
     campaignTemplate(id: Scalars['ObjectId'], fields?: Array<keyof CampaignTemplateFields>, headers?: Headers, token?: string): Promise<CampaignTemplate>;
@@ -60,7 +61,8 @@ export declare class Cinnamon {
     catalog(id: Scalars['ObjectId'], fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<Catalog>;
     catalogs(filter?: CatalogsFilterInput, after?: PageInfo['endCursor'], fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<import("./generated/graphql").CatalogConnection>;
     catalogsAll(filter?: CatalogsFilterInput, fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<Catalog[]>;
-    createCatalog(input: CatalogInput, fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<Catalog>;
+    createCatalog(input: CatalogCreateInput, fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<Catalog>;
+    importCatalog(input: CatalogImportInput, fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<Catalog>;
     updateCatalog(id: Scalars['ObjectId'], input: CatalogUpdateInput, fields?: Array<keyof CatalogFields>, headers?: Headers, token?: string): Promise<Catalog>;
     deleteCatalog(id: Scalars['ObjectId'], headers?: Headers, token?: string): Promise<import("./generated/graphql").Deletion>;
     product(id: Scalars['ObjectId'], fields?: Array<keyof ProductFields>, headers?: Headers, token?: string): Promise<Product>;
