@@ -18,6 +18,8 @@ export type Scalars = {
     Float: number;
     /** ObjectId must be 24 bytes */
     ObjectId: string;
+    /** Date strings must follow ISO 8601 specifications */
+    DateISO: any;
     /** String must contain at least one character */
     NonEmptyString: string;
     /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
@@ -74,8 +76,8 @@ export enum CacheControlScope {
 
 export type CampaignTemplate = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     description: Scalars['String'];
     platform: Platform;
@@ -113,11 +115,12 @@ export type Catalog = {
     id: Scalars['ObjectId'];
     name: Scalars['NonEmptyString'];
     catalogType: CatalogType;
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     remoteId?: Maybe<Scalars['String']>;
     systemStatus: SystemStatus;
     remoteState: Scalars['JSONObject'];
+    dataFeedId?: Maybe<Scalars['String']>;
     error?: Maybe<Scalars['JSONObject']>;
     mediaChannel: MediaChannel;
     products?: Maybe<ProductConnection>;
@@ -183,8 +186,8 @@ export type Deletion = {
 
 export type Entitlement = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     user: User;
     type: EntitlementResourceTypeEnum;
     resource: EntitlementResource;
@@ -228,8 +231,8 @@ export type EntitlementUpdateInput = {
 
 export type MarketingAd = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     remoteId: Scalars['String'];
     preview: Scalars['String'];
     results?: Maybe<ResultConnection>;
@@ -261,8 +264,8 @@ export type MarketingAdsFilterInput = {
 
 export type MarketingCampaign = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     status: MarketingCampaignStatus;
     marketingAds?: Maybe<MarketingAdConnection>;
     products?: Maybe<ProductConnection>;
@@ -272,6 +275,7 @@ export type MarketingCampaign = {
     results?: Maybe<ResultConnection>;
     creativeSpec: Scalars['JSONObject'];
     runTimeSpec: Scalars['JSONObject'];
+    systemStatus: SystemStatus;
 };
 
 export type MarketingCampaignMarketingAdsArgs = {
@@ -313,6 +317,8 @@ export type MarketingCampaignsFilterInput = {
     mediaChannelId?: Maybe<Scalars['ObjectId']>;
     vendorId?: Maybe<Scalars['ObjectId']>;
     id__in?: Maybe<Array<Scalars['ObjectId']>>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
 };
 
 export enum MarketingCampaignStatus {
@@ -328,13 +334,14 @@ export type MarketingCampaignUpdateInput = {
 
 export type Marketplace = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     organization: Organization;
     mediaChannels?: Maybe<MediaChannelConnection>;
     campaignTemplates?: Maybe<CampaignTemplateConnection>;
     vendors?: Maybe<VendorConnection>;
+    systemStatus: SystemStatus;
 };
 
 export type MarketplaceMediaChannelsArgs = {
@@ -373,6 +380,9 @@ export type MarketplacesFilterInput = {
     name__icontains?: Maybe<Scalars['String']>;
     id__in?: Maybe<Array<Scalars['ObjectId']>>;
     organizationId?: Maybe<Scalars['ObjectId']>;
+    organizationId__in?: Maybe<Array<Scalars['ObjectId']>>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
 };
 
 export type MarketplaceUpdateInput = {
@@ -381,8 +391,8 @@ export type MarketplaceUpdateInput = {
 
 export type MediaChannel = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     platform: Platform;
     remoteId?: Maybe<Scalars['String']>;
@@ -464,6 +474,7 @@ export type Mutation = {
     deleteMediaChannel?: Maybe<Deletion>;
     createOrganization?: Maybe<Organization>;
     updateOrganization?: Maybe<Organization>;
+    deleteOrganization?: Maybe<Deletion>;
     createProduct?: Maybe<Product>;
     updateProduct?: Maybe<Product>;
     deleteProduct?: Maybe<Deletion>;
@@ -557,6 +568,10 @@ export type MutationUpdateOrganizationArgs = {
     input: OrganizationUpdateInput;
 };
 
+export type MutationDeleteOrganizationArgs = {
+    id: Scalars['ObjectId'];
+};
+
 export type MutationCreateProductArgs = {
     input: ProductInput;
 };
@@ -597,12 +612,14 @@ export type MutationDeleteVendorArgs = {
 
 export type Organization = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     users?: Maybe<UserConnection>;
     marketplaces?: Maybe<MarketplaceConnection>;
     name: Scalars['NonEmptyString'];
     tier: OrganizationTierEnum;
+    systemStatus: SystemStatus;
+    error?: Maybe<Scalars['JSONObject']>;
 };
 
 export type OrganizationUsersArgs = {
@@ -635,6 +652,8 @@ export type OrganizationsFilterInput = {
     name__icontains?: Maybe<Scalars['String']>;
     tier?: Maybe<OrganizationTierEnum>;
     id__in?: Maybe<Array<Scalars['ObjectId']>>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
 };
 
 export enum OrganizationTierEnum {
@@ -658,17 +677,18 @@ export enum Platform {
 
 export type Product = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
-    sku: Scalars['String'];
-    remoteState: Scalars['JSONObject'];
+    sku: Scalars['NonEmptyString'];
+    remoteState?: Maybe<Scalars['JSONObject']>;
     marketingCampaigns?: Maybe<MarketingCampaignConnection>;
     catalog: Catalog;
     metadata: Scalars['JSONObject'];
     vendor: Vendor;
     systemStatus: SystemStatus;
-    errors?: Maybe<Array<Maybe<Scalars['String']>>>;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
 export type ProductMarketingCampaignsArgs = {
@@ -687,11 +707,9 @@ export type ProductEdge = {
 };
 
 export type ProductInput = {
-    name: Scalars['NonEmptyString'];
-    sku: Scalars['String'];
     vendorId: Scalars['ObjectId'];
     catalogId: Scalars['ObjectId'];
-    metadata?: Maybe<Scalars['JSONObject']>;
+    metadata: Scalars['JSONObject'];
 };
 
 export type ProductsFilterInput = {
@@ -707,9 +725,7 @@ export type ProductsFilterInput = {
 };
 
 export type ProductUpdateInput = {
-    name?: Maybe<Scalars['NonEmptyString']>;
-    sku?: Maybe<Scalars['String']>;
-    metadata?: Maybe<Scalars['JSONObject']>;
+    metadata: Scalars['JSONObject'];
 };
 
 export type Query = {
@@ -854,9 +870,9 @@ export type RefreshTokenInput = {
 
 export type Result = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
-    date: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
+    date: Scalars['DateISO'];
     impressions: Array<Scalars['String']>;
     results: Array<Scalars['String']>;
     type: ResultResourceTypeEnum;
@@ -890,7 +906,11 @@ export type ResultsFilterInput = {
 
 export enum SystemStatus {
     Pending = 'PENDING',
+    PendingDeletion = 'PENDING_DELETION',
+    PendingSync = 'PENDING_SYNC',
     Processing = 'PROCESSING',
+    ProcessingSync = 'PROCESSING_SYNC',
+    ProcessingDeletion = 'PROCESSING_DELETION',
     Processed = 'PROCESSED',
     Error = 'ERROR',
     Deleted = 'DELETED',
@@ -899,7 +919,7 @@ export enum SystemStatus {
 export type Token = {
     token: Scalars['String'];
     refreshToken: Scalars['String'];
-    expiryDate: Scalars['String'];
+    expiryDate: Scalars['DateISO'];
     user: User;
 };
 
@@ -912,8 +932,8 @@ export enum TokenStatus {
 
 export type User = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     email: Scalars['NonEmptyString'];
     firstName?: Maybe<Scalars['NonEmptyString']>;
     lastName?: Maybe<Scalars['NonEmptyString']>;
@@ -955,11 +975,12 @@ export type UserUpdateInput = {
 
 export type Vendor = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     marketplace: Marketplace;
     products?: Maybe<ProductConnection>;
+    systemStatus: SystemStatus;
 };
 
 export type VendorProductsArgs = {
@@ -988,6 +1009,8 @@ export type VendorsFilterInput = {
     name__contains?: Maybe<Scalars['String']>;
     name__icontains?: Maybe<Scalars['String']>;
     marketplaceId?: Maybe<Scalars['ObjectId']>;
+    systemStatus?: Maybe<SystemStatus>;
+    systemStatus__in?: Maybe<Array<SystemStatus>>;
 };
 
 export type VendorUpdateInput = {
@@ -1100,8 +1123,9 @@ export type ResolversTypes = {
     Query: ResolverTypeWrapper<{}>;
     ObjectId: ResolverTypeWrapper<Scalars['ObjectId']>;
     CampaignTemplate: ResolverTypeWrapper<CampaignTemplate>;
-    String: ResolverTypeWrapper<Scalars['String']>;
+    DateISO: ResolverTypeWrapper<Scalars['DateISO']>;
     NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']>;
+    String: ResolverTypeWrapper<Scalars['String']>;
     Platform: Platform;
     Marketplace: ResolverTypeWrapper<Marketplace>;
     Organization: ResolverTypeWrapper<Organization>;
@@ -1214,8 +1238,9 @@ export type ResolversParentTypes = {
     Query: {};
     ObjectId: Scalars['ObjectId'];
     CampaignTemplate: CampaignTemplate;
-    String: Scalars['String'];
+    DateISO: Scalars['DateISO'];
     NonEmptyString: Scalars['NonEmptyString'];
+    String: Scalars['String'];
     Platform: Platform;
     Marketplace: Marketplace;
     Organization: Organization;
@@ -1329,6 +1354,17 @@ export type AuthDirectiveResolver<
     }
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
+export type LengthDirectiveResolver<
+    Result,
+    Parent,
+    ContextType = any,
+    Args = {
+        min?: Maybe<Maybe<Scalars['Int']>>;
+        max?: Maybe<Maybe<Scalars['Int']>>;
+        unique?: Maybe<Maybe<Scalars['Boolean']>>;
+    }
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
 export type CacheControlDirectiveResolver<
     Result,
     Parent,
@@ -1344,9 +1380,9 @@ export type CampaignTemplateResolvers<
     ParentType extends ResolversParentTypes['CampaignTemplate'] = ResolversParentTypes['CampaignTemplate']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1402,9 +1438,9 @@ export type CatalogResolvers<
         ParentType,
         ContextType
     >;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1420,6 +1456,11 @@ export type CatalogResolvers<
     >;
     remoteState?: Resolver<
         ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    dataFeedId?: Resolver<
+        Maybe<ResolversTypes['String']>,
         ParentType,
         ContextType
     >;
@@ -1461,6 +1502,11 @@ export type CatalogEdgeResolvers<
     node?: Resolver<Maybe<ResolversTypes['Catalog']>, ParentType, ContextType>;
 };
 
+export interface DateIsoScalarConfig
+    extends GraphQLScalarTypeConfig<ResolversTypes['DateISO'], any> {
+    name: 'DateISO';
+}
+
 export type DeletionResolvers<
     ContextType = any,
     ParentType extends ResolversParentTypes['Deletion'] = ResolversParentTypes['Deletion']
@@ -1473,9 +1519,9 @@ export type EntitlementResolvers<
     ParentType extends ResolversParentTypes['Entitlement'] = ResolversParentTypes['Entitlement']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1542,9 +1588,9 @@ export type MarketingAdResolvers<
     ParentType extends ResolversParentTypes['MarketingAd'] = ResolversParentTypes['MarketingAd']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1593,9 +1639,9 @@ export type MarketingCampaignResolvers<
     ParentType extends ResolversParentTypes['MarketingCampaign'] = ResolversParentTypes['MarketingCampaign']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1643,6 +1689,11 @@ export type MarketingCampaignResolvers<
         ParentType,
         ContextType
     >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
 };
 
 export type MarketingCampaignConnectionResolvers<
@@ -1674,9 +1725,9 @@ export type MarketplaceResolvers<
     ParentType extends ResolversParentTypes['Marketplace'] = ResolversParentTypes['Marketplace']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1703,6 +1754,11 @@ export type MarketplaceResolvers<
         ParentType,
         ContextType,
         MarketplaceVendorsArgs
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
     >;
 };
 
@@ -1735,9 +1791,9 @@ export type MediaChannelResolvers<
     ParentType extends ResolversParentTypes['MediaChannel'] = ResolversParentTypes['MediaChannel']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1933,6 +1989,12 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationUpdateOrganizationArgs, 'id' | 'input'>
     >;
+    deleteOrganization?: Resolver<
+        Maybe<ResolversTypes['Deletion']>,
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteOrganizationArgs, 'id'>
+    >;
     createProduct?: Resolver<
         Maybe<ResolversTypes['Product']>,
         ParentType,
@@ -2004,9 +2066,9 @@ export type OrganizationResolvers<
     ParentType extends ResolversParentTypes['Organization'] = ResolversParentTypes['Organization']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -2025,6 +2087,16 @@ export type OrganizationResolvers<
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     tier?: Resolver<
         ResolversTypes['OrganizationTierEnum'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    error?: Resolver<
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -2076,16 +2148,16 @@ export type ProductResolvers<
     ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    sku?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    sku?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     remoteState?: Resolver<
-        ResolversTypes['JSONObject'],
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -2104,7 +2176,12 @@ export type ProductResolvers<
         ContextType
     >;
     errors?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['String']>>>,
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
+    warnings?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
         ParentType,
         ContextType
     >;
@@ -2274,13 +2351,13 @@ export type ResultResolvers<
     ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
-    date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    date?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     impressions?: Resolver<
         Array<ResolversTypes['String']>,
         ParentType,
@@ -2341,7 +2418,7 @@ export type TokenResolvers<
 > = {
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     refreshToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    expiryDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    expiryDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
@@ -2355,9 +2432,9 @@ export type UserResolvers<
     ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -2411,9 +2488,9 @@ export type VendorResolvers<
     ParentType extends ResolversParentTypes['Vendor'] = ResolversParentTypes['Vendor']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -2428,6 +2505,11 @@ export type VendorResolvers<
         ParentType,
         ContextType,
         VendorProductsArgs
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
     >;
 };
 
@@ -2460,6 +2542,7 @@ export type Resolvers<ContextType = any> = {
     Catalog?: CatalogResolvers<ContextType>;
     CatalogConnection?: CatalogConnectionResolvers<ContextType>;
     CatalogEdge?: CatalogEdgeResolvers<ContextType>;
+    DateISO?: GraphQLScalarType;
     Deletion?: DeletionResolvers<ContextType>;
     Entitlement?: EntitlementResolvers<ContextType>;
     EntitlementConnection?: EntitlementConnectionResolvers<ContextType>;
@@ -2512,6 +2595,7 @@ export type Resolvers<ContextType = any> = {
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 export type DirectiveResolvers<ContextType = any> = {
     auth?: AuthDirectiveResolver<any, any, ContextType>;
+    length?: LengthDirectiveResolver<any, any, ContextType>;
     cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
 };
 
