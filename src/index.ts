@@ -248,6 +248,8 @@ export class Cinnamon {
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
+            OrganizationFields.systemStatus,
+            OrganizationFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -270,6 +272,8 @@ export class Cinnamon {
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
+            OrganizationFields.systemStatus,
+            OrganizationFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -299,6 +303,8 @@ export class Cinnamon {
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
+            OrganizationFields.systemStatus,
+            OrganizationFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -313,6 +319,8 @@ export class Cinnamon {
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
+            OrganizationFields.systemStatus,
+            OrganizationFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -335,6 +343,8 @@ export class Cinnamon {
         fields: Array<keyof OrganizationFields> = [
             OrganizationFields.id,
             OrganizationFields.name,
+            OrganizationFields.systemStatus,
+            OrganizationFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -360,6 +370,8 @@ export class Cinnamon {
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
+            MarketplaceFields.systemStatus,
+            MarketplaceFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -382,6 +394,8 @@ export class Cinnamon {
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
+            MarketplaceFields.systemStatus,
+            MarketplaceFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -411,6 +425,8 @@ export class Cinnamon {
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
+            MarketplaceFields.systemStatus,
+            MarketplaceFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -425,6 +441,8 @@ export class Cinnamon {
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
+            MarketplaceFields.systemStatus,
+            MarketplaceFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -447,6 +465,8 @@ export class Cinnamon {
         fields: Array<keyof MarketplaceFields> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
+            MarketplaceFields.systemStatus,
+            MarketplaceFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -489,6 +509,8 @@ export class Cinnamon {
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
+            MediaChannelFields.systemStatus,
+            MediaChannelFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -511,6 +533,8 @@ export class Cinnamon {
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
+            MediaChannelFields.systemStatus,
+            MediaChannelFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -540,6 +564,8 @@ export class Cinnamon {
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
+            MediaChannelFields.systemStatus,
+            MediaChannelFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -554,6 +580,8 @@ export class Cinnamon {
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
+            MediaChannelFields.systemStatus,
+            MediaChannelFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -575,6 +603,8 @@ export class Cinnamon {
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
+            MediaChannelFields.systemStatus,
+            MediaChannelFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -597,6 +627,8 @@ export class Cinnamon {
         fields: Array<keyof MediaChannelFields> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
+            MediaChannelFields.systemStatus,
+            MediaChannelFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -708,6 +740,8 @@ export class Cinnamon {
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
+            VendorFields.systemStatus,
+            VendorFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -730,6 +764,8 @@ export class Cinnamon {
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
+            VendorFields.systemStatus,
+            VendorFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -759,6 +795,8 @@ export class Cinnamon {
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
+            VendorFields.systemStatus,
+            VendorFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -773,6 +811,8 @@ export class Cinnamon {
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
+            VendorFields.systemStatus,
+            VendorFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -795,6 +835,8 @@ export class Cinnamon {
         fields: Array<keyof VendorFields> = [
             VendorFields.id,
             VendorFields.name,
+            VendorFields.systemStatus,
+            VendorFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -837,6 +879,9 @@ export class Cinnamon {
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
+            CatalogFields.remoteId,
+            CatalogFields.systemStatus,
+            CatalogFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -859,6 +904,9 @@ export class Cinnamon {
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
+            CatalogFields.remoteId,
+            CatalogFields.systemStatus,
+            CatalogFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -888,6 +936,9 @@ export class Cinnamon {
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
+            CatalogFields.remoteId,
+            CatalogFields.systemStatus,
+            CatalogFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -902,6 +953,9 @@ export class Cinnamon {
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
+            CatalogFields.remoteId,
+            CatalogFields.systemStatus,
+            CatalogFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -923,6 +977,9 @@ export class Cinnamon {
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
+            CatalogFields.remoteId,
+            CatalogFields.systemStatus,
+            CatalogFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -945,6 +1002,9 @@ export class Cinnamon {
         fields: Array<keyof CatalogFields> = [
             CatalogFields.id,
             CatalogFields.name,
+            CatalogFields.remoteId,
+            CatalogFields.systemStatus,
+            CatalogFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -987,6 +1047,10 @@ export class Cinnamon {
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
+            ProductFields.sku,
+            ProductFields.systemStatus,
+            ProductFields.errors,
+            ProductFields.warnings,
         ],
         headers: Headers = {},
         token?: string,
@@ -1009,6 +1073,10 @@ export class Cinnamon {
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
+            ProductFields.sku,
+            ProductFields.systemStatus,
+            ProductFields.errors,
+            ProductFields.warnings,
         ],
         headers: Headers = {},
         token?: string,
@@ -1038,6 +1106,10 @@ export class Cinnamon {
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
+            ProductFields.sku,
+            ProductFields.systemStatus,
+            ProductFields.errors,
+            ProductFields.warnings,
         ],
         headers: Headers = {},
         token?: string,
@@ -1052,6 +1124,10 @@ export class Cinnamon {
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
+            ProductFields.sku,
+            ProductFields.systemStatus,
+            ProductFields.errors,
+            ProductFields.warnings,
         ],
         headers: Headers = {},
         token?: string,
@@ -1074,6 +1150,10 @@ export class Cinnamon {
         fields: Array<keyof ProductFields> = [
             ProductFields.id,
             ProductFields.name,
+            ProductFields.sku,
+            ProductFields.systemStatus,
+            ProductFields.errors,
+            ProductFields.warnings,
         ],
         headers: Headers = {},
         token?: string,
@@ -1116,6 +1196,8 @@ export class Cinnamon {
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
+            MarketingCampaignFields.systemStatus,
+            MarketingCampaignFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -1138,6 +1220,8 @@ export class Cinnamon {
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
+            MarketingCampaignFields.systemStatus,
+            MarketingCampaignFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -1167,6 +1251,8 @@ export class Cinnamon {
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
+            MarketingCampaignFields.systemStatus,
+            MarketingCampaignFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -1182,6 +1268,8 @@ export class Cinnamon {
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
+            MarketingCampaignFields.systemStatus,
+            MarketingCampaignFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -1204,6 +1292,8 @@ export class Cinnamon {
         fields: Array<keyof MarketingCampaignFields> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
+            MarketingCampaignFields.systemStatus,
+            MarketingCampaignFields.errors,
         ],
         headers: Headers = {},
         token?: string,
@@ -1314,7 +1404,9 @@ export class Cinnamon {
         id: Scalars['ObjectId'],
         fields: Array<keyof ResultFields> = [
             ResultFields.id,
+            ResultFields.date,
             ResultFields.results,
+            ResultFields.impressions,
         ],
         headers: Headers = {},
         token?: string,
@@ -1337,6 +1429,8 @@ export class Cinnamon {
         fields: Array<keyof ResultFields> = [
             ResultFields.id,
             ResultFields.date,
+            ResultFields.results,
+            ResultFields.impressions,
         ],
         headers: Headers = {},
         token?: string,
@@ -1366,6 +1460,8 @@ export class Cinnamon {
         fields: Array<keyof ResultFields> = [
             ResultFields.id,
             ResultFields.date,
+            ResultFields.results,
+            ResultFields.impressions,
         ],
         headers: Headers = {},
         token?: string,
@@ -1384,6 +1480,7 @@ export class Cinnamon {
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
+            EntitlementFields.type,
         ],
         headers: Headers = {},
         token?: string,
@@ -1406,6 +1503,7 @@ export class Cinnamon {
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
+            EntitlementFields.type,
         ],
         headers: Headers = {},
         token?: string,
@@ -1435,6 +1533,7 @@ export class Cinnamon {
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
+            EntitlementFields.type,
         ],
         headers: Headers = {},
         token?: string,
@@ -1449,6 +1548,7 @@ export class Cinnamon {
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
+            EntitlementFields.type,
         ],
         headers: Headers = {},
         token?: string,
@@ -1471,6 +1571,7 @@ export class Cinnamon {
         fields: Array<keyof EntitlementFields> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
+            EntitlementFields.type,
         ],
         headers: Headers = {},
         token?: string,
