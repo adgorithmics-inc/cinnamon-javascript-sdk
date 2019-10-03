@@ -745,11 +745,16 @@ export declare type Result = {
     creationDate: Scalars['DateISO'];
     lastChangeDate: Scalars['DateISO'];
     date: Scalars['DateISO'];
-    impressions: Array<Scalars['String']>;
-    results: Array<Scalars['String']>;
+    analytics: ResultAnalytics;
     type: ResultResourceTypeEnum;
     resource: ResultResource;
     vendor: Vendor;
+};
+export declare type ResultAnalytics = {
+    results?: Maybe<Scalars['Int']>;
+    impressions?: Maybe<Scalars['Int']>;
+    clicks?: Maybe<Scalars['Int']>;
+    spend?: Maybe<Scalars['Float']>;
 };
 export declare type ResultConnection = {
     edges?: Maybe<Array<Maybe<ResultEdge>>>;
@@ -951,6 +956,8 @@ export declare type ResolversTypes = {
     ResultConnection: ResolverTypeWrapper<ResultConnection>;
     ResultEdge: ResolverTypeWrapper<ResultEdge>;
     Result: ResolverTypeWrapper<Result>;
+    ResultAnalytics: ResolverTypeWrapper<ResultAnalytics>;
+    Float: ResolverTypeWrapper<Scalars['Float']>;
     ResultResourceTypeEnum: ResultResourceTypeEnum;
     CampaignTemplateConnection: ResolverTypeWrapper<CampaignTemplateConnection>;
     CampaignTemplateEdge: ResolverTypeWrapper<CampaignTemplateEdge>;
@@ -1050,6 +1057,8 @@ export declare type ResolversParentTypes = {
     ResultConnection: ResultConnection;
     ResultEdge: ResultEdge;
     Result: Result;
+    ResultAnalytics: ResultAnalytics;
+    Float: Scalars['Float'];
     ResultResourceTypeEnum: ResultResourceTypeEnum;
     CampaignTemplateConnection: CampaignTemplateConnection;
     CampaignTemplateEdge: CampaignTemplateEdge;
@@ -1101,11 +1110,6 @@ export declare type AuthDirectiveResolver<Result, Parent, ContextType = any, Arg
     location?: Maybe<Maybe<AuthLocation>>;
     type?: Maybe<Maybe<AuthType>>;
     permissions?: Maybe<Maybe<Array<Maybe<AuthPermission>>>>;
-}> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-export declare type LengthDirectiveResolver<Result, Parent, ContextType = any, Args = {
-    min?: Maybe<Maybe<Scalars['Int']>>;
-    max?: Maybe<Maybe<Scalars['Int']>>;
-    unique?: Maybe<Maybe<Scalars['Boolean']>>;
 }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 export declare type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = {
     maxAge?: Maybe<Maybe<Scalars['Int']>>;
@@ -1387,11 +1391,16 @@ export declare type ResultResolvers<ContextType = any, ParentType extends Resolv
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     date?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    impressions?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-    results?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+    analytics?: Resolver<ResolversTypes['ResultAnalytics'], ParentType, ContextType>;
     type?: Resolver<ResolversTypes['ResultResourceTypeEnum'], ParentType, ContextType>;
     resource?: Resolver<ResolversTypes['ResultResource'], ParentType, ContextType>;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+};
+export declare type ResultAnalyticsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultAnalytics'] = ResolversParentTypes['ResultAnalytics']> = {
+    results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    impressions?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    clicks?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    spend?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
 };
 export declare type ResultConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultConnection'] = ResolversParentTypes['ResultConnection']> = {
     edges?: Resolver<Maybe<Array<Maybe<ResolversTypes['ResultEdge']>>>, ParentType, ContextType>;
@@ -1491,6 +1500,7 @@ export declare type Resolvers<ContextType = any> = {
     ProductEdge?: ProductEdgeResolvers<ContextType>;
     Query?: QueryResolvers<ContextType>;
     Result?: ResultResolvers<ContextType>;
+    ResultAnalytics?: ResultAnalyticsResolvers<ContextType>;
     ResultConnection?: ResultConnectionResolvers<ContextType>;
     ResultEdge?: ResultEdgeResolvers<ContextType>;
     ResultResource?: ResultResourceResolvers;
@@ -1510,7 +1520,6 @@ export declare type Resolvers<ContextType = any> = {
 export declare type IResolvers<ContextType = any> = Resolvers<ContextType>;
 export declare type DirectiveResolvers<ContextType = any> = {
     auth?: AuthDirectiveResolver<any, any, ContextType>;
-    length?: LengthDirectiveResolver<any, any, ContextType>;
     cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
 };
 /**

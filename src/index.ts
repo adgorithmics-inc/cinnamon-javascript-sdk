@@ -205,7 +205,10 @@ export class Cinnamon {
     }
 
     async me(
-        fields: Array<keyof UserFields> = [UserFields.id, UserFields.email],
+        fields: Array<keyof UserFields | string> = [
+            UserFields.id,
+            UserFields.email,
+        ],
         headers: Headers = {},
         token?: string,
     ) {
@@ -223,7 +226,10 @@ export class Cinnamon {
 
     async updateUser(
         input: UserUpdateInput,
-        fields: Array<keyof UserFields> = [UserFields.id, UserFields.email],
+        fields: Array<keyof UserFields | string> = [
+            UserFields.id,
+            UserFields.email,
+        ],
         headers: Headers = {},
         token?: string,
     ) {
@@ -245,7 +251,7 @@ export class Cinnamon {
 
     async organization(
         id: Scalars['ObjectId'],
-        fields: Array<keyof OrganizationFields> = [
+        fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
@@ -269,7 +275,7 @@ export class Cinnamon {
     async organizations(
         filter: OrganizationsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof OrganizationFields> = [
+        fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
@@ -300,7 +306,7 @@ export class Cinnamon {
 
     organizationsAll(
         filter: OrganizationsFilterInput = {},
-        fields: Array<keyof OrganizationFields> = [
+        fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
@@ -316,7 +322,7 @@ export class Cinnamon {
 
     async createOrganization(
         input: OrganizationInput,
-        fields: Array<keyof OrganizationFields> = [
+        fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
@@ -340,7 +346,7 @@ export class Cinnamon {
     async updateOrganization(
         id: Scalars['ObjectId'],
         input: OrganizationUpdateInput,
-        fields: Array<keyof OrganizationFields> = [
+        fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
@@ -367,7 +373,7 @@ export class Cinnamon {
 
     async marketplace(
         id: Scalars['ObjectId'],
-        fields: Array<keyof MarketplaceFields> = [
+        fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
@@ -391,7 +397,7 @@ export class Cinnamon {
     async marketplaces(
         filter: MarketplacesFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MarketplaceFields> = [
+        fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
@@ -422,7 +428,7 @@ export class Cinnamon {
 
     marketplacesAll(
         filter: MarketplacesFilterInput = {},
-        fields: Array<keyof MarketplaceFields> = [
+        fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
@@ -438,7 +444,7 @@ export class Cinnamon {
 
     async createMarketplace(
         input: MarketplaceInput,
-        fields: Array<keyof MarketplaceFields> = [
+        fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
@@ -462,7 +468,7 @@ export class Cinnamon {
     async updateMarketplace(
         id: Scalars['ObjectId'],
         input: MarketplaceUpdateInput,
-        fields: Array<keyof MarketplaceFields> = [
+        fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
@@ -506,7 +512,7 @@ export class Cinnamon {
 
     async mediaChannel(
         id: Scalars['ObjectId'],
-        fields: Array<keyof MediaChannelFields> = [
+        fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
@@ -530,7 +536,7 @@ export class Cinnamon {
     async mediaChannels(
         filter: MediaChannelsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MediaChannelFields> = [
+        fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
@@ -561,7 +567,7 @@ export class Cinnamon {
 
     mediaChannelsAll(
         filter: MediaChannelsFilterInput = {},
-        fields: Array<keyof MediaChannelFields> = [
+        fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
@@ -577,7 +583,7 @@ export class Cinnamon {
 
     async createMediaChannel(
         input: MediaChannelCreateInput,
-        fields: Array<keyof MediaChannelFields> = [
+        fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
@@ -600,7 +606,7 @@ export class Cinnamon {
 
     async importMediaChannel(
         input: MediaChannelImportInput,
-        fields: Array<keyof MediaChannelFields> = [
+        fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
@@ -624,7 +630,7 @@ export class Cinnamon {
     async updateMediaChannel(
         id: Scalars['ObjectId'],
         input: MediaChannelUpdateInput,
-        fields: Array<keyof MediaChannelFields> = [
+        fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
@@ -668,7 +674,7 @@ export class Cinnamon {
 
     async campaignTemplate(
         id: Scalars['ObjectId'],
-        fields: Array<keyof CampaignTemplateFields> = [
+        fields: Array<keyof CampaignTemplateFields | string> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
         ],
@@ -690,7 +696,7 @@ export class Cinnamon {
     async campaignTemplates(
         filter: CampaignTemplatesFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof CampaignTemplateFields> = [
+        fields: Array<keyof CampaignTemplateFields | string> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
         ],
@@ -719,7 +725,7 @@ export class Cinnamon {
 
     campaignTemplatesAll(
         filter: CampaignTemplatesFilterInput = {},
-        fields: Array<keyof CampaignTemplateFields> = [
+        fields: Array<keyof CampaignTemplateFields | string> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
         ],
@@ -737,7 +743,7 @@ export class Cinnamon {
 
     async vendor(
         id: Scalars['ObjectId'],
-        fields: Array<keyof VendorFields> = [
+        fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
@@ -761,7 +767,7 @@ export class Cinnamon {
     async vendors(
         filter: VendorsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof VendorFields> = [
+        fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
@@ -792,7 +798,7 @@ export class Cinnamon {
 
     vendorsAll(
         filter: VendorsFilterInput = {},
-        fields: Array<keyof VendorFields> = [
+        fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
@@ -808,7 +814,7 @@ export class Cinnamon {
 
     async createVendor(
         input: VendorInput,
-        fields: Array<keyof VendorFields> = [
+        fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
@@ -832,7 +838,7 @@ export class Cinnamon {
     async updateVendor(
         id: Scalars['ObjectId'],
         input: VendorUpdateInput,
-        fields: Array<keyof VendorFields> = [
+        fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
@@ -876,7 +882,7 @@ export class Cinnamon {
 
     async catalog(
         id: Scalars['ObjectId'],
-        fields: Array<keyof CatalogFields> = [
+        fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
@@ -901,7 +907,7 @@ export class Cinnamon {
     async catalogs(
         filter: CatalogsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof CatalogFields> = [
+        fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
@@ -933,7 +939,7 @@ export class Cinnamon {
 
     catalogsAll(
         filter: CatalogsFilterInput = {},
-        fields: Array<keyof CatalogFields> = [
+        fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
@@ -950,7 +956,7 @@ export class Cinnamon {
 
     async createCatalog(
         input: CatalogCreateInput,
-        fields: Array<keyof CatalogFields> = [
+        fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
@@ -974,7 +980,7 @@ export class Cinnamon {
 
     async importCatalog(
         input: CatalogImportInput,
-        fields: Array<keyof CatalogFields> = [
+        fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
@@ -999,7 +1005,7 @@ export class Cinnamon {
     async updateCatalog(
         id: Scalars['ObjectId'],
         input: CatalogUpdateInput,
-        fields: Array<keyof CatalogFields> = [
+        fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
@@ -1044,7 +1050,7 @@ export class Cinnamon {
 
     async product(
         id: Scalars['ObjectId'],
-        fields: Array<keyof ProductFields> = [
+        fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1070,7 +1076,7 @@ export class Cinnamon {
     async products(
         filter: ProductsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof ProductFields> = [
+        fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1103,7 +1109,7 @@ export class Cinnamon {
 
     productsAll(
         filter: ProductsFilterInput = {},
-        fields: Array<keyof ProductFields> = [
+        fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1121,7 +1127,7 @@ export class Cinnamon {
 
     async createProduct(
         input: ProductInput,
-        fields: Array<keyof ProductFields> = [
+        fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1147,7 +1153,7 @@ export class Cinnamon {
     async updateProduct(
         id: Scalars['ObjectId'],
         input: ProductUpdateInput,
-        fields: Array<keyof ProductFields> = [
+        fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1193,7 +1199,7 @@ export class Cinnamon {
 
     async marketingCampaign(
         id: Scalars['ObjectId'],
-        fields: Array<keyof MarketingCampaignFields> = [
+        fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
@@ -1217,7 +1223,7 @@ export class Cinnamon {
     async marketingCampaigns(
         filter: MarketingCampaignsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MarketingCampaignFields> = [
+        fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
@@ -1248,7 +1254,7 @@ export class Cinnamon {
 
     marketingCampaignsAll(
         filter: MarketingCampaignsFilterInput = {},
-        fields: Array<keyof MarketingCampaignFields> = [
+        fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
@@ -1265,7 +1271,7 @@ export class Cinnamon {
 
     async createMarketingCampaign(
         input: MarketingCampaignInput,
-        fields: Array<keyof MarketingCampaignFields> = [
+        fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
@@ -1289,7 +1295,7 @@ export class Cinnamon {
     async updateMarketingCampaign(
         id: Scalars['ObjectId'],
         input: MarketingCampaignUpdateInput,
-        fields: Array<keyof MarketingCampaignFields> = [
+        fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
@@ -1333,7 +1339,7 @@ export class Cinnamon {
 
     async marketingAd(
         id: Scalars['ObjectId'],
-        fields: Array<keyof MarketingAdFields> = [
+        fields: Array<keyof MarketingAdFields | string> = [
             MarketingAdFields.id,
             MarketingAdFields.remoteId,
         ],
@@ -1355,7 +1361,7 @@ export class Cinnamon {
     async marketingAds(
         filter: MarketingAdsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MarketingAdFields> = [
+        fields: Array<keyof MarketingAdFields | string> = [
             MarketingAdFields.id,
             MarketingAdFields.remoteId,
         ],
@@ -1384,7 +1390,7 @@ export class Cinnamon {
 
     marketingAdsAll(
         filter: MarketingAdsFilterInput = {},
-        fields: Array<keyof MarketingAdFields> = [
+        fields: Array<keyof MarketingAdFields | string> = [
             MarketingAdFields.id,
             MarketingAdFields.remoteId,
         ],
@@ -1402,11 +1408,10 @@ export class Cinnamon {
 
     async result(
         id: Scalars['ObjectId'],
-        fields: Array<keyof ResultFields> = [
+        fields: Array<keyof ResultFields | string> = [
             ResultFields.id,
             ResultFields.date,
-            ResultFields.results,
-            ResultFields.impressions,
+            'analytics {results}',
         ],
         headers: Headers = {},
         token?: string,
@@ -1426,11 +1431,10 @@ export class Cinnamon {
     async results(
         filter: ResultsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof ResultFields> = [
+        fields: Array<keyof ResultFields | string> = [
             ResultFields.id,
             ResultFields.date,
-            ResultFields.results,
-            ResultFields.impressions,
+            'analytics {results}',
         ],
         headers: Headers = {},
         token?: string,
@@ -1457,11 +1461,10 @@ export class Cinnamon {
 
     resultsAll(
         filter: ResultsFilterInput = {},
-        fields: Array<keyof ResultFields> = [
+        fields: Array<keyof ResultFields | string> = [
             ResultFields.id,
             ResultFields.date,
-            ResultFields.results,
-            ResultFields.impressions,
+            'analytics {results}',
         ],
         headers: Headers = {},
         token?: string,
@@ -1477,7 +1480,7 @@ export class Cinnamon {
 
     async entitlement(
         id: Scalars['ObjectId'],
-        fields: Array<keyof EntitlementFields> = [
+        fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
@@ -1500,7 +1503,7 @@ export class Cinnamon {
     async entitlements(
         filter: EntitlementsFilterInput = {},
         after: PageInfo['endCursor'] = '',
-        fields: Array<keyof EntitlementFields> = [
+        fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
@@ -1530,7 +1533,7 @@ export class Cinnamon {
 
     entitlementsAll(
         filter: EntitlementsFilterInput = {},
-        fields: Array<keyof EntitlementFields> = [
+        fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
@@ -1545,7 +1548,7 @@ export class Cinnamon {
 
     async createEntitlement(
         input: EntitlementInput,
-        fields: Array<keyof EntitlementFields> = [
+        fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
@@ -1568,7 +1571,7 @@ export class Cinnamon {
     async updateEntitlement(
         id: Scalars['ObjectId'],
         input: EntitlementUpdateInput,
-        fields: Array<keyof EntitlementFields> = [
+        fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
