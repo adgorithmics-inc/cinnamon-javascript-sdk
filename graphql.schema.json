@@ -4534,48 +4534,16 @@
                         "deprecationReason": null
                     },
                     {
-                        "name": "impressions",
+                        "name": "analytics",
                         "description": null,
                         "args": [],
                         "type": {
                             "kind": "NON_NULL",
                             "name": null,
                             "ofType": {
-                                "kind": "LIST",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "NON_NULL",
-                                    "name": null,
-                                    "ofType": {
-                                        "kind": "SCALAR",
-                                        "name": "String",
-                                        "ofType": null
-                                    }
-                                }
-                            }
-                        },
-                        "isDeprecated": false,
-                        "deprecationReason": null
-                    },
-                    {
-                        "name": "results",
-                        "description": null,
-                        "args": [],
-                        "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "LIST",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "NON_NULL",
-                                    "name": null,
-                                    "ofType": {
-                                        "kind": "SCALAR",
-                                        "name": "String",
-                                        "ofType": null
-                                    }
-                                }
+                                "kind": "OBJECT",
+                                "name": "ResultAnalytics",
+                                "ofType": null
                             }
                         },
                         "isDeprecated": false,
@@ -4632,6 +4600,75 @@
                 ],
                 "inputFields": null,
                 "interfaces": [],
+                "enumValues": null,
+                "possibleTypes": null
+            },
+            {
+                "kind": "OBJECT",
+                "name": "ResultAnalytics",
+                "description": null,
+                "fields": [
+                    {
+                        "name": "results",
+                        "description": null,
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Int",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "impressions",
+                        "description": null,
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Int",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "clicks",
+                        "description": null,
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Int",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "spend",
+                        "description": null,
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Float",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    }
+                ],
+                "inputFields": null,
+                "interfaces": [],
+                "enumValues": null,
+                "possibleTypes": null
+            },
+            {
+                "kind": "SCALAR",
+                "name": "Float",
+                "description": "The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).",
+                "fields": null,
+                "inputFields": null,
+                "interfaces": null,
                 "enumValues": null,
                 "possibleTypes": null
             },
@@ -8782,43 +8819,6 @@
                             }
                         },
                         "defaultValue": "[WRITE]"
-                    }
-                ]
-            },
-            {
-                "name": "length",
-                "description": null,
-                "locations": ["INPUT_FIELD_DEFINITION", "FIELD_DEFINITION"],
-                "args": [
-                    {
-                        "name": "min",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "Int",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "max",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "Int",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "unique",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "Boolean",
-                            "ofType": null
-                        },
-                        "defaultValue": "false"
                     }
                 ]
             },

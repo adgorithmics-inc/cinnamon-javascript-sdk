@@ -881,11 +881,17 @@ export type Result = {
     creationDate: Scalars['DateISO'];
     lastChangeDate: Scalars['DateISO'];
     date: Scalars['DateISO'];
-    impressions: Array<Scalars['String']>;
-    results: Array<Scalars['String']>;
+    analytics: ResultAnalytics;
     type: ResultResourceTypeEnum;
     resource: ResultResource;
     vendor: Vendor;
+};
+
+export type ResultAnalytics = {
+    results?: Maybe<Scalars['Int']>;
+    impressions?: Maybe<Scalars['Int']>;
+    clicks?: Maybe<Scalars['Int']>;
+    spend?: Maybe<Scalars['Float']>;
 };
 
 export type ResultConnection = {
@@ -1187,6 +1193,8 @@ export type ResolversTypes = {
     ResultConnection: ResolverTypeWrapper<ResultConnection>;
     ResultEdge: ResolverTypeWrapper<ResultEdge>;
     Result: ResolverTypeWrapper<Result>;
+    ResultAnalytics: ResolverTypeWrapper<ResultAnalytics>;
+    Float: ResolverTypeWrapper<Scalars['Float']>;
     ResultResourceTypeEnum: ResultResourceTypeEnum;
     CampaignTemplateConnection: ResolverTypeWrapper<CampaignTemplateConnection>;
     CampaignTemplateEdge: ResolverTypeWrapper<CampaignTemplateEdge>;
@@ -1287,6 +1295,8 @@ export type ResolversParentTypes = {
     ResultConnection: ResultConnection;
     ResultEdge: ResultEdge;
     Result: Result;
+    ResultAnalytics: ResultAnalytics;
+    Float: Scalars['Float'];
     ResultResourceTypeEnum: ResultResourceTypeEnum;
     CampaignTemplateConnection: CampaignTemplateConnection;
     CampaignTemplateEdge: CampaignTemplateEdge;
@@ -1343,17 +1353,6 @@ export type AuthDirectiveResolver<
         location?: Maybe<Maybe<AuthLocation>>;
         type?: Maybe<Maybe<AuthType>>;
         permissions?: Maybe<Maybe<Array<Maybe<AuthPermission>>>>;
-    }
-> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
-export type LengthDirectiveResolver<
-    Result,
-    Parent,
-    ContextType = any,
-    Args = {
-        min?: Maybe<Maybe<Scalars['Int']>>;
-        max?: Maybe<Maybe<Scalars['Int']>>;
-        unique?: Maybe<Maybe<Scalars['Boolean']>>;
     }
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
@@ -2378,13 +2377,8 @@ export type ResultResolvers<
         ContextType
     >;
     date?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    impressions?: Resolver<
-        Array<ResolversTypes['String']>,
-        ParentType,
-        ContextType
-    >;
-    results?: Resolver<
-        Array<ResolversTypes['String']>,
+    analytics?: Resolver<
+        ResolversTypes['ResultAnalytics'],
         ParentType,
         ContextType
     >;
@@ -2399,6 +2393,20 @@ export type ResultResolvers<
         ContextType
     >;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+};
+
+export type ResultAnalyticsResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['ResultAnalytics'] = ResolversParentTypes['ResultAnalytics']
+> = {
+    results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    impressions?: Resolver<
+        Maybe<ResolversTypes['Int']>,
+        ParentType,
+        ContextType
+    >;
+    clicks?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    spend?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
 };
 
 export type ResultConnectionResolvers<
@@ -2608,6 +2616,7 @@ export type Resolvers<ContextType = any> = {
     ProductEdge?: ProductEdgeResolvers<ContextType>;
     Query?: QueryResolvers<ContextType>;
     Result?: ResultResolvers<ContextType>;
+    ResultAnalytics?: ResultAnalyticsResolvers<ContextType>;
     ResultConnection?: ResultConnectionResolvers<ContextType>;
     ResultEdge?: ResultEdgeResolvers<ContextType>;
     ResultResource?: ResultResourceResolvers;
@@ -2628,7 +2637,6 @@ export type Resolvers<ContextType = any> = {
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 export type DirectiveResolvers<ContextType = any> = {
     auth?: AuthDirectiveResolver<any, any, ContextType>;
-    length?: LengthDirectiveResolver<any, any, ContextType>;
     cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
 };
 
