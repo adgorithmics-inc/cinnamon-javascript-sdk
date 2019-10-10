@@ -12,43 +12,32 @@ import {
     RefreshTokenInput,
     Organization,
     OrganizationInput,
-    OrganizationsFilterInput,
     OrganizationUpdateInput,
     Marketplace,
     MarketplaceInput,
-    MarketplacesFilterInput,
     MarketplaceUpdateInput,
     MediaChannel,
     MediaChannelCreateInput,
     MediaChannelUpdateInput,
     MediaChannelImportInput,
-    MediaChannelsFilterInput,
     CampaignTemplate,
-    CampaignTemplatesFilterInput,
     Vendor,
     VendorInput,
-    VendorsFilterInput,
     VendorUpdateInput,
     Catalog,
     CatalogCreateInput,
     CatalogImportInput,
     CatalogUpdateInput,
-    CatalogsFilterInput,
     Product,
     ProductInput,
-    ProductsFilterInput,
     ProductUpdateInput,
     MarketingCampaign,
     MarketingCampaignInput,
-    MarketingCampaignsFilterInput,
     MarketingCampaignUpdateInput,
     MarketingAd,
-    MarketingAdsFilterInput,
     Result,
-    ResultsFilterInput,
     Entitlement,
     EntitlementInput,
-    EntitlementsFilterInput,
     EntitlementUpdateInput,
 } from './generated/graphql';
 
@@ -273,7 +262,7 @@ export class Cinnamon {
     }
 
     async organizations(
-        filter: OrganizationsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
@@ -285,7 +274,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'organizations'>(
-            `query($filter: OrganizationsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 organizations(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -305,7 +294,7 @@ export class Cinnamon {
     }
 
     organizationsAll(
-        filter: OrganizationsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof OrganizationFields | string> = [
             OrganizationFields.id,
             OrganizationFields.name,
@@ -395,7 +384,7 @@ export class Cinnamon {
     }
 
     async marketplaces(
-        filter: MarketplacesFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
@@ -407,7 +396,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketplaces'>(
-            `query($filter: MarketplacesFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 marketplaces(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -427,7 +416,7 @@ export class Cinnamon {
     }
 
     marketplacesAll(
-        filter: MarketplacesFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof MarketplaceFields | string> = [
             MarketplaceFields.id,
             MarketplaceFields.name,
@@ -534,7 +523,7 @@ export class Cinnamon {
     }
 
     async mediaChannels(
-        filter: MediaChannelsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
@@ -546,7 +535,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'mediaChannels'>(
-            `query($filter: MediaChannelsFilterInput!, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 mediaChannels(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -566,7 +555,7 @@ export class Cinnamon {
     }
 
     mediaChannelsAll(
-        filter: MediaChannelsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof MediaChannelFields | string> = [
             MediaChannelFields.id,
             MediaChannelFields.name,
@@ -694,7 +683,7 @@ export class Cinnamon {
     }
 
     async campaignTemplates(
-        filter: CampaignTemplatesFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof CampaignTemplateFields | string> = [
             CampaignTemplateFields.id,
@@ -704,7 +693,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'campaignTemplates'>(
-            `query($filter: CampaignTemplatesFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 campaignTemplates(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -724,7 +713,7 @@ export class Cinnamon {
     }
 
     campaignTemplatesAll(
-        filter: CampaignTemplatesFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof CampaignTemplateFields | string> = [
             CampaignTemplateFields.id,
             CampaignTemplateFields.name,
@@ -765,7 +754,7 @@ export class Cinnamon {
     }
 
     async vendors(
-        filter: VendorsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
@@ -777,7 +766,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'vendors'>(
-            `query($filter: VendorsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 vendors(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -797,7 +786,7 @@ export class Cinnamon {
     }
 
     vendorsAll(
-        filter: VendorsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof VendorFields | string> = [
             VendorFields.id,
             VendorFields.name,
@@ -905,7 +894,7 @@ export class Cinnamon {
     }
 
     async catalogs(
-        filter: CatalogsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
@@ -918,7 +907,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'catalogs'>(
-            `query($filter: CatalogsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 catalogs(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -938,7 +927,7 @@ export class Cinnamon {
     }
 
     catalogsAll(
-        filter: CatalogsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof CatalogFields | string> = [
             CatalogFields.id,
             CatalogFields.name,
@@ -1074,7 +1063,7 @@ export class Cinnamon {
     }
 
     async products(
-        filter: ProductsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
@@ -1088,7 +1077,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'products'>(
-            `query($filter: ProductsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 products(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1108,7 +1097,7 @@ export class Cinnamon {
     }
 
     productsAll(
-        filter: ProductsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof ProductFields | string> = [
             ProductFields.id,
             ProductFields.name,
@@ -1221,7 +1210,7 @@ export class Cinnamon {
     }
 
     async marketingCampaigns(
-        filter: MarketingCampaignsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
@@ -1233,7 +1222,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketingCampaigns'>(
-            `query($filter: MarketingCampaignsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 marketingCampaigns(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1253,7 +1242,7 @@ export class Cinnamon {
     }
 
     marketingCampaignsAll(
-        filter: MarketingCampaignsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof MarketingCampaignFields | string> = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
@@ -1359,7 +1348,7 @@ export class Cinnamon {
     }
 
     async marketingAds(
-        filter: MarketingAdsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof MarketingAdFields | string> = [
             MarketingAdFields.id,
@@ -1369,7 +1358,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'marketingAds'>(
-            `query($filter: MarketingAdsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 marketingAds(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1389,7 +1378,7 @@ export class Cinnamon {
     }
 
     marketingAdsAll(
-        filter: MarketingAdsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof MarketingAdFields | string> = [
             MarketingAdFields.id,
             MarketingAdFields.remoteId,
@@ -1429,7 +1418,7 @@ export class Cinnamon {
     }
 
     async results(
-        filter: ResultsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof ResultFields | string> = [
             ResultFields.id,
@@ -1440,7 +1429,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'results'>(
-            `query($filter: ResultsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 results(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1460,7 +1449,7 @@ export class Cinnamon {
     }
 
     resultsAll(
-        filter: ResultsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof ResultFields | string> = [
             ResultFields.id,
             ResultFields.date,
@@ -1501,7 +1490,7 @@ export class Cinnamon {
     }
 
     async entitlements(
-        filter: EntitlementsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         after: PageInfo['endCursor'] = '',
         fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
@@ -1512,7 +1501,7 @@ export class Cinnamon {
         token?: string,
     ) {
         return (await this.api<'entitlements'>(
-            `query($filter: EntitlementsFilterInput, $after: ObjectId!) {
+            `query($filter: FilterInput, $after: ObjectId!) {
                 entitlements(filter: $filter, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1532,7 +1521,7 @@ export class Cinnamon {
     }
 
     entitlementsAll(
-        filter: EntitlementsFilterInput = {},
+        filter: Scalars['FilterInput'] = [],
         fields: Array<keyof EntitlementFields | string> = [
             EntitlementFields.id,
             EntitlementFields.permissions,

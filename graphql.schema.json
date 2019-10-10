@@ -44,8 +44,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "CampaignTemplatesFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -114,8 +114,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "CatalogsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -139,6 +139,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -184,8 +194,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "EntitlementsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -254,8 +264,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "MarketingAdsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -324,8 +334,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "MarketingCampaignsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -349,6 +359,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -394,8 +414,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "MarketplacesFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -419,6 +439,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -464,8 +494,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "MediaChannelsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -489,6 +519,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -534,8 +574,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "OrganizationsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -559,6 +599,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -604,8 +654,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "ProductsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -629,6 +679,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -674,8 +734,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "ResultsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -756,8 +816,8 @@
                                 "name": "filter",
                                 "description": null,
                                 "type": {
-                                    "kind": "INPUT_OBJECT",
-                                    "name": "VendorsFilterInput",
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
                                     "ofType": null
                                 },
                                 "defaultValue": null
@@ -781,6 +841,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -945,6 +1015,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -963,6 +1043,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -1116,6 +1206,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -1134,6 +1234,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -1148,6 +1258,16 @@
                         "name": "campaignTemplates",
                         "description": null,
                         "args": [
+                            {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
                             {
                                 "name": "first",
                                 "description": null,
@@ -1182,6 +1302,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -1200,6 +1330,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -1510,6 +1650,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -1543,6 +1693,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -1561,6 +1721,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -1648,6 +1818,16 @@
                         "ofType": null
                     }
                 ],
+                "enumValues": null,
+                "possibleTypes": null
+            },
+            {
+                "kind": "SCALAR",
+                "name": "FilterInput",
+                "description": "Accepts a single filterObject ({field: NonEmptyString!, operator: OPERATOR!,\nvalue: [String]}), a single array of filterObjects (creates an AND'ed query), or\na two dimentional array (each array is OR'ed) to produce your resource query.\nRefer to the following JSON schema for more filter restriction details:\n\n{\n  \"anyOf\": [\n    {\n      \"type\": \"object\",\n      \"$ref\": \"#/definitions/filterInput\"\n    },\n    {\n      \"type\": \"array\",\n      \"items\": {\n        \"anyOf\": [\n          {\n            \"$ref\": \"#/definitions/filterInput\"\n          },\n          {\n            \"type\": \"array\",\n            \"items\": {\n              \"$ref\": \"#/definitions/filterInput\"\n            }\n          }\n        ]\n      }\n    }\n  ],\n  \"definitions\": {\n    \"alphabeticString\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[a-zA-Z]+$\",\n      \"minLength\": 1,\n      \"required\": true\n    },\n    \"filterInput\": {\n      \"anyOf\": [\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"IN\"\n              ],\n              \"required\": true\n            },\n            \"value\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": [\n                  \"string\",\n                  \"integer\",\n                  \"boolean\"\n                ]\n              },\n              \"require\": true\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"EQUALS\",\n                \"NOT_EQUALS\",\n                \"CONTAINS\",\n                \"ICONTAINS\",\n                \"GT\",\n                \"GTE\",\n                \"LT\",\n                \"LTE\"\n              ],\n              \"required\": true\n            },\n            \"value\": {\n              \"type\": [\n                \"string\",\n                \"integer\",\n                \"boolean\"\n              ],\n              \"required\": true\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"IS_NULL\"\n              ],\n              \"required\": true\n            }\n          }\n        }\n      ]\n    }\n  }\n}",
+                "fields": null,
+                "inputFields": null,
+                "interfaces": null,
                 "enumValues": null,
                 "possibleTypes": null
             },
@@ -1841,6 +2021,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -1859,6 +2049,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -1873,6 +2073,16 @@
                         "name": "entitlements",
                         "description": null,
                         "args": [
+                            {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
                             {
                                 "name": "first",
                                 "description": null,
@@ -1905,6 +2115,16 @@
                 ],
                 "inputFields": null,
                 "interfaces": [],
+                "enumValues": null,
+                "possibleTypes": null
+            },
+            {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "description": "The `Boolean` scalar type represents `true` or `false`.",
+                "fields": null,
+                "inputFields": null,
+                "interfaces": null,
                 "enumValues": null,
                 "possibleTypes": null
             },
@@ -2038,16 +2258,6 @@
                 ],
                 "inputFields": null,
                 "interfaces": [],
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "description": "The `Boolean` scalar type represents `true` or `false`.",
-                "fields": null,
-                "inputFields": null,
-                "interfaces": null,
                 "enumValues": null,
                 "possibleTypes": null
             },
@@ -2709,6 +2919,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -2727,6 +2947,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -3068,6 +3298,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -3086,6 +3326,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -3357,6 +3607,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -3375,6 +3635,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -3651,6 +3921,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -3684,6 +3964,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -3702,6 +3992,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -3764,6 +4064,16 @@
                         "name": "results",
                         "description": null,
                         "args": [
+                            {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
                             {
                                 "name": "first",
                                 "description": null,
@@ -4045,6 +4355,16 @@
                         "description": null,
                         "args": [
                             {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
+                            {
                                 "name": "first",
                                 "description": null,
                                 "type": {
@@ -4063,6 +4383,16 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+                            },
+                            {
+                                "name": "showDeleted",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "Boolean",
+                                    "ofType": null
+                                },
+                                "defaultValue": "false"
                             }
                         ],
                         "type": {
@@ -4309,6 +4639,16 @@
                         "name": "results",
                         "description": null,
                         "args": [
+                            {
+                                "name": "filter",
+                                "description": null,
+                                "type": {
+                                    "kind": "SCALAR",
+                                    "name": "FilterInput",
+                                    "ofType": null
+                                },
+                                "defaultValue": null
+                            },
                             {
                                 "name": "first",
                                 "description": null,
@@ -4856,1043 +5196,6 @@
                 ],
                 "inputFields": null,
                 "interfaces": [],
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "CampaignTemplatesFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "platform",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "Platform",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "remoteId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "marketplaceId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "CatalogsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "mediaChannelId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "remoteId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "EntitlementsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "userId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "resourceId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "type",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "EntitlementResourceTypeEnum",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "MarketingAdsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "vendorId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "marketingCampaignId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "remoteId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "MarketingCampaignsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "status",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "MarketingCampaignStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "campaignTemplateId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "mediaChannelId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "vendorId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "MarketplacesFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "organizationId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "organizationId__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "MediaChannelsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "tokenStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "TokenStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "tokenStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "TokenStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "platform",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "Platform",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "remoteId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "marketplaceId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "OrganizationsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "tier",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "OrganizationTierEnum",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "ProductsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "sku",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "catalogId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "vendorId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "ResultsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "SCALAR",
-                                    "name": "ObjectId",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "type",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "ResultResourceTypeEnum",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "resourceId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "vendorId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
-                "enumValues": null,
-                "possibleTypes": null
-            },
-            {
-                "kind": "INPUT_OBJECT",
-                "name": "VendorsFilterInput",
-                "description": null,
-                "fields": null,
-                "inputFields": [
-                    {
-                        "name": "id__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "SCALAR",
-                                "name": "ObjectId",
-                                "ofType": null
-                            }
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__contains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "name__icontains",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "marketplaceId",
-                        "description": null,
-                        "type": {
-                            "kind": "SCALAR",
-                            "name": "ObjectId",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus",
-                        "description": null,
-                        "type": {
-                            "kind": "ENUM",
-                            "name": "SystemStatus",
-                            "ofType": null
-                        },
-                        "defaultValue": null
-                    },
-                    {
-                        "name": "systemStatus__in",
-                        "description": null,
-                        "type": {
-                            "kind": "LIST",
-                            "name": null,
-                            "ofType": {
-                                "kind": "NON_NULL",
-                                "name": null,
-                                "ofType": {
-                                    "kind": "ENUM",
-                                    "name": "SystemStatus",
-                                    "ofType": null
-                                }
-                            }
-                        },
-                        "defaultValue": null
-                    }
-                ],
-                "interfaces": null,
                 "enumValues": null,
                 "possibleTypes": null
             },
@@ -8752,6 +8055,77 @@
                     },
                     {
                         "name": "PRIVATE",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    }
+                ],
+                "possibleTypes": null
+            },
+            {
+                "kind": "ENUM",
+                "name": "OPERATOR",
+                "description": null,
+                "fields": null,
+                "inputFields": null,
+                "interfaces": null,
+                "enumValues": [
+                    {
+                        "name": "EQUALS",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "NOT_EQUALS",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "CONTAINS",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "ICONTAINS",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "GT",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "GTE",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "LT",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "LTE",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "IN",
+                        "description": null,
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "IS_NULL",
                         "description": null,
                         "isDeprecated": false,
                         "deprecationReason": null
