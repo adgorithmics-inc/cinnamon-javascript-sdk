@@ -6,7 +6,7 @@
   "browser": "index.web.js",
   "types": "src/index.d.ts",
   "files": [
-    "/src",
+    "/src/**/*.d.ts",
     "/index.web.js",
     "/index.node.js"
   ],
