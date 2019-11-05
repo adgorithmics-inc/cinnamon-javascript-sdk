@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
-export declare type Maybe<T> = T | null;
+export declare type Maybe<T> = T;
 export declare type RequireFields<T, K extends keyof T> = {
     [X in Exclude<keyof T, K>]?: T[X];
 } & {
