@@ -4,7 +4,6 @@ import {
     GraphQLScalarTypeConfig,
 } from 'graphql';
 export type Maybe<T> = T | null;
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = {
     [X in Exclude<keyof T, K>]?: T[X]
 } &
@@ -18,10 +17,132 @@ export type Scalars = {
     Float: number;
     /** ObjectId must be 24 bytes */
     ObjectId: string;
+    /** Date strings must follow ISO 8601 specifications */
+    DateISO: any;
     /** String must contain at least one character */
     NonEmptyString: string;
     /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
     JSONObject: any;
+    /**
+     * Accepts a single filterObject (`{field: NonEmptyString!, operator: OPERATOR!,
+     * value: [String]}`), a single array of filterObjects (creates an AND'ed query),
+     * or a two dimentional array (each array is OR'ed) to produce your resource query.
+     * Refer to the following JSON schema for more filter restriction details:
+     *
+     * ```json
+     * {
+     *   "anyOf": [
+     *     {
+     *       "type": "object",
+     *       "$ref": "#/definitions/filterInput"
+     *     },
+     *     {
+     *       "type": "array",
+     *       "items": {
+     *         "anyOf": [
+     *           {
+     *             "$ref": "#/definitions/filterInput"
+     *           },
+     *           {
+     *             "type": "array",
+     *             "items": {
+     *               "$ref": "#/definitions/filterInput"
+     *             }
+     *           }
+     *         ]
+     *       }
+     *     }
+     *   ],
+     *   "definitions": {
+     *     "alphabeticString": {
+     *       "type": "string",
+     *       "pattern": "^[a-zA-Z]+$",
+     *       "minLength": 1,
+     *       "required": true
+     *     },
+     *     "filterInput": {
+     *       "anyOf": [
+     *         {
+     *           "type": "object",
+     *           "additionalProperties": false,
+     *           "properties": {
+     *             "field": {
+     *               "$ref": "#/definitions/alphabeticString"
+     *             },
+     *             "operator": {
+     *               "type": "string",
+     *               "enum": [
+     *                 "IN"
+     *               ],
+     *               "required": true
+     *             },
+     *             "value": {
+     *               "type": "array",
+     *               "items": {
+     *                 "type": [
+     *                   "string",
+     *                   "integer",
+     *                   "boolean"
+     *                 ]
+     *               },
+     *               "require": true
+     *             }
+     *           }
+     *         },
+     *         {
+     *           "type": "object",
+     *           "additionalProperties": false,
+     *           "properties": {
+     *             "field": {
+     *               "$ref": "#/definitions/alphabeticString"
+     *             },
+     *             "operator": {
+     *               "type": "string",
+     *               "enum": [
+     *                 "EQUALS",
+     *                 "NOT_EQUALS",
+     *                 "CONTAINS",
+     *                 "ICONTAINS",
+     *                 "GT",
+     *                 "GTE",
+     *                 "LT",
+     *                 "LTE"
+     *               ],
+     *               "required": true
+     *             },
+     *             "value": {
+     *               "type": [
+     *                 "string",
+     *                 "integer",
+     *                 "boolean"
+     *               ],
+     *               "required": true
+     *             }
+     *           }
+     *         },
+     *         {
+     *           "type": "object",
+     *           "additionalProperties": false,
+     *           "properties": {
+     *             "field": {
+     *               "$ref": "#/definitions/alphabeticString"
+     *             },
+     *             "operator": {
+     *               "type": "string",
+     *               "enum": [
+     *                 "IS_NULL"
+     *               ],
+     *               "required": true
+     *             }
+     *           }
+     *         }
+     *       ]
+     *     }
+     *   }
+     * }
+     * ```
+     **/
+    FilterInput: any;
     /** The `Upload` scalar type represents a file upload. */
     Upload: any;
 };
@@ -74,8 +195,8 @@ export enum CacheControlScope {
 
 export type CampaignTemplate = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     description: Scalars['String'];
     platform: Platform;
@@ -85,8 +206,10 @@ export type CampaignTemplate = {
 };
 
 export type CampaignTemplateMarketingCampaignsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type CampaignTemplateConnection = {
@@ -99,33 +222,26 @@ export type CampaignTemplateEdge = {
     node?: Maybe<CampaignTemplate>;
 };
 
-export type CampaignTemplatesFilterInput = {
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    platform?: Maybe<Platform>;
-    remoteId?: Maybe<Scalars['String']>;
-    marketplaceId?: Maybe<Scalars['ObjectId']>;
-};
-
 export type Catalog = {
     id: Scalars['ObjectId'];
     name: Scalars['NonEmptyString'];
     catalogType: CatalogType;
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     remoteId?: Maybe<Scalars['String']>;
     systemStatus: SystemStatus;
     remoteState: Scalars['JSONObject'];
-    error?: Maybe<Scalars['JSONObject']>;
+    dataFeedId?: Maybe<Scalars['String']>;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     mediaChannel: MediaChannel;
     products?: Maybe<ProductConnection>;
 };
 
 export type CatalogProductsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type CatalogConnection = {
@@ -147,17 +263,6 @@ export type CatalogEdge = {
 export type CatalogImportInput = {
     mediaChannelId: Scalars['ObjectId'];
     remoteId: Scalars['String'];
-};
-
-export type CatalogsFilterInput = {
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    systemStatus?: Maybe<SystemStatus>;
-    systemStatus__in?: Maybe<Array<SystemStatus>>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    mediaChannelId?: Maybe<Scalars['ObjectId']>;
-    remoteId?: Maybe<Scalars['ObjectId']>;
 };
 
 export enum CatalogType {
@@ -183,8 +288,8 @@ export type Deletion = {
 
 export type Entitlement = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     user: User;
     type: EntitlementResourceTypeEnum;
     resource: EntitlementResource;
@@ -207,7 +312,14 @@ export type EntitlementInput = {
     permissions: Array<AuthPermission>;
 };
 
-export type EntitlementResource = Marketplace | Organization | MediaChannel;
+export type EntitlementResource = {
+    id: Scalars['ObjectId'];
+    name: Scalars['NonEmptyString'];
+    systemStatus: SystemStatus;
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+};
 
 export enum EntitlementResourceTypeEnum {
     Marketplace = 'Marketplace',
@@ -215,21 +327,14 @@ export enum EntitlementResourceTypeEnum {
     MediaChannel = 'MediaChannel',
 }
 
-export type EntitlementsFilterInput = {
-    userId?: Maybe<Scalars['ObjectId']>;
-    resourceId?: Maybe<Scalars['ObjectId']>;
-    type?: Maybe<EntitlementResourceTypeEnum>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-};
-
 export type EntitlementUpdateInput = {
     permissions: Array<AuthPermission>;
 };
 
-export type MarketingAd = {
+export type MarketingAd = ResultResource & {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     remoteId: Scalars['String'];
     preview: Scalars['String'];
     results?: Maybe<ResultConnection>;
@@ -238,6 +343,7 @@ export type MarketingAd = {
 };
 
 export type MarketingAdResultsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -252,39 +358,40 @@ export type MarketingAdEdge = {
     node?: Maybe<MarketingAd>;
 };
 
-export type MarketingAdsFilterInput = {
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    vendorId?: Maybe<Scalars['ObjectId']>;
-    marketingCampaignId?: Maybe<Scalars['ObjectId']>;
-    remoteId?: Maybe<Scalars['String']>;
-};
-
-export type MarketingCampaign = {
+export type MarketingCampaign = ResultResource & {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
+    name: Scalars['NonEmptyString'];
     status: MarketingCampaignStatus;
     marketingAds?: Maybe<MarketingAdConnection>;
     products?: Maybe<ProductConnection>;
     vendor: Vendor;
+    catalog: Catalog;
     campaignTemplate: CampaignTemplate;
     mediaChannel: MediaChannel;
     results?: Maybe<ResultConnection>;
     creativeSpec: Scalars['JSONObject'];
     runTimeSpec: Scalars['JSONObject'];
+    systemStatus: SystemStatus;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
 export type MarketingCampaignMarketingAdsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
 
 export type MarketingCampaignProductsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MarketingCampaignResultsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -305,14 +412,7 @@ export type MarketingCampaignInput = {
     runTimeSpec: Scalars['JSONObject'];
     productIds?: Maybe<Array<Scalars['ObjectId']>>;
     status?: Maybe<MarketingCampaignStatus>;
-};
-
-export type MarketingCampaignsFilterInput = {
-    status?: Maybe<MarketingCampaignStatus>;
-    campaignTemplateId?: Maybe<Scalars['ObjectId']>;
-    mediaChannelId?: Maybe<Scalars['ObjectId']>;
-    vendorId?: Maybe<Scalars['ObjectId']>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
+    name?: Maybe<Scalars['NonEmptyString']>;
 };
 
 export enum MarketingCampaignStatus {
@@ -324,32 +424,40 @@ export type MarketingCampaignUpdateInput = {
     creativeSpec?: Maybe<Scalars['JSONObject']>;
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
     status?: Maybe<MarketingCampaignStatus>;
+    name?: Maybe<Scalars['NonEmptyString']>;
 };
 
-export type Marketplace = {
+export type Marketplace = EntitlementResource & {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     organization: Organization;
     mediaChannels?: Maybe<MediaChannelConnection>;
     campaignTemplates?: Maybe<CampaignTemplateConnection>;
     vendors?: Maybe<VendorConnection>;
+    systemStatus: SystemStatus;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
 export type MarketplaceMediaChannelsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MarketplaceCampaignTemplatesArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
 
 export type MarketplaceVendorsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MarketplaceConnection = {
@@ -367,22 +475,14 @@ export type MarketplaceInput = {
     organizationId: Scalars['ObjectId'];
 };
 
-export type MarketplacesFilterInput = {
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    organizationId?: Maybe<Scalars['ObjectId']>;
-};
-
 export type MarketplaceUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
-export type MediaChannel = {
+export type MediaChannel = EntitlementResource & {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     platform: Platform;
     remoteId?: Maybe<Scalars['String']>;
@@ -391,14 +491,16 @@ export type MediaChannel = {
     timezone?: Maybe<Scalars['NonEmptyString']>;
     tokenStatus: TokenStatus;
     systemStatus: SystemStatus;
-    error?: Maybe<Scalars['JSONObject']>;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     catalogs: CatalogConnection;
     marketplace: Marketplace;
 };
 
 export type MediaChannelCatalogsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MediaChannelConnection = {
@@ -423,20 +525,6 @@ export type MediaChannelImportInput = {
     platform: Platform;
     remoteId: Scalars['String'];
     token: Scalars['NonEmptyString'];
-};
-
-export type MediaChannelsFilterInput = {
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    systemStatus?: Maybe<SystemStatus>;
-    systemStatus__in?: Maybe<Array<SystemStatus>>;
-    tokenStatus?: Maybe<TokenStatus>;
-    tokenStatus__in?: Maybe<Array<TokenStatus>>;
-    platform?: Maybe<Platform>;
-    remoteId?: Maybe<Scalars['String']>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    marketplaceId?: Maybe<Scalars['ObjectId']>;
 };
 
 export type MediaChannelUpdateInput = {
@@ -464,6 +552,7 @@ export type Mutation = {
     deleteMediaChannel?: Maybe<Deletion>;
     createOrganization?: Maybe<Organization>;
     updateOrganization?: Maybe<Organization>;
+    deleteOrganization?: Maybe<Deletion>;
     createProduct?: Maybe<Product>;
     updateProduct?: Maybe<Product>;
     deleteProduct?: Maybe<Deletion>;
@@ -557,6 +646,10 @@ export type MutationUpdateOrganizationArgs = {
     input: OrganizationUpdateInput;
 };
 
+export type MutationDeleteOrganizationArgs = {
+    id: Scalars['ObjectId'];
+};
+
 export type MutationCreateProductArgs = {
     input: ProductInput;
 };
@@ -595,24 +688,42 @@ export type MutationDeleteVendorArgs = {
     id: Scalars['ObjectId'];
 };
 
-export type Organization = {
+export enum Operator {
+    Equals = 'EQUALS',
+    NotEquals = 'NOT_EQUALS',
+    Contains = 'CONTAINS',
+    Icontains = 'ICONTAINS',
+    Gt = 'GT',
+    Gte = 'GTE',
+    Lt = 'LT',
+    Lte = 'LTE',
+    In = 'IN',
+    IsNull = 'IS_NULL',
+}
+
+export type Organization = EntitlementResource & {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     users?: Maybe<UserConnection>;
     marketplaces?: Maybe<MarketplaceConnection>;
     name: Scalars['NonEmptyString'];
     tier: OrganizationTierEnum;
+    systemStatus: SystemStatus;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
 export type OrganizationUsersArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
 
 export type OrganizationMarketplacesArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type OrganizationConnection = {
@@ -627,14 +738,6 @@ export type OrganizationEdge = {
 
 export type OrganizationInput = {
     name: Scalars['NonEmptyString'];
-};
-
-export type OrganizationsFilterInput = {
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    tier?: Maybe<OrganizationTierEnum>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
 };
 
 export enum OrganizationTierEnum {
@@ -658,22 +761,25 @@ export enum Platform {
 
 export type Product = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
-    sku: Scalars['String'];
-    remoteState: Scalars['JSONObject'];
+    sku: Scalars['NonEmptyString'];
+    remoteState?: Maybe<Scalars['JSONObject']>;
     marketingCampaigns?: Maybe<MarketingCampaignConnection>;
     catalog: Catalog;
     metadata: Scalars['JSONObject'];
     vendor: Vendor;
     systemStatus: SystemStatus;
-    errors?: Maybe<Array<Maybe<Scalars['String']>>>;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
 export type ProductMarketingCampaignsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type ProductConnection = {
@@ -687,29 +793,13 @@ export type ProductEdge = {
 };
 
 export type ProductInput = {
-    name: Scalars['NonEmptyString'];
-    sku: Scalars['String'];
     vendorId: Scalars['ObjectId'];
     catalogId: Scalars['ObjectId'];
-    metadata?: Maybe<Scalars['JSONObject']>;
-};
-
-export type ProductsFilterInput = {
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    systemStatus?: Maybe<SystemStatus>;
-    systemStatus__in?: Maybe<Array<SystemStatus>>;
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    sku?: Maybe<Scalars['String']>;
-    catalogId?: Maybe<Scalars['ObjectId']>;
-    vendorId?: Maybe<Scalars['ObjectId']>;
+    metadata: Scalars['JSONObject'];
 };
 
 export type ProductUpdateInput = {
-    name?: Maybe<Scalars['NonEmptyString']>;
-    sku?: Maybe<Scalars['String']>;
-    metadata?: Maybe<Scalars['JSONObject']>;
+    metadata: Scalars['JSONObject'];
 };
 
 export type Query = {
@@ -743,7 +833,7 @@ export type QueryCampaignTemplateArgs = {
 };
 
 export type QueryCampaignTemplatesArgs = {
-    filter?: Maybe<CampaignTemplatesFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -753,9 +843,10 @@ export type QueryCatalogArgs = {
 };
 
 export type QueryCatalogsArgs = {
-    filter?: Maybe<CatalogsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryEntitlementArgs = {
@@ -763,7 +854,7 @@ export type QueryEntitlementArgs = {
 };
 
 export type QueryEntitlementsArgs = {
-    filter?: Maybe<EntitlementsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -773,7 +864,7 @@ export type QueryMarketingAdArgs = {
 };
 
 export type QueryMarketingAdsArgs = {
-    filter?: Maybe<MarketingAdsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -783,9 +874,10 @@ export type QueryMarketingCampaignArgs = {
 };
 
 export type QueryMarketingCampaignsArgs = {
-    filter?: Maybe<MarketingCampaignsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryMarketplaceArgs = {
@@ -793,9 +885,10 @@ export type QueryMarketplaceArgs = {
 };
 
 export type QueryMarketplacesArgs = {
-    filter?: Maybe<MarketplacesFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryMediaChannelArgs = {
@@ -803,9 +896,10 @@ export type QueryMediaChannelArgs = {
 };
 
 export type QueryMediaChannelsArgs = {
-    filter?: Maybe<MediaChannelsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryOrganizationArgs = {
@@ -813,9 +907,10 @@ export type QueryOrganizationArgs = {
 };
 
 export type QueryOrganizationsArgs = {
-    filter?: Maybe<OrganizationsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryProductArgs = {
@@ -823,9 +918,10 @@ export type QueryProductArgs = {
 };
 
 export type QueryProductsArgs = {
-    filter?: Maybe<ProductsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryResultArgs = {
@@ -833,7 +929,7 @@ export type QueryResultArgs = {
 };
 
 export type QueryResultsArgs = {
-    filter?: Maybe<ResultsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -843,9 +939,10 @@ export type QueryVendorArgs = {
 };
 
 export type QueryVendorsArgs = {
-    filter?: Maybe<VendorsFilterInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type RefreshTokenInput = {
@@ -854,14 +951,20 @@ export type RefreshTokenInput = {
 
 export type Result = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
-    date: Scalars['String'];
-    impressions: Array<Scalars['String']>;
-    results: Array<Scalars['String']>;
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
+    date: Scalars['DateISO'];
+    analytics: ResultAnalytics;
     type: ResultResourceTypeEnum;
     resource: ResultResource;
     vendor: Vendor;
+};
+
+export type ResultAnalytics = {
+    results?: Maybe<Scalars['Int']>;
+    impressions?: Maybe<Scalars['Int']>;
+    clicks?: Maybe<Scalars['Int']>;
+    spend?: Maybe<Scalars['Float']>;
 };
 
 export type ResultConnection = {
@@ -874,23 +977,25 @@ export type ResultEdge = {
     node?: Maybe<Result>;
 };
 
-export type ResultResource = MarketingAd | MarketingCampaign;
+export type ResultResource = {
+    id: Scalars['ObjectId'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
+    vendor: Vendor;
+};
 
 export enum ResultResourceTypeEnum {
     MarketingAd = 'MarketingAd',
     MarketingCampaign = 'MarketingCampaign',
 }
 
-export type ResultsFilterInput = {
-    id__in?: Maybe<Array<Scalars['ObjectId']>>;
-    type?: Maybe<ResultResourceTypeEnum>;
-    resourceId?: Maybe<Scalars['ObjectId']>;
-    vendorId?: Maybe<Scalars['ObjectId']>;
-};
-
 export enum SystemStatus {
     Pending = 'PENDING',
+    PendingDeletion = 'PENDING_DELETION',
+    PendingSync = 'PENDING_SYNC',
     Processing = 'PROCESSING',
+    ProcessingSync = 'PROCESSING_SYNC',
+    ProcessingDeletion = 'PROCESSING_DELETION',
     Processed = 'PROCESSED',
     Error = 'ERROR',
     Deleted = 'DELETED',
@@ -899,7 +1004,7 @@ export enum SystemStatus {
 export type Token = {
     token: Scalars['String'];
     refreshToken: Scalars['String'];
-    expiryDate: Scalars['String'];
+    expiryDate: Scalars['DateISO'];
     user: User;
 };
 
@@ -912,8 +1017,8 @@ export enum TokenStatus {
 
 export type User = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     email: Scalars['NonEmptyString'];
     firstName?: Maybe<Scalars['NonEmptyString']>;
     lastName?: Maybe<Scalars['NonEmptyString']>;
@@ -922,11 +1027,14 @@ export type User = {
 };
 
 export type UserOrganizationsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type UserEntitlementsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
 };
@@ -955,16 +1063,20 @@ export type UserUpdateInput = {
 
 export type Vendor = {
     id: Scalars['ObjectId'];
-    creationDate: Scalars['String'];
-    lastChangeDate: Scalars['String'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
     name: Scalars['NonEmptyString'];
     marketplace: Marketplace;
     products?: Maybe<ProductConnection>;
+    systemStatus: SystemStatus;
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
 export type VendorProductsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
     first?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['ObjectId']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type VendorConnection = {
@@ -980,14 +1092,6 @@ export type VendorEdge = {
 export type VendorInput = {
     name: Scalars['NonEmptyString'];
     marketplaceId: Scalars['ObjectId'];
-};
-
-export type VendorsFilterInput = {
-    id__in?: Maybe<Array<Maybe<Scalars['ObjectId']>>>;
-    name?: Maybe<Scalars['String']>;
-    name__contains?: Maybe<Scalars['String']>;
-    name__icontains?: Maybe<Scalars['String']>;
-    marketplaceId?: Maybe<Scalars['ObjectId']>;
 };
 
 export type VendorUpdateInput = {
@@ -1100,35 +1204,36 @@ export type ResolversTypes = {
     Query: ResolverTypeWrapper<{}>;
     ObjectId: ResolverTypeWrapper<Scalars['ObjectId']>;
     CampaignTemplate: ResolverTypeWrapper<CampaignTemplate>;
-    String: ResolverTypeWrapper<Scalars['String']>;
+    DateISO: ResolverTypeWrapper<Scalars['DateISO']>;
     NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']>;
+    String: ResolverTypeWrapper<Scalars['String']>;
     Platform: Platform;
     Marketplace: ResolverTypeWrapper<Marketplace>;
+    EntitlementResource: ResolverTypeWrapper<EntitlementResource>;
+    SystemStatus: SystemStatus;
+    JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
     Organization: ResolverTypeWrapper<Organization>;
+    FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
     Int: ResolverTypeWrapper<Scalars['Int']>;
     UserConnection: ResolverTypeWrapper<UserConnection>;
     UserEdge: ResolverTypeWrapper<UserEdge>;
     User: ResolverTypeWrapper<User>;
+    Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
     OrganizationConnection: ResolverTypeWrapper<OrganizationConnection>;
     OrganizationEdge: ResolverTypeWrapper<OrganizationEdge>;
     PageInfo: ResolverTypeWrapper<PageInfo>;
-    Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
     EntitlementConnection: ResolverTypeWrapper<EntitlementConnection>;
     EntitlementEdge: ResolverTypeWrapper<EntitlementEdge>;
-    Entitlement: ResolverTypeWrapper<
-        Omit<Entitlement, 'resource'> & {
-            resource: ResolversTypes['EntitlementResource'];
-        }
-    >;
+    Entitlement: ResolverTypeWrapper<Entitlement>;
     EntitlementResourceTypeEnum: EntitlementResourceTypeEnum;
-    EntitlementResource:
-        | ResolversTypes['Marketplace']
-        | ResolversTypes['Organization']
-        | ResolversTypes['MediaChannel'];
+    AuthPermission: AuthPermission;
+    MarketplaceConnection: ResolverTypeWrapper<MarketplaceConnection>;
+    MarketplaceEdge: ResolverTypeWrapper<MarketplaceEdge>;
+    OrganizationTierEnum: OrganizationTierEnum;
+    MediaChannelConnection: ResolverTypeWrapper<MediaChannelConnection>;
+    MediaChannelEdge: ResolverTypeWrapper<MediaChannelEdge>;
     MediaChannel: ResolverTypeWrapper<MediaChannel>;
-    JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
     TokenStatus: TokenStatus;
-    SystemStatus: SystemStatus;
     CatalogConnection: ResolverTypeWrapper<CatalogConnection>;
     CatalogEdge: ResolverTypeWrapper<CatalogEdge>;
     Catalog: ResolverTypeWrapper<Catalog>;
@@ -1141,43 +1246,22 @@ export type ResolversTypes = {
     >;
     MarketingCampaignEdge: ResolverTypeWrapper<MarketingCampaignEdge>;
     MarketingCampaign: ResolverTypeWrapper<MarketingCampaign>;
+    ResultResource: ResolverTypeWrapper<ResultResource>;
+    Vendor: ResolverTypeWrapper<Vendor>;
     MarketingCampaignStatus: MarketingCampaignStatus;
     MarketingAdConnection: ResolverTypeWrapper<MarketingAdConnection>;
     MarketingAdEdge: ResolverTypeWrapper<MarketingAdEdge>;
     MarketingAd: ResolverTypeWrapper<MarketingAd>;
     ResultConnection: ResolverTypeWrapper<ResultConnection>;
     ResultEdge: ResolverTypeWrapper<ResultEdge>;
-    Result: ResolverTypeWrapper<
-        Omit<Result, 'resource'> & {
-            resource: ResolversTypes['ResultResource'];
-        }
-    >;
+    Result: ResolverTypeWrapper<Result>;
+    ResultAnalytics: ResolverTypeWrapper<ResultAnalytics>;
+    Float: ResolverTypeWrapper<Scalars['Float']>;
     ResultResourceTypeEnum: ResultResourceTypeEnum;
-    ResultResource:
-        | ResolversTypes['MarketingAd']
-        | ResolversTypes['MarketingCampaign'];
-    Vendor: ResolverTypeWrapper<Vendor>;
-    AuthPermission: AuthPermission;
-    MarketplaceConnection: ResolverTypeWrapper<MarketplaceConnection>;
-    MarketplaceEdge: ResolverTypeWrapper<MarketplaceEdge>;
-    OrganizationTierEnum: OrganizationTierEnum;
-    MediaChannelConnection: ResolverTypeWrapper<MediaChannelConnection>;
-    MediaChannelEdge: ResolverTypeWrapper<MediaChannelEdge>;
     CampaignTemplateConnection: ResolverTypeWrapper<CampaignTemplateConnection>;
     CampaignTemplateEdge: ResolverTypeWrapper<CampaignTemplateEdge>;
     VendorConnection: ResolverTypeWrapper<VendorConnection>;
     VendorEdge: ResolverTypeWrapper<VendorEdge>;
-    CampaignTemplatesFilterInput: CampaignTemplatesFilterInput;
-    CatalogsFilterInput: CatalogsFilterInput;
-    EntitlementsFilterInput: EntitlementsFilterInput;
-    MarketingAdsFilterInput: MarketingAdsFilterInput;
-    MarketingCampaignsFilterInput: MarketingCampaignsFilterInput;
-    MarketplacesFilterInput: MarketplacesFilterInput;
-    MediaChannelsFilterInput: MediaChannelsFilterInput;
-    OrganizationsFilterInput: OrganizationsFilterInput;
-    ProductsFilterInput: ProductsFilterInput;
-    ResultsFilterInput: ResultsFilterInput;
-    VendorsFilterInput: VendorsFilterInput;
     Mutation: ResolverTypeWrapper<{}>;
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
@@ -1206,6 +1290,7 @@ export type ResolversTypes = {
     AuthLocation: AuthLocation;
     AuthType: AuthType;
     CacheControlScope: CacheControlScope;
+    OPERATOR: Operator;
     Upload: ResolverTypeWrapper<Scalars['Upload']>;
 };
 
@@ -1214,33 +1299,36 @@ export type ResolversParentTypes = {
     Query: {};
     ObjectId: Scalars['ObjectId'];
     CampaignTemplate: CampaignTemplate;
-    String: Scalars['String'];
+    DateISO: Scalars['DateISO'];
     NonEmptyString: Scalars['NonEmptyString'];
+    String: Scalars['String'];
     Platform: Platform;
     Marketplace: Marketplace;
+    EntitlementResource: EntitlementResource;
+    SystemStatus: SystemStatus;
+    JSONObject: Scalars['JSONObject'];
     Organization: Organization;
+    FilterInput: Scalars['FilterInput'];
     Int: Scalars['Int'];
     UserConnection: UserConnection;
     UserEdge: UserEdge;
     User: User;
+    Boolean: Scalars['Boolean'];
     OrganizationConnection: OrganizationConnection;
     OrganizationEdge: OrganizationEdge;
     PageInfo: PageInfo;
-    Boolean: Scalars['Boolean'];
     EntitlementConnection: EntitlementConnection;
     EntitlementEdge: EntitlementEdge;
-    Entitlement: Omit<Entitlement, 'resource'> & {
-        resource: ResolversTypes['EntitlementResource'];
-    };
+    Entitlement: Entitlement;
     EntitlementResourceTypeEnum: EntitlementResourceTypeEnum;
-    EntitlementResource:
-        | ResolversTypes['Marketplace']
-        | ResolversTypes['Organization']
-        | ResolversTypes['MediaChannel'];
+    AuthPermission: AuthPermission;
+    MarketplaceConnection: MarketplaceConnection;
+    MarketplaceEdge: MarketplaceEdge;
+    OrganizationTierEnum: OrganizationTierEnum;
+    MediaChannelConnection: MediaChannelConnection;
+    MediaChannelEdge: MediaChannelEdge;
     MediaChannel: MediaChannel;
-    JSONObject: Scalars['JSONObject'];
     TokenStatus: TokenStatus;
-    SystemStatus: SystemStatus;
     CatalogConnection: CatalogConnection;
     CatalogEdge: CatalogEdge;
     Catalog: Catalog;
@@ -1251,41 +1339,22 @@ export type ResolversParentTypes = {
     MarketingCampaignConnection: MarketingCampaignConnection;
     MarketingCampaignEdge: MarketingCampaignEdge;
     MarketingCampaign: MarketingCampaign;
+    ResultResource: ResultResource;
+    Vendor: Vendor;
     MarketingCampaignStatus: MarketingCampaignStatus;
     MarketingAdConnection: MarketingAdConnection;
     MarketingAdEdge: MarketingAdEdge;
     MarketingAd: MarketingAd;
     ResultConnection: ResultConnection;
     ResultEdge: ResultEdge;
-    Result: Omit<Result, 'resource'> & {
-        resource: ResolversTypes['ResultResource'];
-    };
+    Result: Result;
+    ResultAnalytics: ResultAnalytics;
+    Float: Scalars['Float'];
     ResultResourceTypeEnum: ResultResourceTypeEnum;
-    ResultResource:
-        | ResolversTypes['MarketingAd']
-        | ResolversTypes['MarketingCampaign'];
-    Vendor: Vendor;
-    AuthPermission: AuthPermission;
-    MarketplaceConnection: MarketplaceConnection;
-    MarketplaceEdge: MarketplaceEdge;
-    OrganizationTierEnum: OrganizationTierEnum;
-    MediaChannelConnection: MediaChannelConnection;
-    MediaChannelEdge: MediaChannelEdge;
     CampaignTemplateConnection: CampaignTemplateConnection;
     CampaignTemplateEdge: CampaignTemplateEdge;
     VendorConnection: VendorConnection;
     VendorEdge: VendorEdge;
-    CampaignTemplatesFilterInput: CampaignTemplatesFilterInput;
-    CatalogsFilterInput: CatalogsFilterInput;
-    EntitlementsFilterInput: EntitlementsFilterInput;
-    MarketingAdsFilterInput: MarketingAdsFilterInput;
-    MarketingCampaignsFilterInput: MarketingCampaignsFilterInput;
-    MarketplacesFilterInput: MarketplacesFilterInput;
-    MediaChannelsFilterInput: MediaChannelsFilterInput;
-    OrganizationsFilterInput: OrganizationsFilterInput;
-    ProductsFilterInput: ProductsFilterInput;
-    ResultsFilterInput: ResultsFilterInput;
-    VendorsFilterInput: VendorsFilterInput;
     Mutation: {};
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
@@ -1314,6 +1383,7 @@ export type ResolversParentTypes = {
     AuthLocation: AuthLocation;
     AuthType: AuthType;
     CacheControlScope: CacheControlScope;
+    OPERATOR: Operator;
     Upload: Scalars['Upload'];
 };
 
@@ -1344,9 +1414,9 @@ export type CampaignTemplateResolvers<
     ParentType extends ResolversParentTypes['CampaignTemplate'] = ResolversParentTypes['CampaignTemplate']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1363,7 +1433,7 @@ export type CampaignTemplateResolvers<
         Maybe<ResolversTypes['MarketingCampaignConnection']>,
         ParentType,
         ContextType,
-        CampaignTemplateMarketingCampaignsArgs
+        RequireFields<CampaignTemplateMarketingCampaignsArgs, 'showDeleted'>
     >;
 };
 
@@ -1402,9 +1472,9 @@ export type CatalogResolvers<
         ParentType,
         ContextType
     >;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1423,8 +1493,13 @@ export type CatalogResolvers<
         ParentType,
         ContextType
     >;
-    error?: Resolver<
-        Maybe<ResolversTypes['JSONObject']>,
+    dataFeedId?: Resolver<
+        Maybe<ResolversTypes['String']>,
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
         ParentType,
         ContextType
     >;
@@ -1437,7 +1512,7 @@ export type CatalogResolvers<
         Maybe<ResolversTypes['ProductConnection']>,
         ParentType,
         ContextType,
-        CatalogProductsArgs
+        RequireFields<CatalogProductsArgs, 'showDeleted'>
     >;
 };
 
@@ -1461,6 +1536,11 @@ export type CatalogEdgeResolvers<
     node?: Resolver<Maybe<ResolversTypes['Catalog']>, ParentType, ContextType>;
 };
 
+export interface DateIsoScalarConfig
+    extends GraphQLScalarTypeConfig<ResolversTypes['DateISO'], any> {
+    name: 'DateISO';
+}
+
 export type DeletionResolvers<
     ContextType = any,
     ParentType extends ResolversParentTypes['Deletion'] = ResolversParentTypes['Deletion']
@@ -1473,9 +1553,9 @@ export type EntitlementResolvers<
     ParentType extends ResolversParentTypes['Entitlement'] = ResolversParentTypes['Entitlement']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1530,7 +1610,30 @@ export type EntitlementResourceResolvers<
         ParentType,
         ContextType
     >;
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
 };
+
+export interface FilterInputScalarConfig
+    extends GraphQLScalarTypeConfig<ResolversTypes['FilterInput'], any> {
+    name: 'FilterInput';
+}
 
 export interface JsonObjectScalarConfig
     extends GraphQLScalarTypeConfig<ResolversTypes['JSONObject'], any> {
@@ -1542,9 +1645,9 @@ export type MarketingAdResolvers<
     ParentType extends ResolversParentTypes['MarketingAd'] = ResolversParentTypes['MarketingAd']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1593,12 +1696,13 @@ export type MarketingCampaignResolvers<
     ParentType extends ResolversParentTypes['MarketingCampaign'] = ResolversParentTypes['MarketingCampaign']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     status?: Resolver<
         ResolversTypes['MarketingCampaignStatus'],
         ParentType,
@@ -1614,9 +1718,10 @@ export type MarketingCampaignResolvers<
         Maybe<ResolversTypes['ProductConnection']>,
         ParentType,
         ContextType,
-        MarketingCampaignProductsArgs
+        RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>
     >;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     campaignTemplate?: Resolver<
         ResolversTypes['CampaignTemplate'],
         ParentType,
@@ -1640,6 +1745,16 @@ export type MarketingCampaignResolvers<
     >;
     runTimeSpec?: Resolver<
         ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
         ParentType,
         ContextType
     >;
@@ -1674,9 +1789,9 @@ export type MarketplaceResolvers<
     ParentType extends ResolversParentTypes['Marketplace'] = ResolversParentTypes['Marketplace']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1690,7 +1805,7 @@ export type MarketplaceResolvers<
         Maybe<ResolversTypes['MediaChannelConnection']>,
         ParentType,
         ContextType,
-        MarketplaceMediaChannelsArgs
+        RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>
     >;
     campaignTemplates?: Resolver<
         Maybe<ResolversTypes['CampaignTemplateConnection']>,
@@ -1702,7 +1817,17 @@ export type MarketplaceResolvers<
         Maybe<ResolversTypes['VendorConnection']>,
         ParentType,
         ContextType,
-        MarketplaceVendorsArgs
+        RequireFields<MarketplaceVendorsArgs, 'showDeleted'>
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
     >;
 };
 
@@ -1735,9 +1860,9 @@ export type MediaChannelResolvers<
     ParentType extends ResolversParentTypes['MediaChannel'] = ResolversParentTypes['MediaChannel']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -1773,8 +1898,8 @@ export type MediaChannelResolvers<
         ParentType,
         ContextType
     >;
-    error?: Resolver<
-        Maybe<ResolversTypes['JSONObject']>,
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
         ParentType,
         ContextType
     >;
@@ -1782,7 +1907,7 @@ export type MediaChannelResolvers<
         ResolversTypes['CatalogConnection'],
         ParentType,
         ContextType,
-        MediaChannelCatalogsArgs
+        RequireFields<MediaChannelCatalogsArgs, 'showDeleted'>
     >;
     marketplace?: Resolver<
         ResolversTypes['Marketplace'],
@@ -1933,6 +2058,12 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationUpdateOrganizationArgs, 'id' | 'input'>
     >;
+    deleteOrganization?: Resolver<
+        Maybe<ResolversTypes['Deletion']>,
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteOrganizationArgs, 'id'>
+    >;
     createProduct?: Resolver<
         Maybe<ResolversTypes['Product']>,
         ParentType,
@@ -2004,9 +2135,9 @@ export type OrganizationResolvers<
     ParentType extends ResolversParentTypes['Organization'] = ResolversParentTypes['Organization']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -2020,11 +2151,21 @@ export type OrganizationResolvers<
         Maybe<ResolversTypes['MarketplaceConnection']>,
         ParentType,
         ContextType,
-        OrganizationMarketplacesArgs
+        RequireFields<OrganizationMarketplacesArgs, 'showDeleted'>
     >;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     tier?: Resolver<
         ResolversTypes['OrganizationTierEnum'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
         ParentType,
         ContextType
     >;
@@ -2076,16 +2217,16 @@ export type ProductResolvers<
     ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    sku?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    sku?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     remoteState?: Resolver<
-        ResolversTypes['JSONObject'],
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -2093,7 +2234,7 @@ export type ProductResolvers<
         Maybe<ResolversTypes['MarketingCampaignConnection']>,
         ParentType,
         ContextType,
-        ProductMarketingCampaignsArgs
+        RequireFields<ProductMarketingCampaignsArgs, 'showDeleted'>
     >;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
@@ -2104,7 +2245,12 @@ export type ProductResolvers<
         ContextType
     >;
     errors?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['String']>>>,
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
+    warnings?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
         ParentType,
         ContextType
     >;
@@ -2156,7 +2302,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['CatalogConnection']>,
         ParentType,
         ContextType,
-        QueryCatalogsArgs
+        RequireFields<QueryCatalogsArgs, 'showDeleted'>
     >;
     entitlement?: Resolver<
         Maybe<ResolversTypes['Entitlement']>,
@@ -2192,7 +2338,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['MarketingCampaignConnection']>,
         ParentType,
         ContextType,
-        QueryMarketingCampaignsArgs
+        RequireFields<QueryMarketingCampaignsArgs, 'showDeleted'>
     >;
     marketplace?: Resolver<
         Maybe<ResolversTypes['Marketplace']>,
@@ -2204,7 +2350,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['MarketplaceConnection']>,
         ParentType,
         ContextType,
-        QueryMarketplacesArgs
+        RequireFields<QueryMarketplacesArgs, 'showDeleted'>
     >;
     mediaChannel?: Resolver<
         Maybe<ResolversTypes['MediaChannel']>,
@@ -2216,7 +2362,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['MediaChannelConnection']>,
         ParentType,
         ContextType,
-        QueryMediaChannelsArgs
+        RequireFields<QueryMediaChannelsArgs, 'showDeleted'>
     >;
     organization?: Resolver<
         Maybe<ResolversTypes['Organization']>,
@@ -2228,7 +2374,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['OrganizationConnection']>,
         ParentType,
         ContextType,
-        QueryOrganizationsArgs
+        RequireFields<QueryOrganizationsArgs, 'showDeleted'>
     >;
     product?: Resolver<
         Maybe<ResolversTypes['Product']>,
@@ -2240,7 +2386,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['ProductConnection']>,
         ParentType,
         ContextType,
-        QueryProductsArgs
+        RequireFields<QueryProductsArgs, 'showDeleted'>
     >;
     result?: Resolver<
         Maybe<ResolversTypes['Result']>,
@@ -2265,7 +2411,7 @@ export type QueryResolvers<
         Maybe<ResolversTypes['VendorConnection']>,
         ParentType,
         ContextType,
-        QueryVendorsArgs
+        RequireFields<QueryVendorsArgs, 'showDeleted'>
     >;
 };
 
@@ -2274,20 +2420,15 @@ export type ResultResolvers<
     ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
-    date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    impressions?: Resolver<
-        Array<ResolversTypes['String']>,
-        ParentType,
-        ContextType
-    >;
-    results?: Resolver<
-        Array<ResolversTypes['String']>,
+    date?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    analytics?: Resolver<
+        ResolversTypes['ResultAnalytics'],
         ParentType,
         ContextType
     >;
@@ -2302,6 +2443,20 @@ export type ResultResolvers<
         ContextType
     >;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+};
+
+export type ResultAnalyticsResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['ResultAnalytics'] = ResolversParentTypes['ResultAnalytics']
+> = {
+    results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    impressions?: Resolver<
+        Maybe<ResolversTypes['Int']>,
+        ParentType,
+        ContextType
+    >;
+    clicks?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    spend?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
 };
 
 export type ResultConnectionResolvers<
@@ -2329,10 +2484,18 @@ export type ResultResourceResolvers<
     ParentType extends ResolversParentTypes['ResultResource'] = ResolversParentTypes['ResultResource']
 > = {
     __resolveType: TypeResolveFn<
-        'MarketingAd' | 'MarketingCampaign',
+        'MarketingCampaign' | 'MarketingAd',
         ParentType,
         ContextType
     >;
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
 };
 
 export type TokenResolvers<
@@ -2341,7 +2504,7 @@ export type TokenResolvers<
 > = {
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     refreshToken?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    expiryDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    expiryDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
@@ -2355,9 +2518,9 @@ export type UserResolvers<
     ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -2376,7 +2539,7 @@ export type UserResolvers<
         Maybe<ResolversTypes['OrganizationConnection']>,
         ParentType,
         ContextType,
-        UserOrganizationsArgs
+        RequireFields<UserOrganizationsArgs, 'showDeleted'>
     >;
     entitlements?: Resolver<
         Maybe<ResolversTypes['EntitlementConnection']>,
@@ -2411,9 +2574,9 @@ export type VendorResolvers<
     ParentType extends ResolversParentTypes['Vendor'] = ResolversParentTypes['Vendor']
 > = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    creationDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<
-        ResolversTypes['String'],
+        ResolversTypes['DateISO'],
         ParentType,
         ContextType
     >;
@@ -2427,7 +2590,17 @@ export type VendorResolvers<
         Maybe<ResolversTypes['ProductConnection']>,
         ParentType,
         ContextType,
-        VendorProductsArgs
+        RequireFields<VendorProductsArgs, 'showDeleted'>
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
     >;
 };
 
@@ -2460,11 +2633,13 @@ export type Resolvers<ContextType = any> = {
     Catalog?: CatalogResolvers<ContextType>;
     CatalogConnection?: CatalogConnectionResolvers<ContextType>;
     CatalogEdge?: CatalogEdgeResolvers<ContextType>;
+    DateISO?: GraphQLScalarType;
     Deletion?: DeletionResolvers<ContextType>;
     Entitlement?: EntitlementResolvers<ContextType>;
     EntitlementConnection?: EntitlementConnectionResolvers<ContextType>;
     EntitlementEdge?: EntitlementEdgeResolvers<ContextType>;
     EntitlementResource?: EntitlementResourceResolvers;
+    FilterInput?: GraphQLScalarType;
     JSONObject?: GraphQLScalarType;
     MarketingAd?: MarketingAdResolvers<ContextType>;
     MarketingAdConnection?: MarketingAdConnectionResolvers<ContextType>;
@@ -2492,6 +2667,7 @@ export type Resolvers<ContextType = any> = {
     ProductEdge?: ProductEdgeResolvers<ContextType>;
     Query?: QueryResolvers<ContextType>;
     Result?: ResultResolvers<ContextType>;
+    ResultAnalytics?: ResultAnalyticsResolvers<ContextType>;
     ResultConnection?: ResultConnectionResolvers<ContextType>;
     ResultEdge?: ResultEdgeResolvers<ContextType>;
     ResultResource?: ResultResourceResolvers;
