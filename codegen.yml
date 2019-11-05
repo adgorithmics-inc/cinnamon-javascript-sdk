@@ -9,6 +9,7 @@ config:
     scalars:
         ObjectId: string
         NonEmptyString: string
+    maybeValue: T
 hooks:
     afterAllFileWrite:
         - prettier --write
