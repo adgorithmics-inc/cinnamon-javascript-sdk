@@ -85,12 +85,17 @@ export class Cinnamon {
         this.config = config;
     }
 
-    async api<T extends APIKey, U extends string = T>(
-        query: string,
-        variables: object = {},
-        headers: Headers = {},
-        token?: string,
-    ): Promise<APIResult<T, U>> {
+    async api<T extends APIKey, U extends string = T>({
+        query,
+        variables = {},
+        headers = {},
+        token,
+    }: {
+        query: string;
+        variables: object;
+        headers?: Headers;
+        token?: string;
+    }): Promise<APIResult<T, U>> {
         const response = await fetch(this.config.url, {
             method: 'POST',
             headers: {
@@ -112,7 +117,7 @@ export class Cinnamon {
                 !token
             ) {
                 await this.refreshLogin({ refreshToken: this.refreshToken });
-                return this.api(query, variables, headers, token);
+                return this.api({ query, variables, headers, token });
             }
             throw new Error(
                 json.errors.map((error: Error) => error.message).join('\n'),
@@ -150,8 +155,8 @@ export class Cinnamon {
     // ####################################
 
     async login(input: UserLoginInput) {
-        const result = (await this.api<'login'>(
-            `mutation($input: UserLoginInput!) {
+        const result = (await this.api<'login'>({
+            query: `mutation($input: UserLoginInput!) {
                 login(input: $input) {
                     ${[
                         TokenFields.expiryDate,
@@ -160,8 +165,8 @@ export class Cinnamon {
                     ].join(' ')}
                 }
             }`,
-            { input },
-        )).data.login;
+            variables: { input },
+        })).data.login;
 
         if (result.token && result.refreshToken) {
             this.token = result.token;
@@ -172,8 +177,8 @@ export class Cinnamon {
     }
 
     async refreshLogin(input: RefreshTokenInput) {
-        const result = (await this.api<'refreshLogin'>(
-            `mutation($input: RefreshTokenInput!) {
+        const result = (await this.api<'refreshLogin'>({
+            query: `mutation($input: RefreshTokenInput!) {
                 refreshLogin(input: $input) {
                     ${[
                         TokenFields.expiryDate,
@@ -182,8 +187,8 @@ export class Cinnamon {
                     ].join(' ')}
                 }
             }`,
-            { input },
-        )).data.refreshLogin;
+            variables: { input },
+        })).data.refreshLogin;
 
         if (result.token && result.refreshToken) {
             this.token = result.token;
@@ -193,89 +198,104 @@ export class Cinnamon {
         return result;
     }
 
-    async me(
-        fields: Array<keyof UserFields | string> = [
-            UserFields.id,
-            UserFields.email,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'me'>(
-            `query {
+    async me({
+        fields = [UserFields.id, UserFields.email],
+        headers,
+        token,
+    }: {
+        fields?: Array<keyof UserFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'me'>({
+            query: `query {
                 me {
                     ${fields.join(' ')}
                 }
             }`,
-            {},
+            variables: {},
             headers,
             token,
-        )).data.me;
+        })).data.me;
     }
 
-    async updateUser(
-        input: UserUpdateInput,
-        fields: Array<keyof UserFields | string> = [
-            UserFields.id,
-            UserFields.email,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateUser'>(
-            `mutation($input: UserUpdateInput!) {
+    async updateUser({
+        input,
+        fields = [UserFields.id, UserFields.email],
+        headers,
+        token,
+    }: {
+        input: UserUpdateInput;
+        fields?: Array<keyof UserFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateUser'>({
+            query: `mutation($input: UserUpdateInput!) {
                 updateUser(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.updateUser;
+        })).data.updateUser;
     }
 
     // ####################################
     // Organization
     // ####################################
 
-    async organization(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof OrganizationFields | string> = [
+    async organization({
+        id,
+        fields = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
             OrganizationFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'organization'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof OrganizationFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'organization'>({
+            query: `query($id: ObjectId!) {
                 organization(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.organization;
+        })).data.organization;
     }
 
-    async organizations(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof OrganizationFields | string> = [
+    async organizations({
+        filter,
+        sort,
+        after,
+        fields = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
             OrganizationFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'organizations'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof OrganizationFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'organizations'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 organizations(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -288,118 +308,142 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.organizations;
+        })).data.organizations;
     }
 
-    organizationsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof OrganizationFields | string> = [
-            OrganizationFields.id,
-            OrganizationFields.name,
-            OrganizationFields.systemStatus,
-            OrganizationFields.errors,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    organizationsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof OrganizationFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Organization>((after: PageInfo['endCursor']) =>
-            this.organizations(filter, sort, after, fields, headers, token),
+            this.organizations({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createOrganization(
-        input: OrganizationInput,
-        fields: Array<keyof OrganizationFields | string> = [
+    async createOrganization({
+        input,
+        fields = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
             OrganizationFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createOrganization'>(
-            `mutation($input: OrganizationInput!) {
+        headers,
+        token,
+    }: {
+        input: OrganizationInput;
+        fields?: Array<keyof OrganizationFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createOrganization'>({
+            query: `mutation($input: OrganizationInput!) {
                 createOrganization(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createOrganization;
+        })).data.createOrganization;
     }
 
-    async updateOrganization(
-        id: Scalars['ObjectId'],
-        input: OrganizationUpdateInput,
-        fields: Array<keyof OrganizationFields | string> = [
+    async updateOrganization({
+        id,
+        input,
+        fields = [
             OrganizationFields.id,
             OrganizationFields.name,
             OrganizationFields.systemStatus,
             OrganizationFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateOrganization'>(
-            `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: OrganizationUpdateInput;
+        fields?: Array<keyof OrganizationFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateOrganization'>({
+            query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
                 updateOrganization(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateOrganization;
+        })).data.updateOrganization;
     }
 
     // ####################################
     // Marketplace
     // ####################################
 
-    async marketplace(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof MarketplaceFields | string> = [
+    async marketplace({
+        id,
+        fields = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
             MarketplaceFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'marketplace'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof MarketplaceFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'marketplace'>({
+            query: `query($id: ObjectId!) {
                 marketplace(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.marketplace;
+        })).data.marketplace;
     }
 
-    async marketplaces(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MarketplaceFields | string> = [
+    async marketplaces({
+        filter,
+        sort,
+        after,
+        fields = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
             MarketplaceFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'marketplaces'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof MarketplaceFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'marketplaces'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 marketplaces(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -412,135 +456,163 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.marketplaces;
+        })).data.marketplaces;
     }
 
-    marketplacesAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof MarketplaceFields | string> = [
-            MarketplaceFields.id,
-            MarketplaceFields.name,
-            MarketplaceFields.systemStatus,
-            MarketplaceFields.errors,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    marketplacesAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MarketplaceFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Marketplace>((after: PageInfo['endCursor']) =>
-            this.marketplaces(filter, sort, after, fields, headers, token),
+            this.marketplaces({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createMarketplace(
-        input: MarketplaceInput,
-        fields: Array<keyof MarketplaceFields | string> = [
+    async createMarketplace({
+        input,
+        fields = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
             MarketplaceFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createMarketplace'>(
-            `mutation($input: MarketplaceInput!) {
+        headers,
+        token,
+    }: {
+        input: MarketplaceInput;
+        fields?: Array<keyof MarketplaceFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createMarketplace'>({
+            query: `mutation($input: MarketplaceInput!) {
                 createMarketplace(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createMarketplace;
+        })).data.createMarketplace;
     }
 
-    async updateMarketplace(
-        id: Scalars['ObjectId'],
-        input: MarketplaceUpdateInput,
-        fields: Array<keyof MarketplaceFields | string> = [
+    async updateMarketplace({
+        id,
+        input,
+        fields = [
             MarketplaceFields.id,
             MarketplaceFields.name,
             MarketplaceFields.systemStatus,
             MarketplaceFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateMarketplace'>(
-            `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: MarketplaceUpdateInput;
+        fields?: Array<keyof MarketplaceFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateMarketplace'>({
+            query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
                 updateMarketplace(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateMarketplace;
+        })).data.updateMarketplace;
     }
 
-    async deleteMarketplace(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteMarketplace'>(
-            `mutation($id: ObjectId!) {
+    async deleteMarketplace({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteMarketplace'>({
+            query: `mutation($id: ObjectId!) {
                 deleteMarketplace(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteMarketplace;
+        })).data.deleteMarketplace;
     }
 
     // ####################################
     // MediaChannel
     // ####################################
 
-    async mediaChannel(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof MediaChannelFields | string> = [
+    async mediaChannel({
+        id,
+        fields = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
             MediaChannelFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'mediaChannel'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'mediaChannel'>({
+            query: `query($id: ObjectId!) {
                 mediaChannel(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.mediaChannel;
+        })).data.mediaChannel;
     }
 
-    async mediaChannels(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MediaChannelFields | string> = [
+    async mediaChannels({
+        filter,
+        sort,
+        after,
+        fields = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
             MediaChannelFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'mediaChannels'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'mediaChannels'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 mediaChannels(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -553,154 +625,181 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.mediaChannels;
+        })).data.mediaChannels;
     }
 
-    mediaChannelsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof MediaChannelFields | string> = [
-            MediaChannelFields.id,
-            MediaChannelFields.name,
-            MediaChannelFields.systemStatus,
-            MediaChannelFields.errors,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    mediaChannelsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<MediaChannel>((after: PageInfo['endCursor']) =>
-            this.mediaChannels(filter, sort, after, fields, headers, token),
+            this.mediaChannels({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createMediaChannel(
-        input: MediaChannelCreateInput,
-        fields: Array<keyof MediaChannelFields | string> = [
+    async createMediaChannel({
+        input,
+        fields = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
             MediaChannelFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createMediaChannel'>(
-            `mutation($input: MediaChannelCreateInput!) {
+        headers,
+        token,
+    }: {
+        input: MediaChannelCreateInput;
+        fields?: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createMediaChannel'>({
+            query: `mutation($input: MediaChannelCreateInput!) {
                 createMediaChannel(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createMediaChannel;
+        })).data.createMediaChannel;
     }
 
-    async importMediaChannel(
-        input: MediaChannelImportInput,
-        fields: Array<keyof MediaChannelFields | string> = [
+    async importMediaChannel({
+        input,
+        fields = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
             MediaChannelFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'importMediaChannel'>(
-            `mutation($input: MediaChannelImportInput!) {
+        headers,
+        token,
+    }: {
+        input: MediaChannelImportInput;
+        fields?: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'importMediaChannel'>({
+            query: `mutation($input: MediaChannelImportInput!) {
                 importMediaChannel(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.importMediaChannel;
+        })).data.importMediaChannel;
     }
 
-    async updateMediaChannel(
-        id: Scalars['ObjectId'],
-        input: MediaChannelUpdateInput,
-        fields: Array<keyof MediaChannelFields | string> = [
+    async updateMediaChannel({
+        id,
+        input,
+        fields = [
             MediaChannelFields.id,
             MediaChannelFields.name,
             MediaChannelFields.systemStatus,
             MediaChannelFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateMediaChannel'>(
-            `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: MediaChannelUpdateInput;
+        fields?: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateMediaChannel'>({
+            query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
                 updateMediaChannel(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateMediaChannel;
+        })).data.updateMediaChannel;
     }
 
-    async deleteMediaChannel(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteMediaChannel'>(
-            `mutation($id: ObjectId!) {
+    async deleteMediaChannel({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteMediaChannel'>({
+            query: `mutation($id: ObjectId!) {
                 deleteMediaChannel(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteMediaChannel;
+        })).data.deleteMediaChannel;
     }
 
     // ####################################
     // CampaignTemplate
     // ####################################
 
-    async campaignTemplate(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof CampaignTemplateFields | string> = [
-            CampaignTemplateFields.id,
-            CampaignTemplateFields.name,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'campaignTemplate'>(
-            `query($id: ObjectId!) {
+    async campaignTemplate({
+        id,
+        fields = [CampaignTemplateFields.id, CampaignTemplateFields.name],
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CampaignTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'campaignTemplate'>({
+            query: `query($id: ObjectId!) {
                 campaignTemplate(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.campaignTemplate;
+        })).data.campaignTemplate;
     }
 
-    async campaignTemplates(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof CampaignTemplateFields | string> = [
-            CampaignTemplateFields.id,
-            CampaignTemplateFields.name,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'campaignTemplates'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+    async campaignTemplates({
+        filter,
+        sort,
+        after,
+        fields = [CampaignTemplateFields.id, CampaignTemplateFields.name],
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CampaignTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'campaignTemplates'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 campaignTemplates(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -713,24 +812,34 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.campaignTemplates;
+        })).data.campaignTemplates;
     }
 
-    campaignTemplatesAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof CampaignTemplateFields | string> = [
-            CampaignTemplateFields.id,
-            CampaignTemplateFields.name,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    campaignTemplatesAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CampaignTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<CampaignTemplate>((after: PageInfo['endCursor']) =>
-            this.campaignTemplates(filter, sort, after, fields, headers, token),
+            this.campaignTemplates({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -738,44 +847,56 @@ export class Cinnamon {
     // Vendor
     // ####################################
 
-    async vendor(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof VendorFields | string> = [
+    async vendor({
+        id,
+        fields = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
             VendorFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'vendor'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof VendorFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'vendor'>({
+            query: `query($id: ObjectId!) {
                 vendor(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.vendor;
+        })).data.vendor;
     }
 
-    async vendors(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof VendorFields | string> = [
+    async vendors({
+        filter,
+        sort,
+        after,
+        fields = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
             VendorFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'vendors'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof VendorFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'vendors'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 vendors(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -788,137 +909,165 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.vendors;
+        })).data.vendors;
     }
 
-    vendorsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof VendorFields | string> = [
-            VendorFields.id,
-            VendorFields.name,
-            VendorFields.systemStatus,
-            VendorFields.errors,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    vendorsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof VendorFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Vendor>((after: PageInfo['endCursor']) =>
-            this.vendors(filter, sort, after, fields, headers, token),
+            this.vendors({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createVendor(
-        input: VendorInput,
-        fields: Array<keyof VendorFields | string> = [
+    async createVendor({
+        input,
+        fields = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
             VendorFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createVendor'>(
-            `mutation($input: VendorInput!) {
+        headers,
+        token,
+    }: {
+        input: VendorInput;
+        fields?: Array<keyof VendorFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createVendor'>({
+            query: `mutation($input: VendorInput!) {
                 createVendor(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createVendor;
+        })).data.createVendor;
     }
 
-    async updateVendor(
-        id: Scalars['ObjectId'],
-        input: VendorUpdateInput,
-        fields: Array<keyof VendorFields | string> = [
+    async updateVendor({
+        id,
+        input,
+        fields = [
             VendorFields.id,
             VendorFields.name,
             VendorFields.systemStatus,
             VendorFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateVendor'>(
-            `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: VendorUpdateInput;
+        fields?: Array<keyof VendorFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateVendor'>({
+            query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
                 updateVendor(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateVendor;
+        })).data.updateVendor;
     }
 
-    async deleteVendor(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteVendor'>(
-            `mutation($id: ObjectId!) {
+    async deleteVendor({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteVendor'>({
+            query: `mutation($id: ObjectId!) {
                 deleteVendor(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteVendor;
+        })).data.deleteVendor;
     }
 
     // ####################################
     // Catalog
     // ####################################
 
-    async catalog(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof CatalogFields | string> = [
+    async catalog({
+        id,
+        fields = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
             CatalogFields.systemStatus,
             CatalogFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'catalog'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'catalog'>({
+            query: `query($id: ObjectId!) {
                 catalog(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.catalog;
+        })).data.catalog;
     }
 
-    async catalogs(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof CatalogFields | string> = [
+    async catalogs({
+        filter,
+        sort,
+        after,
+        fields = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
             CatalogFields.systemStatus,
             CatalogFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'catalogs'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'catalogs'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 catalogs(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -931,127 +1080,147 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.catalogs;
+        })).data.catalogs;
     }
 
-    catalogsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof CatalogFields | string> = [
-            CatalogFields.id,
-            CatalogFields.name,
-            CatalogFields.remoteId,
-            CatalogFields.systemStatus,
-            CatalogFields.errors,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    catalogsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Catalog>((after: PageInfo['endCursor']) =>
-            this.catalogs(filter, sort, after, fields, headers, token),
+            this.catalogs({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createCatalog(
-        input: CatalogCreateInput,
-        fields: Array<keyof CatalogFields | string> = [
+    async createCatalog({
+        input,
+        fields = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
             CatalogFields.systemStatus,
             CatalogFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createCatalog'>(
-            `mutation($input: CatalogCreateInput!) {
+        headers,
+        token,
+    }: {
+        input: CatalogCreateInput;
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createCatalog'>({
+            query: `mutation($input: CatalogCreateInput!) {
                 createCatalog(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createCatalog;
+        })).data.createCatalog;
     }
 
-    async importCatalog(
-        input: CatalogImportInput,
-        fields: Array<keyof CatalogFields | string> = [
+    async importCatalog({
+        input,
+        fields = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
             CatalogFields.systemStatus,
             CatalogFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createCatalog'>(
-            `mutation($input: CatalogImportInput!) {
+        headers,
+        token,
+    }: {
+        input: CatalogImportInput;
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createCatalog'>({
+            query: `mutation($input: CatalogImportInput!) {
                 createCatalog(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createCatalog;
+        })).data.createCatalog;
     }
 
-    async updateCatalog(
-        id: Scalars['ObjectId'],
-        input: CatalogUpdateInput,
-        fields: Array<keyof CatalogFields | string> = [
+    async updateCatalog({
+        id,
+        input,
+        fields = [
             CatalogFields.id,
             CatalogFields.name,
             CatalogFields.remoteId,
             CatalogFields.systemStatus,
             CatalogFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateCatalog'>(
-            `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: CatalogUpdateInput;
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateCatalog'>({
+            query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
                 updateCatalog(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateCatalog;
+        })).data.updateCatalog;
     }
 
-    async deleteCatalog(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteCatalog'>(
-            `mutation($id: ObjectId!) {
+    async deleteCatalog({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteCatalog'>({
+            query: `mutation($id: ObjectId!) {
                 deleteCatalog(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteCatalog;
+        })).data.deleteCatalog;
     }
 
     // ####################################
     // Product
     // ####################################
 
-    async product(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof ProductFields | string> = [
+    async product({
+        id,
+        fields = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1059,26 +1228,31 @@ export class Cinnamon {
             ProductFields.errors,
             ProductFields.warnings,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'product'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof ProductFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'product'>({
+            query: `query($id: ObjectId!) {
                 product(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.product;
+        })).data.product;
     }
 
-    async products(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof ProductFields | string> = [
+    async products({
+        filter,
+        sort,
+        after,
+        fields = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1086,11 +1260,18 @@ export class Cinnamon {
             ProductFields.errors,
             ProductFields.warnings,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'products'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof ProductFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'products'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 products(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1103,34 +1284,33 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.products;
+        })).data.products;
     }
 
-    productsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof ProductFields | string> = [
-            ProductFields.id,
-            ProductFields.name,
-            ProductFields.sku,
-            ProductFields.systemStatus,
-            ProductFields.errors,
-            ProductFields.warnings,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    productsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof ProductFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Product>((after: PageInfo['endCursor']) =>
-            this.products(filter, sort, after, fields, headers, token),
+            this.products({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createProduct(
-        input: ProductInput,
-        fields: Array<keyof ProductFields | string> = [
+    async createProduct({
+        input,
+        fields = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1138,25 +1318,30 @@ export class Cinnamon {
             ProductFields.errors,
             ProductFields.warnings,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createProduct'>(
-            `mutation($input: ProductInput!) {
+        headers,
+        token,
+    }: {
+        input: ProductInput;
+        fields?: Array<keyof ProductFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createProduct'>({
+            query: `mutation($input: ProductInput!) {
                 createProduct(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createProduct;
+        })).data.createProduct;
     }
 
-    async updateProduct(
-        id: Scalars['ObjectId'],
-        input: ProductUpdateInput,
-        fields: Array<keyof ProductFields | string> = [
+    async updateProduct({
+        id,
+        input,
+        fields = [
             ProductFields.id,
             ProductFields.name,
             ProductFields.sku,
@@ -1164,80 +1349,102 @@ export class Cinnamon {
             ProductFields.errors,
             ProductFields.warnings,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateProduct'>(
-            `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: ProductUpdateInput;
+        fields?: Array<keyof ProductFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateProduct'>({
+            query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
                 updateProduct(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateProduct;
+        })).data.updateProduct;
     }
 
-    async deleteProduct(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteProduct'>(
-            `mutation($id: ObjectId!) {
+    async deleteProduct({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteProduct'>({
+            query: `mutation($id: ObjectId!) {
                 deleteProduct(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteProduct;
+        })).data.deleteProduct;
     }
 
     // ####################################
     // MarketingCampaign
     // ####################################
 
-    async marketingCampaign(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof MarketingCampaignFields | string> = [
+    async marketingCampaign({
+        id,
+        fields = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
             MarketingCampaignFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'marketingCampaign'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'marketingCampaign'>({
+            query: `query($id: ObjectId!) {
                 marketingCampaign(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.marketingCampaign;
+        })).data.marketingCampaign;
     }
 
-    async marketingCampaigns(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MarketingCampaignFields | string> = [
+    async marketingCampaigns({
+        filter,
+        sort,
+        after,
+        fields = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
             MarketingCampaignFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'marketingCampaigns'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'marketingCampaigns'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1250,139 +1457,161 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.marketingCampaigns;
+        })).data.marketingCampaigns;
     }
 
-    marketingCampaignsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof MarketingCampaignFields | string> = [
-            MarketingCampaignFields.id,
-            MarketingCampaignFields.status,
-            MarketingCampaignFields.systemStatus,
-            MarketingCampaignFields.errors,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    marketingCampaignsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<MarketingCampaign>(
             (after: PageInfo['endCursor']) =>
-                this.marketingCampaigns(
+                this.marketingCampaigns({
                     filter,
                     sort,
                     after,
                     fields,
                     headers,
                     token,
-                ),
+                }),
         );
     }
 
-    async createMarketingCampaign(
-        input: MarketingCampaignInput,
-        fields: Array<keyof MarketingCampaignFields | string> = [
+    async createMarketingCampaign({
+        input,
+        fields = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
             MarketingCampaignFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createMarketingCampaign'>(
-            `mutation($input: MarketingCampaignInput!) {
+        headers,
+        token,
+    }: {
+        input: MarketingCampaignInput;
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createMarketingCampaign'>({
+            query: `mutation($input: MarketingCampaignInput!) {
                 createMarketingCampaign(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createMarketingCampaign;
+        })).data.createMarketingCampaign;
     }
 
-    async updateMarketingCampaign(
-        id: Scalars['ObjectId'],
-        input: MarketingCampaignUpdateInput,
-        fields: Array<keyof MarketingCampaignFields | string> = [
+    async updateMarketingCampaign({
+        id,
+        input,
+        fields = [
             MarketingCampaignFields.id,
             MarketingCampaignFields.status,
             MarketingCampaignFields.systemStatus,
             MarketingCampaignFields.errors,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateMarketingCampaign'>(
-            `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: MarketingCampaignUpdateInput;
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateMarketingCampaign'>({
+            query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
                 updateMarketingCampaign(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateMarketingCampaign;
+        })).data.updateMarketingCampaign;
     }
 
-    async deleteMarketingCampaign(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteMarketingCampaign'>(
-            `mutation($id: ObjectId!) {
+    async deleteMarketingCampaign({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteMarketingCampaign'>({
+            query: `mutation($id: ObjectId!) {
                 deleteMarketingCampaign(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteMarketingCampaign;
+        })).data.deleteMarketingCampaign;
     }
 
     // ####################################
     // MarketingAd
     // ####################################
 
-    async marketingAd(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof MarketingAdFields | string> = [
-            MarketingAdFields.id,
-            MarketingAdFields.remoteId,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'marketingAd'>(
-            `query($id: ObjectId!) {
+    async marketingAd({
+        id,
+        fields = [MarketingAdFields.id, MarketingAdFields.remoteId],
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof MarketingAdFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'marketingAd'>({
+            query: `query($id: ObjectId!) {
                 marketingAd(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.marketingAd;
+        })).data.marketingAd;
     }
 
-    async marketingAds(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof MarketingAdFields | string> = [
-            MarketingAdFields.id,
-            MarketingAdFields.remoteId,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'marketingAds'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+    async marketingAds({
+        filter,
+        sort,
+        after,
+        fields = [MarketingAdFields.id, MarketingAdFields.remoteId],
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof MarketingAdFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'marketingAds'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 marketingAds(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1395,24 +1624,27 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.marketingAds;
+        })).data.marketingAds;
     }
 
-    marketingAdsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof MarketingAdFields | string> = [
-            MarketingAdFields.id,
-            MarketingAdFields.remoteId,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    marketingAdsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MarketingAdFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<MarketingAd>((after: PageInfo['endCursor']) =>
-            this.marketingAds(filter, sort, after, fields, headers, token),
+            this.marketingAds({ filter, sort, after, fields, headers, token }),
         );
     }
 
@@ -1420,42 +1652,46 @@ export class Cinnamon {
     // Result
     // ####################################
 
-    async result(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof ResultFields | string> = [
-            ResultFields.id,
-            ResultFields.date,
-            'analytics {results}',
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'result'>(
-            `query($id: ObjectId!) {
+    async result({
+        id,
+        fields = [ResultFields.id, ResultFields.date, 'analytics {results}'],
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof ResultFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'result'>({
+            query: `query($id: ObjectId!) {
                 result(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.result;
+        })).data.result;
     }
 
-    async results(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof ResultFields | string> = [
-            ResultFields.id,
-            ResultFields.date,
-            'analytics {results}',
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'results'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+    async results({
+        filter,
+        sort,
+        after,
+        fields = [ResultFields.id, ResultFields.date, 'analytics {results}'],
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof ResultFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'results'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 results(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1468,25 +1704,27 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.results;
+        })).data.results;
     }
 
-    resultsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof ResultFields | string> = [
-            ResultFields.id,
-            ResultFields.date,
-            'analytics {results}',
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    resultsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof ResultFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Result>((after: PageInfo['endCursor']) =>
-            this.results(filter, sort, after, fields, headers, token),
+            this.results({ filter, sort, after, fields, headers, token }),
         );
     }
 
@@ -1494,42 +1732,54 @@ export class Cinnamon {
     // Entitlement
     // ####################################
 
-    async entitlement(
-        id: Scalars['ObjectId'],
-        fields: Array<keyof EntitlementFields | string> = [
+    async entitlement({
+        id,
+        fields = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'entitlement'>(
-            `query($id: ObjectId!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof EntitlementFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'entitlement'>({
+            query: `query($id: ObjectId!) {
                 entitlement(id: $id) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.entitlement;
+        })).data.entitlement;
     }
 
-    async entitlements(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        after: PageInfo['endCursor'] = '',
-        fields: Array<keyof EntitlementFields | string> = [
+    async entitlements({
+        filter,
+        sort,
+        after,
+        fields = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'entitlements'>(
-            `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof EntitlementFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'entitlements'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
                 entitlements(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1542,88 +1792,105 @@ export class Cinnamon {
                     }
                 }
             }`,
-            { filter, sort, after },
+            variables: { filter, sort, after },
             headers,
             token,
-        )).data.entitlements;
+        })).data.entitlements;
     }
 
-    entitlementsAll(
-        filter: Scalars['FilterInput'] = [],
-        sort?: SortInput,
-        fields: Array<keyof EntitlementFields | string> = [
-            EntitlementFields.id,
-            EntitlementFields.permissions,
-            EntitlementFields.type,
-        ],
-        headers: Headers = {},
-        token?: string,
-    ) {
+    entitlementsAll({
+        filter,
+        sort,
+        fields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof EntitlementFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
         return this.allPages<Entitlement>((after: PageInfo['endCursor']) =>
-            this.entitlements(filter, sort, after, fields, headers, token),
+            this.entitlements({ filter, sort, after, fields, headers, token }),
         );
     }
 
-    async createEntitlement(
-        input: EntitlementInput,
-        fields: Array<keyof EntitlementFields | string> = [
+    async createEntitlement({
+        input,
+        fields = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'createEntitlement'>(
-            `mutation($input: EntitlementInput!) {
+        headers,
+        token,
+    }: {
+        input: EntitlementInput;
+        fields?: Array<keyof EntitlementFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createEntitlement'>({
+            query: `mutation($input: EntitlementInput!) {
                 createEntitlement(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { input },
+            variables: { input },
             headers,
             token,
-        )).data.createEntitlement;
+        })).data.createEntitlement;
     }
 
-    async updateEntitlement(
-        id: Scalars['ObjectId'],
-        input: EntitlementUpdateInput,
-        fields: Array<keyof EntitlementFields | string> = [
+    async updateEntitlement({
+        id,
+        input,
+        fields = [
             EntitlementFields.id,
             EntitlementFields.permissions,
             EntitlementFields.type,
         ],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'updateEntitlement'>(
-            `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: EntitlementUpdateInput;
+        fields?: Array<keyof EntitlementFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'updateEntitlement'>({
+            query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
                 updateEntitlement(id: $id, input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
-            { id, input },
+            variables: { id, input },
             headers,
             token,
-        )).data.updateEntitlement;
+        })).data.updateEntitlement;
     }
 
-    async deleteEntitlement(
-        id: Scalars['ObjectId'],
-        headers: Headers = {},
-        token?: string,
-    ) {
-        return (await this.api<'deleteEntitlement'>(
-            `mutation($id: ObjectId!) {
+    async deleteEntitlement({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteEntitlement'>({
+            query: `mutation($id: ObjectId!) {
                 deleteEntitlement(id: $id) {
                     id
                 }
             }`,
-            { id },
+            variables: { id },
             headers,
             token,
-        )).data.deleteEntitlement;
+        })).data.deleteEntitlement;
     }
 }
 
