@@ -142,7 +142,46 @@ export type Scalars = {
      * }
      * ```
      **/
-    FilterInput: any;
+    FilterInput:
+        | {
+              field: string;
+              operator:
+                  | 'EQUALS'
+                  | 'NOT_EQUALS'
+                  | 'CONTAINS'
+                  | 'ICONTAINS'
+                  | 'GT'
+                  | 'GTE'
+                  | 'LT'
+                  | 'LTE';
+              value: string | string[];
+          }
+        | {
+              field: string;
+              operator:
+                  | 'EQUALS'
+                  | 'NOT_EQUALS'
+                  | 'CONTAINS'
+                  | 'ICONTAINS'
+                  | 'GT'
+                  | 'GTE'
+                  | 'LT'
+                  | 'LTE';
+              value: string | string[];
+          }[]
+        | {
+              field: string;
+              operator:
+                  | 'EQUALS'
+                  | 'NOT_EQUALS'
+                  | 'CONTAINS'
+                  | 'ICONTAINS'
+                  | 'GT'
+                  | 'GTE'
+                  | 'LT'
+                  | 'LTE';
+              value: string | string[];
+          }[][];
     /** The `Upload` scalar type represents a file upload. */
     Upload: any;
 };
@@ -207,8 +246,11 @@ export type CampaignTemplate = {
 
 export type CampaignTemplateMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -239,8 +281,11 @@ export type Catalog = {
 
 export type CatalogProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -344,8 +389,11 @@ export type MarketingAd = ResultResource & {
 
 export type MarketingAdResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type MarketingAdConnection = {
@@ -379,21 +427,30 @@ export type MarketingCampaign = ResultResource & {
 
 export type MarketingCampaignMarketingAdsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type MarketingCampaignProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MarketingCampaignResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type MarketingCampaignConnection = {
@@ -442,21 +499,30 @@ export type Marketplace = EntitlementResource & {
 
 export type MarketplaceMediaChannelsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type MarketplaceCampaignTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type MarketplaceVendorsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -498,8 +564,11 @@ export type MediaChannel = EntitlementResource & {
 
 export type MediaChannelCatalogsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -715,14 +784,20 @@ export type Organization = EntitlementResource & {
 
 export type OrganizationUsersArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type OrganizationMarketplacesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -751,6 +826,7 @@ export type OrganizationUpdateInput = {
 
 export type PageInfo = {
     hasNextPage: Scalars['Boolean'];
+    hasPreviousPage: Scalars['Boolean'];
     startCursor?: Maybe<Scalars['String']>;
     endCursor?: Maybe<Scalars['String']>;
 };
@@ -777,8 +853,11 @@ export type Product = {
 
 export type ProductMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -834,8 +913,11 @@ export type QueryCampaignTemplateArgs = {
 
 export type QueryCampaignTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type QueryCatalogArgs = {
@@ -844,8 +926,11 @@ export type QueryCatalogArgs = {
 
 export type QueryCatalogsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -855,8 +940,11 @@ export type QueryEntitlementArgs = {
 
 export type QueryEntitlementsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type QueryMarketingAdArgs = {
@@ -865,8 +953,11 @@ export type QueryMarketingAdArgs = {
 
 export type QueryMarketingAdsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type QueryMarketingCampaignArgs = {
@@ -875,8 +966,11 @@ export type QueryMarketingCampaignArgs = {
 
 export type QueryMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -886,8 +980,11 @@ export type QueryMarketplaceArgs = {
 
 export type QueryMarketplacesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -897,8 +994,11 @@ export type QueryMediaChannelArgs = {
 
 export type QueryMediaChannelsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -908,8 +1008,11 @@ export type QueryOrganizationArgs = {
 
 export type QueryOrganizationsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -919,8 +1022,11 @@ export type QueryProductArgs = {
 
 export type QueryProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -930,8 +1036,11 @@ export type QueryResultArgs = {
 
 export type QueryResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type QueryVendorArgs = {
@@ -940,8 +1049,11 @@ export type QueryVendorArgs = {
 
 export type QueryVendorsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -989,6 +1101,16 @@ export enum ResultResourceTypeEnum {
     MarketingCampaign = 'MarketingCampaign',
 }
 
+export enum Sort_Order {
+    Asc = 'ASC',
+    Desc = 'DESC',
+}
+
+export type SortInput = {
+    field?: Maybe<Scalars['NonEmptyString']>;
+    order?: Maybe<Sort_Order>;
+};
+
 export enum SystemStatus {
     Pending = 'PENDING',
     PendingDeletion = 'PENDING_DELETION',
@@ -1028,15 +1150,21 @@ export type User = {
 
 export type UserOrganizationsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type UserEntitlementsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type UserConnection = {
@@ -1074,8 +1202,11 @@ export type Vendor = {
 
 export type VendorProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -1214,6 +1345,8 @@ export type ResolversTypes = {
     JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
     Organization: ResolverTypeWrapper<Organization>;
     FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
+    SortInput: SortInput;
+    SORT_ORDER: Sort_Order;
     Int: ResolverTypeWrapper<Scalars['Int']>;
     UserConnection: ResolverTypeWrapper<UserConnection>;
     UserEdge: ResolverTypeWrapper<UserEdge>;
@@ -1309,6 +1442,8 @@ export type ResolversParentTypes = {
     JSONObject: Scalars['JSONObject'];
     Organization: Organization;
     FilterInput: Scalars['FilterInput'];
+    SortInput: SortInput;
+    SORT_ORDER: Sort_Order;
     Int: Scalars['Int'];
     UserConnection: UserConnection;
     UserEdge: UserEdge;
@@ -2200,6 +2335,11 @@ export type PageInfoResolvers<
     ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']
 > = {
     hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+    hasPreviousPage?: Resolver<
+        ResolversTypes['Boolean'],
+        ParentType,
+        ContextType
+    >;
     startCursor?: Resolver<
         Maybe<ResolversTypes['String']>,
         ParentType,
