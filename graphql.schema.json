@@ -1824,7 +1824,7 @@
             {
                 "kind": "SCALAR",
                 "name": "FilterInput",
-                "description": "Accepts a single filterObject ({field: NonEmptyString!, operator: OPERATOR!,\nvalue: [String]}), a single array of filterObjects (creates an AND'ed query), or\na two dimentional array (each array is OR'ed) to produce your resource query.\nRefer to the following JSON schema for more filter restriction details:\n\n{\n  \"anyOf\": [\n    {\n      \"type\": \"object\",\n      \"$ref\": \"#/definitions/filterInput\"\n    },\n    {\n      \"type\": \"array\",\n      \"items\": {\n        \"anyOf\": [\n          {\n            \"$ref\": \"#/definitions/filterInput\"\n          },\n          {\n            \"type\": \"array\",\n            \"items\": {\n              \"$ref\": \"#/definitions/filterInput\"\n            }\n          }\n        ]\n      }\n    }\n  ],\n  \"definitions\": {\n    \"alphabeticString\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[a-zA-Z]+$\",\n      \"minLength\": 1,\n      \"required\": true\n    },\n    \"filterInput\": {\n      \"anyOf\": [\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"IN\"\n              ],\n              \"required\": true\n            },\n            \"value\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": [\n                  \"string\",\n                  \"integer\",\n                  \"boolean\"\n                ]\n              },\n              \"require\": true\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"EQUALS\",\n                \"NOT_EQUALS\",\n                \"CONTAINS\",\n                \"ICONTAINS\",\n                \"GT\",\n                \"GTE\",\n                \"LT\",\n                \"LTE\"\n              ],\n              \"required\": true\n            },\n            \"value\": {\n              \"type\": [\n                \"string\",\n                \"integer\",\n                \"boolean\"\n              ],\n              \"required\": true\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"IS_NULL\"\n              ],\n              \"required\": true\n            }\n          }\n        }\n      ]\n    }\n  }\n}",
+                "description": "Accepts a single filterObject (`{field: NonEmptyString!, operator: OPERATOR!,\nvalue: [String]}`), a single array of filterObjects (creates an AND'ed query),\nor a two dimentional array (each array is OR'ed) to produce your resource query.\nRefer to the following JSON schema for more filter restriction details:\n\n```json\n{\n  \"anyOf\": [\n    {\n      \"type\": \"object\",\n      \"$ref\": \"#/definitions/filterInput\"\n    },\n    {\n      \"type\": \"array\",\n      \"items\": {\n        \"anyOf\": [\n          {\n            \"$ref\": \"#/definitions/filterInput\"\n          },\n          {\n            \"type\": \"array\",\n            \"items\": {\n              \"$ref\": \"#/definitions/filterInput\"\n            }\n          }\n        ]\n      }\n    }\n  ],\n  \"definitions\": {\n    \"alphabeticString\": {\n      \"type\": \"string\",\n      \"pattern\": \"^[a-zA-Z]+$\",\n      \"minLength\": 1,\n      \"required\": true\n    },\n    \"filterInput\": {\n      \"anyOf\": [\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"IN\"\n              ],\n              \"required\": true\n            },\n            \"value\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": [\n                  \"string\",\n                  \"integer\",\n                  \"boolean\"\n                ]\n              },\n              \"require\": true\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"EQUALS\",\n                \"NOT_EQUALS\",\n                \"CONTAINS\",\n                \"ICONTAINS\",\n                \"GT\",\n                \"GTE\",\n                \"LT\",\n                \"LTE\"\n              ],\n              \"required\": true\n            },\n            \"value\": {\n              \"type\": [\n                \"string\",\n                \"integer\",\n                \"boolean\"\n              ],\n              \"required\": true\n            }\n          }\n        },\n        {\n          \"type\": \"object\",\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"field\": {\n              \"$ref\": \"#/definitions/alphabeticString\"\n            },\n            \"operator\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"IS_NULL\"\n              ],\n              \"required\": true\n            }\n          }\n        }\n      ]\n    }\n  }\n}\n```",
                 "fields": null,
                 "inputFields": null,
                 "interfaces": null,
@@ -3901,6 +3901,22 @@
                         "deprecationReason": null
                     },
                     {
+                        "name": "name",
+                        "description": null,
+                        "args": [],
+                        "type": {
+                            "kind": "NON_NULL",
+                            "name": null,
+                            "ofType": {
+                                "kind": "SCALAR",
+                                "name": "NonEmptyString",
+                                "ofType": null
+                            }
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
                         "name": "status",
                         "description": null,
                         "args": [],
@@ -4022,6 +4038,22 @@
                             "ofType": {
                                 "kind": "OBJECT",
                                 "name": "Vendor",
+                                "ofType": null
+                            }
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "catalog",
+                        "description": null,
+                        "args": [],
+                        "type": {
+                            "kind": "NON_NULL",
+                            "name": null,
+                            "ofType": {
+                                "kind": "OBJECT",
+                                "name": "Catalog",
                                 "ofType": null
                             }
                         },
@@ -6414,6 +6446,16 @@
                             "ofType": null
                         },
                         "defaultValue": null
+                    },
+                    {
+                        "name": "name",
+                        "description": null,
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "NonEmptyString",
+                            "ofType": null
+                        },
+                        "defaultValue": null
                     }
                 ],
                 "interfaces": null,
@@ -6452,6 +6494,16 @@
                         "type": {
                             "kind": "ENUM",
                             "name": "MarketingCampaignStatus",
+                            "ofType": null
+                        },
+                        "defaultValue": null
+                    },
+                    {
+                        "name": "name",
+                        "description": null,
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "NonEmptyString",
                             "ofType": null
                         },
                         "defaultValue": null

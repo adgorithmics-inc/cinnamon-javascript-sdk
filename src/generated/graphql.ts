@@ -24,11 +24,12 @@ export type Scalars = {
     /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
     JSONObject: any;
     /**
-     * Accepts a single filterObject ({field: NonEmptyString!, operator: OPERATOR!,
-     * value: [String]}), a single array of filterObjects (creates an AND'ed query), or
-     * a two dimentional array (each array is OR'ed) to produce your resource query.
+     * Accepts a single filterObject (`{field: NonEmptyString!, operator: OPERATOR!,
+     * value: [String]}`), a single array of filterObjects (creates an AND'ed query),
+     * or a two dimentional array (each array is OR'ed) to produce your resource query.
      * Refer to the following JSON schema for more filter restriction details:
      *
+     * ```json
      * {
      *   "anyOf": [
      *     {
@@ -139,6 +140,7 @@ export type Scalars = {
      *     }
      *   }
      * }
+     * ```
      **/
     FilterInput: any;
     /** The `Upload` scalar type represents a file upload. */
@@ -360,10 +362,12 @@ export type MarketingCampaign = ResultResource & {
     id: Scalars['ObjectId'];
     creationDate: Scalars['DateISO'];
     lastChangeDate: Scalars['DateISO'];
+    name: Scalars['NonEmptyString'];
     status: MarketingCampaignStatus;
     marketingAds?: Maybe<MarketingAdConnection>;
     products?: Maybe<ProductConnection>;
     vendor: Vendor;
+    catalog: Catalog;
     campaignTemplate: CampaignTemplate;
     mediaChannel: MediaChannel;
     results?: Maybe<ResultConnection>;
@@ -408,6 +412,7 @@ export type MarketingCampaignInput = {
     runTimeSpec: Scalars['JSONObject'];
     productIds?: Maybe<Array<Scalars['ObjectId']>>;
     status?: Maybe<MarketingCampaignStatus>;
+    name?: Maybe<Scalars['NonEmptyString']>;
 };
 
 export enum MarketingCampaignStatus {
@@ -419,6 +424,7 @@ export type MarketingCampaignUpdateInput = {
     creativeSpec?: Maybe<Scalars['JSONObject']>;
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
     status?: Maybe<MarketingCampaignStatus>;
+    name?: Maybe<Scalars['NonEmptyString']>;
 };
 
 export type Marketplace = EntitlementResource & {
@@ -1696,6 +1702,7 @@ export type MarketingCampaignResolvers<
         ParentType,
         ContextType
     >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     status?: Resolver<
         ResolversTypes['MarketingCampaignStatus'],
         ParentType,
@@ -1714,6 +1721,7 @@ export type MarketingCampaignResolvers<
         RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>
     >;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     campaignTemplate?: Resolver<
         ResolversTypes['CampaignTemplate'],
         ParentType,
