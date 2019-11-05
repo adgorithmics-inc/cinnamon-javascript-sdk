@@ -1,6 +1,6 @@
 {
   "name": "@adgorithmics/cinnamon-javascript-sdk",
-  "version": "0.0.5",
+  "version": "0.0.5-1",
   "description": "",
   "main": "index.node.js",
   "browser": "index.web.js",
