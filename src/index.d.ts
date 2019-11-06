@@ -125,7 +125,7 @@ export declare class Cinnamon {
     private defaultMediaChannelFields;
     mediaChannel({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields: Array<keyof MediaChannelFields | string>;
+        fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;

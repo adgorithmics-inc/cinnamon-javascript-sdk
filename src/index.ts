@@ -551,7 +551,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields: Array<keyof MediaChannelFields | string>;
+        fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
     }) {
