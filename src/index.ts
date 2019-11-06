@@ -427,7 +427,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'marketplaces'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 marketplaces(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -583,7 +583,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'mediaChannels'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 mediaChannels(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -760,7 +760,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'campaignTemplates'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 campaignTemplates(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -854,7 +854,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'vendors'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 vendors(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1011,7 +1011,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'catalogs'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 catalogs(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1192,7 +1192,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'products'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 products(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1348,7 +1348,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'marketingCampaigns'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1510,7 +1510,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'marketingAds'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 marketingAds(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1596,7 +1596,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'results'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 results(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
@@ -1682,7 +1682,7 @@ export class Cinnamon {
         token?: string;
     } = {}) {
         return (await this.api<'entitlements'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String!) {
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
                 entitlements(filter: $filter, sort: $sort, after: $after) {
                     pageInfo {
                         hasNextPage
