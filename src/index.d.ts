@@ -24,7 +24,7 @@ export declare class Cinnamon {
     constructor(config: Config);
     api<T extends APIKey, U extends string = T>({ query, variables, headers, token, }: {
         query: string;
-        variables: object;
+        variables?: object;
         headers?: Headers;
         token?: string;
     }): Promise<APIResult<T, U>>;
