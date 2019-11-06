@@ -9,6 +9,22 @@ config:
     scalars:
         ObjectId: string
         NonEmptyString: string
+        FilterInput: >-
+            {
+                field: string,
+                operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE', 
+                value: string | string[]
+            } | 
+            {
+                field: string,
+                operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE', 
+                value: string | string[]
+            }[] | 
+            {
+                field: string,
+                operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE', 
+                value: string | string[]
+            }[][]
     maybeValue: T
 hooks:
     afterAllFileWrite:
