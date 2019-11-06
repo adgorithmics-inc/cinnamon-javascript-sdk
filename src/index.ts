@@ -246,14 +246,16 @@ export class Cinnamon {
     // Organization
     // ####################################
 
+    private defaultOrganizationFields = [
+        OrganizationFields.id,
+        OrganizationFields.name,
+        OrganizationFields.systemStatus,
+        OrganizationFields.errors,
+    ];
+
     async organization({
         id,
-        fields = [
-            OrganizationFields.id,
-            OrganizationFields.name,
-            OrganizationFields.systemStatus,
-            OrganizationFields.errors,
-        ],
+        fields = this.defaultOrganizationFields,
         headers,
         token,
     }: {
@@ -278,12 +280,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            OrganizationFields.id,
-            OrganizationFields.name,
-            OrganizationFields.systemStatus,
-            OrganizationFields.errors,
-        ],
+        fields = this.defaultOrganizationFields,
         headers,
         token,
     }: {
@@ -317,7 +314,7 @@ export class Cinnamon {
     organizationsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultOrganizationFields,
         headers,
         token,
     }: {
@@ -334,12 +331,7 @@ export class Cinnamon {
 
     async createOrganization({
         input,
-        fields = [
-            OrganizationFields.id,
-            OrganizationFields.name,
-            OrganizationFields.systemStatus,
-            OrganizationFields.errors,
-        ],
+        fields = this.defaultOrganizationFields,
         headers,
         token,
     }: {
@@ -363,12 +355,7 @@ export class Cinnamon {
     async updateOrganization({
         id,
         input,
-        fields = [
-            OrganizationFields.id,
-            OrganizationFields.name,
-            OrganizationFields.systemStatus,
-            OrganizationFields.errors,
-        ],
+        fields = this.defaultOrganizationFields,
         headers,
         token,
     }: {
@@ -394,14 +381,16 @@ export class Cinnamon {
     // Marketplace
     // ####################################
 
+    private defaultMarketplaceFields = [
+        MarketplaceFields.id,
+        MarketplaceFields.name,
+        MarketplaceFields.systemStatus,
+        MarketplaceFields.errors,
+    ];
+
     async marketplace({
         id,
-        fields = [
-            MarketplaceFields.id,
-            MarketplaceFields.name,
-            MarketplaceFields.systemStatus,
-            MarketplaceFields.errors,
-        ],
+        fields = this.defaultMarketplaceFields,
         headers,
         token,
     }: {
@@ -426,12 +415,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            MarketplaceFields.id,
-            MarketplaceFields.name,
-            MarketplaceFields.systemStatus,
-            MarketplaceFields.errors,
-        ],
+        fields = this.defaultMarketplaceFields,
         headers,
         token,
     }: {
@@ -465,7 +449,7 @@ export class Cinnamon {
     marketplacesAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultMarketplaceFields,
         headers,
         token,
     }: {
@@ -482,12 +466,7 @@ export class Cinnamon {
 
     async createMarketplace({
         input,
-        fields = [
-            MarketplaceFields.id,
-            MarketplaceFields.name,
-            MarketplaceFields.systemStatus,
-            MarketplaceFields.errors,
-        ],
+        fields = this.defaultMarketplaceFields,
         headers,
         token,
     }: {
@@ -511,12 +490,7 @@ export class Cinnamon {
     async updateMarketplace({
         id,
         input,
-        fields = [
-            MarketplaceFields.id,
-            MarketplaceFields.name,
-            MarketplaceFields.systemStatus,
-            MarketplaceFields.errors,
-        ],
+        fields = this.defaultMarketplaceFields,
         headers,
         token,
     }: {
@@ -563,14 +537,16 @@ export class Cinnamon {
     // MediaChannel
     // ####################################
 
+    private defaultMediaChannelFields = [
+        MarketplaceFields.id,
+        MarketplaceFields.name,
+        MarketplaceFields.systemStatus,
+        MarketplaceFields.errors,
+    ];
+
     async mediaChannel({
         id,
-        fields = [
-            MediaChannelFields.id,
-            MediaChannelFields.name,
-            MediaChannelFields.systemStatus,
-            MediaChannelFields.errors,
-        ],
+        fields = this.defaultMediaChannelFields,
         headers,
         token,
     }: {
@@ -595,12 +571,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            MediaChannelFields.id,
-            MediaChannelFields.name,
-            MediaChannelFields.systemStatus,
-            MediaChannelFields.errors,
-        ],
+        fields = this.defaultMediaChannelFields,
         headers,
         token,
     }: {
@@ -634,7 +605,7 @@ export class Cinnamon {
     mediaChannelsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultMediaChannelFields,
         headers,
         token,
     }: {
@@ -651,12 +622,7 @@ export class Cinnamon {
 
     async createMediaChannel({
         input,
-        fields = [
-            MediaChannelFields.id,
-            MediaChannelFields.name,
-            MediaChannelFields.systemStatus,
-            MediaChannelFields.errors,
-        ],
+        fields = this.defaultMediaChannelFields,
         headers,
         token,
     }: {
@@ -679,12 +645,7 @@ export class Cinnamon {
 
     async importMediaChannel({
         input,
-        fields = [
-            MediaChannelFields.id,
-            MediaChannelFields.name,
-            MediaChannelFields.systemStatus,
-            MediaChannelFields.errors,
-        ],
+        fields = this.defaultMediaChannelFields,
         headers,
         token,
     }: {
@@ -708,12 +669,7 @@ export class Cinnamon {
     async updateMediaChannel({
         id,
         input,
-        fields = [
-            MediaChannelFields.id,
-            MediaChannelFields.name,
-            MediaChannelFields.systemStatus,
-            MediaChannelFields.errors,
-        ],
+        fields = this.defaultMediaChannelFields,
         headers,
         token,
     }: {
@@ -760,9 +716,14 @@ export class Cinnamon {
     // CampaignTemplate
     // ####################################
 
+    private defaultCampaignTemplateFields = [
+        CampaignTemplateFields.id,
+        CampaignTemplateFields.name,
+    ];
+
     async campaignTemplate({
         id,
-        fields = [CampaignTemplateFields.id, CampaignTemplateFields.name],
+        fields = this.defaultCampaignTemplateFields,
         headers,
         token,
     }: {
@@ -787,7 +748,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [CampaignTemplateFields.id, CampaignTemplateFields.name],
+        fields = this.defaultCampaignTemplateFields,
         headers,
         token,
     }: {
@@ -821,7 +782,7 @@ export class Cinnamon {
     campaignTemplatesAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultCampaignTemplateFields,
         headers,
         token,
     }: {
@@ -847,14 +808,16 @@ export class Cinnamon {
     // Vendor
     // ####################################
 
+    private defaultVendorFields = [
+        VendorFields.id,
+        VendorFields.name,
+        VendorFields.systemStatus,
+        VendorFields.errors,
+    ];
+
     async vendor({
         id,
-        fields = [
-            VendorFields.id,
-            VendorFields.name,
-            VendorFields.systemStatus,
-            VendorFields.errors,
-        ],
+        fields = this.defaultVendorFields,
         headers,
         token,
     }: {
@@ -879,12 +842,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            VendorFields.id,
-            VendorFields.name,
-            VendorFields.systemStatus,
-            VendorFields.errors,
-        ],
+        fields = this.defaultVendorFields,
         headers,
         token,
     }: {
@@ -918,7 +876,7 @@ export class Cinnamon {
     vendorsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultVendorFields,
         headers,
         token,
     }: {
@@ -935,12 +893,7 @@ export class Cinnamon {
 
     async createVendor({
         input,
-        fields = [
-            VendorFields.id,
-            VendorFields.name,
-            VendorFields.systemStatus,
-            VendorFields.errors,
-        ],
+        fields = this.defaultVendorFields,
         headers,
         token,
     }: {
@@ -964,12 +917,7 @@ export class Cinnamon {
     async updateVendor({
         id,
         input,
-        fields = [
-            VendorFields.id,
-            VendorFields.name,
-            VendorFields.systemStatus,
-            VendorFields.errors,
-        ],
+        fields = this.defaultVendorFields,
         headers,
         token,
     }: {
@@ -1016,15 +964,17 @@ export class Cinnamon {
     // Catalog
     // ####################################
 
+    private defaultCatalogFields = [
+        CatalogFields.id,
+        CatalogFields.name,
+        CatalogFields.remoteId,
+        CatalogFields.systemStatus,
+        CatalogFields.errors,
+    ];
+
     async catalog({
         id,
-        fields = [
-            CatalogFields.id,
-            CatalogFields.name,
-            CatalogFields.remoteId,
-            CatalogFields.systemStatus,
-            CatalogFields.errors,
-        ],
+        fields = this.defaultCatalogFields,
         headers,
         token,
     }: {
@@ -1049,13 +999,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            CatalogFields.id,
-            CatalogFields.name,
-            CatalogFields.remoteId,
-            CatalogFields.systemStatus,
-            CatalogFields.errors,
-        ],
+        fields = this.defaultCatalogFields,
         headers,
         token,
     }: {
@@ -1089,7 +1033,7 @@ export class Cinnamon {
     catalogsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultCatalogFields,
         headers,
         token,
     }: {
@@ -1106,13 +1050,7 @@ export class Cinnamon {
 
     async createCatalog({
         input,
-        fields = [
-            CatalogFields.id,
-            CatalogFields.name,
-            CatalogFields.remoteId,
-            CatalogFields.systemStatus,
-            CatalogFields.errors,
-        ],
+        fields = this.defaultCatalogFields,
         headers,
         token,
     }: {
@@ -1135,13 +1073,7 @@ export class Cinnamon {
 
     async importCatalog({
         input,
-        fields = [
-            CatalogFields.id,
-            CatalogFields.name,
-            CatalogFields.remoteId,
-            CatalogFields.systemStatus,
-            CatalogFields.errors,
-        ],
+        fields = this.defaultCatalogFields,
         headers,
         token,
     }: {
@@ -1165,13 +1097,7 @@ export class Cinnamon {
     async updateCatalog({
         id,
         input,
-        fields = [
-            CatalogFields.id,
-            CatalogFields.name,
-            CatalogFields.remoteId,
-            CatalogFields.systemStatus,
-            CatalogFields.errors,
-        ],
+        fields = this.defaultCatalogFields,
         headers,
         token,
     }: {
@@ -1218,16 +1144,18 @@ export class Cinnamon {
     // Product
     // ####################################
 
+    private defaultProductFields = [
+        ProductFields.id,
+        ProductFields.name,
+        ProductFields.sku,
+        ProductFields.systemStatus,
+        ProductFields.errors,
+        ProductFields.warnings,
+    ];
+
     async product({
         id,
-        fields = [
-            ProductFields.id,
-            ProductFields.name,
-            ProductFields.sku,
-            ProductFields.systemStatus,
-            ProductFields.errors,
-            ProductFields.warnings,
-        ],
+        fields = this.defaultProductFields,
         headers,
         token,
     }: {
@@ -1252,14 +1180,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            ProductFields.id,
-            ProductFields.name,
-            ProductFields.sku,
-            ProductFields.systemStatus,
-            ProductFields.errors,
-            ProductFields.warnings,
-        ],
+        fields = this.defaultProductFields,
         headers,
         token,
     }: {
@@ -1293,7 +1214,7 @@ export class Cinnamon {
     productsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultProductFields,
         headers,
         token,
     }: {
@@ -1310,14 +1231,7 @@ export class Cinnamon {
 
     async createProduct({
         input,
-        fields = [
-            ProductFields.id,
-            ProductFields.name,
-            ProductFields.sku,
-            ProductFields.systemStatus,
-            ProductFields.errors,
-            ProductFields.warnings,
-        ],
+        fields = this.defaultProductFields,
         headers,
         token,
     }: {
@@ -1341,14 +1255,7 @@ export class Cinnamon {
     async updateProduct({
         id,
         input,
-        fields = [
-            ProductFields.id,
-            ProductFields.name,
-            ProductFields.sku,
-            ProductFields.systemStatus,
-            ProductFields.errors,
-            ProductFields.warnings,
-        ],
+        fields = this.defaultProductFields,
         headers,
         token,
     }: {
@@ -1395,14 +1302,16 @@ export class Cinnamon {
     // MarketingCampaign
     // ####################################
 
+    private defaultMarketingCampaignFields = [
+        MarketingCampaignFields.id,
+        MarketingCampaignFields.status,
+        MarketingCampaignFields.systemStatus,
+        MarketingCampaignFields.errors,
+    ];
+
     async marketingCampaign({
         id,
-        fields = [
-            MarketingCampaignFields.id,
-            MarketingCampaignFields.status,
-            MarketingCampaignFields.systemStatus,
-            MarketingCampaignFields.errors,
-        ],
+        fields = this.defaultMarketingCampaignFields,
         headers,
         token,
     }: {
@@ -1427,12 +1336,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            MarketingCampaignFields.id,
-            MarketingCampaignFields.status,
-            MarketingCampaignFields.systemStatus,
-            MarketingCampaignFields.errors,
-        ],
+        fields = this.defaultMarketingCampaignFields,
         headers,
         token,
     }: {
@@ -1466,7 +1370,7 @@ export class Cinnamon {
     marketingCampaignsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultMarketingCampaignFields,
         headers,
         token,
     }: {
@@ -1491,12 +1395,7 @@ export class Cinnamon {
 
     async createMarketingCampaign({
         input,
-        fields = [
-            MarketingCampaignFields.id,
-            MarketingCampaignFields.status,
-            MarketingCampaignFields.systemStatus,
-            MarketingCampaignFields.errors,
-        ],
+        fields = this.defaultMarketingCampaignFields,
         headers,
         token,
     }: {
@@ -1520,12 +1419,7 @@ export class Cinnamon {
     async updateMarketingCampaign({
         id,
         input,
-        fields = [
-            MarketingCampaignFields.id,
-            MarketingCampaignFields.status,
-            MarketingCampaignFields.systemStatus,
-            MarketingCampaignFields.errors,
-        ],
+        fields = this.defaultMarketingCampaignFields,
         headers,
         token,
     }: {
@@ -1572,9 +1466,14 @@ export class Cinnamon {
     // MarketingAd
     // ####################################
 
+    private defaultMarketingAdFields = [
+        MarketingAdFields.id,
+        MarketingAdFields.remoteId,
+    ];
+
     async marketingAd({
         id,
-        fields = [MarketingAdFields.id, MarketingAdFields.remoteId],
+        fields = this.defaultMarketingAdFields,
         headers,
         token,
     }: {
@@ -1599,7 +1498,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [MarketingAdFields.id, MarketingAdFields.remoteId],
+        fields = this.defaultMarketingAdFields,
         headers,
         token,
     }: {
@@ -1633,7 +1532,7 @@ export class Cinnamon {
     marketingAdsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultMarketingAdFields,
         headers,
         token,
     }: {
@@ -1652,9 +1551,15 @@ export class Cinnamon {
     // Result
     // ####################################
 
+    private defaultResultFields = [
+        ResultFields.id,
+        ResultFields.date,
+        'analytics {results}',
+    ];
+
     async result({
         id,
-        fields = [ResultFields.id, ResultFields.date, 'analytics {results}'],
+        fields = this.defaultResultFields,
         headers,
         token,
     }: {
@@ -1679,7 +1584,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [ResultFields.id, ResultFields.date, 'analytics {results}'],
+        fields = this.defaultResultFields,
         headers,
         token,
     }: {
@@ -1713,7 +1618,7 @@ export class Cinnamon {
     resultsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultResultFields,
         headers,
         token,
     }: {
@@ -1732,13 +1637,15 @@ export class Cinnamon {
     // Entitlement
     // ####################################
 
+    private defaultEntitlementFields = [
+        EntitlementFields.id,
+        EntitlementFields.permissions,
+        EntitlementFields.type,
+    ];
+
     async entitlement({
         id,
-        fields = [
-            EntitlementFields.id,
-            EntitlementFields.permissions,
-            EntitlementFields.type,
-        ],
+        fields = this.defaultEntitlementFields,
         headers,
         token,
     }: {
@@ -1763,11 +1670,7 @@ export class Cinnamon {
         filter,
         sort,
         after,
-        fields = [
-            EntitlementFields.id,
-            EntitlementFields.permissions,
-            EntitlementFields.type,
-        ],
+        fields = this.defaultEntitlementFields,
         headers,
         token,
     }: {
@@ -1801,7 +1704,7 @@ export class Cinnamon {
     entitlementsAll({
         filter,
         sort,
-        fields,
+        fields = this.defaultEntitlementFields,
         headers,
         token,
     }: {
@@ -1818,11 +1721,7 @@ export class Cinnamon {
 
     async createEntitlement({
         input,
-        fields = [
-            EntitlementFields.id,
-            EntitlementFields.permissions,
-            EntitlementFields.type,
-        ],
+        fields = this.defaultEntitlementFields,
         headers,
         token,
     }: {
@@ -1846,11 +1745,7 @@ export class Cinnamon {
     async updateEntitlement({
         id,
         input,
-        fields = [
-            EntitlementFields.id,
-            EntitlementFields.permissions,
-            EntitlementFields.type,
-        ],
+        fields = this.defaultEntitlementFields,
         headers,
         token,
     }: {

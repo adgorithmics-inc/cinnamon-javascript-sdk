@@ -47,6 +47,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").User>;
+    private defaultOrganizationFields;
     organization({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof OrganizationFields | string>;
@@ -81,6 +82,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Organization>;
+    private defaultMarketplaceFields;
     marketplace({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketplaceFields | string>;
@@ -120,6 +122,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultMediaChannelFields;
     mediaChannel({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields: Array<keyof MediaChannelFields | string>;
@@ -165,6 +168,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultCampaignTemplateFields;
     campaignTemplate({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof CampaignTemplateFields | string>;
@@ -186,6 +190,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CampaignTemplate[]>;
+    private defaultVendorFields;
     vendor({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof VendorFields | string>;
@@ -225,6 +230,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultCatalogFields;
     catalog({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof CatalogFields | string>;
@@ -270,6 +276,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultProductFields;
     product({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof ProductFields | string>;
@@ -309,6 +316,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultMarketingCampaignFields;
     marketingCampaign({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketingCampaignFields | string>;
@@ -348,6 +356,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultMarketingAdFields;
     marketingAd({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketingAdFields | string>;
@@ -369,6 +378,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingAd[]>;
+    private defaultResultFields;
     result({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof ResultFields | string>;
@@ -390,6 +400,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Result[]>;
+    private defaultEntitlementFields;
     entitlement({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof EntitlementFields | string>;
