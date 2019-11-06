@@ -92,7 +92,7 @@ export class Cinnamon {
         token,
     }: {
         query: string;
-        variables: object;
+        variables?: object;
         headers?: Headers;
         token?: string;
     }): Promise<APIResult<T, U>> {
