@@ -203,7 +203,8 @@ export declare enum AuthLocation {
     /** On the referenced result */
     Result = "RESULT",
     /** On the referenced vendor */
-    Vendor = "VENDOR"
+    Vendor = "VENDOR",
+    VendorToken = "VENDOR_TOKEN"
 }
 /** Types of permissions that can be granted to resources */
 export declare enum AuthPermission {
@@ -646,6 +647,8 @@ export declare type Marketplace = EntitlementResource & {
     campaignTemplates?: Maybe<CampaignTemplateConnection>;
     /** Vendors related to the marketplace */
     vendors?: Maybe<VendorConnection>;
+    /** Vendor tokens associated with the marketplace that can be used to access the api as a vendor */
+    vendorTokens?: Maybe<VendorTokenConnection>;
     /** System status of the marketplace */
     systemStatus: SystemStatus;
     /** Validation errors of the marketplace */
@@ -689,6 +692,18 @@ export declare type MarketplaceVendorsArgs = {
     before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
+export declare type MarketplaceVendorTokensArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
+};
 /** Marketplaces collection */
 export declare type MarketplaceConnection = {
     /** Collection of marketplaces */
@@ -715,6 +730,11 @@ export declare type MarketplaceUpdateInput = {
     /** Name of the marketplace */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
+export declare type Me = {
+    id: Scalars['ObjectId'];
+    creationDate: Scalars['DateISO'];
+    lastChangeDate: Scalars['DateISO'];
+};
 /** Media channel represents an ad account on a specific platform */
 export declare type MediaChannel = EntitlementResource & {
     /** Id of the media channel */
@@ -733,6 +753,10 @@ export declare type MediaChannel = EntitlementResource & {
     remoteState: Scalars['JSONObject'];
     /** Currency code of the media channel */
     currency?: Maybe<Scalars['NonEmptyString']>;
+    /** Currency symbol of the media channel */
+    currencySymbol?: Maybe<Scalars['NonEmptyString']>;
+    /** Currency offset of the media channel that must be applied to monetary analytics values */
+    currencyOffset?: Maybe<Scalars['Int']>;
     /** Time zone of the media channel */
     timezone?: Maybe<Scalars['NonEmptyString']>;
     /** Status of the platform authentication token */
@@ -852,6 +876,10 @@ export declare type Mutation = {
     updateUser?: Maybe<User>;
     /** Refreshed the user authentication using refresh login input data */
     refreshLogin?: Maybe<Token>;
+    /** Creates a vendor token using input data */
+    createVendorToken?: Maybe<VendorToken>;
+    /** Deletes a vendor token identified by a given id */
+    deleteVendorToken?: Maybe<Deletion>;
     /** Creates a vendor using input data */
     createVendor?: Maybe<Vendor>;
     /** Updates a vendor identified by a given id using input data */
@@ -943,6 +971,12 @@ export declare type MutationUpdateUserArgs = {
 };
 export declare type MutationRefreshLoginArgs = {
     input: RefreshTokenInput;
+};
+export declare type MutationCreateVendorTokenArgs = {
+    input: VendorTokenInput;
+};
+export declare type MutationDeleteVendorTokenArgs = {
+    id: Scalars['ObjectId'];
 };
 export declare type MutationCreateVendorArgs = {
     input: VendorInput;
@@ -1188,7 +1222,11 @@ export declare type Query = {
     /** Returns a collecton of results */
     results?: Maybe<ResultConnection>;
     /** Returns the user making this query */
-    me?: Maybe<User>;
+    me?: Maybe<Me>;
+    /** Returns a single vendor token identified by a given id */
+    vendorToken?: Maybe<VendorToken>;
+    /** Returns a collection of vendor tokens */
+    vendorTokens?: Maybe<VendorTokenConnection>;
     /** Returns a single vendor identified by a given id */
     vendor?: Maybe<Vendor>;
     /** Returns a collection of vendors */
@@ -1309,6 +1347,17 @@ export declare type QueryResultsArgs = {
     after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
     before?: Maybe<Scalars['String']>;
+};
+export declare type QueryVendorTokenArgs = {
+    id: Scalars['ObjectId'];
+};
+export declare type QueryVendorTokensArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 export declare type QueryVendorArgs = {
     id: Scalars['ObjectId'];
@@ -1448,7 +1497,7 @@ export declare enum TokenStatus {
  * User of the system that is granted access to resources
  * through entitlements
  **/
-export declare type User = {
+export declare type User = Me & {
     /** Id of the user */
     id: Scalars['ObjectId'];
     /** Date and time the user was created */
@@ -1527,7 +1576,7 @@ export declare type UserUpdateInput = {
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
  **/
-export declare type Vendor = {
+export declare type Vendor = Me & {
     /** Id of the vendor */
     id: Scalars['ObjectId'];
     /** Date and time the vendor was created */
@@ -1538,12 +1587,26 @@ export declare type Vendor = {
     name: Scalars['NonEmptyString'];
     /** Marketplace referenced by the vendor */
     marketplace: Marketplace;
+    /** Vendor tokens associated with the vendor that can be used to access the api */
+    vendorTokens?: Maybe<VendorTokenConnection>;
     /** Products related to the vendor */
     products?: Maybe<ProductConnection>;
     /** System status of the vendor */
     systemStatus: SystemStatus;
     /** Validation errors of the vendor */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+};
+/**
+ * Vendor belongs to a marketplace and is granted access to specific
+ * products they can use to create a marketing campaign
+ **/
+export declare type VendorVendorTokensArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 /**
  * Vendor belongs to a marketplace and is granted access to specific
@@ -1578,6 +1641,35 @@ export declare type VendorInput = {
     name: Scalars['NonEmptyString'];
     /** Id of the marketplace referenced by the vendor */
     marketplaceId: Scalars['ObjectId'];
+};
+/** Vendor token is an API access token associated with a vendor and marketplace */
+export declare type VendorToken = {
+    /** Id of the vendor */
+    id: Scalars['ObjectId'];
+    /** Date and time the vendor was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the vendor was last updated */
+    lastChangeDate: Scalars['DateISO'];
+    /** Marketplace associated with the vendor token */
+    marketplace: Marketplace;
+    /** Vednor associated with the vendor token */
+    vendor: Vendor;
+    /** API access token associated with the vendor */
+    token: Scalars['String'];
+};
+/** Vendor tokens collection */
+export declare type VendorTokenConnection = {
+    edges?: Maybe<Array<Maybe<VendorTokenEdge>>>;
+    pageInfo: PageInfo;
+};
+/** Vendor token in a collection */
+export declare type VendorTokenEdge = {
+    cursor: Scalars['ObjectId'];
+    node?: Maybe<VendorToken>;
+};
+/** Vendor token creation input data */
+export declare type VendorTokenInput = {
+    vendorId: Scalars['ObjectId'];
 };
 /** Vendor update input data */
 export declare type VendorUpdateInput = {
@@ -1631,6 +1723,7 @@ export declare type ResolversTypes = {
     UserConnection: ResolverTypeWrapper<UserConnection>;
     UserEdge: ResolverTypeWrapper<UserEdge>;
     User: ResolverTypeWrapper<User>;
+    Me: ResolverTypeWrapper<Me>;
     Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
     OrganizationConnection: ResolverTypeWrapper<OrganizationConnection>;
     OrganizationEdge: ResolverTypeWrapper<OrganizationEdge>;
@@ -1659,6 +1752,9 @@ export declare type ResolversTypes = {
     MarketingCampaign: ResolverTypeWrapper<MarketingCampaign>;
     ResultResource: ResolverTypeWrapper<ResultResource>;
     Vendor: ResolverTypeWrapper<Vendor>;
+    VendorTokenConnection: ResolverTypeWrapper<VendorTokenConnection>;
+    VendorTokenEdge: ResolverTypeWrapper<VendorTokenEdge>;
+    VendorToken: ResolverTypeWrapper<VendorToken>;
     MarketingCampaignStatus: MarketingCampaignStatus;
     MarketingAdConnection: ResolverTypeWrapper<MarketingAdConnection>;
     MarketingAdEdge: ResolverTypeWrapper<MarketingAdEdge>;
@@ -1695,6 +1791,7 @@ export declare type ResolversTypes = {
     Token: ResolverTypeWrapper<Token>;
     UserUpdateInput: UserUpdateInput;
     RefreshTokenInput: RefreshTokenInput;
+    VendorTokenInput: VendorTokenInput;
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
     AuthField: AuthField;
@@ -1725,6 +1822,7 @@ export declare type ResolversParentTypes = {
     UserConnection: UserConnection;
     UserEdge: UserEdge;
     User: User;
+    Me: Me;
     Boolean: Scalars['Boolean'];
     OrganizationConnection: OrganizationConnection;
     OrganizationEdge: OrganizationEdge;
@@ -1753,6 +1851,9 @@ export declare type ResolversParentTypes = {
     MarketingCampaign: MarketingCampaign;
     ResultResource: ResultResource;
     Vendor: Vendor;
+    VendorTokenConnection: VendorTokenConnection;
+    VendorTokenEdge: VendorTokenEdge;
+    VendorToken: VendorToken;
     MarketingCampaignStatus: MarketingCampaignStatus;
     MarketingAdConnection: MarketingAdConnection;
     MarketingAdEdge: MarketingAdEdge;
@@ -1789,6 +1890,7 @@ export declare type ResolversParentTypes = {
     Token: Token;
     UserUpdateInput: UserUpdateInput;
     RefreshTokenInput: RefreshTokenInput;
+    VendorTokenInput: VendorTokenInput;
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
     AuthField: AuthField;
@@ -1940,6 +2042,7 @@ export declare type MarketplaceResolvers<ContextType = any, ParentType extends R
     mediaChannels?: Resolver<Maybe<ResolversTypes['MediaChannelConnection']>, ParentType, ContextType, RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>>;
     campaignTemplates?: Resolver<Maybe<ResolversTypes['CampaignTemplateConnection']>, ParentType, ContextType, MarketplaceCampaignTemplatesArgs>;
     vendors?: Resolver<Maybe<ResolversTypes['VendorConnection']>, ParentType, ContextType, RequireFields<MarketplaceVendorsArgs, 'showDeleted'>>;
+    vendorTokens?: Resolver<Maybe<ResolversTypes['VendorTokenConnection']>, ParentType, ContextType, MarketplaceVendorTokensArgs>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
@@ -1951,6 +2054,12 @@ export declare type MarketplaceEdgeResolvers<ContextType = any, ParentType exten
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<Maybe<ResolversTypes['Marketplace']>, ParentType, ContextType>;
 };
+export declare type MeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Me'] = ResolversParentTypes['Me']> = {
+    __resolveType: TypeResolveFn<'User' | 'Vendor', ParentType, ContextType>;
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+};
 export declare type MediaChannelResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaChannel'] = ResolversParentTypes['MediaChannel']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
@@ -1960,6 +2069,8 @@ export declare type MediaChannelResolvers<ContextType = any, ParentType extends 
     remoteId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     remoteState?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     currency?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
+    currencySymbol?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
+    currencyOffset?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     timezone?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
     tokenStatus?: Resolver<ResolversTypes['TokenStatus'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
@@ -2002,6 +2113,8 @@ export declare type MutationResolvers<ContextType = any, ParentType extends Reso
     login?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
     updateUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
     refreshLogin?: Resolver<Maybe<ResolversTypes['Token']>, ParentType, ContextType, RequireFields<MutationRefreshLoginArgs, 'input'>>;
+    createVendorToken?: Resolver<Maybe<ResolversTypes['VendorToken']>, ParentType, ContextType, RequireFields<MutationCreateVendorTokenArgs, 'input'>>;
+    deleteVendorToken?: Resolver<Maybe<ResolversTypes['Deletion']>, ParentType, ContextType, RequireFields<MutationDeleteVendorTokenArgs, 'id'>>;
     createVendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType, RequireFields<MutationCreateVendorArgs, 'input'>>;
     updateVendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType, RequireFields<MutationUpdateVendorArgs, 'id' | 'input'>>;
     deleteVendor?: Resolver<Maybe<ResolversTypes['Deletion']>, ParentType, ContextType, RequireFields<MutationDeleteVendorArgs, 'id'>>;
@@ -2081,7 +2194,9 @@ export declare type QueryResolvers<ContextType = any, ParentType extends Resolve
     products?: Resolver<Maybe<ResolversTypes['ProductConnection']>, ParentType, ContextType, RequireFields<QueryProductsArgs, 'showDeleted'>>;
     result?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType, RequireFields<QueryResultArgs, 'id'>>;
     results?: Resolver<Maybe<ResolversTypes['ResultConnection']>, ParentType, ContextType, QueryResultsArgs>;
-    me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+    me?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType>;
+    vendorToken?: Resolver<Maybe<ResolversTypes['VendorToken']>, ParentType, ContextType, RequireFields<QueryVendorTokenArgs, 'id'>>;
+    vendorTokens?: Resolver<Maybe<ResolversTypes['VendorTokenConnection']>, ParentType, ContextType, QueryVendorTokensArgs>;
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType, RequireFields<QueryVendorArgs, 'id'>>;
     vendors?: Resolver<Maybe<ResolversTypes['VendorConnection']>, ParentType, ContextType, RequireFields<QueryVendorsArgs, 'showDeleted'>>;
 };
@@ -2149,6 +2264,7 @@ export declare type VendorResolvers<ContextType = any, ParentType extends Resolv
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    vendorTokens?: Resolver<Maybe<ResolversTypes['VendorTokenConnection']>, ParentType, ContextType, VendorVendorTokensArgs>;
     products?: Resolver<Maybe<ResolversTypes['ProductConnection']>, ParentType, ContextType, RequireFields<VendorProductsArgs, 'showDeleted'>>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
@@ -2160,6 +2276,22 @@ export declare type VendorConnectionResolvers<ContextType = any, ParentType exte
 export declare type VendorEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorEdge'] = ResolversParentTypes['VendorEdge']> = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
+};
+export declare type VendorTokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorToken'] = ResolversParentTypes['VendorToken']> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+export declare type VendorTokenConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorTokenConnection'] = ResolversParentTypes['VendorTokenConnection']> = {
+    edges?: Resolver<Maybe<Array<Maybe<ResolversTypes['VendorTokenEdge']>>>, ParentType, ContextType>;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+export declare type VendorTokenEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorTokenEdge'] = ResolversParentTypes['VendorTokenEdge']> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<Maybe<ResolversTypes['VendorToken']>, ParentType, ContextType>;
 };
 export declare type Resolvers<ContextType = any> = {
     CampaignTemplate?: CampaignTemplateResolvers<ContextType>;
@@ -2185,6 +2317,7 @@ export declare type Resolvers<ContextType = any> = {
     Marketplace?: MarketplaceResolvers<ContextType>;
     MarketplaceConnection?: MarketplaceConnectionResolvers<ContextType>;
     MarketplaceEdge?: MarketplaceEdgeResolvers<ContextType>;
+    Me?: MeResolvers;
     MediaChannel?: MediaChannelResolvers<ContextType>;
     MediaChannelConnection?: MediaChannelConnectionResolvers<ContextType>;
     MediaChannelEdge?: MediaChannelEdgeResolvers<ContextType>;
@@ -2212,6 +2345,9 @@ export declare type Resolvers<ContextType = any> = {
     Vendor?: VendorResolvers<ContextType>;
     VendorConnection?: VendorConnectionResolvers<ContextType>;
     VendorEdge?: VendorEdgeResolvers<ContextType>;
+    VendorToken?: VendorTokenResolvers<ContextType>;
+    VendorTokenConnection?: VendorTokenConnectionResolvers<ContextType>;
+    VendorTokenEdge?: VendorTokenEdgeResolvers<ContextType>;
 };
 /**
  * @deprecated

@@ -1,6 +1,6 @@
 import { codes } from '@adgorithmics/graphql-errors';
-import { PageInfo, Scalars, Mutation, Query, SortInput, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput } from './generated/graphql';
-import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields } from './inputFields';
+import { PageInfo, Scalars, Mutation, Query, SortInput, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput } from './generated/graphql';
+import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, VendorTokenFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields } from './inputFields';
 export interface Config {
     url: string;
 }
@@ -22,6 +22,7 @@ export declare class Cinnamon {
     refreshToken: string;
     token: string;
     constructor(config: Config);
+    private isVendorToken;
     api<T extends APIKey, U extends string = T>({ query, variables, headers, token, }: {
         query: string;
         variables?: object;
@@ -34,13 +35,15 @@ export declare class Cinnamon {
             node?: T;
         }>;
     }>): Promise<T[]>;
+    private defaultUserFields;
     login(input: UserLoginInput): Promise<import("./generated/graphql").Token>;
     refreshLogin(input: RefreshTokenInput): Promise<import("./generated/graphql").Token>;
+    setToken(token: string): void;
     me({ fields, headers, token, }?: {
-        fields?: Array<keyof UserFields | string>;
+        fields?: Array<keyof UserFields | keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
-    }): Promise<import("./generated/graphql").User>;
+    }): Promise<import("./generated/graphql").Me>;
     updateUser({ input, fields, headers, token, }: {
         input: UserUpdateInput;
         fields?: Array<keyof UserFields | string>;
@@ -226,6 +229,39 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<Vendor>;
     deleteVendor({ id, headers, token, }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").Deletion>;
+    private defaultVendorTokenFields;
+    vendorToken({ id, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<VendorToken>;
+    vendorTokens({ filter, sort, after, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").VendorTokenConnection>;
+    vendorTokensAll({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<VendorToken[]>;
+    createVendorToken({ input, fields, headers, token, }: {
+        input: VendorTokenInput;
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<VendorToken>;
+    deleteVendorToken({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
         token?: string;

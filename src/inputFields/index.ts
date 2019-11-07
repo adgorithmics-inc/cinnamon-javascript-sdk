@@ -7,6 +7,7 @@ import {
     MediaChannel,
     CampaignTemplate,
     Vendor,
+    VendorToken,
     Catalog,
     Product,
     MarketingCampaign,
@@ -18,7 +19,7 @@ import {
 const fields = (keys: string[]): object =>
     keys.reduce((keys, key) => ({ ...keys, [key]: key }), {});
 
-type Fields<T> = { [key in NonNullable<keyof T>]: keyof T };
+type Fields<T> = { [key in NonNullable<keyof T>]: key };
 
 export type TokenFields = Fields<Token>;
 export const TokenFields = fields(keys<Token>()) as TokenFields;
@@ -48,6 +49,11 @@ export const CampaignTemplateFields = fields(
 
 export type VendorFields = Fields<Vendor>;
 export const VendorFields = fields(keys<Vendor>()) as VendorFields;
+
+export type VendorTokenFields = Fields<VendorToken>;
+export const VendorTokenFields = fields(
+    keys<VendorToken>(),
+) as VendorTokenFields;
 
 export type CatalogFields = Fields<Catalog>;
 export const CatalogFields = fields(keys<Catalog>()) as CatalogFields;
