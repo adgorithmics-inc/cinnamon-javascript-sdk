@@ -25,6 +25,8 @@ import {
     Vendor,
     VendorInput,
     VendorUpdateInput,
+    VendorToken,
+    VendorTokenInput,
     Catalog,
     CatalogCreateInput,
     CatalogImportInput,
@@ -50,6 +52,7 @@ import {
     MediaChannelFields,
     CampaignTemplateFields,
     VendorFields,
+    VendorTokenFields,
     CatalogFields,
     ProductFields,
     MarketingCampaignFields,
@@ -76,6 +79,8 @@ export type APIResult<T extends APIKey, U extends string = T> = {
     data: Record<U, NonNullable<(Query & Mutation)[T]>>;
 };
 
+const VENDOR_TOKEN_LENGTH = 60;
+
 export class Cinnamon {
     config: Config;
     refreshToken = '';
@@ -83,6 +88,10 @@ export class Cinnamon {
 
     constructor(config: Config) {
         this.config = config;
+    }
+
+    private isVendorToken(token: string) {
+        return token.length === VENDOR_TOKEN_LENGTH;
     }
 
     async api<T extends APIKey, U extends string = T>({
@@ -154,6 +163,8 @@ export class Cinnamon {
     // User
     // ####################################
 
+    private defaultUserFields = [UserFields.id, UserFields.email];
+
     async login(input: UserLoginInput) {
         const result = (await this.api<'login'>({
             query: `mutation($input: UserLoginInput!) {
@@ -198,19 +209,31 @@ export class Cinnamon {
         return result;
     }
 
+    setToken(token: string) {
+        this.token = token;
+    }
+
     async me({
-        fields = [UserFields.id, UserFields.email],
+        fields,
         headers,
         token,
     }: {
-        fields?: Array<keyof UserFields | string>;
+        fields?: Array<keyof UserFields | keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (await this.api<'me'>({
             query: `query {
                 me {
-                    ${fields.join(' ')}
+                    ${
+                        this.isVendorToken(token || this.token)
+                            ? `... on Vendor { ${(
+                                  fields || this.defaultVendorFields
+                              ).join(' ')} }`
+                            : `... on User { ${(
+                                  fields || this.defaultUserFields
+                              ).join(' ')} }`
+                    }
                 }
             }`,
             variables: {},
@@ -540,8 +563,6 @@ export class Cinnamon {
     private defaultMediaChannelFields = [
         MarketplaceFields.id,
         MarketplaceFields.name,
-        MarketplaceFields.systemStatus,
-        MarketplaceFields.errors,
     ];
 
     async mediaChannel({
@@ -958,6 +979,135 @@ export class Cinnamon {
             headers,
             token,
         })).data.deleteVendor;
+    }
+
+    // ####################################
+    // Vendor Token
+    // ####################################
+
+    private defaultVendorTokenFields = [
+        VendorTokenFields.id,
+        VendorTokenFields.token,
+    ];
+
+    async vendorToken({
+        id,
+        fields = this.defaultVendorTokenFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'vendorToken'>({
+            query: `query($id: ObjectId!) {
+                vendorToken(id: $id) {
+                    ${fields.join(' ')}
+                }
+            }`,
+            variables: { id },
+            headers,
+            token,
+        })).data.vendorToken;
+    }
+
+    async vendorTokens({
+        filter,
+        sort,
+        after,
+        fields = this.defaultVendorTokenFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (await this.api<'vendorTokens'>({
+            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                vendorTokens(filter: $filter, sort: $sort, after: $after) {
+                    pageInfo {
+                        hasNextPage
+                        endCursor
+                    }
+                    edges {
+                        node {
+                            ${fields.join(' ')}
+                        }
+                    }
+                }
+            }`,
+            variables: { filter, sort, after },
+            headers,
+            token,
+        })).data.vendorTokens;
+    }
+
+    vendorTokensAll({
+        filter,
+        sort,
+        fields = this.defaultVendorTokenFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<VendorToken>((after: PageInfo['endCursor']) =>
+            this.vendorTokens({ filter, sort, after, fields, headers, token }),
+        );
+    }
+
+    async createVendorToken({
+        input,
+        fields = this.defaultVendorTokenFields,
+        headers,
+        token,
+    }: {
+        input: VendorTokenInput;
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'createVendorToken'>({
+            query: `mutation($input: VendorTokenInput!) {
+                createVendorToken(input: $input) {
+                    ${fields.join(' ')}
+                }
+            }`,
+            variables: { input },
+            headers,
+            token,
+        })).data.createVendorToken;
+    }
+
+    async deleteVendorToken({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (await this.api<'deleteVendorToken'>({
+            query: `mutation($id: ObjectId!) {
+                deleteVendorToken(id: $id) {
+                    id
+                }
+            }`,
+            variables: { id },
+            headers,
+            token,
+        })).data.deleteVendorToken;
     }
 
     // ####################################
