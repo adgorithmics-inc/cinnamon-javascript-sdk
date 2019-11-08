@@ -5816,7 +5816,7 @@
                     },
                     {
                         "name": "vendor",
-                        "description": "Vednor associated with the vendor token",
+                        "description": "Vendor associated with the vendor token",
                         "args": [],
                         "type": {
                             "kind": "NON_NULL",

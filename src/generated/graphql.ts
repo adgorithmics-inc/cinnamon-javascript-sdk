@@ -1837,7 +1837,7 @@ export type VendorToken = {
     lastChangeDate: Scalars['DateISO'];
     /** Marketplace associated with the vendor token */
     marketplace: Marketplace;
-    /** Vednor associated with the vendor token */
+    /** Vendor associated with the vendor token */
     vendor: Vendor;
     /** API access token associated with the vendor */
     token: Scalars['String'];
