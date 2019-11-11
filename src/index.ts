@@ -1,5 +1,6 @@
 import fetch from 'cross-fetch';
 import get from 'lodash.get';
+import md5 from 'md5';
 import { codes } from '@adgorithmics/graphql-errors';
 
 import {
@@ -63,6 +64,7 @@ import {
 
 export interface Config {
     url: string;
+    cacheExpires: number;
 }
 
 export interface Headers {
@@ -90,6 +92,12 @@ export class Cinnamon {
         this.config = config;
     }
 
+    private cache: Record<
+        string,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { json: APIResult<any>; expires: number }
+    > = {};
+
     private isVendorToken(token: string) {
         return token.length === VENDOR_TOKEN_LENGTH;
     }
@@ -99,13 +107,18 @@ export class Cinnamon {
         variables = {},
         headers = {},
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         query: string;
         variables?: object;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<APIResult<T, U>> {
-        const response = await fetch(this.config.url, {
+        const request = {
+            url: this.config.url,
             method: 'POST',
             headers: {
                 authorization: `Bearer ${token || this.token}`,
@@ -114,7 +127,15 @@ export class Cinnamon {
                 ...headers,
             },
             body: JSON.stringify({ query, variables }),
-        });
+        };
+        const hash = md5(JSON.stringify(request));
+        const time = Date.now();
+
+        if (!skipCache && this.cache[hash] && this.cache[hash].expires > time) {
+            return this.cache[hash].json;
+        }
+
+        const response = await fetch(this.config.url, request);
 
         const json = await response.json();
         if (json.errors) {
@@ -132,6 +153,15 @@ export class Cinnamon {
                 json.errors.map((error: Error) => error.message).join('\n'),
             );
         }
+
+        const expires = cacheExpires ?? this.config.cacheExpires ?? 0;
+        if (!skipCache && expires) {
+            this.cache[hash] = {
+                json,
+                expires: time + expires,
+            };
+        }
+
         return json;
     }
 
@@ -166,18 +196,20 @@ export class Cinnamon {
     private defaultUserFields = [UserFields.id, UserFields.email];
 
     async login(input: UserLoginInput) {
-        const result = (await this.api<'login'>({
-            query: `mutation($input: UserLoginInput!) {
-                login(input: $input) {
-                    ${[
-                        TokenFields.expiryDate,
-                        TokenFields.token,
-                        TokenFields.refreshToken,
-                    ].join(' ')}
-                }
-            }`,
-            variables: { input },
-        })).data.login;
+        const result = (
+            await this.api<'login'>({
+                query: `mutation($input: UserLoginInput!) {
+                    login(input: $input) {
+                        ${[
+                            TokenFields.expiryDate,
+                            TokenFields.token,
+                            TokenFields.refreshToken,
+                        ].join(' ')}
+                    }
+                }`,
+                variables: { input },
+            })
+        ).data.login;
 
         if (result.token && result.refreshToken) {
             this.token = result.token;
@@ -188,18 +220,20 @@ export class Cinnamon {
     }
 
     async refreshLogin(input: RefreshTokenInput) {
-        const result = (await this.api<'refreshLogin'>({
-            query: `mutation($input: RefreshTokenInput!) {
-                refreshLogin(input: $input) {
-                    ${[
-                        TokenFields.expiryDate,
-                        TokenFields.token,
-                        TokenFields.refreshToken,
-                    ].join(' ')}
-                }
-            }`,
-            variables: { input },
-        })).data.refreshLogin;
+        const result = (
+            await this.api<'refreshLogin'>({
+                query: `mutation($input: RefreshTokenInput!) {
+                    refreshLogin(input: $input) {
+                        ${[
+                            TokenFields.expiryDate,
+                            TokenFields.token,
+                            TokenFields.refreshToken,
+                        ].join(' ')}
+                    }
+                }`,
+                variables: { input },
+            })
+        ).data.refreshLogin;
 
         if (result.token && result.refreshToken) {
             this.token = result.token;
@@ -217,29 +251,37 @@ export class Cinnamon {
         fields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         fields?: Array<keyof UserFields | keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'me'>({
-            query: `query {
-                me {
-                    ${
-                        this.isVendorToken(token || this.token)
-                            ? `... on Vendor { ${(
-                                  fields || this.defaultVendorFields
-                              ).join(' ')} }`
-                            : `... on User { ${(
-                                  fields || this.defaultUserFields
-                              ).join(' ')} }`
+        return (
+            await this.api<'me'>({
+                query: `query {
+                    me {
+                        ${
+                            this.isVendorToken(token || this.token)
+                                ? `... on Vendor { ${(
+                                      fields || this.defaultVendorFields
+                                  ).join(' ')} }`
+                                : `... on User { ${(
+                                      fields || this.defaultUserFields
+                                  ).join(' ')} }`
+                        }
                     }
-                }
-            }`,
-            variables: {},
-            headers,
-            token,
-        })).data.me;
+                }`,
+                variables: {},
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.me;
     }
 
     async updateUser({
@@ -253,16 +295,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateUser'>({
-            query: `mutation($input: UserUpdateInput!) {
-                updateUser(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.updateUser;
+        return (
+            await this.api<'updateUser'>({
+                query: `mutation($input: UserUpdateInput!) {
+                    updateUser(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.updateUser;
     }
 
     // ####################################
@@ -281,22 +325,30 @@ export class Cinnamon {
         fields = this.defaultOrganizationFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof OrganizationFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'organization'>({
-            query: `query($id: ObjectId!) {
-                organization(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.organization;
+        return (
+            await this.api<'organization'>({
+                query: `query($id: ObjectId!) {
+                    organization(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.organization;
     }
 
     async organizations({
@@ -306,6 +358,8 @@ export class Cinnamon {
         fields = this.defaultOrganizationFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -313,25 +367,31 @@ export class Cinnamon {
         fields?: Array<keyof OrganizationFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'organizations'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                organizations(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'organizations'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    organizations(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.organizations;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.organizations;
     }
 
     organizationsAll({
@@ -340,15 +400,28 @@ export class Cinnamon {
         fields = this.defaultOrganizationFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof OrganizationFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Organization>((after: PageInfo['endCursor']) =>
-            this.organizations({ filter, sort, after, fields, headers, token }),
+            this.organizations({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -363,16 +436,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createOrganization'>({
-            query: `mutation($input: OrganizationInput!) {
-                createOrganization(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createOrganization;
+        return (
+            await this.api<'createOrganization'>({
+                query: `mutation($input: OrganizationInput!) {
+                    createOrganization(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createOrganization;
     }
 
     async updateOrganization({
@@ -388,16 +463,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateOrganization'>({
-            query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
-                updateOrganization(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateOrganization;
+        return (
+            await this.api<'updateOrganization'>({
+                query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
+                    updateOrganization(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateOrganization;
     }
 
     // ####################################
@@ -416,22 +493,30 @@ export class Cinnamon {
         fields = this.defaultMarketplaceFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketplaceFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'marketplace'>({
-            query: `query($id: ObjectId!) {
-                marketplace(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.marketplace;
+        return (
+            await this.api<'marketplace'>({
+                query: `query($id: ObjectId!) {
+                    marketplace(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.marketplace;
     }
 
     async marketplaces({
@@ -441,6 +526,8 @@ export class Cinnamon {
         fields = this.defaultMarketplaceFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -448,25 +535,31 @@ export class Cinnamon {
         fields?: Array<keyof MarketplaceFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'marketplaces'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                marketplaces(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'marketplaces'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    marketplaces(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.marketplaces;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.marketplaces;
     }
 
     marketplacesAll({
@@ -475,15 +568,28 @@ export class Cinnamon {
         fields = this.defaultMarketplaceFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketplaceFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Marketplace>((after: PageInfo['endCursor']) =>
-            this.marketplaces({ filter, sort, after, fields, headers, token }),
+            this.marketplaces({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -498,16 +604,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createMarketplace'>({
-            query: `mutation($input: MarketplaceInput!) {
-                createMarketplace(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createMarketplace;
+        return (
+            await this.api<'createMarketplace'>({
+                query: `mutation($input: MarketplaceInput!) {
+                    createMarketplace(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createMarketplace;
     }
 
     async updateMarketplace({
@@ -523,16 +631,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateMarketplace'>({
-            query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
-                updateMarketplace(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateMarketplace;
+        return (
+            await this.api<'updateMarketplace'>({
+                query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
+                    updateMarketplace(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateMarketplace;
     }
 
     async deleteMarketplace({
@@ -544,16 +654,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteMarketplace'>({
-            query: `mutation($id: ObjectId!) {
-                deleteMarketplace(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteMarketplace;
+        return (
+            await this.api<'deleteMarketplace'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteMarketplace(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteMarketplace;
     }
 
     // ####################################
@@ -570,22 +682,30 @@ export class Cinnamon {
         fields = this.defaultMediaChannelFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'mediaChannel'>({
-            query: `query($id: ObjectId!) {
-                mediaChannel(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.mediaChannel;
+        return (
+            await this.api<'mediaChannel'>({
+                query: `query($id: ObjectId!) {
+                    mediaChannel(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.mediaChannel;
     }
 
     async mediaChannels({
@@ -595,6 +715,8 @@ export class Cinnamon {
         fields = this.defaultMediaChannelFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -602,25 +724,31 @@ export class Cinnamon {
         fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'mediaChannels'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                mediaChannels(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'mediaChannels'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    mediaChannels(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.mediaChannels;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.mediaChannels;
     }
 
     mediaChannelsAll({
@@ -629,15 +757,28 @@ export class Cinnamon {
         fields = this.defaultMediaChannelFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<MediaChannel>((after: PageInfo['endCursor']) =>
-            this.mediaChannels({ filter, sort, after, fields, headers, token }),
+            this.mediaChannels({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -652,16 +793,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createMediaChannel'>({
-            query: `mutation($input: MediaChannelCreateInput!) {
-                createMediaChannel(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createMediaChannel;
+        return (
+            await this.api<'createMediaChannel'>({
+                query: `mutation($input: MediaChannelCreateInput!) {
+                    createMediaChannel(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createMediaChannel;
     }
 
     async importMediaChannel({
@@ -675,16 +818,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'importMediaChannel'>({
-            query: `mutation($input: MediaChannelImportInput!) {
-                importMediaChannel(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.importMediaChannel;
+        return (
+            await this.api<'importMediaChannel'>({
+                query: `mutation($input: MediaChannelImportInput!) {
+                    importMediaChannel(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.importMediaChannel;
     }
 
     async updateMediaChannel({
@@ -700,16 +845,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateMediaChannel'>({
-            query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
-                updateMediaChannel(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateMediaChannel;
+        return (
+            await this.api<'updateMediaChannel'>({
+                query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
+                    updateMediaChannel(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateMediaChannel;
     }
 
     async deleteMediaChannel({
@@ -721,16 +868,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteMediaChannel'>({
-            query: `mutation($id: ObjectId!) {
-                deleteMediaChannel(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteMediaChannel;
+        return (
+            await this.api<'deleteMediaChannel'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteMediaChannel(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteMediaChannel;
     }
 
     // ####################################
@@ -747,22 +896,30 @@ export class Cinnamon {
         fields = this.defaultCampaignTemplateFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof CampaignTemplateFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'campaignTemplate'>({
-            query: `query($id: ObjectId!) {
-                campaignTemplate(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.campaignTemplate;
+        return (
+            await this.api<'campaignTemplate'>({
+                query: `query($id: ObjectId!) {
+                    campaignTemplate(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.campaignTemplate;
     }
 
     async campaignTemplates({
@@ -772,6 +929,8 @@ export class Cinnamon {
         fields = this.defaultCampaignTemplateFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -779,25 +938,31 @@ export class Cinnamon {
         fields?: Array<keyof CampaignTemplateFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'campaignTemplates'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                campaignTemplates(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'campaignTemplates'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    campaignTemplates(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.campaignTemplates;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.campaignTemplates;
     }
 
     campaignTemplatesAll({
@@ -806,12 +971,16 @@ export class Cinnamon {
         fields = this.defaultCampaignTemplateFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CampaignTemplateFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<CampaignTemplate>((after: PageInfo['endCursor']) =>
             this.campaignTemplates({
@@ -821,6 +990,8 @@ export class Cinnamon {
                 fields,
                 headers,
                 token,
+                cacheExpires,
+                skipCache,
             }),
         );
     }
@@ -841,22 +1012,30 @@ export class Cinnamon {
         fields = this.defaultVendorFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'vendor'>({
-            query: `query($id: ObjectId!) {
-                vendor(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.vendor;
+        return (
+            await this.api<'vendor'>({
+                query: `query($id: ObjectId!) {
+                    vendor(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.vendor;
     }
 
     async vendors({
@@ -866,6 +1045,8 @@ export class Cinnamon {
         fields = this.defaultVendorFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -873,25 +1054,31 @@ export class Cinnamon {
         fields?: Array<keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'vendors'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                vendors(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'vendors'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    vendors(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.vendors;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.vendors;
     }
 
     vendorsAll({
@@ -900,15 +1087,28 @@ export class Cinnamon {
         fields = this.defaultVendorFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Vendor>((after: PageInfo['endCursor']) =>
-            this.vendors({ filter, sort, after, fields, headers, token }),
+            this.vendors({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -923,16 +1123,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createVendor'>({
-            query: `mutation($input: VendorInput!) {
-                createVendor(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createVendor;
+        return (
+            await this.api<'createVendor'>({
+                query: `mutation($input: VendorInput!) {
+                    createVendor(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createVendor;
     }
 
     async updateVendor({
@@ -948,16 +1150,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateVendor'>({
-            query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
-                updateVendor(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateVendor;
+        return (
+            await this.api<'updateVendor'>({
+                query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
+                    updateVendor(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateVendor;
     }
 
     async deleteVendor({
@@ -969,16 +1173,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteVendor'>({
-            query: `mutation($id: ObjectId!) {
-                deleteVendor(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteVendor;
+        return (
+            await this.api<'deleteVendor'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteVendor(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteVendor;
     }
 
     // ####################################
@@ -995,22 +1201,30 @@ export class Cinnamon {
         fields = this.defaultVendorTokenFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof VendorTokenFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'vendorToken'>({
-            query: `query($id: ObjectId!) {
-                vendorToken(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.vendorToken;
+        return (
+            await this.api<'vendorToken'>({
+                query: `query($id: ObjectId!) {
+                    vendorToken(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.vendorToken;
     }
 
     async vendorTokens({
@@ -1020,6 +1234,8 @@ export class Cinnamon {
         fields = this.defaultVendorTokenFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1027,25 +1243,31 @@ export class Cinnamon {
         fields?: Array<keyof VendorTokenFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'vendorTokens'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                vendorTokens(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'vendorTokens'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    vendorTokens(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.vendorTokens;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.vendorTokens;
     }
 
     vendorTokensAll({
@@ -1054,15 +1276,28 @@ export class Cinnamon {
         fields = this.defaultVendorTokenFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorTokenFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<VendorToken>((after: PageInfo['endCursor']) =>
-            this.vendorTokens({ filter, sort, after, fields, headers, token }),
+            this.vendorTokens({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -1077,16 +1312,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createVendorToken'>({
-            query: `mutation($input: VendorTokenInput!) {
-                createVendorToken(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createVendorToken;
+        return (
+            await this.api<'createVendorToken'>({
+                query: `mutation($input: VendorTokenInput!) {
+                    createVendorToken(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createVendorToken;
     }
 
     async deleteVendorToken({
@@ -1098,16 +1335,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteVendorToken'>({
-            query: `mutation($id: ObjectId!) {
-                deleteVendorToken(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteVendorToken;
+        return (
+            await this.api<'deleteVendorToken'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteVendorToken(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteVendorToken;
     }
 
     // ####################################
@@ -1127,22 +1366,30 @@ export class Cinnamon {
         fields = this.defaultCatalogFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof CatalogFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'catalog'>({
-            query: `query($id: ObjectId!) {
-                catalog(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.catalog;
+        return (
+            await this.api<'catalog'>({
+                query: `query($id: ObjectId!) {
+                    catalog(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.catalog;
     }
 
     async catalogs({
@@ -1152,6 +1399,8 @@ export class Cinnamon {
         fields = this.defaultCatalogFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1159,25 +1408,31 @@ export class Cinnamon {
         fields?: Array<keyof CatalogFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'catalogs'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                catalogs(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'catalogs'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    catalogs(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.catalogs;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.catalogs;
     }
 
     catalogsAll({
@@ -1186,15 +1441,28 @@ export class Cinnamon {
         fields = this.defaultCatalogFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CatalogFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Catalog>((after: PageInfo['endCursor']) =>
-            this.catalogs({ filter, sort, after, fields, headers, token }),
+            this.catalogs({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -1209,16 +1477,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createCatalog'>({
-            query: `mutation($input: CatalogCreateInput!) {
-                createCatalog(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createCatalog;
+        return (
+            await this.api<'createCatalog'>({
+                query: `mutation($input: CatalogCreateInput!) {
+                    createCatalog(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCatalog;
     }
 
     async importCatalog({
@@ -1232,16 +1502,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createCatalog'>({
-            query: `mutation($input: CatalogImportInput!) {
-                createCatalog(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createCatalog;
+        return (
+            await this.api<'createCatalog'>({
+                query: `mutation($input: CatalogImportInput!) {
+                    createCatalog(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCatalog;
     }
 
     async updateCatalog({
@@ -1257,16 +1529,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateCatalog'>({
-            query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
-                updateCatalog(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateCatalog;
+        return (
+            await this.api<'updateCatalog'>({
+                query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
+                    updateCatalog(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateCatalog;
     }
 
     async deleteCatalog({
@@ -1278,16 +1552,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteCatalog'>({
-            query: `mutation($id: ObjectId!) {
-                deleteCatalog(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteCatalog;
+        return (
+            await this.api<'deleteCatalog'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteCatalog(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteCatalog;
     }
 
     // ####################################
@@ -1308,22 +1584,30 @@ export class Cinnamon {
         fields = this.defaultProductFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof ProductFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'product'>({
-            query: `query($id: ObjectId!) {
-                product(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.product;
+        return (
+            await this.api<'product'>({
+                query: `query($id: ObjectId!) {
+                    product(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.product;
     }
 
     async products({
@@ -1333,6 +1617,8 @@ export class Cinnamon {
         fields = this.defaultProductFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1340,25 +1626,31 @@ export class Cinnamon {
         fields?: Array<keyof ProductFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'products'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                products(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'products'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    products(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.products;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.products;
     }
 
     productsAll({
@@ -1367,15 +1659,28 @@ export class Cinnamon {
         fields = this.defaultProductFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ProductFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Product>((after: PageInfo['endCursor']) =>
-            this.products({ filter, sort, after, fields, headers, token }),
+            this.products({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -1390,16 +1695,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createProduct'>({
-            query: `mutation($input: ProductInput!) {
-                createProduct(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createProduct;
+        return (
+            await this.api<'createProduct'>({
+                query: `mutation($input: ProductInput!) {
+                    createProduct(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createProduct;
     }
 
     async updateProduct({
@@ -1415,16 +1722,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateProduct'>({
-            query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
-                updateProduct(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateProduct;
+        return (
+            await this.api<'updateProduct'>({
+                query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
+                    updateProduct(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateProduct;
     }
 
     async deleteProduct({
@@ -1436,16 +1745,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteProduct'>({
-            query: `mutation($id: ObjectId!) {
-                deleteProduct(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteProduct;
+        return (
+            await this.api<'deleteProduct'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteProduct(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteProduct;
     }
 
     // ####################################
@@ -1464,22 +1775,30 @@ export class Cinnamon {
         fields = this.defaultMarketingCampaignFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketingCampaignFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'marketingCampaign'>({
-            query: `query($id: ObjectId!) {
-                marketingCampaign(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.marketingCampaign;
+        return (
+            await this.api<'marketingCampaign'>({
+                query: `query($id: ObjectId!) {
+                    marketingCampaign(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.marketingCampaign;
     }
 
     async marketingCampaigns({
@@ -1489,6 +1808,8 @@ export class Cinnamon {
         fields = this.defaultMarketingCampaignFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1496,25 +1817,31 @@ export class Cinnamon {
         fields?: Array<keyof MarketingCampaignFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'marketingCampaigns'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'marketingCampaigns'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.marketingCampaigns;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.marketingCampaigns;
     }
 
     marketingCampaignsAll({
@@ -1523,12 +1850,16 @@ export class Cinnamon {
         fields = this.defaultMarketingCampaignFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<MarketingCampaign>(
             (after: PageInfo['endCursor']) =>
@@ -1539,6 +1870,8 @@ export class Cinnamon {
                     fields,
                     headers,
                     token,
+                    cacheExpires,
+                    skipCache,
                 }),
         );
     }
@@ -1554,16 +1887,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createMarketingCampaign'>({
-            query: `mutation($input: MarketingCampaignInput!) {
-                createMarketingCampaign(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createMarketingCampaign;
+        return (
+            await this.api<'createMarketingCampaign'>({
+                query: `mutation($input: MarketingCampaignInput!) {
+                    createMarketingCampaign(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createMarketingCampaign;
     }
 
     async updateMarketingCampaign({
@@ -1579,16 +1914,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateMarketingCampaign'>({
-            query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
-                updateMarketingCampaign(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateMarketingCampaign;
+        return (
+            await this.api<'updateMarketingCampaign'>({
+                query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
+                    updateMarketingCampaign(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateMarketingCampaign;
     }
 
     async deleteMarketingCampaign({
@@ -1600,16 +1937,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteMarketingCampaign'>({
-            query: `mutation($id: ObjectId!) {
-                deleteMarketingCampaign(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteMarketingCampaign;
+        return (
+            await this.api<'deleteMarketingCampaign'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteMarketingCampaign(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteMarketingCampaign;
     }
 
     // ####################################
@@ -1626,22 +1965,30 @@ export class Cinnamon {
         fields = this.defaultMarketingAdFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketingAdFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'marketingAd'>({
-            query: `query($id: ObjectId!) {
-                marketingAd(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.marketingAd;
+        return (
+            await this.api<'marketingAd'>({
+                query: `query($id: ObjectId!) {
+                    marketingAd(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.marketingAd;
     }
 
     async marketingAds({
@@ -1651,6 +1998,8 @@ export class Cinnamon {
         fields = this.defaultMarketingAdFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1658,25 +2007,31 @@ export class Cinnamon {
         fields?: Array<keyof MarketingAdFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'marketingAds'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                marketingAds(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'marketingAds'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    marketingAds(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.marketingAds;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.marketingAds;
     }
 
     marketingAdsAll({
@@ -1685,15 +2040,28 @@ export class Cinnamon {
         fields = this.defaultMarketingAdFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingAdFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<MarketingAd>((after: PageInfo['endCursor']) =>
-            this.marketingAds({ filter, sort, after, fields, headers, token }),
+            this.marketingAds({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -1712,22 +2080,30 @@ export class Cinnamon {
         fields = this.defaultResultFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'result'>({
-            query: `query($id: ObjectId!) {
-                result(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.result;
+        return (
+            await this.api<'result'>({
+                query: `query($id: ObjectId!) {
+                    result(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.result;
     }
 
     async results({
@@ -1737,6 +2113,8 @@ export class Cinnamon {
         fields = this.defaultResultFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1744,25 +2122,31 @@ export class Cinnamon {
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'results'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                results(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'results'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    results(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.results;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.results;
     }
 
     resultsAll({
@@ -1771,15 +2155,28 @@ export class Cinnamon {
         fields = this.defaultResultFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Result>((after: PageInfo['endCursor']) =>
-            this.results({ filter, sort, after, fields, headers, token }),
+            this.results({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -1798,22 +2195,30 @@ export class Cinnamon {
         fields = this.defaultEntitlementFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }) {
-        return (await this.api<'entitlement'>({
-            query: `query($id: ObjectId!) {
-                entitlement(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.entitlement;
+        return (
+            await this.api<'entitlement'>({
+                query: `query($id: ObjectId!) {
+                    entitlement(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.entitlement;
     }
 
     async entitlements({
@@ -1823,6 +2228,8 @@ export class Cinnamon {
         fields = this.defaultEntitlementFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
@@ -1830,25 +2237,31 @@ export class Cinnamon {
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
-        return (await this.api<'entitlements'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                entitlements(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'entitlements'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    entitlements(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.entitlements;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            })
+        ).data.entitlements;
     }
 
     entitlementsAll({
@@ -1857,15 +2270,28 @@ export class Cinnamon {
         fields = this.defaultEntitlementFields,
         headers,
         token,
+        cacheExpires,
+        skipCache = false,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     } = {}) {
         return this.allPages<Entitlement>((after: PageInfo['endCursor']) =>
-            this.entitlements({ filter, sort, after, fields, headers, token }),
+            this.entitlements({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+                cacheExpires,
+                skipCache,
+            }),
         );
     }
 
@@ -1880,16 +2306,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createEntitlement'>({
-            query: `mutation($input: EntitlementInput!) {
-                createEntitlement(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createEntitlement;
+        return (
+            await this.api<'createEntitlement'>({
+                query: `mutation($input: EntitlementInput!) {
+                    createEntitlement(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createEntitlement;
     }
 
     async updateEntitlement({
@@ -1905,16 +2333,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateEntitlement'>({
-            query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
-                updateEntitlement(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateEntitlement;
+        return (
+            await this.api<'updateEntitlement'>({
+                query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
+                    updateEntitlement(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateEntitlement;
     }
 
     async deleteEntitlement({
@@ -1926,16 +2356,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteEntitlement'>({
-            query: `mutation($id: ObjectId!) {
-                deleteEntitlement(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteEntitlement;
+        return (
+            await this.api<'deleteEntitlement'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteEntitlement(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteEntitlement;
     }
 }
 

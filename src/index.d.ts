@@ -3,6 +3,7 @@ import { PageInfo, Scalars, Mutation, Query, SortInput, UserLoginInput, UserUpda
 import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, VendorTokenFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields } from './inputFields';
 export interface Config {
     url: string;
+    cacheExpires: number;
 }
 export interface Headers {
     [key: string]: string;
@@ -22,12 +23,15 @@ export declare class Cinnamon {
     refreshToken: string;
     token: string;
     constructor(config: Config);
+    private cache;
     private isVendorToken;
-    api<T extends APIKey, U extends string = T>({ query, variables, headers, token, }: {
+    api<T extends APIKey, U extends string = T>({ query, variables, headers, token, cacheExpires, skipCache, }: {
         query: string;
         variables?: object;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<APIResult<T, U>>;
     allPages<T>(fetchRelayConnection: (after: PageInfo['endCursor']) => Promise<{
         pageInfo: PageInfo;
@@ -39,10 +43,12 @@ export declare class Cinnamon {
     login(input: UserLoginInput): Promise<import("./generated/graphql").Token>;
     refreshLogin(input: RefreshTokenInput): Promise<import("./generated/graphql").Token>;
     setToken(token: string): void;
-    me({ fields, headers, token, }?: {
+    me({ fields, headers, token, cacheExpires, skipCache, }?: {
         fields?: Array<keyof UserFields | keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").Me>;
     updateUser({ input, fields, headers, token, }: {
         input: UserUpdateInput;
@@ -51,26 +57,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").User>;
     private defaultOrganizationFields;
-    organization({ id, fields, headers, token, }: {
+    organization({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof OrganizationFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Organization>;
-    organizations({ filter, sort, after, fields, headers, token, }?: {
+    organizations({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof OrganizationFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").OrganizationConnection>;
-    organizationsAll({ filter, sort, fields, headers, token, }?: {
+    organizationsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof OrganizationFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Organization[]>;
     createOrganization({ input, fields, headers, token, }: {
         input: OrganizationInput;
@@ -86,26 +98,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<Organization>;
     private defaultMarketplaceFields;
-    marketplace({ id, fields, headers, token, }: {
+    marketplace({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketplaceFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Marketplace>;
-    marketplaces({ filter, sort, after, fields, headers, token, }?: {
+    marketplaces({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof MarketplaceFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").MarketplaceConnection>;
-    marketplacesAll({ filter, sort, fields, headers, token, }?: {
+    marketplacesAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketplaceFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Marketplace[]>;
     createMarketplace({ input, fields, headers, token, }: {
         input: MarketplaceInput;
@@ -126,26 +144,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultMediaChannelFields;
-    mediaChannel({ id, fields, headers, token, }: {
+    mediaChannel({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<MediaChannel>;
-    mediaChannels({ filter, sort, after, fields, headers, token, }?: {
+    mediaChannels({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").MediaChannelConnection>;
-    mediaChannelsAll({ filter, sort, fields, headers, token, }?: {
+    mediaChannelsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MediaChannelFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<MediaChannel[]>;
     createMediaChannel({ input, fields, headers, token, }: {
         input: MediaChannelCreateInput;
@@ -172,48 +196,60 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultCampaignTemplateFields;
-    campaignTemplate({ id, fields, headers, token, }: {
+    campaignTemplate({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof CampaignTemplateFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<CampaignTemplate>;
-    campaignTemplates({ filter, sort, after, fields, headers, token, }?: {
+    campaignTemplates({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof CampaignTemplateFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").CampaignTemplateConnection>;
-    campaignTemplatesAll({ filter, sort, fields, headers, token, }?: {
+    campaignTemplatesAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CampaignTemplateFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<CampaignTemplate[]>;
     private defaultVendorFields;
-    vendor({ id, fields, headers, token, }: {
+    vendor({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Vendor>;
-    vendors({ filter, sort, after, fields, headers, token, }?: {
+    vendors({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").VendorConnection>;
-    vendorsAll({ filter, sort, fields, headers, token, }?: {
+    vendorsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Vendor[]>;
     createVendor({ input, fields, headers, token, }: {
         input: VendorInput;
@@ -234,26 +270,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultVendorTokenFields;
-    vendorToken({ id, fields, headers, token, }: {
+    vendorToken({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof VendorTokenFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<VendorToken>;
-    vendorTokens({ filter, sort, after, fields, headers, token, }?: {
+    vendorTokens({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof VendorTokenFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").VendorTokenConnection>;
-    vendorTokensAll({ filter, sort, fields, headers, token, }?: {
+    vendorTokensAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorTokenFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<VendorToken[]>;
     createVendorToken({ input, fields, headers, token, }: {
         input: VendorTokenInput;
@@ -267,26 +309,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultCatalogFields;
-    catalog({ id, fields, headers, token, }: {
+    catalog({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof CatalogFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Catalog>;
-    catalogs({ filter, sort, after, fields, headers, token, }?: {
+    catalogs({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof CatalogFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").CatalogConnection>;
-    catalogsAll({ filter, sort, fields, headers, token, }?: {
+    catalogsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CatalogFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Catalog[]>;
     createCatalog({ input, fields, headers, token, }: {
         input: CatalogCreateInput;
@@ -313,26 +361,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultProductFields;
-    product({ id, fields, headers, token, }: {
+    product({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof ProductFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Product>;
-    products({ filter, sort, after, fields, headers, token, }?: {
+    products({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof ProductFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").ProductConnection>;
-    productsAll({ filter, sort, fields, headers, token, }?: {
+    productsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ProductFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Product[]>;
     createProduct({ input, fields, headers, token, }: {
         input: ProductInput;
@@ -353,26 +407,32 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultMarketingCampaignFields;
-    marketingCampaign({ id, fields, headers, token, }: {
+    marketingCampaign({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketingCampaignFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<MarketingCampaign>;
-    marketingCampaigns({ filter, sort, after, fields, headers, token, }?: {
+    marketingCampaigns({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof MarketingCampaignFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").MarketingCampaignConnection>;
-    marketingCampaignsAll({ filter, sort, fields, headers, token, }?: {
+    marketingCampaignsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<MarketingCampaign[]>;
     createMarketingCampaign({ input, fields, headers, token, }: {
         input: MarketingCampaignInput;
@@ -393,70 +453,88 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
     private defaultMarketingAdFields;
-    marketingAd({ id, fields, headers, token, }: {
+    marketingAd({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof MarketingAdFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<MarketingAd>;
-    marketingAds({ filter, sort, after, fields, headers, token, }?: {
+    marketingAds({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof MarketingAdFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").MarketingAdConnection>;
-    marketingAdsAll({ filter, sort, fields, headers, token, }?: {
+    marketingAdsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingAdFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<MarketingAd[]>;
     private defaultResultFields;
-    result({ id, fields, headers, token, }: {
+    result({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Result>;
-    results({ filter, sort, after, fields, headers, token, }?: {
+    results({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").ResultConnection>;
-    resultsAll({ filter, sort, fields, headers, token, }?: {
+    resultsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Result[]>;
     private defaultEntitlementFields;
-    entitlement({ id, fields, headers, token, }: {
+    entitlement({ id, fields, headers, token, cacheExpires, skipCache, }: {
         id: Scalars['ObjectId'];
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Entitlement>;
-    entitlements({ filter, sort, after, fields, headers, token, }?: {
+    entitlements({ filter, sort, after, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         after?: PageInfo['endCursor'];
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<import("./generated/graphql").EntitlementConnection>;
-    entitlementsAll({ filter, sort, fields, headers, token, }?: {
+    entitlementsAll({ filter, sort, fields, headers, token, cacheExpires, skipCache, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
+        cacheExpires?: number;
+        skipCache?: boolean;
     }): Promise<Entitlement[]>;
     createEntitlement({ input, fields, headers, token, }: {
         input: EntitlementInput;
