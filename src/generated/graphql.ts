@@ -521,6 +521,8 @@ export type MarketingAd = ResultResource & {
     remoteId: Scalars['String'];
     /** Preview data of the marketing ad */
     preview: Scalars['String'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
     /** Results related to the marketing ad */
     results?: Maybe<ResultConnection>;
     /** Marketing campaigns related to the marketing ad */
@@ -593,6 +595,8 @@ export type MarketingCampaign = ResultResource & {
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data */
     runTimeSpec: Scalars['JSONObject'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
     /** System status of the marketing campaign */
     systemStatus: SystemStatus;
     /** Validation errors of the marketing campaign */
@@ -1567,6 +1571,10 @@ export type ResultAnalytics = {
     clicks?: Maybe<Scalars['Int']>;
     /** Amount spent */
     spend?: Maybe<Scalars['Float']>;
+    /** Number of purchases */
+    purchases?: Maybe<Scalars['Int']>;
+    /** Amount of purchases value */
+    purchasesValue?: Maybe<Scalars['Float']>;
 };
 
 /** Results collection */
@@ -2435,6 +2443,11 @@ export type MarketingAdResolvers<
     >;
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     preview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    resultsSource?: Resolver<
+        Array<Maybe<ResolversTypes['NonEmptyString']>>,
+        ParentType,
+        ContextType
+    >;
     results?: Resolver<
         Maybe<ResolversTypes['ResultConnection']>,
         ParentType,
@@ -2527,6 +2540,11 @@ export type MarketingCampaignResolvers<
     >;
     runTimeSpec?: Resolver<
         ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    resultsSource?: Resolver<
+        Array<Maybe<ResolversTypes['NonEmptyString']>>,
         ParentType,
         ContextType
     >;
@@ -3298,6 +3316,12 @@ export type ResultAnalyticsResolvers<
     >;
     clicks?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     spend?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+    purchases?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    purchasesValue?: Resolver<
+        Maybe<ResolversTypes['Float']>,
+        ParentType,
+        ContextType
+    >;
 };
 
 export type ResultConnectionResolvers<

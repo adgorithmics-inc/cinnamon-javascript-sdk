@@ -465,6 +465,8 @@ export declare type MarketingAd = ResultResource & {
     remoteId: Scalars['String'];
     /** Preview data of the marketing ad */
     preview: Scalars['String'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
     /** Results related to the marketing ad */
     results?: Maybe<ResultConnection>;
     /** Marketing campaigns related to the marketing ad */
@@ -533,6 +535,8 @@ export declare type MarketingCampaign = ResultResource & {
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data */
     runTimeSpec: Scalars['JSONObject'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
     /** System status of the marketing campaign */
     systemStatus: SystemStatus;
     /** Validation errors of the marketing campaign */
@@ -1405,6 +1409,10 @@ export declare type ResultAnalytics = {
     clicks?: Maybe<Scalars['Int']>;
     /** Amount spent */
     spend?: Maybe<Scalars['Float']>;
+    /** Number of purchases */
+    purchases?: Maybe<Scalars['Int']>;
+    /** Amount of purchases value */
+    purchasesValue?: Maybe<Scalars['Float']>;
 };
 /** Results collection */
 export declare type ResultConnection = {
@@ -1995,6 +2003,7 @@ export declare type MarketingAdResolvers<ContextType = any, ParentType extends R
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     preview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    resultsSource?: Resolver<Array<Maybe<ResolversTypes['NonEmptyString']>>, ParentType, ContextType>;
     results?: Resolver<Maybe<ResolversTypes['ResultConnection']>, ParentType, ContextType, MarketingAdResultsArgs>;
     marketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType>;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
@@ -2022,6 +2031,7 @@ export declare type MarketingCampaignResolvers<ContextType = any, ParentType ext
     results?: Resolver<Maybe<ResolversTypes['ResultConnection']>, ParentType, ContextType, MarketingCampaignResultsArgs>;
     creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     runTimeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    resultsSource?: Resolver<Array<Maybe<ResolversTypes['NonEmptyString']>>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
@@ -2215,6 +2225,8 @@ export declare type ResultAnalyticsResolvers<ContextType = any, ParentType exten
     impressions?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     clicks?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     spend?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+    purchases?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    purchasesValue?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
 };
 export declare type ResultConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultConnection'] = ResolversParentTypes['ResultConnection']> = {
     edges?: Resolver<Maybe<Array<Maybe<ResolversTypes['ResultEdge']>>>, ParentType, ContextType>;

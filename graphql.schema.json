@@ -5249,6 +5249,26 @@
                         "deprecationReason": null
                     },
                     {
+                        "name": "resultsSource",
+                        "description": "The source of the analytics used to derive results data",
+                        "args": [],
+                        "type": {
+                            "kind": "NON_NULL",
+                            "name": null,
+                            "ofType": {
+                                "kind": "LIST",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "NonEmptyString",
+                                    "ofType": null
+                                }
+                            }
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
                         "name": "systemStatus",
                         "description": "System status of the marketing campaign",
                         "args": [],
@@ -6043,6 +6063,26 @@
                         "deprecationReason": null
                     },
                     {
+                        "name": "resultsSource",
+                        "description": "The source of the analytics used to derive results data",
+                        "args": [],
+                        "type": {
+                            "kind": "NON_NULL",
+                            "name": null,
+                            "ofType": {
+                                "kind": "LIST",
+                                "name": null,
+                                "ofType": {
+                                    "kind": "SCALAR",
+                                    "name": "NonEmptyString",
+                                    "ofType": null
+                                }
+                            }
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
                         "name": "results",
                         "description": "Results related to the marketing ad",
                         "args": [
@@ -6424,6 +6464,30 @@
                     {
                         "name": "spend",
                         "description": "Amount spent",
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Float",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "purchases",
+                        "description": "Number of purchases",
+                        "args": [],
+                        "type": {
+                            "kind": "SCALAR",
+                            "name": "Int",
+                            "ofType": null
+                        },
+                        "isDeprecated": false,
+                        "deprecationReason": null
+                    },
+                    {
+                        "name": "purchasesValue",
+                        "description": "Amount of purchases value",
                         "args": [],
                         "type": {
                             "kind": "SCALAR",
