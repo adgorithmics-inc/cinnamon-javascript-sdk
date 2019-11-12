@@ -142,49 +142,122 @@ export type Scalars = {
      * }
      * ```
      **/
-    FilterInput: any;
+    FilterInput:
+        | {
+              field: string;
+              operator:
+                  | 'EQUALS'
+                  | 'NOT_EQUALS'
+                  | 'CONTAINS'
+                  | 'ICONTAINS'
+                  | 'GT'
+                  | 'GTE'
+                  | 'LT'
+                  | 'LTE';
+              value: string | string[];
+          }
+        | {
+              field: string;
+              operator:
+                  | 'EQUALS'
+                  | 'NOT_EQUALS'
+                  | 'CONTAINS'
+                  | 'ICONTAINS'
+                  | 'GT'
+                  | 'GTE'
+                  | 'LT'
+                  | 'LTE';
+              value: string | string[];
+          }[]
+        | {
+              field: string;
+              operator:
+                  | 'EQUALS'
+                  | 'NOT_EQUALS'
+                  | 'CONTAINS'
+                  | 'ICONTAINS'
+                  | 'GT'
+                  | 'GTE'
+                  | 'LT'
+                  | 'LTE';
+              value: string | string[];
+          }[][];
     /** The `Upload` scalar type represents a file upload. */
     Upload: any;
 };
 
+/** Authorization field type */
 export enum AuthField {
+    /** Generic object id */
     Id = 'id',
+    /** User id */
     UserId = 'userId',
+    /** Vendor id */
     VendorId = 'vendorId',
+    /** Organization id */
     OrganizationId = 'organizationId',
+    /** Marketplace id */
     MarketplaceId = 'marketplaceId',
+    /** Media channel id */
     MediaChannelId = 'mediaChannelId',
+    /** Campaign template id */
     CampaignTemplateId = 'campaignTemplateId',
+    /** Entitlement target resource id */
     ResourceId = 'resourceId',
+    /** Product catalog id */
     CatalogId = 'catalogId',
+    /** Product ids */
     ProductIds = 'productIds',
 }
 
+/** Location of the authorization operation */
 export enum AuthLocation {
+    /** On the query arguments */
     Arg = 'ARG',
+    /** On the mutation input */
     Input = 'INPUT',
+    /** On the parent object */
     Parent = 'PARENT',
+    /** On the referenced catalog */
     Catalog = 'CATALOG',
+    /** On the referenced entitlement */
     Entitlement = 'ENTITLEMENT',
+    /** On the referenced marketing ad */
     MarketingAd = 'MARKETING_AD',
+    /** On the referenced marketing campaign */
     MarketingCampaign = 'MARKETING_CAMPAIGN',
+    /** On the referenced campaign template */
     CampaignTemplate = 'CAMPAIGN_TEMPLATE',
+    /** On the referenced media channel */
     MediaChannel = 'MEDIA_CHANNEL',
+    /** On the referenced product */
     Product = 'PRODUCT',
+    /** On the referenced result */
     Result = 'RESULT',
+    /** On the referenced vendor */
     Vendor = 'VENDOR',
+    VendorToken = 'VENDOR_TOKEN',
 }
 
+/** Types of permissions that can be granted to resources */
 export enum AuthPermission {
+    /** Allows fetching the resource */
     Read = 'READ',
+    /** Allows creation and updating the resource */
     Write = 'WRITE',
+    /** Allows deleting the resource */
     Delete = 'DELETE',
+    /** Allows managing entitlements targeting the resource  */
     ManageEntitlements = 'MANAGE_ENTITLEMENTS',
 }
 
+/** Permission check type */
 export enum AuthType {
+    /** Permission granted by entitlement */
     Entitlement = 'ENTITLEMENT',
+    /** Permission granted by vendor relationship */
     Vendor = 'VENDOR',
+    /** Permission granted by user ownership */
     UserOnly = 'USER_ONLY',
 }
 
@@ -193,374 +266,715 @@ export enum CacheControlScope {
     Private = 'PRIVATE',
 }
 
+/**
+ * Campaign templates contain targeting and creative information tailored
+ * to your objectives specific to your goals and business needs
+ **/
 export type CampaignTemplate = {
+    /** Id of the campaign template */
     id: Scalars['ObjectId'];
+    /** Date and time the campaign template was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the campaign template was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Name of the campaign template */
     name: Scalars['NonEmptyString'];
+    /** Description of the campaign template */
     description: Scalars['String'];
+    /** Platform the campaign template is available for */
     platform: Platform;
+    /** Id of the campaign template on the corresponding platform */
     remoteId: Scalars['String'];
+    /** Marketplace the campaign template was created for */
     marketplace: Marketplace;
+    /** Marketing campaigns that are using this campaign template */
     marketingCampaigns?: Maybe<MarketingCampaignConnection>;
 };
 
+/**
+ * Campaign templates contain targeting and creative information tailored
+ * to your objectives specific to your goals and business needs
+ **/
 export type CampaignTemplateMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Campaign templates collection */
 export type CampaignTemplateConnection = {
+    /** Collection of campaign templates */
     edges?: Maybe<Array<Maybe<CampaignTemplateEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Campaign template in a collection */
 export type CampaignTemplateEdge = {
+    /** Id of the contained campaign template */
     cursor: Scalars['ObjectId'];
+    /** Container for a campaign template */
     node?: Maybe<CampaignTemplate>;
 };
 
+/** Catalogs contain products linked to a specific platform and media channel */
 export type Catalog = {
+    /** Id of the product catalog */
     id: Scalars['ObjectId'];
+    /** Name of the product catalog */
     name: Scalars['NonEmptyString'];
+    /** Category of the products referenced by the product catalog */
     catalogType: CatalogType;
+    /** Date and time the product catalog was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the product catalog was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Id of the product catalog on the related platform */
     remoteId?: Maybe<Scalars['String']>;
+    /** System status of the product catalog */
     systemStatus: SystemStatus;
+    /** Data related to the product catalog stored on the remote platform */
     remoteState: Scalars['JSONObject'];
+    /** Facebook data feed id referenced by the product catalog */
     dataFeedId?: Maybe<Scalars['String']>;
+    /** Validation errors of the product catalog */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Media channel related to the product catalog */
     mediaChannel: MediaChannel;
+    /** Products referenced by the catalog */
     products?: Maybe<ProductConnection>;
 };
 
+/** Catalogs contain products linked to a specific platform and media channel */
 export type CatalogProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Product catalogs collection */
 export type CatalogConnection = {
+    /** Collection of product catalogs */
     edges?: Maybe<Array<Maybe<CatalogEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Product catalog creation input data */
 export type CatalogCreateInput = {
+    /** Name of the product catalog */
     name: Scalars['NonEmptyString'];
+    /** Media channel id referenced by the product catalog */
     mediaChannelId: Scalars['ObjectId'];
+    /** Category of the products referenced by the catalog */
     catalogType: CatalogType;
 };
 
+/** Product catalog in a collection */
 export type CatalogEdge = {
+    /** Id of the contained product catalog */
     cursor: Scalars['ObjectId'];
+    /** Container for a product catalog */
     node?: Maybe<Catalog>;
 };
 
+/** Product catalog import input data */
 export type CatalogImportInput = {
+    /** Media channel id referenced by the product catalog */
     mediaChannelId: Scalars['ObjectId'];
+    /** Id of the product catalog on the related platform */
     remoteId: Scalars['String'];
 };
 
+/** Product catalog type */
 export enum CatalogType {
+    /** Catalog of bookable services */
     Bookable = 'bookable',
+    /** Catalog of standard products or services */
     Commerce = 'commerce',
+    /** Catalog of travel destinations */
     Destinations = 'destinations',
+    /** Catalog of plane tickets */
     Flights = 'flights',
+    /** Catalog of home rentals */
     HomeListings = 'home_listings',
+    /** Catalog of hotel rooms */
     Hotels = 'hotels',
+    /** Catalog of store-based products or services */
     OfflineCommerce = 'offline_commerce',
+    /** Catalog of event tickets */
     TicketedExperiences = 'ticketed_experiences',
+    /** Catalog of transactable goods */
     TransactableItems = 'transactable_items',
+    /** Catalog of vehicle rentals or sales */
     Vehicles = 'vehicles',
 }
 
+/** Product catalog update input data */
 export type CatalogUpdateInput = {
+    /** Name of the product catalog */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
+/** Object deletion operation result */
 export type Deletion = {
+    /** Id of the deleted object */
     id: Scalars['String'];
 };
 
+/** A set of user permissions related to a resource */
 export type Entitlement = {
+    /** Id of the entitlement */
     id: Scalars['ObjectId'];
+    /** Date and time the entitlement was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the entitlement was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** User the permissions are granted to */
     user: User;
+    /** Type of resource related to the entitlement */
     type: EntitlementResourceTypeEnum;
+    /** Resource related to the entitlement */
     resource: EntitlementResource;
+    /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
 
+/** Entitlement collection */
 export type EntitlementConnection = {
+    /** Collection of entitlements */
     edges?: Maybe<Array<Maybe<EntitlementEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Entitlement in a collection */
 export type EntitlementEdge = {
+    /** Id of the contained entitlement */
     cursor: Scalars['ObjectId'];
+    /** Container for an entitlement */
     node?: Maybe<Entitlement>;
 };
 
+/** Entitlement creation input data */
 export type EntitlementInput = {
+    /** Id of the user the permissions are granted to */
     userId: Scalars['ObjectId'];
+    /** Id of the resource related to the entitlement */
     resourceId: Scalars['ObjectId'];
+    /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
 
+/** Resource targeted by an entitlement */
 export type EntitlementResource = {
+    /** Id of the resource */
     id: Scalars['ObjectId'];
+    /** Name of the resource */
     name: Scalars['NonEmptyString'];
+    /** System status of the resource */
     systemStatus: SystemStatus;
+    /** Date and time the resource was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the resource was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Validation errors of the resource */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
+/** Resource types that can be granted permissions to */
 export enum EntitlementResourceTypeEnum {
+    /** Marketplace resource type */
     Marketplace = 'Marketplace',
+    /** Organization resource type */
     Organization = 'Organization',
+    /** Media channel resource type */
     MediaChannel = 'MediaChannel',
 }
 
+/** Entitlement update input data */
 export type EntitlementUpdateInput = {
+    /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
 
+/**
+ * Marketing ad represents an specific ad on a platform belonging
+ * to a marketing campaign and associated with a single vendor
+ **/
 export type MarketingAd = ResultResource & {
+    /** Id of the marketing ad */
     id: Scalars['ObjectId'];
+    /** Date and time the marketing ad was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the marketing ad was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Id of the marketing ad on the related marketing campaign platform */
     remoteId: Scalars['String'];
+    /** Preview data of the marketing ad */
     preview: Scalars['String'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
+    /** Results related to the marketing ad */
     results?: Maybe<ResultConnection>;
+    /** Marketing campaigns related to the marketing ad */
     marketingCampaign: MarketingCampaign;
+    /** Vendor related to the marketing ad */
     vendor: Vendor;
 };
 
+/**
+ * Marketing ad represents an specific ad on a platform belonging
+ * to a marketing campaign and associated with a single vendor
+ **/
 export type MarketingAdResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
+/** Marketing ads collection */
 export type MarketingAdConnection = {
+    /** Collection of marketing ads */
     edges?: Maybe<Array<Maybe<MarketingAdEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Marketing ad in a collection */
 export type MarketingAdEdge = {
+    /** Id of the contained marketing ad */
     cursor: Scalars['ObjectId'];
+    /** Container for a marketing ad */
     node?: Maybe<MarketingAd>;
 };
 
+/**
+ * Marketing campaign is a collection of dynamic marketing ads
+ * utilizing a specified campaign template, list of products, run
+ * time and creative specifications that are launched on a provided
+ * media channel
+ **/
 export type MarketingCampaign = ResultResource & {
+    /** Id of the marketing campaign */
     id: Scalars['ObjectId'];
+    /** Date and time the marketing campaign was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the marketing campaign was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Name of the marketing campaign */
     name: Scalars['NonEmptyString'];
+    /** Delivering status of the marketing campaign */
     status: MarketingCampaignStatus;
+    /** Marketing ads contained by the marketing campaign */
     marketingAds?: Maybe<MarketingAdConnection>;
+    /** Products referenced by the marketing campaign */
     products?: Maybe<ProductConnection>;
+    /** Vendor related to the marketing campaign */
     vendor: Vendor;
+    /** Catalog related to the marketing campaign */
     catalog: Catalog;
+    /** Campaign template related to the marketing campaign */
     campaignTemplate: CampaignTemplate;
+    /** Media channel the marketing campaign is delivering to */
     mediaChannel: MediaChannel;
+    /** Results referencing the marketing campaign */
     results?: Maybe<ResultConnection>;
+    /** Marketing campaign creative data */
     creativeSpec: Scalars['JSONObject'];
+    /** Marketing campaign scheduling data */
     runTimeSpec: Scalars['JSONObject'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
+    /** System status of the marketing campaign */
     systemStatus: SystemStatus;
+    /** Validation errors of the marketing campaign */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
+/**
+ * Marketing campaign is a collection of dynamic marketing ads
+ * utilizing a specified campaign template, list of products, run
+ * time and creative specifications that are launched on a provided
+ * media channel
+ **/
 export type MarketingCampaignMarketingAdsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
+/**
+ * Marketing campaign is a collection of dynamic marketing ads
+ * utilizing a specified campaign template, list of products, run
+ * time and creative specifications that are launched on a provided
+ * media channel
+ **/
 export type MarketingCampaignProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/**
+ * Marketing campaign is a collection of dynamic marketing ads
+ * utilizing a specified campaign template, list of products, run
+ * time and creative specifications that are launched on a provided
+ * media channel
+ **/
 export type MarketingCampaignResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
+/** Marketing campaign collection */
 export type MarketingCampaignConnection = {
+    /** Collection of marketing campaigns */
     edges?: Maybe<Array<Maybe<MarketingCampaignEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Marketing campaign in a collection */
 export type MarketingCampaignEdge = {
+    /** Id of the marketing campaign */
     cursor: Scalars['ObjectId'];
+    /** Container for a marketing campaign */
     node?: Maybe<MarketingCampaign>;
 };
 
+/** Marketing campaign creation input data */
 export type MarketingCampaignInput = {
+    /** Id of the campaign template referenced by the marketing campaign */
     campaignTemplateId: Scalars['ObjectId'];
+    /** Marketing campaign creative data */
     creativeSpec: Scalars['JSONObject'];
+    /** Marketing campaign scheduling data */
     runTimeSpec: Scalars['JSONObject'];
+    /** Ids of the products advertised in the marketing campaign */
     productIds?: Maybe<Array<Scalars['ObjectId']>>;
+    /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
+/** Delivering status a of a marketing campaign */
 export enum MarketingCampaignStatus {
+    /** Active status */
     Active = 'ACTIVE',
+    /** Paused status */
     Paused = 'PAUSED',
 }
 
+/** Marketing campaign update input data */
 export type MarketingCampaignUpdateInput = {
+    /** Marketing campaign creative data */
     creativeSpec?: Maybe<Scalars['JSONObject']>;
+    /** Marketing campaign scheduling data */
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
+    /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
 export type Marketplace = EntitlementResource & {
+    /** Id of the marketplace */
     id: Scalars['ObjectId'];
+    /** Date and time the marketplace was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the marketplace was last updated */
     lastChangeDate: Scalars['DateISO'];
+    /** Name of the marketplace */
     name: Scalars['NonEmptyString'];
+    /** Organization related to the marketplace */
     organization: Organization;
+    /** Media channels related to the marketplace */
     mediaChannels?: Maybe<MediaChannelConnection>;
+    /** Campaign templates related to the marketplace */
     campaignTemplates?: Maybe<CampaignTemplateConnection>;
+    /** Vendors related to the marketplace */
     vendors?: Maybe<VendorConnection>;
+    /** Vendor tokens associated with the marketplace that can be used to access the api as a vendor */
+    vendorTokens?: Maybe<VendorTokenConnection>;
+    /** System status of the marketplace */
     systemStatus: SystemStatus;
+    /** Validation errors of the marketplace */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
 export type MarketplaceMediaChannelsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
 export type MarketplaceCampaignTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
 export type MarketplaceVendorsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
+export type MarketplaceVendorTokensArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
+};
+
+/** Marketplaces collection */
 export type MarketplaceConnection = {
+    /** Collection of marketplaces */
     edges?: Maybe<Array<Maybe<MarketplaceEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Marketplace in a collection */
 export type MarketplaceEdge = {
+    /** Id of the contained marketplace */
     cursor: Scalars['ObjectId'];
+    /** Container for a marketplace */
     node?: Maybe<Marketplace>;
 };
 
+/** Marketplace creation input */
 export type MarketplaceInput = {
+    /** Name of the marketplace */
     name: Scalars['NonEmptyString'];
+    /** Id of the organization referenced by the marketplace */
     organizationId: Scalars['ObjectId'];
 };
 
+/** Marketplace update input */
 export type MarketplaceUpdateInput = {
+    /** Name of the marketplace */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
-export type MediaChannel = EntitlementResource & {
+export type Me = {
     id: Scalars['ObjectId'];
     creationDate: Scalars['DateISO'];
     lastChangeDate: Scalars['DateISO'];
+};
+
+/** Media channel represents an ad account on a specific platform */
+export type MediaChannel = EntitlementResource & {
+    /** Id of the media channel */
+    id: Scalars['ObjectId'];
+    /** Date and time the media channel was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the media channel was last modified */
+    lastChangeDate: Scalars['DateISO'];
+    /** Name of the media channel */
     name: Scalars['NonEmptyString'];
+    /** Platform the media channel is available for */
     platform: Platform;
+    /** Id of the media channel on the corresponding platform */
     remoteId?: Maybe<Scalars['String']>;
+    /** Data related to the media channel stored on the remote platform */
     remoteState: Scalars['JSONObject'];
+    /** Currency code of the media channel */
     currency?: Maybe<Scalars['NonEmptyString']>;
+    /** Currency symbol of the media channel */
+    currencySymbol?: Maybe<Scalars['NonEmptyString']>;
+    /** Currency offset of the media channel that must be applied to monetary analytics values */
+    currencyOffset?: Maybe<Scalars['Int']>;
+    /** Time zone of the media channel */
     timezone?: Maybe<Scalars['NonEmptyString']>;
+    /** Status of the platform authentication token */
     tokenStatus: TokenStatus;
+    /** System status of the media channel */
     systemStatus: SystemStatus;
+    /** Validation errors of the media channel */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Product catalogs referenced by the media channel */
     catalogs: CatalogConnection;
+    /** Marketplace related to the media channel */
     marketplace: Marketplace;
 };
 
+/** Media channel represents an ad account on a specific platform */
 export type MediaChannelCatalogsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Media channels collection */
 export type MediaChannelConnection = {
+    /** Collection of media channels */
     edges?: Maybe<Array<Maybe<MediaChannelEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Media channel creation input data */
 export type MediaChannelCreateInput = {
+    /** Name of the media channel */
     name: Scalars['NonEmptyString'];
+    /** Id of the marketplace referenced by the media channel */
     marketplaceId: Scalars['ObjectId'];
+    /** Platform the media channel is available for */
     platform: Platform;
+    /** Media channel platform authentication token */
     token: Scalars['NonEmptyString'];
 };
 
+/** Media channel in  a collection */
 export type MediaChannelEdge = {
+    /** Id of the contained media channel */
     cursor: Scalars['ObjectId'];
+    /** Container for a media channel */
     node?: Maybe<MediaChannel>;
 };
 
+/** Media channel import input data */
 export type MediaChannelImportInput = {
+    /** Id of the marketplace referenced by the media channel */
     marketplaceId: Scalars['ObjectId'];
+    /** Platform the media channel is available for */
     platform: Platform;
+    /** Id of the media channel on the corresponding platform */
     remoteId: Scalars['String'];
+    /** Media channel platform authentication token */
     token: Scalars['NonEmptyString'];
 };
 
+/** Media channel update input data */
 export type MediaChannelUpdateInput = {
+    /** Name of the media channel */
     name?: Maybe<Scalars['NonEmptyString']>;
+    /** Media channel platform authentication token */
     token?: Maybe<Scalars['NonEmptyString']>;
 };
 
 export type Mutation = {
+    /** Creates a product catalog using input data */
     createCatalog?: Maybe<Catalog>;
+    /** Imports a product catalog using input data */
     importCatalog?: Maybe<Catalog>;
+    /** Deletes a product catalog identified by a given id */
     deleteCatalog?: Maybe<Deletion>;
+    /** Updates a product catalog identified by an id using input data */
     updateCatalog?: Maybe<Catalog>;
+    /** Creates an entitlement using input data */
     createEntitlement?: Maybe<Entitlement>;
+    /** Updates an entitlement identified by an id using input data */
     updateEntitlement?: Maybe<Entitlement>;
+    /** Deletes an entitlement identified by an id */
     deleteEntitlement?: Maybe<Deletion>;
+    /** Creates a marketing campaign using input data */
     createMarketingCampaign?: Maybe<MarketingCampaign>;
+    /** Updates a marketing campaign identified by a given id using input data */
     updateMarketingCampaign?: Maybe<MarketingCampaign>;
+    /** Deletes a marketing campaign identified by a given id */
     deleteMarketingCampaign?: Maybe<Deletion>;
+    /** Creates a marketplace using input data */
     createMarketplace?: Maybe<Marketplace>;
+    /** Updates a marketplace identified by a given id using input data */
     updateMarketplace?: Maybe<Marketplace>;
+    /** Deletes a marketplace identified by an id */
     deleteMarketplace?: Maybe<Deletion>;
+    /** Creates a media channel using input data */
     createMediaChannel?: Maybe<MediaChannel>;
+    /** Imports a media channel using input data */
     importMediaChannel?: Maybe<MediaChannel>;
+    /** Updates a media channel identified by an id using input data */
     updateMediaChannel?: Maybe<MediaChannel>;
+    /** Deletes a media channel identified by an id */
     deleteMediaChannel?: Maybe<Deletion>;
+    /** Creates an organization using input data */
     createOrganization?: Maybe<Organization>;
+    /** Updates an organization identified by a given id using input data */
     updateOrganization?: Maybe<Organization>;
+    /** Deletes an organization identified by a given id */
     deleteOrganization?: Maybe<Deletion>;
+    /** Creates a product using input data */
     createProduct?: Maybe<Product>;
+    /** Updates a product identified by an id using input data */
     updateProduct?: Maybe<Product>;
+    /** Deletes a product identified by a given id */
     deleteProduct?: Maybe<Deletion>;
+    /** Authenticates the user using login input data */
     login?: Maybe<Token>;
+    /** Updates the user using update input data */
     updateUser?: Maybe<User>;
+    /** Refreshed the user authentication using refresh login input data */
     refreshLogin?: Maybe<Token>;
+    /** Creates a vendor token using input data */
+    createVendorToken?: Maybe<VendorToken>;
+    /** Deletes a vendor token identified by a given id */
+    deleteVendorToken?: Maybe<Deletion>;
+    /** Creates a vendor using input data */
     createVendor?: Maybe<Vendor>;
+    /** Updates a vendor identified by a given id using input data */
     updateVendor?: Maybe<Vendor>;
+    /** Deletes a vendor identified by a given id */
     deleteVendor?: Maybe<Deletion>;
 };
 
@@ -675,6 +1089,14 @@ export type MutationRefreshLoginArgs = {
     input: RefreshTokenInput;
 };
 
+export type MutationCreateVendorTokenArgs = {
+    input: VendorTokenInput;
+};
+
+export type MutationDeleteVendorTokenArgs = {
+    id: Scalars['ObjectId'];
+};
+
 export type MutationCreateVendorArgs = {
     input: VendorInput;
 };
@@ -688,143 +1110,265 @@ export type MutationDeleteVendorArgs = {
     id: Scalars['ObjectId'];
 };
 
+/** Filter operator */
 export enum Operator {
+    /** Field value equals the given value */
     Equals = 'EQUALS',
+    /** Field value is not equal to the given value */
     NotEquals = 'NOT_EQUALS',
+    /** Field contains the given value (case sensitive) */
     Contains = 'CONTAINS',
+    /** Field contains the given value (case insensitive) */
     Icontains = 'ICONTAINS',
+    /** Field value is greater than the given value */
     Gt = 'GT',
+    /** Field value is equal or greater than the given value */
     Gte = 'GTE',
+    /** Field value is lower than the given value */
     Lt = 'LT',
+    /** Field value is equal or lower than the given value */
     Lte = 'LTE',
+    /** Field value is contained in the given list of values */
     In = 'IN',
+    /** Field value is null */
     IsNull = 'IS_NULL',
 }
 
+/**
+ * Organization is the top level of your resources hierarchy
+ * and links to all owned marketplaces
+ **/
 export type Organization = EntitlementResource & {
+    /** Id of the organization */
     id: Scalars['ObjectId'];
+    /** Date and time the organization was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the organization was last updated */
     lastChangeDate: Scalars['DateISO'];
     users?: Maybe<UserConnection>;
     marketplaces?: Maybe<MarketplaceConnection>;
+    /** Name of the organization */
     name: Scalars['NonEmptyString'];
+    /** Tier type of the organization */
     tier: OrganizationTierEnum;
+    /** System status of the organization */
     systemStatus: SystemStatus;
+    /** Validation errors of the organization */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
+/**
+ * Organization is the top level of your resources hierarchy
+ * and links to all owned marketplaces
+ **/
 export type OrganizationUsersArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
+/**
+ * Organization is the top level of your resources hierarchy
+ * and links to all owned marketplaces
+ **/
 export type OrganizationMarketplacesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Organizations collection */
 export type OrganizationConnection = {
+    /** Collection of organizations */
     edges?: Maybe<Array<Maybe<OrganizationEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Organization in a collection */
 export type OrganizationEdge = {
+    /** Id of the contained organization */
     cursor: Scalars['ObjectId'];
+    /** Container for an organization */
     node?: Maybe<Organization>;
 };
 
+/** Organization creation input data */
 export type OrganizationInput = {
+    /** Name of the organization */
     name: Scalars['NonEmptyString'];
 };
 
+/** Organization tier type */
 export enum OrganizationTierEnum {
     Standard = 'Standard',
     Developer = 'Developer',
 }
 
+/** Organization update input data */
 export type OrganizationUpdateInput = {
+    /** Name of the organization */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
+/** Pagination information */
 export type PageInfo = {
+    /** Whether there's more pages to retrieve after this page */
     hasNextPage: Scalars['Boolean'];
+    /** Whether there's more pages to retrieve before this page */
+    hasPreviousPage: Scalars['Boolean'];
+    /** Id of the first object contained on the page */
     startCursor?: Maybe<Scalars['String']>;
+    /** Id of the last object contained on the page */
     endCursor?: Maybe<Scalars['String']>;
 };
 
+/** Marketing platform */
 export enum Platform {
+    /** Facebook marketing platform */
     Facebook = 'facebook',
 }
 
+/**
+ * Product is a collection of data representing a
+ * single product associated with a specific catalog
+ * and vendor which can be used to generate
+ * dynamic ads via a marekting campaign
+ **/
 export type Product = {
+    /** Id of the product */
     id: Scalars['ObjectId'];
+    /** Date and time the product was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the product was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Name of the product */
     name: Scalars['NonEmptyString'];
+    /** Stock keeping unit of the product */
     sku: Scalars['NonEmptyString'];
+    /** Data related to the product stored on the remote platform */
     remoteState?: Maybe<Scalars['JSONObject']>;
+    /** Marketing campaigns referenced by the product */
     marketingCampaigns?: Maybe<MarketingCampaignConnection>;
+    /** Product catalog containing the product */
     catalog: Catalog;
+    /** Data related to the product */
     metadata: Scalars['JSONObject'];
+    /** Vendor owning the product */
     vendor: Vendor;
+    /** System status of the product */
     systemStatus: SystemStatus;
+    /** Validation errors of the product */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Validation warnings */
     warnings?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
+/**
+ * Product is a collection of data representing a
+ * single product associated with a specific catalog
+ * and vendor which can be used to generate
+ * dynamic ads via a marekting campaign
+ **/
 export type ProductMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Products collection */
 export type ProductConnection = {
+    /** Collection of products */
     edges?: Maybe<Array<Maybe<ProductEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Product in a collection */
 export type ProductEdge = {
+    /** Id of the contained product */
     cursor: Scalars['ObjectId'];
+    /** Container for a product */
     node?: Maybe<Product>;
 };
 
+/** Product creation input */
 export type ProductInput = {
+    /** Id of the vendor that owns the product */
     vendorId: Scalars['ObjectId'];
+    /** Id of the product catalog containing the product */
     catalogId: Scalars['ObjectId'];
+    /** Data related to the product */
     metadata: Scalars['JSONObject'];
 };
 
+/** Product update input data */
 export type ProductUpdateInput = {
+    /** Data related to the product */
     metadata: Scalars['JSONObject'];
 };
 
 export type Query = {
+    /** Returns a single campaign template identified by a given id */
     campaignTemplate?: Maybe<CampaignTemplate>;
+    /** Returns a collection of campaign templates */
     campaignTemplates?: Maybe<CampaignTemplateConnection>;
+    /** Returns a single product catalog identified by a given id */
     catalog?: Maybe<Catalog>;
+    /** Returns a collection of product catalogs */
     catalogs?: Maybe<CatalogConnection>;
+    /** Returns a single entitlement identified by a given id */
     entitlement?: Maybe<Entitlement>;
+    /** Returns a collection of entitlements */
     entitlements?: Maybe<EntitlementConnection>;
+    /** Returns a single marketing ad identified by a given id */
     marketingAd?: Maybe<MarketingAd>;
+    /** Returns a collection of marketing ads */
     marketingAds?: Maybe<MarketingAdConnection>;
+    /** Returns a single marketing campaign identified by a given id */
     marketingCampaign?: Maybe<MarketingCampaign>;
+    /** Returns a collection of marketing campaigns */
     marketingCampaigns?: Maybe<MarketingCampaignConnection>;
+    /** Returns a single marketplace identified by a given id */
     marketplace?: Maybe<Marketplace>;
+    /** Returns a collection of marketplaces */
     marketplaces?: Maybe<MarketplaceConnection>;
+    /** Returns a single product catalog identified by a given id */
     mediaChannel?: Maybe<MediaChannel>;
+    /** Returns a collection of media channels */
     mediaChannels?: Maybe<MediaChannelConnection>;
+    /** Returns a single organization identified by a given id */
     organization?: Maybe<Organization>;
+    /** Returns a collection of organizations */
     organizations?: Maybe<OrganizationConnection>;
+    /** Returns a single product identified by a given id */
     product?: Maybe<Product>;
+    /** Returns a collection of products */
     products?: Maybe<ProductConnection>;
+    /** Returns a single result identified by a given id */
     result?: Maybe<Result>;
+    /** Returns a collecton of results */
     results?: Maybe<ResultConnection>;
-    me?: Maybe<User>;
+    /** Returns the user making this query */
+    me?: Maybe<Me>;
+    /** Returns a single vendor token identified by a given id */
+    vendorToken?: Maybe<VendorToken>;
+    /** Returns a collection of vendor tokens */
+    vendorTokens?: Maybe<VendorTokenConnection>;
+    /** Returns a single vendor identified by a given id */
     vendor?: Maybe<Vendor>;
+    /** Returns a collection of vendors */
     vendors?: Maybe<VendorConnection>;
 };
 
@@ -834,8 +1378,11 @@ export type QueryCampaignTemplateArgs = {
 
 export type QueryCampaignTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
 export type QueryCatalogArgs = {
@@ -844,8 +1391,11 @@ export type QueryCatalogArgs = {
 
 export type QueryCatalogsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -855,8 +1405,11 @@ export type QueryEntitlementArgs = {
 
 export type QueryEntitlementsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
 export type QueryMarketingAdArgs = {
@@ -865,8 +1418,11 @@ export type QueryMarketingAdArgs = {
 
 export type QueryMarketingAdsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
 export type QueryMarketingCampaignArgs = {
@@ -875,8 +1431,11 @@ export type QueryMarketingCampaignArgs = {
 
 export type QueryMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -886,8 +1445,11 @@ export type QueryMarketplaceArgs = {
 
 export type QueryMarketplacesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -897,8 +1459,11 @@ export type QueryMediaChannelArgs = {
 
 export type QueryMediaChannelsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -908,8 +1473,11 @@ export type QueryOrganizationArgs = {
 
 export type QueryOrganizationsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -919,8 +1487,11 @@ export type QueryProductArgs = {
 
 export type QueryProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
@@ -930,8 +1501,24 @@ export type QueryResultArgs = {
 
 export type QueryResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+};
+
+export type QueryVendorTokenArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type QueryVendorTokensArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
 };
 
 export type QueryVendorArgs = {
@@ -940,161 +1527,350 @@ export type QueryVendorArgs = {
 
 export type QueryVendorsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Refresh login input data */
 export type RefreshTokenInput = {
+    /** Secondary token value */
     refreshToken: Scalars['String'];
 };
 
+/** Result */
 export type Result = {
+    /** Id of the result */
     id: Scalars['ObjectId'];
+    /** Date and time the result was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the result was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Date and time the result data was generated */
     date: Scalars['DateISO'];
+    /** Analytics data related to the result */
     analytics: ResultAnalytics;
+    /** Resource type related to the result */
     type: ResultResourceTypeEnum;
+    /** Resource related to the result */
     resource: ResultResource;
+    /** Vendor related to the result */
     vendor: Vendor;
 };
 
+/** Analytics data referenced by a result */
 export type ResultAnalytics = {
+    /** Number of results */
     results?: Maybe<Scalars['Int']>;
+    /** Number of impressions */
     impressions?: Maybe<Scalars['Int']>;
+    /** Number of clicks */
     clicks?: Maybe<Scalars['Int']>;
+    /** Amount spent */
     spend?: Maybe<Scalars['Float']>;
+    /** Number of purchases */
+    purchases?: Maybe<Scalars['Int']>;
+    /** Amount of purchases value */
+    purchasesValue?: Maybe<Scalars['Float']>;
 };
 
+/** Results collection */
 export type ResultConnection = {
+    /** Collection of results */
     edges?: Maybe<Array<Maybe<ResultEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Result in a collection */
 export type ResultEdge = {
+    /** Id of the contained result */
     cursor: Scalars['ObjectId'];
+    /** Container for a result */
     node?: Maybe<Result>;
 };
 
+/** Resource referenced by a result */
 export type ResultResource = {
+    /** Id of the result resource */
     id: Scalars['ObjectId'];
+    /** Date and time the result resource was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the result resource was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Vendor related with the result resource */
     vendor: Vendor;
 };
 
+/** Resource related to a result */
 export enum ResultResourceTypeEnum {
     MarketingAd = 'MarketingAd',
     MarketingCampaign = 'MarketingCampaign',
 }
 
+/** Sorting direction */
+export enum Sort_Order {
+    /** Ascending sort order */
+    Asc = 'ASC',
+    /** Descending sort order */
+    Desc = 'DESC',
+}
+
+/** Sort input data */
+export type SortInput = {
+    /** Field that will be sorted in the specified direction */
+    field?: Maybe<Scalars['NonEmptyString']>;
+    /** Sorting direction */
+    order?: Maybe<Sort_Order>;
+};
+
+/** System status */
 export enum SystemStatus {
+    /** Awaiting an update */
     Pending = 'PENDING',
+    /** Awaiting deletion */
     PendingDeletion = 'PENDING_DELETION',
+    /** Awaiting synchronization */
     PendingSync = 'PENDING_SYNC',
+    /** Being processed for an update */
     Processing = 'PROCESSING',
+    /** Being processed for synchronization */
     ProcessingSync = 'PROCESSING_SYNC',
+    /** Being processed for deletion */
     ProcessingDeletion = 'PROCESSING_DELETION',
+    /** Already been processed */
     Processed = 'PROCESSED',
+    /** Having errors */
     Error = 'ERROR',
+    /** Marked as deleted */
     Deleted = 'DELETED',
 }
 
+/** Authentication token */
 export type Token = {
+    /** Token value */
     token: Scalars['String'];
+    /** Secondary token used to refresh authentication */
     refreshToken: Scalars['String'];
+    /** Date and time the token will expire */
     expiryDate: Scalars['DateISO'];
+    /** User the token was created for */
     user: User;
 };
 
+/** Platform token processing status */
 export enum TokenStatus {
+    /** Token submitted and awaiting processing */
     Pending = 'PENDING',
+    /** Token not submitted */
     Missing = 'MISSING',
+    /** Token successfully validated */
     Valid = 'VALID',
+    /** Invalid token */
     Invalid = 'INVALID',
 }
 
-export type User = {
+/**
+ * User of the system that is granted access to resources
+ * through entitlements
+ **/
+export type User = Me & {
+    /** Id of the user */
     id: Scalars['ObjectId'];
+    /** Date and time the user was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the user was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** Email of the user */
     email: Scalars['NonEmptyString'];
+    /** First name of the user */
     firstName?: Maybe<Scalars['NonEmptyString']>;
+    /** Last name of the user */
     lastName?: Maybe<Scalars['NonEmptyString']>;
+    /** Organizations the user is a member of */
     organizations?: Maybe<OrganizationConnection>;
+    /** Entitlements granting permissions to the user */
     entitlements?: Maybe<EntitlementConnection>;
 };
 
+/**
+ * User of the system that is granted access to resources
+ * through entitlements
+ **/
 export type UserOrganizationsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/**
+ * User of the system that is granted access to resources
+ * through entitlements
+ **/
 export type UserEntitlementsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
 };
 
+/** User collection */
 export type UserConnection = {
+    /** Collection of users */
     edges?: Maybe<Array<Maybe<UserEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** User in a collection */
 export type UserEdge = {
+    /** Id of the contained user */
     cursor: Scalars['ObjectId'];
+    /** Container for a user */
     node?: Maybe<User>;
 };
 
+/** User login input data */
 export type UserLoginInput = {
+    /** Password used for the login */
     password: Scalars['NonEmptyString'];
+    /** Email used for the login */
     email: Scalars['NonEmptyString'];
 };
 
+/** User update input data */
 export type UserUpdateInput = {
+    /** First name of the user */
     firstName?: Maybe<Scalars['NonEmptyString']>;
+    /** Last name of the user */
     lastName?: Maybe<Scalars['NonEmptyString']>;
+    /** Password of the user */
     password?: Maybe<Scalars['NonEmptyString']>;
+    /** Email of the user */
     email?: Maybe<Scalars['NonEmptyString']>;
 };
 
-export type Vendor = {
+/**
+ * Vendor belongs to a marketplace and is granted access to specific
+ * products they can use to create a marketing campaign
+ **/
+export type Vendor = Me & {
+    /** Id of the vendor */
     id: Scalars['ObjectId'];
+    /** Date and time the vendor was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time the vendor was last updated */
     lastChangeDate: Scalars['DateISO'];
+    /** Name of the vendor */
     name: Scalars['NonEmptyString'];
+    /** Marketplace referenced by the vendor */
     marketplace: Marketplace;
+    /** Vendor tokens associated with the vendor that can be used to access the api */
+    vendorTokens?: Maybe<VendorTokenConnection>;
+    /** Products related to the vendor */
     products?: Maybe<ProductConnection>;
+    /** System status of the vendor */
     systemStatus: SystemStatus;
+    /** Validation errors of the vendor */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 
+/**
+ * Vendor belongs to a marketplace and is granted access to specific
+ * products they can use to create a marketing campaign
+ **/
+export type VendorVendorTokensArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    after?: Maybe<Scalars['String']>;
+};
+
+/**
+ * Vendor belongs to a marketplace and is granted access to specific
+ * products they can use to create a marketing campaign
+ **/
 export type VendorProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['ObjectId']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
+/** Vendors collection */
 export type VendorConnection = {
+    /** Collection of vendors */
     edges?: Maybe<Array<Maybe<VendorEdge>>>;
+    /** Pagination information */
     pageInfo: PageInfo;
 };
 
+/** Vendor in a collection */
 export type VendorEdge = {
+    /** Id of the contained vendor */
     cursor: Scalars['ObjectId'];
+    /** Container for a vendor */
     node?: Maybe<Vendor>;
 };
 
+/** Vendor creation input data */
 export type VendorInput = {
+    /** Name of the vendor */
     name: Scalars['NonEmptyString'];
+    /** Id of the marketplace referenced by the vendor */
     marketplaceId: Scalars['ObjectId'];
 };
 
+/** Vendor token is an API access token associated with a vendor and marketplace */
+export type VendorToken = {
+    /** Id of the vendor */
+    id: Scalars['ObjectId'];
+    /** Date and time the vendor was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the vendor was last updated */
+    lastChangeDate: Scalars['DateISO'];
+    /** Marketplace associated with the vendor token */
+    marketplace: Marketplace;
+    /** Vendor associated with the vendor token */
+    vendor: Vendor;
+    /** API access token associated with the vendor */
+    token: Scalars['String'];
+};
+
+/** Vendor tokens collection */
+export type VendorTokenConnection = {
+    edges?: Maybe<Array<Maybe<VendorTokenEdge>>>;
+    pageInfo: PageInfo;
+};
+
+/** Vendor token in a collection */
+export type VendorTokenEdge = {
+    cursor: Scalars['ObjectId'];
+    node?: Maybe<VendorToken>;
+};
+
+/** Vendor token creation input data */
+export type VendorTokenInput = {
+    vendorId: Scalars['ObjectId'];
+};
+
+/** Vendor update input data */
 export type VendorUpdateInput = {
+    /** Name of the vendor */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
@@ -1214,10 +1990,13 @@ export type ResolversTypes = {
     JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
     Organization: ResolverTypeWrapper<Organization>;
     FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
+    SortInput: SortInput;
+    SORT_ORDER: Sort_Order;
     Int: ResolverTypeWrapper<Scalars['Int']>;
     UserConnection: ResolverTypeWrapper<UserConnection>;
     UserEdge: ResolverTypeWrapper<UserEdge>;
     User: ResolverTypeWrapper<User>;
+    Me: ResolverTypeWrapper<Me>;
     Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
     OrganizationConnection: ResolverTypeWrapper<OrganizationConnection>;
     OrganizationEdge: ResolverTypeWrapper<OrganizationEdge>;
@@ -1248,6 +2027,9 @@ export type ResolversTypes = {
     MarketingCampaign: ResolverTypeWrapper<MarketingCampaign>;
     ResultResource: ResolverTypeWrapper<ResultResource>;
     Vendor: ResolverTypeWrapper<Vendor>;
+    VendorTokenConnection: ResolverTypeWrapper<VendorTokenConnection>;
+    VendorTokenEdge: ResolverTypeWrapper<VendorTokenEdge>;
+    VendorToken: ResolverTypeWrapper<VendorToken>;
     MarketingCampaignStatus: MarketingCampaignStatus;
     MarketingAdConnection: ResolverTypeWrapper<MarketingAdConnection>;
     MarketingAdEdge: ResolverTypeWrapper<MarketingAdEdge>;
@@ -1284,6 +2066,7 @@ export type ResolversTypes = {
     Token: ResolverTypeWrapper<Token>;
     UserUpdateInput: UserUpdateInput;
     RefreshTokenInput: RefreshTokenInput;
+    VendorTokenInput: VendorTokenInput;
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
     AuthField: AuthField;
@@ -1309,10 +2092,13 @@ export type ResolversParentTypes = {
     JSONObject: Scalars['JSONObject'];
     Organization: Organization;
     FilterInput: Scalars['FilterInput'];
+    SortInput: SortInput;
+    SORT_ORDER: Sort_Order;
     Int: Scalars['Int'];
     UserConnection: UserConnection;
     UserEdge: UserEdge;
     User: User;
+    Me: Me;
     Boolean: Scalars['Boolean'];
     OrganizationConnection: OrganizationConnection;
     OrganizationEdge: OrganizationEdge;
@@ -1341,6 +2127,9 @@ export type ResolversParentTypes = {
     MarketingCampaign: MarketingCampaign;
     ResultResource: ResultResource;
     Vendor: Vendor;
+    VendorTokenConnection: VendorTokenConnection;
+    VendorTokenEdge: VendorTokenEdge;
+    VendorToken: VendorToken;
     MarketingCampaignStatus: MarketingCampaignStatus;
     MarketingAdConnection: MarketingAdConnection;
     MarketingAdEdge: MarketingAdEdge;
@@ -1377,6 +2166,7 @@ export type ResolversParentTypes = {
     Token: Token;
     UserUpdateInput: UserUpdateInput;
     RefreshTokenInput: RefreshTokenInput;
+    VendorTokenInput: VendorTokenInput;
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
     AuthField: AuthField;
@@ -1653,6 +2443,11 @@ export type MarketingAdResolvers<
     >;
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     preview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    resultsSource?: Resolver<
+        Array<Maybe<ResolversTypes['NonEmptyString']>>,
+        ParentType,
+        ContextType
+    >;
     results?: Resolver<
         Maybe<ResolversTypes['ResultConnection']>,
         ParentType,
@@ -1748,6 +2543,11 @@ export type MarketingCampaignResolvers<
         ParentType,
         ContextType
     >;
+    resultsSource?: Resolver<
+        Array<Maybe<ResolversTypes['NonEmptyString']>>,
+        ParentType,
+        ContextType
+    >;
     systemStatus?: Resolver<
         ResolversTypes['SystemStatus'],
         ParentType,
@@ -1819,6 +2619,12 @@ export type MarketplaceResolvers<
         ContextType,
         RequireFields<MarketplaceVendorsArgs, 'showDeleted'>
     >;
+    vendorTokens?: Resolver<
+        Maybe<ResolversTypes['VendorTokenConnection']>,
+        ParentType,
+        ContextType,
+        MarketplaceVendorTokensArgs
+    >;
     systemStatus?: Resolver<
         ResolversTypes['SystemStatus'],
         ParentType,
@@ -1855,6 +2661,20 @@ export type MarketplaceEdgeResolvers<
     >;
 };
 
+export type MeResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['Me'] = ResolversParentTypes['Me']
+> = {
+    __resolveType: TypeResolveFn<'User' | 'Vendor', ParentType, ContextType>;
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+};
+
 export type MediaChannelResolvers<
     ContextType = any,
     ParentType extends ResolversParentTypes['MediaChannel'] = ResolversParentTypes['MediaChannel']
@@ -1880,6 +2700,16 @@ export type MediaChannelResolvers<
     >;
     currency?: Resolver<
         Maybe<ResolversTypes['NonEmptyString']>,
+        ParentType,
+        ContextType
+    >;
+    currencySymbol?: Resolver<
+        Maybe<ResolversTypes['NonEmptyString']>,
+        ParentType,
+        ContextType
+    >;
+    currencyOffset?: Resolver<
+        Maybe<ResolversTypes['Int']>,
         ParentType,
         ContextType
     >;
@@ -2100,6 +2930,18 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationRefreshLoginArgs, 'input'>
     >;
+    createVendorToken?: Resolver<
+        Maybe<ResolversTypes['VendorToken']>,
+        ParentType,
+        ContextType,
+        RequireFields<MutationCreateVendorTokenArgs, 'input'>
+    >;
+    deleteVendorToken?: Resolver<
+        Maybe<ResolversTypes['Deletion']>,
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteVendorTokenArgs, 'id'>
+    >;
     createVendor?: Resolver<
         Maybe<ResolversTypes['Vendor']>,
         ParentType,
@@ -2200,6 +3042,11 @@ export type PageInfoResolvers<
     ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']
 > = {
     hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+    hasPreviousPage?: Resolver<
+        ResolversTypes['Boolean'],
+        ParentType,
+        ContextType
+    >;
     startCursor?: Resolver<
         Maybe<ResolversTypes['String']>,
         ParentType,
@@ -2400,7 +3247,19 @@ export type QueryResolvers<
         ContextType,
         QueryResultsArgs
     >;
-    me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+    me?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType>;
+    vendorToken?: Resolver<
+        Maybe<ResolversTypes['VendorToken']>,
+        ParentType,
+        ContextType,
+        RequireFields<QueryVendorTokenArgs, 'id'>
+    >;
+    vendorTokens?: Resolver<
+        Maybe<ResolversTypes['VendorTokenConnection']>,
+        ParentType,
+        ContextType,
+        QueryVendorTokensArgs
+    >;
     vendor?: Resolver<
         Maybe<ResolversTypes['Vendor']>,
         ParentType,
@@ -2457,6 +3316,12 @@ export type ResultAnalyticsResolvers<
     >;
     clicks?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     spend?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+    purchases?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+    purchasesValue?: Resolver<
+        Maybe<ResolversTypes['Float']>,
+        ParentType,
+        ContextType
+    >;
 };
 
 export type ResultConnectionResolvers<
@@ -2586,6 +3451,12 @@ export type VendorResolvers<
         ParentType,
         ContextType
     >;
+    vendorTokens?: Resolver<
+        Maybe<ResolversTypes['VendorTokenConnection']>,
+        ParentType,
+        ContextType,
+        VendorVendorTokensArgs
+    >;
     products?: Resolver<
         Maybe<ResolversTypes['ProductConnection']>,
         ParentType,
@@ -2624,6 +3495,50 @@ export type VendorEdgeResolvers<
     node?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 
+export type VendorTokenResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['VendorToken'] = ResolversParentTypes['VendorToken']
+> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    marketplace?: Resolver<
+        ResolversTypes['Marketplace'],
+        ParentType,
+        ContextType
+    >;
+    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
+
+export type VendorTokenConnectionResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['VendorTokenConnection'] = ResolversParentTypes['VendorTokenConnection']
+> = {
+    edges?: Resolver<
+        Maybe<Array<Maybe<ResolversTypes['VendorTokenEdge']>>>,
+        ParentType,
+        ContextType
+    >;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+
+export type VendorTokenEdgeResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['VendorTokenEdge'] = ResolversParentTypes['VendorTokenEdge']
+> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<
+        Maybe<ResolversTypes['VendorToken']>,
+        ParentType,
+        ContextType
+    >;
+};
+
 export type Resolvers<ContextType = any> = {
     CampaignTemplate?: CampaignTemplateResolvers<ContextType>;
     CampaignTemplateConnection?: CampaignTemplateConnectionResolvers<
@@ -2652,6 +3567,7 @@ export type Resolvers<ContextType = any> = {
     Marketplace?: MarketplaceResolvers<ContextType>;
     MarketplaceConnection?: MarketplaceConnectionResolvers<ContextType>;
     MarketplaceEdge?: MarketplaceEdgeResolvers<ContextType>;
+    Me?: MeResolvers;
     MediaChannel?: MediaChannelResolvers<ContextType>;
     MediaChannelConnection?: MediaChannelConnectionResolvers<ContextType>;
     MediaChannelEdge?: MediaChannelEdgeResolvers<ContextType>;
@@ -2679,6 +3595,9 @@ export type Resolvers<ContextType = any> = {
     Vendor?: VendorResolvers<ContextType>;
     VendorConnection?: VendorConnectionResolvers<ContextType>;
     VendorEdge?: VendorEdgeResolvers<ContextType>;
+    VendorToken?: VendorTokenResolvers<ContextType>;
+    VendorTokenConnection?: VendorTokenConnectionResolvers<ContextType>;
+    VendorTokenEdge?: VendorTokenEdgeResolvers<ContextType>;
 };
 
 /**
