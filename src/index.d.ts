@@ -35,6 +35,12 @@ export declare class Cinnamon {
             node?: T;
         }>;
     }>): Promise<T[]>;
+    eachNode<T>(fetchRelayConnection: (after: PageInfo['endCursor']) => Promise<{
+        pageInfo: PageInfo;
+        edges?: Array<{
+            node?: T;
+        }>;
+    }>): AsyncGenerator<T, void, unknown>;
     private defaultUserFields;
     login(input: UserLoginInput): Promise<import("./generated/graphql").Token>;
     refreshLogin(input: RefreshTokenInput): Promise<import("./generated/graphql").Token>;
@@ -72,6 +78,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Organization[]>;
+    organizationsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof OrganizationFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Organization, void, unknown>;
     createOrganization({ input, fields, headers, token, }: {
         input: OrganizationInput;
         fields?: Array<keyof OrganizationFields | string>;
@@ -107,6 +120,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace[]>;
+    marketplacesEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MarketplaceFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Marketplace, void, unknown>;
     createMarketplace({ input, fields, headers, token, }: {
         input: MarketplaceInput;
         fields?: Array<keyof MarketplaceFields | string>;
@@ -147,6 +167,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel[]>;
+    mediaChannelsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MediaChannelFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<MediaChannel, void, unknown>;
     createMediaChannel({ input, fields, headers, token, }: {
         input: MediaChannelCreateInput;
         fields?: Array<keyof MediaChannelFields | string>;
@@ -193,6 +220,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CampaignTemplate[]>;
+    campaignTemplatesEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CampaignTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CampaignTemplate, void, unknown>;
     private defaultVendorFields;
     vendor({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
@@ -215,6 +249,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Vendor[]>;
+    vendorsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof VendorFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Vendor, void, unknown>;
     createVendor({ input, fields, headers, token, }: {
         input: VendorInput;
         fields?: Array<keyof VendorFields | string>;
@@ -255,6 +296,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken[]>;
+    vendorTokensEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof VendorTokenFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<VendorToken, void, unknown>;
     createVendorToken({ input, fields, headers, token, }: {
         input: VendorTokenInput;
         fields?: Array<keyof VendorTokenFields | string>;
@@ -288,6 +336,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Catalog[]>;
+    catalogsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CatalogFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Catalog, void, unknown>;
     createCatalog({ input, fields, headers, token, }: {
         input: CatalogCreateInput;
         fields?: Array<keyof CatalogFields | string>;
@@ -334,6 +389,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Product[]>;
+    productsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof ProductFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Product, void, unknown>;
     createProduct({ input, fields, headers, token, }: {
         input: ProductInput;
         fields?: Array<keyof ProductFields | string>;
@@ -374,6 +436,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign[]>;
+    marketingCampaignsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<MarketingCampaign, void, unknown>;
     createMarketingCampaign({ input, fields, headers, token, }: {
         input: MarketingCampaignInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
@@ -414,6 +483,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingAd[]>;
+    marketingAdsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof MarketingAdFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<MarketingAd, void, unknown>;
     private defaultResultFields;
     result({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
@@ -436,6 +512,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Result[]>;
+    resultsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof ResultFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Result, void, unknown>;
     private defaultEntitlementFields;
     entitlement({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
@@ -458,6 +541,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement[]>;
+    entitlementsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof EntitlementFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Entitlement, void, unknown>;
     createEntitlement({ input, fields, headers, token, }: {
         input: EntitlementInput;
         fields?: Array<keyof EntitlementFields | string>;
