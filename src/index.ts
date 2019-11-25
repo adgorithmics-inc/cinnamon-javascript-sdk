@@ -1391,16 +1391,16 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createCatalog'>({
+        return (await this.api<'importCatalog'>({
             query: `mutation($input: CatalogImportInput!) {
-                createCatalog(input: $input) {
+                importCatalog(input: $input) {
                     ${fields.join(' ')}
                 }
             }`,
             variables: { input },
             headers,
             token,
-        })).data.createCatalog;
+        })).data.importCatalog;
     }
 
     async updateCatalog({
