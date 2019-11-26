@@ -569,3 +569,4 @@ export declare class Cinnamon {
 }
 export * from './generated/graphql';
 export * from './inputFields';
+export * from './helpers';

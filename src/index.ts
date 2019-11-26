@@ -61,6 +61,8 @@ import {
     EntitlementFields,
 } from './inputFields';
 
+import { bind } from './helpers';
+
 export interface Config {
     url: string;
 }
@@ -90,10 +92,12 @@ export class Cinnamon {
         this.config = config;
     }
 
+    @bind
     private isVendorToken(token: string) {
         return token.length === VENDOR_TOKEN_LENGTH;
     }
 
+    @bind
     async api<T extends APIKey, U extends string = T>({
         query,
         variables = {},
@@ -135,6 +139,7 @@ export class Cinnamon {
         return json;
     }
 
+    @bind
     async allPages<T>(
         fetchRelayConnection: (
             after: PageInfo['endCursor'],
@@ -159,6 +164,7 @@ export class Cinnamon {
         return result;
     }
 
+    @bind
     async *eachNode<T>(
         fetchRelayConnection: (
             after: PageInfo['endCursor'],
@@ -191,19 +197,22 @@ export class Cinnamon {
 
     private defaultUserFields = [UserFields.id, UserFields.email];
 
+    @bind
     async login(input: UserLoginInput) {
-        const result = (await this.api<'login'>({
-            query: `mutation($input: UserLoginInput!) {
-                login(input: $input) {
-                    ${[
-                        TokenFields.expiryDate,
-                        TokenFields.token,
-                        TokenFields.refreshToken,
-                    ].join(' ')}
-                }
-            }`,
-            variables: { input },
-        })).data.login;
+        const result = (
+            await this.api<'login'>({
+                query: `mutation($input: UserLoginInput!) {
+                    login(input: $input) {
+                        ${[
+                            TokenFields.expiryDate,
+                            TokenFields.token,
+                            TokenFields.refreshToken,
+                        ].join(' ')}
+                    }
+                }`,
+                variables: { input },
+            })
+        ).data.login;
 
         if (result.token && result.refreshToken) {
             this.token = result.token;
@@ -213,19 +222,22 @@ export class Cinnamon {
         return result;
     }
 
+    @bind
     async refreshLogin(input: RefreshTokenInput) {
-        const result = (await this.api<'refreshLogin'>({
-            query: `mutation($input: RefreshTokenInput!) {
-                refreshLogin(input: $input) {
-                    ${[
-                        TokenFields.expiryDate,
-                        TokenFields.token,
-                        TokenFields.refreshToken,
-                    ].join(' ')}
-                }
-            }`,
-            variables: { input },
-        })).data.refreshLogin;
+        const result = (
+            await this.api<'refreshLogin'>({
+                query: `mutation($input: RefreshTokenInput!) {
+                    refreshLogin(input: $input) {
+                        ${[
+                            TokenFields.expiryDate,
+                            TokenFields.token,
+                            TokenFields.refreshToken,
+                        ].join(' ')}
+                    }
+                }`,
+                variables: { input },
+            })
+        ).data.refreshLogin;
 
         if (result.token && result.refreshToken) {
             this.token = result.token;
@@ -235,10 +247,12 @@ export class Cinnamon {
         return result;
     }
 
+    @bind
     setToken(token: string) {
         this.token = token;
     }
 
+    @bind
     async me({
         fields,
         headers,
@@ -248,26 +262,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'me'>({
-            query: `query {
-                me {
-                    ${
-                        this.isVendorToken(token || this.token)
-                            ? `... on Vendor { ${(
-                                  fields || this.defaultVendorFields
-                              ).join(' ')} }`
-                            : `... on User { ${(
-                                  fields || this.defaultUserFields
-                              ).join(' ')} }`
+        return (
+            await this.api<'me'>({
+                query: `query {
+                    me {
+                        ${
+                            this.isVendorToken(token || this.token)
+                                ? `... on Vendor { ${(
+                                      fields || this.defaultVendorFields
+                                  ).join(' ')} }`
+                                : `... on User { ${(
+                                      fields || this.defaultUserFields
+                                  ).join(' ')} }`
+                        }
                     }
-                }
-            }`,
-            variables: {},
-            headers,
-            token,
-        })).data.me;
+                }`,
+                variables: {},
+                headers,
+                token,
+            })
+        ).data.me;
     }
 
+    @bind
     async updateUser({
         input,
         fields = [UserFields.id, UserFields.email],
@@ -279,16 +296,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateUser'>({
-            query: `mutation($input: UserUpdateInput!) {
-                updateUser(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.updateUser;
+        return (
+            await this.api<'updateUser'>({
+                query: `mutation($input: UserUpdateInput!) {
+                    updateUser(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.updateUser;
     }
 
     // ####################################
@@ -302,6 +321,7 @@ export class Cinnamon {
         OrganizationFields.errors,
     ];
 
+    @bind
     async organization({
         id,
         fields = this.defaultOrganizationFields,
@@ -313,18 +333,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'organization'>({
-            query: `query($id: ObjectId!) {
-                organization(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.organization;
+        return (
+            await this.api<'organization'>({
+                query: `query($id: ObjectId!) {
+                    organization(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.organization;
     }
 
+    @bind
     async organizations({
         filter,
         sort,
@@ -340,26 +363,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'organizations'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                organizations(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'organizations'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    organizations(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.organizations;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.organizations;
     }
 
+    @bind
     organizationsAll({
         filter,
         sort,
@@ -378,6 +404,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     organizationsEach({
         filter,
         sort,
@@ -396,6 +423,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createOrganization({
         input,
         fields = this.defaultOrganizationFields,
@@ -407,18 +435,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createOrganization'>({
-            query: `mutation($input: OrganizationInput!) {
-                createOrganization(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createOrganization;
+        return (
+            await this.api<'createOrganization'>({
+                query: `mutation($input: OrganizationInput!) {
+                    createOrganization(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createOrganization;
     }
 
+    @bind
     async updateOrganization({
         id,
         input,
@@ -432,16 +463,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateOrganization'>({
-            query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
-                updateOrganization(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateOrganization;
+        return (
+            await this.api<'updateOrganization'>({
+                query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
+                    updateOrganization(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateOrganization;
     }
 
     // ####################################
@@ -455,6 +488,7 @@ export class Cinnamon {
         MarketplaceFields.errors,
     ];
 
+    @bind
     async marketplace({
         id,
         fields = this.defaultMarketplaceFields,
@@ -466,18 +500,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'marketplace'>({
-            query: `query($id: ObjectId!) {
-                marketplace(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.marketplace;
+        return (
+            await this.api<'marketplace'>({
+                query: `query($id: ObjectId!) {
+                    marketplace(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.marketplace;
     }
 
+    @bind
     async marketplaces({
         filter,
         sort,
@@ -493,26 +530,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'marketplaces'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                marketplaces(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'marketplaces'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    marketplaces(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.marketplaces;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.marketplaces;
     }
 
+    @bind
     marketplacesAll({
         filter,
         sort,
@@ -531,6 +571,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     marketplacesEach({
         filter,
         sort,
@@ -549,6 +590,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createMarketplace({
         input,
         fields = this.defaultMarketplaceFields,
@@ -560,18 +602,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createMarketplace'>({
-            query: `mutation($input: MarketplaceInput!) {
-                createMarketplace(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createMarketplace;
+        return (
+            await this.api<'createMarketplace'>({
+                query: `mutation($input: MarketplaceInput!) {
+                    createMarketplace(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createMarketplace;
     }
 
+    @bind
     async updateMarketplace({
         id,
         input,
@@ -585,18 +630,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateMarketplace'>({
-            query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
-                updateMarketplace(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateMarketplace;
+        return (
+            await this.api<'updateMarketplace'>({
+                query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
+                    updateMarketplace(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateMarketplace;
     }
 
+    @bind
     async deleteMarketplace({
         id,
         headers,
@@ -606,16 +654,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteMarketplace'>({
-            query: `mutation($id: ObjectId!) {
-                deleteMarketplace(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteMarketplace;
+        return (
+            await this.api<'deleteMarketplace'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteMarketplace(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteMarketplace;
     }
 
     // ####################################
@@ -627,6 +677,7 @@ export class Cinnamon {
         MarketplaceFields.name,
     ];
 
+    @bind
     async mediaChannel({
         id,
         fields = this.defaultMediaChannelFields,
@@ -638,18 +689,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'mediaChannel'>({
-            query: `query($id: ObjectId!) {
-                mediaChannel(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.mediaChannel;
+        return (
+            await this.api<'mediaChannel'>({
+                query: `query($id: ObjectId!) {
+                    mediaChannel(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.mediaChannel;
     }
 
+    @bind
     async mediaChannels({
         filter,
         sort,
@@ -665,26 +719,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'mediaChannels'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                mediaChannels(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'mediaChannels'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    mediaChannels(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.mediaChannels;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.mediaChannels;
     }
 
+    @bind
     mediaChannelsAll({
         filter,
         sort,
@@ -703,6 +760,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     mediaChannelsEach({
         filter,
         sort,
@@ -721,6 +779,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createMediaChannel({
         input,
         fields = this.defaultMediaChannelFields,
@@ -732,18 +791,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createMediaChannel'>({
-            query: `mutation($input: MediaChannelCreateInput!) {
-                createMediaChannel(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createMediaChannel;
+        return (
+            await this.api<'createMediaChannel'>({
+                query: `mutation($input: MediaChannelCreateInput!) {
+                    createMediaChannel(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createMediaChannel;
     }
 
+    @bind
     async importMediaChannel({
         input,
         fields = this.defaultMediaChannelFields,
@@ -755,18 +817,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'importMediaChannel'>({
-            query: `mutation($input: MediaChannelImportInput!) {
-                importMediaChannel(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.importMediaChannel;
+        return (
+            await this.api<'importMediaChannel'>({
+                query: `mutation($input: MediaChannelImportInput!) {
+                    importMediaChannel(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.importMediaChannel;
     }
 
+    @bind
     async updateMediaChannel({
         id,
         input,
@@ -780,18 +845,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateMediaChannel'>({
-            query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
-                updateMediaChannel(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateMediaChannel;
+        return (
+            await this.api<'updateMediaChannel'>({
+                query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
+                    updateMediaChannel(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateMediaChannel;
     }
 
+    @bind
     async deleteMediaChannel({
         id,
         headers,
@@ -801,16 +869,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteMediaChannel'>({
-            query: `mutation($id: ObjectId!) {
-                deleteMediaChannel(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteMediaChannel;
+        return (
+            await this.api<'deleteMediaChannel'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteMediaChannel(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteMediaChannel;
     }
 
     // ####################################
@@ -822,6 +892,7 @@ export class Cinnamon {
         CampaignTemplateFields.name,
     ];
 
+    @bind
     async campaignTemplate({
         id,
         fields = this.defaultCampaignTemplateFields,
@@ -833,18 +904,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'campaignTemplate'>({
-            query: `query($id: ObjectId!) {
-                campaignTemplate(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.campaignTemplate;
+        return (
+            await this.api<'campaignTemplate'>({
+                query: `query($id: ObjectId!) {
+                    campaignTemplate(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.campaignTemplate;
     }
 
+    @bind
     async campaignTemplates({
         filter,
         sort,
@@ -860,26 +934,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'campaignTemplates'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                campaignTemplates(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'campaignTemplates'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    campaignTemplates(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.campaignTemplates;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.campaignTemplates;
     }
 
+    @bind
     campaignTemplatesAll({
         filter,
         sort,
@@ -905,6 +982,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     campaignTemplatesEach({
         filter,
         sort,
@@ -941,6 +1019,7 @@ export class Cinnamon {
         VendorFields.errors,
     ];
 
+    @bind
     async vendor({
         id,
         fields = this.defaultVendorFields,
@@ -952,18 +1031,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'vendor'>({
-            query: `query($id: ObjectId!) {
-                vendor(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.vendor;
+        return (
+            await this.api<'vendor'>({
+                query: `query($id: ObjectId!) {
+                    vendor(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.vendor;
     }
 
+    @bind
     async vendors({
         filter,
         sort,
@@ -979,26 +1061,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'vendors'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                vendors(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'vendors'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    vendors(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.vendors;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.vendors;
     }
 
+    @bind
     vendorsAll({
         filter,
         sort,
@@ -1017,6 +1102,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     vendorsEach({
         filter,
         sort,
@@ -1035,6 +1121,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createVendor({
         input,
         fields = this.defaultVendorFields,
@@ -1046,18 +1133,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createVendor'>({
-            query: `mutation($input: VendorInput!) {
-                createVendor(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createVendor;
+        return (
+            await this.api<'createVendor'>({
+                query: `mutation($input: VendorInput!) {
+                    createVendor(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createVendor;
     }
 
+    @bind
     async updateVendor({
         id,
         input,
@@ -1071,18 +1161,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateVendor'>({
-            query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
-                updateVendor(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateVendor;
+        return (
+            await this.api<'updateVendor'>({
+                query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
+                    updateVendor(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateVendor;
     }
 
+    @bind
     async deleteVendor({
         id,
         headers,
@@ -1092,16 +1185,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteVendor'>({
-            query: `mutation($id: ObjectId!) {
-                deleteVendor(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteVendor;
+        return (
+            await this.api<'deleteVendor'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteVendor(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteVendor;
     }
 
     // ####################################
@@ -1113,6 +1208,7 @@ export class Cinnamon {
         VendorTokenFields.token,
     ];
 
+    @bind
     async vendorToken({
         id,
         fields = this.defaultVendorTokenFields,
@@ -1124,18 +1220,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'vendorToken'>({
-            query: `query($id: ObjectId!) {
-                vendorToken(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.vendorToken;
+        return (
+            await this.api<'vendorToken'>({
+                query: `query($id: ObjectId!) {
+                    vendorToken(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.vendorToken;
     }
 
+    @bind
     async vendorTokens({
         filter,
         sort,
@@ -1151,26 +1250,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'vendorTokens'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                vendorTokens(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'vendorTokens'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    vendorTokens(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.vendorTokens;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.vendorTokens;
     }
 
+    @bind
     vendorTokensAll({
         filter,
         sort,
@@ -1189,6 +1291,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     vendorTokensEach({
         filter,
         sort,
@@ -1207,6 +1310,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createVendorToken({
         input,
         fields = this.defaultVendorTokenFields,
@@ -1218,18 +1322,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createVendorToken'>({
-            query: `mutation($input: VendorTokenInput!) {
-                createVendorToken(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createVendorToken;
+        return (
+            await this.api<'createVendorToken'>({
+                query: `mutation($input: VendorTokenInput!) {
+                    createVendorToken(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createVendorToken;
     }
 
+    @bind
     async deleteVendorToken({
         id,
         headers,
@@ -1239,16 +1346,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteVendorToken'>({
-            query: `mutation($id: ObjectId!) {
-                deleteVendorToken(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteVendorToken;
+        return (
+            await this.api<'deleteVendorToken'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteVendorToken(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteVendorToken;
     }
 
     // ####################################
@@ -1263,6 +1372,7 @@ export class Cinnamon {
         CatalogFields.errors,
     ];
 
+    @bind
     async catalog({
         id,
         fields = this.defaultCatalogFields,
@@ -1274,18 +1384,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'catalog'>({
-            query: `query($id: ObjectId!) {
-                catalog(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.catalog;
+        return (
+            await this.api<'catalog'>({
+                query: `query($id: ObjectId!) {
+                    catalog(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.catalog;
     }
 
+    @bind
     async catalogs({
         filter,
         sort,
@@ -1301,26 +1414,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'catalogs'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                catalogs(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'catalogs'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    catalogs(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.catalogs;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.catalogs;
     }
 
+    @bind
     catalogsAll({
         filter,
         sort,
@@ -1339,6 +1455,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     catalogsEach({
         filter,
         sort,
@@ -1357,6 +1474,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createCatalog({
         input,
         fields = this.defaultCatalogFields,
@@ -1368,18 +1486,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createCatalog'>({
-            query: `mutation($input: CatalogCreateInput!) {
-                createCatalog(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createCatalog;
+        return (
+            await this.api<'createCatalog'>({
+                query: `mutation($input: CatalogCreateInput!) {
+                    createCatalog(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCatalog;
     }
 
+    @bind
     async importCatalog({
         input,
         fields = this.defaultCatalogFields,
@@ -1391,18 +1512,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'importCatalog'>({
-            query: `mutation($input: CatalogImportInput!) {
-                importCatalog(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.importCatalog;
+        return (
+            await this.api<'importCatalog'>({
+                query: `mutation($input: CatalogImportInput!) {
+                    importCatalog(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.importCatalog;
     }
 
+    @bind
     async updateCatalog({
         id,
         input,
@@ -1416,18 +1540,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateCatalog'>({
-            query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
-                updateCatalog(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateCatalog;
+        return (
+            await this.api<'updateCatalog'>({
+                query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
+                    updateCatalog(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateCatalog;
     }
 
+    @bind
     async deleteCatalog({
         id,
         headers,
@@ -1437,16 +1564,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteCatalog'>({
-            query: `mutation($id: ObjectId!) {
-                deleteCatalog(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteCatalog;
+        return (
+            await this.api<'deleteCatalog'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteCatalog(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteCatalog;
     }
 
     // ####################################
@@ -1462,6 +1591,7 @@ export class Cinnamon {
         ProductFields.warnings,
     ];
 
+    @bind
     async product({
         id,
         fields = this.defaultProductFields,
@@ -1473,18 +1603,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'product'>({
-            query: `query($id: ObjectId!) {
-                product(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.product;
+        return (
+            await this.api<'product'>({
+                query: `query($id: ObjectId!) {
+                    product(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.product;
     }
 
+    @bind
     async products({
         filter,
         sort,
@@ -1500,26 +1633,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'products'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                products(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'products'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    products(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.products;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.products;
     }
 
+    @bind
     productsAll({
         filter,
         sort,
@@ -1538,6 +1674,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     productsEach({
         filter,
         sort,
@@ -1556,6 +1693,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createProduct({
         input,
         fields = this.defaultProductFields,
@@ -1567,18 +1705,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createProduct'>({
-            query: `mutation($input: ProductInput!) {
-                createProduct(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createProduct;
+        return (
+            await this.api<'createProduct'>({
+                query: `mutation($input: ProductInput!) {
+                    createProduct(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createProduct;
     }
 
+    @bind
     async updateProduct({
         id,
         input,
@@ -1592,18 +1733,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateProduct'>({
-            query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
-                updateProduct(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateProduct;
+        return (
+            await this.api<'updateProduct'>({
+                query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
+                    updateProduct(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateProduct;
     }
 
+    @bind
     async deleteProduct({
         id,
         headers,
@@ -1613,16 +1757,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteProduct'>({
-            query: `mutation($id: ObjectId!) {
-                deleteProduct(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteProduct;
+        return (
+            await this.api<'deleteProduct'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteProduct(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteProduct;
     }
 
     // ####################################
@@ -1636,6 +1782,7 @@ export class Cinnamon {
         MarketingCampaignFields.errors,
     ];
 
+    @bind
     async marketingCampaign({
         id,
         fields = this.defaultMarketingCampaignFields,
@@ -1647,18 +1794,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'marketingCampaign'>({
-            query: `query($id: ObjectId!) {
-                marketingCampaign(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.marketingCampaign;
+        return (
+            await this.api<'marketingCampaign'>({
+                query: `query($id: ObjectId!) {
+                    marketingCampaign(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.marketingCampaign;
     }
 
+    @bind
     async marketingCampaigns({
         filter,
         sort,
@@ -1674,26 +1824,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'marketingCampaigns'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'marketingCampaigns'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.marketingCampaigns;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.marketingCampaigns;
     }
 
+    @bind
     marketingCampaignsAll({
         filter,
         sort,
@@ -1720,6 +1873,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     marketingCampaignsEach({
         filter,
         sort,
@@ -1746,6 +1900,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createMarketingCampaign({
         input,
         fields = this.defaultMarketingCampaignFields,
@@ -1757,18 +1912,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createMarketingCampaign'>({
-            query: `mutation($input: MarketingCampaignInput!) {
-                createMarketingCampaign(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createMarketingCampaign;
+        return (
+            await this.api<'createMarketingCampaign'>({
+                query: `mutation($input: MarketingCampaignInput!) {
+                    createMarketingCampaign(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createMarketingCampaign;
     }
 
+    @bind
     async updateMarketingCampaign({
         id,
         input,
@@ -1782,18 +1940,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateMarketingCampaign'>({
-            query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
-                updateMarketingCampaign(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateMarketingCampaign;
+        return (
+            await this.api<'updateMarketingCampaign'>({
+                query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
+                    updateMarketingCampaign(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateMarketingCampaign;
     }
 
+    @bind
     async deleteMarketingCampaign({
         id,
         headers,
@@ -1803,16 +1964,18 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteMarketingCampaign'>({
-            query: `mutation($id: ObjectId!) {
-                deleteMarketingCampaign(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteMarketingCampaign;
+        return (
+            await this.api<'deleteMarketingCampaign'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteMarketingCampaign(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteMarketingCampaign;
     }
 
     // ####################################
@@ -1824,6 +1987,7 @@ export class Cinnamon {
         MarketingAdFields.remoteId,
     ];
 
+    @bind
     async marketingAd({
         id,
         fields = this.defaultMarketingAdFields,
@@ -1835,18 +1999,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'marketingAd'>({
-            query: `query($id: ObjectId!) {
-                marketingAd(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.marketingAd;
+        return (
+            await this.api<'marketingAd'>({
+                query: `query($id: ObjectId!) {
+                    marketingAd(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.marketingAd;
     }
 
+    @bind
     async marketingAds({
         filter,
         sort,
@@ -1862,26 +2029,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'marketingAds'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                marketingAds(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'marketingAds'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    marketingAds(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.marketingAds;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.marketingAds;
     }
 
+    @bind
     marketingAdsAll({
         filter,
         sort,
@@ -1900,6 +2070,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     marketingAdsEach({
         filter,
         sort,
@@ -1928,6 +2099,7 @@ export class Cinnamon {
         'analytics {results}',
     ];
 
+    @bind
     async result({
         id,
         fields = this.defaultResultFields,
@@ -1939,18 +2111,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'result'>({
-            query: `query($id: ObjectId!) {
-                result(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.result;
+        return (
+            await this.api<'result'>({
+                query: `query($id: ObjectId!) {
+                    result(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.result;
     }
 
+    @bind
     async results({
         filter,
         sort,
@@ -1966,26 +2141,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'results'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                results(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'results'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    results(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.results;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.results;
     }
 
+    @bind
     resultsAll({
         filter,
         sort,
@@ -2004,6 +2182,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     resultsEach({
         filter,
         sort,
@@ -2032,6 +2211,7 @@ export class Cinnamon {
         EntitlementFields.type,
     ];
 
+    @bind
     async entitlement({
         id,
         fields = this.defaultEntitlementFields,
@@ -2043,18 +2223,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'entitlement'>({
-            query: `query($id: ObjectId!) {
-                entitlement(id: $id) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.entitlement;
+        return (
+            await this.api<'entitlement'>({
+                query: `query($id: ObjectId!) {
+                    entitlement(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.entitlement;
     }
 
+    @bind
     async entitlements({
         filter,
         sort,
@@ -2070,26 +2253,29 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     } = {}) {
-        return (await this.api<'entitlements'>({
-            query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                entitlements(filter: $filter, sort: $sort, after: $after) {
-                    pageInfo {
-                        hasNextPage
-                        endCursor
-                    }
-                    edges {
-                        node {
-                            ${fields.join(' ')}
+        return (
+            await this.api<'entitlements'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    entitlements(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
                         }
                     }
-                }
-            }`,
-            variables: { filter, sort, after },
-            headers,
-            token,
-        })).data.entitlements;
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.entitlements;
     }
 
+    @bind
     entitlementsAll({
         filter,
         sort,
@@ -2108,6 +2294,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     entitlementsEach({
         filter,
         sort,
@@ -2126,6 +2313,7 @@ export class Cinnamon {
         );
     }
 
+    @bind
     async createEntitlement({
         input,
         fields = this.defaultEntitlementFields,
@@ -2137,18 +2325,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'createEntitlement'>({
-            query: `mutation($input: EntitlementInput!) {
-                createEntitlement(input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { input },
-            headers,
-            token,
-        })).data.createEntitlement;
+        return (
+            await this.api<'createEntitlement'>({
+                query: `mutation($input: EntitlementInput!) {
+                    createEntitlement(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createEntitlement;
     }
 
+    @bind
     async updateEntitlement({
         id,
         input,
@@ -2162,18 +2353,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'updateEntitlement'>({
-            query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
-                updateEntitlement(id: $id, input: $input) {
-                    ${fields.join(' ')}
-                }
-            }`,
-            variables: { id, input },
-            headers,
-            token,
-        })).data.updateEntitlement;
+        return (
+            await this.api<'updateEntitlement'>({
+                query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
+                    updateEntitlement(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateEntitlement;
     }
 
+    @bind
     async deleteEntitlement({
         id,
         headers,
@@ -2183,18 +2377,21 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }) {
-        return (await this.api<'deleteEntitlement'>({
-            query: `mutation($id: ObjectId!) {
-                deleteEntitlement(id: $id) {
-                    id
-                }
-            }`,
-            variables: { id },
-            headers,
-            token,
-        })).data.deleteEntitlement;
+        return (
+            await this.api<'deleteEntitlement'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteEntitlement(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteEntitlement;
     }
 }
 
 export * from './generated/graphql';
 export * from './inputFields';
+export * from './helpers';
