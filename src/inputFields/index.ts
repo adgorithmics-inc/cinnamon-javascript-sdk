@@ -14,6 +14,10 @@ import {
     MarketingAd,
     Result,
     Entitlement,
+    CreativeFont,
+    CreativeImage,
+    CreativeLayer,
+    CreativeTemplate,
 } from '../generated/graphql';
 
 const fields = (keys: string[]): object =>
@@ -78,3 +82,23 @@ export type EntitlementFields = Fields<Entitlement>;
 export const EntitlementFields = fields(
     keys<Entitlement>(),
 ) as EntitlementFields;
+
+export type CreativeFontFields = Fields<CreativeFont>;
+export const CreativeFontFields = fields(
+    keys<CreativeFont>(),
+) as CreativeFontFields;
+
+export type CreativeImageFields = Fields<CreativeImage>;
+export const CreativeImageFields = fields(
+    keys<CreativeImage>(),
+) as CreativeImageFields;
+
+export type CreativeLayerFields = Fields<CreativeLayer>;
+export const CreativeLayerFields = fields(
+    keys<CreativeLayer>(),
+) as CreativeLayerFields;
+
+export type CreativeTemplateFields = Fields<CreativeTemplate>;
+export const CreativeTemplateFields = fields(
+    keys<CreativeTemplate>(),
+) as CreativeTemplateFields;
