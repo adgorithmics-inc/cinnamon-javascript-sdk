@@ -1,4 +1,4 @@
-import { Token, Organization, User, Marketplace, MediaChannel, CampaignTemplate, Vendor, VendorToken, Catalog, Product, MarketingCampaign, MarketingAd, Result, Entitlement } from '../generated/graphql';
+import { Token, Organization, User, Marketplace, MediaChannel, CampaignTemplate, Vendor, VendorToken, Catalog, Product, MarketingCampaign, MarketingAd, Result, Entitlement, CreativeFont, CreativeImage, CreativeLayer, CreativeTemplate } from '../generated/graphql';
 declare type Fields<T> = {
     [key in NonNullable<keyof T>]: key;
 };
@@ -30,4 +30,12 @@ export declare type ResultFields = Fields<Result>;
 export declare const ResultFields: Fields<Result>;
 export declare type EntitlementFields = Fields<Entitlement>;
 export declare const EntitlementFields: Fields<Entitlement>;
+export declare type CreativeFontFields = Fields<CreativeFont>;
+export declare const CreativeFontFields: Fields<CreativeFont>;
+export declare type CreativeImageFields = Fields<CreativeImage>;
+export declare const CreativeImageFields: Fields<CreativeImage>;
+export declare type CreativeLayerFields = Fields<CreativeLayer>;
+export declare const CreativeLayerFields: Fields<CreativeLayer>;
+export declare type CreativeTemplateFields = Fields<CreativeTemplate>;
+export declare const CreativeTemplateFields: Fields<CreativeTemplate>;
 export {};

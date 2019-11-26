@@ -42,6 +42,18 @@ import {
     Entitlement,
     EntitlementInput,
     EntitlementUpdateInput,
+    CreativeFont,
+    CreativeFontCreateInput,
+    CreativeFontUpdateInput,
+    CreativeImage,
+    CreativeImageCreateInput,
+    CreativeImageUpdateInput,
+    CreativeLayer,
+    CreativeLayerCreateInput,
+    CreativeLayerUpdateInput,
+    CreativeTemplate,
+    CreativeTemplateCreateInput,
+    CreativeTemplateUpdateInput,
 } from './generated/graphql';
 
 import {
@@ -59,6 +71,10 @@ import {
     MarketingAdFields,
     ResultFields,
     EntitlementFields,
+    CreativeFontFields,
+    CreativeImageFields,
+    CreativeLayerFields,
+    CreativeTemplateFields,
 } from './inputFields';
 
 import { bind } from './helpers';
@@ -2389,6 +2405,804 @@ export class Cinnamon {
                 token,
             })
         ).data.deleteEntitlement;
+    }
+
+    // ####################################
+    // CreativeFont
+    // ####################################
+
+    private defaultCreativeFontFields = [
+        CreativeFontFields.id,
+        CreativeFontFields.name,
+    ];
+
+    @bind
+    async creativeFont({
+        id,
+        fields = this.defaultCreativeFontFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'creativeFont'>({
+                query: `query($id: ObjectId!) {
+                    creativeFont(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.creativeFont;
+    }
+
+    @bind
+    async creativeFonts({
+        filter,
+        sort,
+        after,
+        fields = this.defaultCreativeFontFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (
+            await this.api<'creativeFonts'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    creativeFonts(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
+                        }
+                    }
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.creativeFonts;
+    }
+
+    @bind
+    creativeFontsAll({
+        filter,
+        sort,
+        fields = this.defaultCreativeFontFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<CreativeFont>((after: PageInfo['endCursor']) =>
+            this.creativeFonts({ filter, sort, after, fields, headers, token }),
+        );
+    }
+
+    @bind
+    creativeFontsEach({
+        filter,
+        sort,
+        fields = this.defaultCreativeFontFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.eachNode<CreativeFont>((after: PageInfo['endCursor']) =>
+            this.creativeFonts({ filter, sort, after, fields, headers, token }),
+        );
+    }
+
+    @bind
+    async createCreativeFont({
+        input,
+        fields = this.defaultCreativeFontFields,
+        headers,
+        token,
+    }: {
+        input: CreativeFontCreateInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'createCreativeFont'>({
+                query: `mutation($input: CreativeFontCreateInput!) {
+                    createCreativeFont(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCreativeFont;
+    }
+
+    @bind
+    async updateCreativeFont({
+        id,
+        input,
+        fields = this.defaultCreativeFontFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: CreativeFontUpdateInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeFont'>({
+                query: `mutation($id: ObjectId!, $input: CreativeFontUpdateInput!) {
+                    updateCreativeFont(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateCreativeFont;
+    }
+
+    @bind
+    async deleteCreativeFont({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'deleteCreativeFont'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteCreativeFont(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteCreativeFont;
+    }
+
+    // ####################################
+    // CreativeImage
+    // ####################################
+
+    private defaultCreativeImageFields = [
+        CreativeImageFields.id,
+        CreativeImageFields.name,
+    ];
+
+    @bind
+    async creativeImage({
+        id,
+        fields = this.defaultCreativeImageFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'creativeImage'>({
+                query: `query($id: ObjectId!) {
+                    creativeImage(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.creativeImage;
+    }
+
+    @bind
+    async creativeImages({
+        filter,
+        sort,
+        after,
+        fields = this.defaultCreativeImageFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (
+            await this.api<'creativeImages'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    creativeImages(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
+                        }
+                    }
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.creativeImages;
+    }
+
+    @bind
+    creativeImagesAll({
+        filter,
+        sort,
+        fields = this.defaultCreativeImageFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<CreativeImage>((after: PageInfo['endCursor']) =>
+            this.creativeImages({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    creativeImagesEach({
+        filter,
+        sort,
+        fields = this.defaultCreativeImageFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.eachNode<CreativeImage>((after: PageInfo['endCursor']) =>
+            this.creativeImages({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    async createCreativeImage({
+        input,
+        fields = this.defaultCreativeImageFields,
+        headers,
+        token,
+    }: {
+        input: CreativeImageCreateInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'createCreativeImage'>({
+                query: `mutation($input: CreativeImageCreateInput!) {
+                    createCreativeImage(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCreativeImage;
+    }
+
+    @bind
+    async updateCreativeImage({
+        id,
+        input,
+        fields = this.defaultCreativeImageFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: CreativeImageUpdateInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeImage'>({
+                query: `mutation($id: ObjectId!, $input: CreativeImageUpdateInput!) {
+                    updateCreativeImage(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateCreativeImage;
+    }
+
+    @bind
+    async deleteCreativeImage({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'deleteCreativeImage'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteCreativeImage(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteCreativeImage;
+    }
+
+    // ####################################
+    // CreativeLayer
+    // ####################################
+
+    private defaultCreativeLayerFields = [
+        CreativeLayerFields.id,
+        CreativeLayerFields.name,
+    ];
+
+    @bind
+    async creativeLayer({
+        id,
+        fields = this.defaultCreativeLayerFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'creativeLayer'>({
+                query: `query($id: ObjectId!) {
+                    creativeLayer(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.creativeLayer;
+    }
+
+    @bind
+    async creativeLayers({
+        filter,
+        sort,
+        after,
+        fields = this.defaultCreativeLayerFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (
+            await this.api<'creativeLayers'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    creativeLayers(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
+                        }
+                    }
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.creativeLayers;
+    }
+
+    @bind
+    creativeLayersAll({
+        filter,
+        sort,
+        fields = this.defaultCreativeLayerFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<CreativeLayer>((after: PageInfo['endCursor']) =>
+            this.creativeLayers({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    creativeLayersEach({
+        filter,
+        sort,
+        fields = this.defaultCreativeLayerFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.eachNode<CreativeLayer>((after: PageInfo['endCursor']) =>
+            this.creativeLayers({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    async createCreativeLayer({
+        input,
+        fields = this.defaultCreativeLayerFields,
+        headers,
+        token,
+    }: {
+        input: CreativeLayerCreateInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'createCreativeLayer'>({
+                query: `mutation($input: CreativeLayerCreateInput!) {
+                    createCreativeLayer(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCreativeLayer;
+    }
+
+    @bind
+    async updateCreativeLayer({
+        id,
+        input,
+        fields = this.defaultCreativeLayerFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: CreativeLayerUpdateInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeLayer'>({
+                query: `mutation($id: ObjectId!, $input: CreativeLayerUpdateInput!) {
+                    updateCreativeLayer(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateCreativeLayer;
+    }
+
+    @bind
+    async deleteCreativeLayer({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'deleteCreativeLayer'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteCreativeLayer(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteCreativeLayer;
+    }
+
+    // ####################################
+    // CreativeTemplate
+    // ####################################
+
+    private defaultCreativeTemplateFields = [
+        CreativeTemplateFields.id,
+        CreativeTemplateFields.name,
+    ];
+
+    @bind
+    async creativeTemplate({
+        id,
+        fields = this.defaultCreativeTemplateFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'creativeTemplate'>({
+                query: `query($id: ObjectId!) {
+                    creativeTemplate(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.creativeTemplate;
+    }
+
+    @bind
+    async creativeTemplates({
+        filter,
+        sort,
+        after,
+        fields = this.defaultCreativeTemplateFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (
+            await this.api<'creativeTemplates'>({
+                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
+                    creativeTemplates(filter: $filter, sort: $sort, after: $after) {
+                        pageInfo {
+                            hasNextPage
+                            endCursor
+                        }
+                        edges {
+                            node {
+                                ${fields.join(' ')}
+                            }
+                        }
+                    }
+                }`,
+                variables: { filter, sort, after },
+                headers,
+                token,
+            })
+        ).data.creativeTemplates;
+    }
+
+    @bind
+    creativeTemplatesAll({
+        filter,
+        sort,
+        fields = this.defaultCreativeTemplateFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<CreativeTemplate>((after: PageInfo['endCursor']) =>
+            this.creativeTemplates({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    creativeTemplatesEach({
+        filter,
+        sort,
+        fields = this.defaultCreativeTemplateFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.eachNode<CreativeTemplate>((after: PageInfo['endCursor']) =>
+            this.creativeTemplates({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    async createCreativeTemplate({
+        input,
+        fields = this.defaultCreativeTemplateFields,
+        headers,
+        token,
+    }: {
+        input: CreativeTemplateCreateInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'createCreativeTemplate'>({
+                query: `mutation($input: CreativeTemplateCreateInput!) {
+                    createCreativeTemplate(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.createCreativeTemplate;
+    }
+
+    @bind
+    async updateCreativeTemplate({
+        id,
+        input,
+        fields = this.defaultCreativeTemplateFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: CreativeTemplateUpdateInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeTemplate'>({
+                query: `mutation($id: ObjectId!, $input: CreativeTemplateUpdateInput!) {
+                    updateCreativeTemplate(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateCreativeTemplate;
+    }
+
+    @bind
+    async deleteCreativeTemplate({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'deleteCreativeTemplate'>({
+                query: `mutation($id: ObjectId!) {
+                    deleteCreativeTemplate(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.deleteCreativeTemplate;
     }
 }
 

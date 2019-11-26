@@ -1,6 +1,6 @@
 import { codes } from '@adgorithmics/graphql-errors';
-import { PageInfo, Scalars, Mutation, Query, SortInput, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput } from './generated/graphql';
-import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, VendorTokenFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields } from './inputFields';
+import { PageInfo, Scalars, Mutation, Query, SortInput, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput } from './generated/graphql';
+import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, VendorTokenFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields, CreativeFontFields, CreativeImageFields, CreativeLayerFields, CreativeTemplateFields } from './inputFields';
 export interface Config {
     url: string;
 }
@@ -562,6 +562,194 @@ export declare class Cinnamon {
         token?: string;
     }): Promise<Entitlement>;
     deleteEntitlement({ id, headers, token, }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").Deletion>;
+    private defaultCreativeFontFields;
+    creativeFont({ id, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeFont>;
+    creativeFonts({ filter, sort, after, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeFontConnection>;
+    creativeFontsAll({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeFont[]>;
+    creativeFontsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeFont, void, unknown>;
+    createCreativeFont({ input, fields, headers, token, }: {
+        input: CreativeFontCreateInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeFont>;
+    updateCreativeFont({ id, input, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        input: CreativeFontUpdateInput;
+        fields?: Array<keyof CreativeFontFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeFont>;
+    deleteCreativeFont({ id, headers, token, }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").Deletion>;
+    private defaultCreativeImageFields;
+    creativeImage({ id, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeImage>;
+    creativeImages({ filter, sort, after, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeImageConnection>;
+    creativeImagesAll({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeImage[]>;
+    creativeImagesEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeImage, void, unknown>;
+    createCreativeImage({ input, fields, headers, token, }: {
+        input: CreativeImageCreateInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeImage>;
+    updateCreativeImage({ id, input, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        input: CreativeImageUpdateInput;
+        fields?: Array<keyof CreativeImageFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeImage>;
+    deleteCreativeImage({ id, headers, token, }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").Deletion>;
+    private defaultCreativeLayerFields;
+    creativeLayer({ id, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeLayer>;
+    creativeLayers({ filter, sort, after, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeLayerConnection>;
+    creativeLayersAll({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeLayer[]>;
+    creativeLayersEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeLayer, void, unknown>;
+    createCreativeLayer({ input, fields, headers, token, }: {
+        input: CreativeLayerCreateInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeLayer>;
+    updateCreativeLayer({ id, input, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        input: CreativeLayerUpdateInput;
+        fields?: Array<keyof CreativeLayerFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeLayer>;
+    deleteCreativeLayer({ id, headers, token, }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").Deletion>;
+    private defaultCreativeTemplateFields;
+    creativeTemplate({ id, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeTemplate>;
+    creativeTemplates({ filter, sort, after, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        after?: PageInfo['endCursor'];
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeTemplateConnection>;
+    creativeTemplatesAll({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeTemplate[]>;
+    creativeTemplatesEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeTemplate, void, unknown>;
+    createCreativeTemplate({ input, fields, headers, token, }: {
+        input: CreativeTemplateCreateInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeTemplate>;
+    updateCreativeTemplate({ id, input, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        input: CreativeTemplateUpdateInput;
+        fields?: Array<keyof CreativeTemplateFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeTemplate>;
+    deleteCreativeTemplate({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
         token?: string;
