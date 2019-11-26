@@ -7,25 +7,11 @@ documents: null
 config:
     skipTypename: true
     scalars:
-        ObjectId: string
-        NonEmptyString: string
-        FilterInput: >-
-            {
-                field: string,
-                operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE', 
-                value: string | string[]
-            } | 
-            {
-                field: string,
-                operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE', 
-                value: string | string[]
-            }[] | 
-            {
-                field: string,
-                operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE', 
-                value: string | string[]
-            }[][]
-    maybeValue: T
+        ObjectId: ../scalars#ObjectId
+        NonEmptyString: ../scalars#NonEmptyString
+        DateISO: ../scalars#DateISO
+        JSONObject: ../scalars#JSONObject
+        FilterInput: ../scalars#FilterInput
 hooks:
     afterAllFileWrite:
         - prettier --write

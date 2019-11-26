@@ -1,11 +1,16 @@
+import { ObjectId } from '../scalars';
+import { DateISO } from '../scalars';
+import { NonEmptyString } from '../scalars';
+import { JSONObject } from '../scalars';
+import { FilterInput } from '../scalars';
 import {
     GraphQLResolveInfo,
     GraphQLScalarType,
     GraphQLScalarTypeConfig,
 } from 'graphql';
-export type Maybe<T> = T;
+export type Maybe<T> = T | null;
 export type RequireFields<T, K extends keyof T> = {
-    [X in Exclude<keyof T, K>]?: T[X]
+    [X in Exclude<keyof T, K>]?: T[X];
 } &
     { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -15,14 +20,14 @@ export type Scalars = {
     Boolean: boolean;
     Int: number;
     Float: number;
-    /** ObjectId must be 24 bytes */
-    ObjectId: string;
+    /** The ObjectId is a 24 byte unique identifier for an object */
+    ObjectId: ObjectId;
     /** Date strings must follow ISO 8601 specifications */
-    DateISO: any;
+    DateISO: DateISO;
     /** String must contain at least one character */
-    NonEmptyString: string;
+    NonEmptyString: NonEmptyString;
     /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-    JSONObject: any;
+    JSONObject: JSONObject;
     /**
      * Accepts a single filterObject (`{field: NonEmptyString!, operator: OPERATOR!,
      * value: [String]}`), a single array of filterObjects (creates an AND'ed query),
@@ -142,46 +147,7 @@ export type Scalars = {
      * }
      * ```
      **/
-    FilterInput:
-        | {
-              field: string;
-              operator:
-                  | 'EQUALS'
-                  | 'NOT_EQUALS'
-                  | 'CONTAINS'
-                  | 'ICONTAINS'
-                  | 'GT'
-                  | 'GTE'
-                  | 'LT'
-                  | 'LTE';
-              value: string | string[];
-          }
-        | {
-              field: string;
-              operator:
-                  | 'EQUALS'
-                  | 'NOT_EQUALS'
-                  | 'CONTAINS'
-                  | 'ICONTAINS'
-                  | 'GT'
-                  | 'GTE'
-                  | 'LT'
-                  | 'LTE';
-              value: string | string[];
-          }[]
-        | {
-              field: string;
-              operator:
-                  | 'EQUALS'
-                  | 'NOT_EQUALS'
-                  | 'CONTAINS'
-                  | 'ICONTAINS'
-                  | 'GT'
-                  | 'GTE'
-                  | 'LT'
-                  | 'LTE';
-              value: string | string[];
-          }[][];
+    FilterInput: FilterInput;
     /** The `Upload` scalar type represents a file upload. */
     Upload: any;
 };
@@ -208,6 +174,8 @@ export enum AuthField {
     CatalogId = 'catalogId',
     /** Product ids */
     ProductIds = 'productIds',
+    /** Creative template id */
+    CreativeTemplateId = 'creativeTemplateId',
 }
 
 /** Location of the authorization operation */
@@ -237,6 +205,14 @@ export enum AuthLocation {
     /** On the referenced vendor */
     Vendor = 'VENDOR',
     VendorToken = 'VENDOR_TOKEN',
+    /** On the referenced creative layer */
+    CreativeLayer = 'CREATIVE_LAYER',
+    /** On the referenced creative template */
+    CreativeTemplate = 'CREATIVE_TEMPLATE',
+    /** On the referenced creative font */
+    CreativeFont = 'CREATIVE_FONT',
+    /** On the referenced creative image */
+    CreativeImage = 'CREATIVE_IMAGE',
 }
 
 /** Types of permissions that can be granted to resources */
@@ -285,10 +261,14 @@ export type CampaignTemplate = {
     platform: Platform;
     /** Id of the campaign template on the corresponding platform */
     remoteId: Scalars['String'];
+    /** System status of the campaign template */
+    systemStatus: SystemStatus;
+    /** Validation errors of the campaign template */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace the campaign template was created for */
     marketplace: Marketplace;
     /** Marketing campaigns that are using this campaign template */
-    marketingCampaigns?: Maybe<MarketingCampaignConnection>;
+    marketingCampaigns: MarketingCampaignConnection;
 };
 
 /**
@@ -308,7 +288,7 @@ export type CampaignTemplateMarketingCampaignsArgs = {
 /** Campaign templates collection */
 export type CampaignTemplateConnection = {
     /** Collection of campaign templates */
-    edges?: Maybe<Array<Maybe<CampaignTemplateEdge>>>;
+    edges: Array<CampaignTemplateEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -318,7 +298,7 @@ export type CampaignTemplateEdge = {
     /** Id of the contained campaign template */
     cursor: Scalars['ObjectId'];
     /** Container for a campaign template */
-    node?: Maybe<CampaignTemplate>;
+    node: CampaignTemplate;
 };
 
 /** Catalogs contain products linked to a specific platform and media channel */
@@ -346,7 +326,7 @@ export type Catalog = {
     /** Media channel related to the product catalog */
     mediaChannel: MediaChannel;
     /** Products referenced by the catalog */
-    products?: Maybe<ProductConnection>;
+    products: ProductConnection;
 };
 
 /** Catalogs contain products linked to a specific platform and media channel */
@@ -363,7 +343,7 @@ export type CatalogProductsArgs = {
 /** Product catalogs collection */
 export type CatalogConnection = {
     /** Collection of product catalogs */
-    edges?: Maybe<Array<Maybe<CatalogEdge>>>;
+    edges: Array<CatalogEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -383,7 +363,7 @@ export type CatalogEdge = {
     /** Id of the contained product catalog */
     cursor: Scalars['ObjectId'];
     /** Container for a product catalog */
-    node?: Maybe<Catalog>;
+    node: Catalog;
 };
 
 /** Product catalog import input data */
@@ -424,6 +404,295 @@ export type CatalogUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 
+/** Creative Font */
+export type CreativeFont = {
+    /** Id of the creative font */
+    id: Scalars['ObjectId'];
+    /** Date and time the creative font was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the creative font was last modified */
+    lastChangeDate: Scalars['DateISO'];
+    /** Name of the creative font */
+    name: Scalars['NonEmptyString'];
+    /** URL of the creative font */
+    url: Scalars['NonEmptyString'];
+    /** Properties of the creative font */
+    properties: Scalars['JSONObject'];
+    /** Marketplace related to the creative font */
+    marketplace: Marketplace;
+    /** System status of the creative font */
+    systemStatus: SystemStatus;
+    /** Validation errors of the creative font */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+};
+
+/** Creative font collection */
+export type CreativeFontConnection = {
+    /** Collection of creative fonts */
+    edges: Array<CreativeFontEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+};
+
+/** Creative font creation input data */
+export type CreativeFontCreateInput = {
+    /** Name of the creative font */
+    name: Scalars['NonEmptyString'];
+    /** URL of the creative font */
+    url: Scalars['NonEmptyString'];
+    /** Properties of the creative font */
+    properties: Scalars['JSONObject'];
+    /** Marketplace related to the creative font */
+    marketplaceId: Scalars['ObjectId'];
+};
+
+/** Creative font in a collection */
+export type CreativeFontEdge = {
+    /** Id of the contained creative font */
+    cursor: Scalars['ObjectId'];
+    /** Container for a creative font */
+    node: CreativeFont;
+};
+
+/** Creative font update input data */
+export type CreativeFontUpdateInput = {
+    /** Name of the creative font */
+    name?: Maybe<Scalars['NonEmptyString']>;
+    /** URL of the creative font */
+    url?: Maybe<Scalars['NonEmptyString']>;
+    /** Properties of the creative font */
+    properties?: Maybe<Scalars['JSONObject']>;
+};
+
+/** Creative Image */
+export type CreativeImage = {
+    /** Id of the creative image */
+    id: Scalars['ObjectId'];
+    /** Date and time the creative image was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the creative image was last modified */
+    lastChangeDate: Scalars['DateISO'];
+    /** Name of the creative image */
+    name: Scalars['NonEmptyString'];
+    /** URL of the creative image */
+    url: Scalars['NonEmptyString'];
+    /** Properties of the creative image */
+    properties: Scalars['JSONObject'];
+    /** Marketplace related to the creative image */
+    marketplace: Marketplace;
+    /** System status of the creative image */
+    systemStatus: SystemStatus;
+    /** Validation errors of the creative image */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+};
+
+/** Creative image collection */
+export type CreativeImageConnection = {
+    /** Collection of creative images */
+    edges: Array<CreativeImageEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+};
+
+/** Creative image creation input data */
+export type CreativeImageCreateInput = {
+    /** Name of the creative image */
+    name: Scalars['NonEmptyString'];
+    /** URL of the creative image */
+    url: Scalars['NonEmptyString'];
+    /** Properties of the creative image */
+    properties: Scalars['JSONObject'];
+    /** Marketplace related to the creative image */
+    marketplaceId: Scalars['ObjectId'];
+};
+
+/** Creative image in a collection */
+export type CreativeImageEdge = {
+    /** Id of the contained creative image */
+    cursor: Scalars['ObjectId'];
+    /** Container for a creative image */
+    node: CreativeImage;
+};
+
+/** Creative image update input data */
+export type CreativeImageUpdateInput = {
+    /** Name of the creative image */
+    name?: Maybe<Scalars['NonEmptyString']>;
+    /** URL of the creative image */
+    url?: Maybe<Scalars['NonEmptyString']>;
+    /** Properties of the creative image */
+    properties?: Maybe<Scalars['JSONObject']>;
+};
+
+/** Creative Layer */
+export type CreativeLayer = {
+    /** Id of the creative layer */
+    id: Scalars['ObjectId'];
+    /** Date and time the creative layer was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the creative layer was last modified */
+    lastChangeDate: Scalars['DateISO'];
+    /** Name of the creative layer */
+    name: Scalars['NonEmptyString'];
+    /** Height of the creative layer */
+    height: Scalars['Int'];
+    /** Width of the creative layer */
+    width: Scalars['Int'];
+    /** X position of the creative layer */
+    x: Scalars['Int'];
+    /** Y position of the creative layer */
+    y: Scalars['Int'];
+    /** Order of the creative layer */
+    order: Scalars['Int'];
+    /** Type of the creative layer */
+    type: CreativeLayerTypes;
+    /** Properties of the creative layer */
+    properties: Scalars['JSONObject'];
+    /** Creative template used by the creative layer */
+    creativeTemplate: CreativeTemplate;
+    /** System status of the creative layer */
+    systemStatus: SystemStatus;
+    /** Validation errors of the creative layer */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+};
+
+/** Creative Layers collection */
+export type CreativeLayerConnection = {
+    /** Collection of creative layers */
+    edges: Array<CreativeLayerEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+};
+
+/** Creative layer creation input data */
+export type CreativeLayerCreateInput = {
+    /** Name of the creative layer */
+    name: Scalars['NonEmptyString'];
+    /** Height of the creative layer */
+    height: Scalars['Int'];
+    /** Width of the creative layer */
+    width: Scalars['Int'];
+    /** X position of the creative layer */
+    x: Scalars['Int'];
+    /** Y position of the creative layer */
+    y: Scalars['Int'];
+    /** Order of the creative layer */
+    order: Scalars['Int'];
+    /** Type of creative layer */
+    type: CreativeLayerTypes;
+    /** Creative template related to this creative layer */
+    creativeTemplateId: Scalars['ObjectId'];
+    /** Properties of the creative layer */
+    properties: Scalars['JSONObject'];
+};
+
+/** Creative layer in a collection */
+export type CreativeLayerEdge = {
+    /** Id of the contained creative layer */
+    cursor: Scalars['ObjectId'];
+    /** Container for a creative layer */
+    node: CreativeLayer;
+};
+
+/** Types of creative layer */
+export enum CreativeLayerTypes {
+    CreativeTextLayer = 'CREATIVE_TEXT_LAYER',
+    CreativeImageLayer = 'CREATIVE_IMAGE_LAYER',
+}
+
+/** Creative layer update input data */
+export type CreativeLayerUpdateInput = {
+    /** Name of the creative layer */
+    name?: Maybe<Scalars['NonEmptyString']>;
+    /** Height of the creative layer */
+    height?: Maybe<Scalars['Int']>;
+    /** Width of the creative layer */
+    width?: Maybe<Scalars['Int']>;
+    /** X position of the creative layer */
+    x?: Maybe<Scalars['Int']>;
+    /** Y position of the creative layer */
+    y?: Maybe<Scalars['Int']>;
+    /** Order of the creative layer */
+    order?: Maybe<Scalars['Int']>;
+    /** Type of the creative layer */
+    type?: Maybe<CreativeLayerTypes>;
+    /** Properties of the creative layer */
+    properties?: Maybe<Scalars['JSONObject']>;
+};
+
+/** Creative Template */
+export type CreativeTemplate = {
+    /** Id of the creative template */
+    id: Scalars['ObjectId'];
+    /** Date and time the creative template was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the creative template was last modified */
+    lastChangeDate: Scalars['DateISO'];
+    /** Name of the creative template */
+    name: Scalars['NonEmptyString'];
+    /** Height of the creative template */
+    height: Scalars['Int'];
+    /** Width of the creative template */
+    width: Scalars['Int'];
+    /** Marketplace related to the creative template */
+    marketplace: Marketplace;
+    /** Creative layers available for the creative template */
+    creativeLayers: CreativeLayerConnection;
+    /** System status of the creative template */
+    systemStatus: SystemStatus;
+    /** Validation errors of the creative template */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+};
+
+/** Creative Template */
+export type CreativeTemplateCreativeLayersArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+/** Creative templates collection */
+export type CreativeTemplateConnection = {
+    /** Collection of creative templates */
+    edges: Array<CreativeTemplateEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+};
+
+/** Creative template creation input data */
+export type CreativeTemplateCreateInput = {
+    /** Name of the creative template */
+    name: Scalars['NonEmptyString'];
+    /** Height of the creative template */
+    height: Scalars['Int'];
+    /** Width of the creative template */
+    width: Scalars['Int'];
+    /** Id of the marketplace referenced by the creative template */
+    marketplaceId: Scalars['ObjectId'];
+};
+
+/** Creative template in a collection */
+export type CreativeTemplateEdge = {
+    /** Id of the contained creative template */
+    cursor: Scalars['ObjectId'];
+    /** Container for a creative template */
+    node: CreativeTemplate;
+};
+
+/** Creative template update input data */
+export type CreativeTemplateUpdateInput = {
+    /** Name of the creative template */
+    name?: Maybe<Scalars['NonEmptyString']>;
+    /** Height of the creative template */
+    height?: Maybe<Scalars['Int']>;
+    /** Width of the creative template */
+    width?: Maybe<Scalars['Int']>;
+};
+
 /** Object deletion operation result */
 export type Deletion = {
     /** Id of the deleted object */
@@ -451,7 +720,7 @@ export type Entitlement = {
 /** Entitlement collection */
 export type EntitlementConnection = {
     /** Collection of entitlements */
-    edges?: Maybe<Array<Maybe<EntitlementEdge>>>;
+    edges: Array<EntitlementEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -461,7 +730,7 @@ export type EntitlementEdge = {
     /** Id of the contained entitlement */
     cursor: Scalars['ObjectId'];
     /** Container for an entitlement */
-    node?: Maybe<Entitlement>;
+    node: Entitlement;
 };
 
 /** Entitlement creation input data */
@@ -519,12 +788,16 @@ export type MarketingAd = ResultResource & {
     lastChangeDate: Scalars['DateISO'];
     /** Id of the marketing ad on the related marketing campaign platform */
     remoteId: Scalars['String'];
+    /** System status of the marketing ad */
+    systemStatus: SystemStatus;
+    /** Validation errors of the marketing ad */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Preview data of the marketing ad */
     preview: Scalars['String'];
     /** The source of the analytics used to derive results data */
     resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
     /** Results related to the marketing ad */
-    results?: Maybe<ResultConnection>;
+    results: ResultConnection;
     /** Marketing campaigns related to the marketing ad */
     marketingCampaign: MarketingCampaign;
     /** Vendor related to the marketing ad */
@@ -547,7 +820,7 @@ export type MarketingAdResultsArgs = {
 /** Marketing ads collection */
 export type MarketingAdConnection = {
     /** Collection of marketing ads */
-    edges?: Maybe<Array<Maybe<MarketingAdEdge>>>;
+    edges: Array<MarketingAdEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -557,7 +830,7 @@ export type MarketingAdEdge = {
     /** Id of the contained marketing ad */
     cursor: Scalars['ObjectId'];
     /** Container for a marketing ad */
-    node?: Maybe<MarketingAd>;
+    node: MarketingAd;
 };
 
 /**
@@ -578,9 +851,9 @@ export type MarketingCampaign = ResultResource & {
     /** Delivering status of the marketing campaign */
     status: MarketingCampaignStatus;
     /** Marketing ads contained by the marketing campaign */
-    marketingAds?: Maybe<MarketingAdConnection>;
+    marketingAds: MarketingAdConnection;
     /** Products referenced by the marketing campaign */
-    products?: Maybe<ProductConnection>;
+    products: ProductConnection;
     /** Vendor related to the marketing campaign */
     vendor: Vendor;
     /** Catalog related to the marketing campaign */
@@ -590,7 +863,7 @@ export type MarketingCampaign = ResultResource & {
     /** Media channel the marketing campaign is delivering to */
     mediaChannel: MediaChannel;
     /** Results referencing the marketing campaign */
-    results?: Maybe<ResultConnection>;
+    results: ResultConnection;
     /** Marketing campaign creative data */
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data */
@@ -652,7 +925,7 @@ export type MarketingCampaignResultsArgs = {
 /** Marketing campaign collection */
 export type MarketingCampaignConnection = {
     /** Collection of marketing campaigns */
-    edges?: Maybe<Array<Maybe<MarketingCampaignEdge>>>;
+    edges: Array<MarketingCampaignEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -662,7 +935,7 @@ export type MarketingCampaignEdge = {
     /** Id of the marketing campaign */
     cursor: Scalars['ObjectId'];
     /** Container for a marketing campaign */
-    node?: Maybe<MarketingCampaign>;
+    node: MarketingCampaign;
 };
 
 /** Marketing campaign creation input data */
@@ -674,7 +947,7 @@ export type MarketingCampaignInput = {
     /** Marketing campaign scheduling data */
     runTimeSpec: Scalars['JSONObject'];
     /** Ids of the products advertised in the marketing campaign */
-    productIds?: Maybe<Array<Scalars['ObjectId']>>;
+    productIds: Array<Scalars['ObjectId']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     name?: Maybe<Scalars['NonEmptyString']>;
@@ -715,17 +988,18 @@ export type Marketplace = EntitlementResource & {
     /** Organization related to the marketplace */
     organization: Organization;
     /** Media channels related to the marketplace */
-    mediaChannels?: Maybe<MediaChannelConnection>;
+    mediaChannels: MediaChannelConnection;
     /** Campaign templates related to the marketplace */
-    campaignTemplates?: Maybe<CampaignTemplateConnection>;
+    campaignTemplates: CampaignTemplateConnection;
     /** Vendors related to the marketplace */
-    vendors?: Maybe<VendorConnection>;
+    vendors: VendorConnection;
     /** Vendor tokens associated with the marketplace that can be used to access the api as a vendor */
-    vendorTokens?: Maybe<VendorTokenConnection>;
+    vendorTokens: VendorTokenConnection;
     /** System status of the marketplace */
     systemStatus: SystemStatus;
     /** Validation errors of the marketplace */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    creativeTemplates: CreativeTemplateConnection;
 };
 
 /**
@@ -782,10 +1056,24 @@ export type MarketplaceVendorTokensArgs = {
     after?: Maybe<Scalars['String']>;
 };
 
+/**
+ * Marketplace represents a collection of media channels, campaign templates
+ * and vendors. A marketplace belongs to a single organization.
+ **/
+export type MarketplaceCreativeTemplatesArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
 /** Marketplaces collection */
 export type MarketplaceConnection = {
     /** Collection of marketplaces */
-    edges?: Maybe<Array<Maybe<MarketplaceEdge>>>;
+    edges: Array<MarketplaceEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -795,7 +1083,7 @@ export type MarketplaceEdge = {
     /** Id of the contained marketplace */
     cursor: Scalars['ObjectId'];
     /** Container for a marketplace */
-    node?: Maybe<Marketplace>;
+    node: Marketplace;
 };
 
 /** Marketplace creation input */
@@ -868,7 +1156,7 @@ export type MediaChannelCatalogsArgs = {
 /** Media channels collection */
 export type MediaChannelConnection = {
     /** Collection of media channels */
-    edges?: Maybe<Array<Maybe<MediaChannelEdge>>>;
+    edges: Array<MediaChannelEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -890,7 +1178,7 @@ export type MediaChannelEdge = {
     /** Id of the contained media channel */
     cursor: Scalars['ObjectId'];
     /** Container for a media channel */
-    node?: Maybe<MediaChannel>;
+    node: MediaChannel;
 };
 
 /** Media channel import input data */
@@ -915,67 +1203,91 @@ export type MediaChannelUpdateInput = {
 
 export type Mutation = {
     /** Creates a product catalog using input data */
-    createCatalog?: Maybe<Catalog>;
+    createCatalog: Catalog;
     /** Imports a product catalog using input data */
-    importCatalog?: Maybe<Catalog>;
+    importCatalog: Catalog;
     /** Deletes a product catalog identified by a given id */
-    deleteCatalog?: Maybe<Deletion>;
+    deleteCatalog: Deletion;
     /** Updates a product catalog identified by an id using input data */
-    updateCatalog?: Maybe<Catalog>;
+    updateCatalog: Catalog;
+    /** Creates a creative font using input data */
+    createCreativeFont: CreativeFont;
+    /** Updates a creative font identified by an id using input data */
+    updateCreativeFont: CreativeFont;
+    /** Deletes a creative font identified by an id */
+    deleteCreativeFont: Deletion;
+    /** Creates a creative image using input data */
+    createCreativeImage: CreativeImage;
+    /** Updates a creative image identified by an id using input data */
+    updateCreativeImage: CreativeImage;
+    /** Deletes a creative image identified by an id */
+    deleteCreativeImage: Deletion;
+    /** Creates a creative layer using input data */
+    createCreativeLayer: CreativeLayer;
+    /** Updates a creative layer identified by an id using input data */
+    updateCreativeLayer: CreativeLayer;
+    /** Deletes a creative layer identified by an id */
+    deleteCreativeLayer: Deletion;
+    /** Creates a creative template using input data */
+    createCreativeTemplate: CreativeTemplate;
+    /** Updates a creative template identified by an id using input data */
+    updateCreativeTemplate: CreativeTemplate;
+    /** Deletes a creative template identified by a given id */
+    deleteCreativeTemplate: Deletion;
     /** Creates an entitlement using input data */
-    createEntitlement?: Maybe<Entitlement>;
+    createEntitlement: Entitlement;
     /** Updates an entitlement identified by an id using input data */
-    updateEntitlement?: Maybe<Entitlement>;
+    updateEntitlement: Entitlement;
     /** Deletes an entitlement identified by an id */
-    deleteEntitlement?: Maybe<Deletion>;
+    deleteEntitlement: Deletion;
     /** Creates a marketing campaign using input data */
-    createMarketingCampaign?: Maybe<MarketingCampaign>;
+    createMarketingCampaign: MarketingCampaign;
     /** Updates a marketing campaign identified by a given id using input data */
-    updateMarketingCampaign?: Maybe<MarketingCampaign>;
+    updateMarketingCampaign: MarketingCampaign;
     /** Deletes a marketing campaign identified by a given id */
-    deleteMarketingCampaign?: Maybe<Deletion>;
+    deleteMarketingCampaign: Deletion;
     /** Creates a marketplace using input data */
-    createMarketplace?: Maybe<Marketplace>;
+    createMarketplace: Marketplace;
     /** Updates a marketplace identified by a given id using input data */
-    updateMarketplace?: Maybe<Marketplace>;
+    updateMarketplace: Marketplace;
     /** Deletes a marketplace identified by an id */
-    deleteMarketplace?: Maybe<Deletion>;
+    deleteMarketplace: Deletion;
     /** Creates a media channel using input data */
-    createMediaChannel?: Maybe<MediaChannel>;
+    createMediaChannel: MediaChannel;
     /** Imports a media channel using input data */
-    importMediaChannel?: Maybe<MediaChannel>;
+    importMediaChannel: MediaChannel;
     /** Updates a media channel identified by an id using input data */
-    updateMediaChannel?: Maybe<MediaChannel>;
+    updateMediaChannel: MediaChannel;
     /** Deletes a media channel identified by an id */
-    deleteMediaChannel?: Maybe<Deletion>;
+    deleteMediaChannel: Deletion;
     /** Creates an organization using input data */
-    createOrganization?: Maybe<Organization>;
+    createOrganization: Organization;
     /** Updates an organization identified by a given id using input data */
-    updateOrganization?: Maybe<Organization>;
+    updateOrganization: Organization;
     /** Deletes an organization identified by a given id */
-    deleteOrganization?: Maybe<Deletion>;
+    deleteOrganization: Deletion;
     /** Creates a product using input data */
-    createProduct?: Maybe<Product>;
+    createProduct: Product;
     /** Updates a product identified by an id using input data */
-    updateProduct?: Maybe<Product>;
+    updateProduct: Product;
     /** Deletes a product identified by a given id */
-    deleteProduct?: Maybe<Deletion>;
+    deleteProduct: Deletion;
     /** Authenticates the user using login input data */
-    login?: Maybe<Token>;
+    login: Token;
     /** Updates the user using update input data */
-    updateUser?: Maybe<User>;
+    updateUser: User;
     /** Refreshed the user authentication using refresh login input data */
-    refreshLogin?: Maybe<Token>;
+    refreshLogin: Token;
     /** Creates a vendor token using input data */
-    createVendorToken?: Maybe<VendorToken>;
+    createVendorToken: VendorToken;
     /** Deletes a vendor token identified by a given id */
-    deleteVendorToken?: Maybe<Deletion>;
+    deleteVendorToken: Deletion;
     /** Creates a vendor using input data */
-    createVendor?: Maybe<Vendor>;
+    createVendor: Vendor;
     /** Updates a vendor identified by a given id using input data */
-    updateVendor?: Maybe<Vendor>;
+    updateVendor: Vendor;
     /** Deletes a vendor identified by a given id */
-    deleteVendor?: Maybe<Deletion>;
+    deleteVendor: Deletion;
 };
 
 export type MutationCreateCatalogArgs = {
@@ -993,6 +1305,58 @@ export type MutationDeleteCatalogArgs = {
 export type MutationUpdateCatalogArgs = {
     id: Scalars['ObjectId'];
     input: CatalogUpdateInput;
+};
+
+export type MutationCreateCreativeFontArgs = {
+    input: CreativeFontCreateInput;
+};
+
+export type MutationUpdateCreativeFontArgs = {
+    id: Scalars['ObjectId'];
+    input: CreativeFontUpdateInput;
+};
+
+export type MutationDeleteCreativeFontArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type MutationCreateCreativeImageArgs = {
+    input: CreativeImageCreateInput;
+};
+
+export type MutationUpdateCreativeImageArgs = {
+    id: Scalars['ObjectId'];
+    input: CreativeImageUpdateInput;
+};
+
+export type MutationDeleteCreativeImageArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type MutationCreateCreativeLayerArgs = {
+    input: CreativeLayerCreateInput;
+};
+
+export type MutationUpdateCreativeLayerArgs = {
+    id: Scalars['ObjectId'];
+    input: CreativeLayerUpdateInput;
+};
+
+export type MutationDeleteCreativeLayerArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type MutationCreateCreativeTemplateArgs = {
+    input: CreativeTemplateCreateInput;
+};
+
+export type MutationUpdateCreativeTemplateArgs = {
+    id: Scalars['ObjectId'];
+    input: CreativeTemplateUpdateInput;
+};
+
+export type MutationDeleteCreativeTemplateArgs = {
+    id: Scalars['ObjectId'];
 };
 
 export type MutationCreateEntitlementArgs = {
@@ -1145,8 +1509,8 @@ export type Organization = EntitlementResource & {
     creationDate: Scalars['DateISO'];
     /** Date and time the organization was last updated */
     lastChangeDate: Scalars['DateISO'];
-    users?: Maybe<UserConnection>;
-    marketplaces?: Maybe<MarketplaceConnection>;
+    users: UserConnection;
+    marketplaces: MarketplaceConnection;
     /** Name of the organization */
     name: Scalars['NonEmptyString'];
     /** Tier type of the organization */
@@ -1187,7 +1551,7 @@ export type OrganizationMarketplacesArgs = {
 /** Organizations collection */
 export type OrganizationConnection = {
     /** Collection of organizations */
-    edges?: Maybe<Array<Maybe<OrganizationEdge>>>;
+    edges: Array<OrganizationEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -1197,7 +1561,7 @@ export type OrganizationEdge = {
     /** Id of the contained organization */
     cursor: Scalars['ObjectId'];
     /** Container for an organization */
-    node?: Maybe<Organization>;
+    node: Organization;
 };
 
 /** Organization creation input data */
@@ -1234,6 +1598,8 @@ export type PageInfo = {
 export enum Platform {
     /** Facebook marketing platform */
     Facebook = 'facebook',
+    /** A sandbox testing platform environment that makes no outside media channel communications */
+    Sandbox = 'sandbox',
 }
 
 /**
@@ -1256,7 +1622,7 @@ export type Product = {
     /** Data related to the product stored on the remote platform */
     remoteState?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaigns referenced by the product */
-    marketingCampaigns?: Maybe<MarketingCampaignConnection>;
+    marketingCampaigns: MarketingCampaignConnection;
     /** Product catalog containing the product */
     catalog: Catalog;
     /** Data related to the product */
@@ -1290,7 +1656,7 @@ export type ProductMarketingCampaignsArgs = {
 /** Products collection */
 export type ProductConnection = {
     /** Collection of products */
-    edges?: Maybe<Array<Maybe<ProductEdge>>>;
+    edges: Array<ProductEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -1300,7 +1666,7 @@ export type ProductEdge = {
     /** Id of the contained product */
     cursor: Scalars['ObjectId'];
     /** Container for a product */
-    node?: Maybe<Product>;
+    node: Product;
 };
 
 /** Product creation input */
@@ -1321,55 +1687,71 @@ export type ProductUpdateInput = {
 
 export type Query = {
     /** Returns a single campaign template identified by a given id */
-    campaignTemplate?: Maybe<CampaignTemplate>;
+    campaignTemplate: CampaignTemplate;
     /** Returns a collection of campaign templates */
-    campaignTemplates?: Maybe<CampaignTemplateConnection>;
+    campaignTemplates: CampaignTemplateConnection;
     /** Returns a single product catalog identified by a given id */
-    catalog?: Maybe<Catalog>;
+    catalog: Catalog;
     /** Returns a collection of product catalogs */
-    catalogs?: Maybe<CatalogConnection>;
+    catalogs: CatalogConnection;
+    /** Returns a single creative font identified by a given id */
+    creativeFont: CreativeFont;
+    /** Returns a collection of creative fonts */
+    creativeFonts: CreativeFontConnection;
+    /** Returns a single creative image identified by a given id */
+    creativeImage: CreativeImage;
+    /** Returns a collection of creative images */
+    creativeImages: CreativeImageConnection;
+    /** Returns a single product catalog identified by a given id */
+    creativeLayer: CreativeLayer;
+    /** Returns a collection of creative layers */
+    creativeLayers: CreativeLayerConnection;
+    /** Returns a single creative template identified by a given id */
+    creativeTemplate: CreativeTemplate;
+    /** Returns a collection of creative templates */
+    creativeTemplates: CreativeTemplateConnection;
     /** Returns a single entitlement identified by a given id */
-    entitlement?: Maybe<Entitlement>;
+    entitlement: Entitlement;
     /** Returns a collection of entitlements */
-    entitlements?: Maybe<EntitlementConnection>;
+    entitlements: EntitlementConnection;
     /** Returns a single marketing ad identified by a given id */
-    marketingAd?: Maybe<MarketingAd>;
+    marketingAd: MarketingAd;
     /** Returns a collection of marketing ads */
-    marketingAds?: Maybe<MarketingAdConnection>;
+    marketingAds: MarketingAdConnection;
     /** Returns a single marketing campaign identified by a given id */
     marketingCampaign?: Maybe<MarketingCampaign>;
     /** Returns a collection of marketing campaigns */
-    marketingCampaigns?: Maybe<MarketingCampaignConnection>;
+    marketingCampaigns: MarketingCampaignConnection;
     /** Returns a single marketplace identified by a given id */
-    marketplace?: Maybe<Marketplace>;
+    marketplace: Marketplace;
     /** Returns a collection of marketplaces */
-    marketplaces?: Maybe<MarketplaceConnection>;
+    marketplaces: MarketplaceConnection;
     /** Returns a single product catalog identified by a given id */
     mediaChannel?: Maybe<MediaChannel>;
     /** Returns a collection of media channels */
-    mediaChannels?: Maybe<MediaChannelConnection>;
+    mediaChannels: MediaChannelConnection;
     /** Returns a single organization identified by a given id */
-    organization?: Maybe<Organization>;
+    organization: Organization;
     /** Returns a collection of organizations */
-    organizations?: Maybe<OrganizationConnection>;
+    organizations: OrganizationConnection;
     /** Returns a single product identified by a given id */
-    product?: Maybe<Product>;
+    product: Product;
     /** Returns a collection of products */
-    products?: Maybe<ProductConnection>;
+    products: ProductConnection;
     /** Returns a single result identified by a given id */
-    result?: Maybe<Result>;
+    result: Result;
     /** Returns a collecton of results */
-    results?: Maybe<ResultConnection>;
+    results: ResultConnection;
     /** Returns the user making this query */
-    me?: Maybe<Me>;
+    me: Me;
     /** Returns a single vendor token identified by a given id */
-    vendorToken?: Maybe<VendorToken>;
+    vendorToken: VendorToken;
     /** Returns a collection of vendor tokens */
-    vendorTokens?: Maybe<VendorTokenConnection>;
+    vendorTokens: VendorTokenConnection;
     /** Returns a single vendor identified by a given id */
-    vendor?: Maybe<Vendor>;
+    vendor: Vendor;
     /** Returns a collection of vendors */
-    vendors?: Maybe<VendorConnection>;
+    vendors: VendorConnection;
 };
 
 export type QueryCampaignTemplateArgs = {
@@ -1383,6 +1765,7 @@ export type QueryCampaignTemplatesArgs = {
     after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
     before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryCatalogArgs = {
@@ -1390,6 +1773,62 @@ export type QueryCatalogArgs = {
 };
 
 export type QueryCatalogsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type QueryCreativeFontArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type QueryCreativeFontsArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type QueryCreativeImageArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type QueryCreativeImagesArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type QueryCreativeLayerArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type QueryCreativeLayersArgs = {
+    filter?: Maybe<Scalars['FilterInput']>;
+    sort?: Maybe<SortInput>;
+    first?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    last?: Maybe<Scalars['Int']>;
+    before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type QueryCreativeTemplateArgs = {
+    id: Scalars['ObjectId'];
+};
+
+export type QueryCreativeTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
@@ -1423,6 +1862,7 @@ export type QueryMarketingAdsArgs = {
     after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
     before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type QueryMarketingCampaignArgs = {
@@ -1580,7 +2020,7 @@ export type ResultAnalytics = {
 /** Results collection */
 export type ResultConnection = {
     /** Collection of results */
-    edges?: Maybe<Array<Maybe<ResultEdge>>>;
+    edges: Array<ResultEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -1590,7 +2030,7 @@ export type ResultEdge = {
     /** Id of the contained result */
     cursor: Scalars['ObjectId'];
     /** Container for a result */
-    node?: Maybe<Result>;
+    node: Result;
 };
 
 /** Resource referenced by a result */
@@ -1691,9 +2131,9 @@ export type User = Me & {
     /** Last name of the user */
     lastName?: Maybe<Scalars['NonEmptyString']>;
     /** Organizations the user is a member of */
-    organizations?: Maybe<OrganizationConnection>;
+    organizations: OrganizationConnection;
     /** Entitlements granting permissions to the user */
-    entitlements?: Maybe<EntitlementConnection>;
+    entitlements: EntitlementConnection;
 };
 
 /**
@@ -1726,7 +2166,7 @@ export type UserEntitlementsArgs = {
 /** User collection */
 export type UserConnection = {
     /** Collection of users */
-    edges?: Maybe<Array<Maybe<UserEdge>>>;
+    edges: Array<UserEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -1736,7 +2176,7 @@ export type UserEdge = {
     /** Id of the contained user */
     cursor: Scalars['ObjectId'];
     /** Container for a user */
-    node?: Maybe<User>;
+    node: User;
 };
 
 /** User login input data */
@@ -1775,9 +2215,9 @@ export type Vendor = Me & {
     /** Marketplace referenced by the vendor */
     marketplace: Marketplace;
     /** Vendor tokens associated with the vendor that can be used to access the api */
-    vendorTokens?: Maybe<VendorTokenConnection>;
+    vendorTokens: VendorTokenConnection;
     /** Products related to the vendor */
-    products?: Maybe<ProductConnection>;
+    products: ProductConnection;
     /** System status of the vendor */
     systemStatus: SystemStatus;
     /** Validation errors of the vendor */
@@ -1814,7 +2254,7 @@ export type VendorProductsArgs = {
 /** Vendors collection */
 export type VendorConnection = {
     /** Collection of vendors */
-    edges?: Maybe<Array<Maybe<VendorEdge>>>;
+    edges: Array<VendorEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
 };
@@ -1824,7 +2264,7 @@ export type VendorEdge = {
     /** Id of the contained vendor */
     cursor: Scalars['ObjectId'];
     /** Container for a vendor */
-    node?: Maybe<Vendor>;
+    node: Vendor;
 };
 
 /** Vendor creation input data */
@@ -1853,14 +2293,14 @@ export type VendorToken = {
 
 /** Vendor tokens collection */
 export type VendorTokenConnection = {
-    edges?: Maybe<Array<Maybe<VendorTokenEdge>>>;
+    edges: Array<VendorTokenEdge>;
     pageInfo: PageInfo;
 };
 
 /** Vendor token in a collection */
 export type VendorTokenEdge = {
     cursor: Scalars['ObjectId'];
-    node?: Maybe<VendorToken>;
+    node: VendorToken;
 };
 
 /** Vendor token creation input data */
@@ -1984,10 +2424,10 @@ export type ResolversTypes = {
     NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']>;
     String: ResolverTypeWrapper<Scalars['String']>;
     Platform: Platform;
-    Marketplace: ResolverTypeWrapper<Marketplace>;
-    EntitlementResource: ResolverTypeWrapper<EntitlementResource>;
     SystemStatus: SystemStatus;
     JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
+    Marketplace: ResolverTypeWrapper<Marketplace>;
+    EntitlementResource: ResolverTypeWrapper<EntitlementResource>;
     Organization: ResolverTypeWrapper<Organization>;
     FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
     SortInput: SortInput;
@@ -2044,11 +2484,32 @@ export type ResolversTypes = {
     CampaignTemplateEdge: ResolverTypeWrapper<CampaignTemplateEdge>;
     VendorConnection: ResolverTypeWrapper<VendorConnection>;
     VendorEdge: ResolverTypeWrapper<VendorEdge>;
+    CreativeTemplateConnection: ResolverTypeWrapper<CreativeTemplateConnection>;
+    CreativeTemplateEdge: ResolverTypeWrapper<CreativeTemplateEdge>;
+    CreativeTemplate: ResolverTypeWrapper<CreativeTemplate>;
+    CreativeLayerConnection: ResolverTypeWrapper<CreativeLayerConnection>;
+    CreativeLayerEdge: ResolverTypeWrapper<CreativeLayerEdge>;
+    CreativeLayer: ResolverTypeWrapper<CreativeLayer>;
+    CreativeLayerTypes: CreativeLayerTypes;
+    CreativeFont: ResolverTypeWrapper<CreativeFont>;
+    CreativeFontConnection: ResolverTypeWrapper<CreativeFontConnection>;
+    CreativeFontEdge: ResolverTypeWrapper<CreativeFontEdge>;
+    CreativeImage: ResolverTypeWrapper<CreativeImage>;
+    CreativeImageConnection: ResolverTypeWrapper<CreativeImageConnection>;
+    CreativeImageEdge: ResolverTypeWrapper<CreativeImageEdge>;
     Mutation: ResolverTypeWrapper<{}>;
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
     Deletion: ResolverTypeWrapper<Deletion>;
     CatalogUpdateInput: CatalogUpdateInput;
+    CreativeFontCreateInput: CreativeFontCreateInput;
+    CreativeFontUpdateInput: CreativeFontUpdateInput;
+    CreativeImageCreateInput: CreativeImageCreateInput;
+    CreativeImageUpdateInput: CreativeImageUpdateInput;
+    CreativeLayerCreateInput: CreativeLayerCreateInput;
+    CreativeLayerUpdateInput: CreativeLayerUpdateInput;
+    CreativeTemplateCreateInput: CreativeTemplateCreateInput;
+    CreativeTemplateUpdateInput: CreativeTemplateUpdateInput;
     EntitlementInput: EntitlementInput;
     EntitlementUpdateInput: EntitlementUpdateInput;
     MarketingCampaignInput: MarketingCampaignInput;
@@ -2086,10 +2547,10 @@ export type ResolversParentTypes = {
     NonEmptyString: Scalars['NonEmptyString'];
     String: Scalars['String'];
     Platform: Platform;
-    Marketplace: Marketplace;
-    EntitlementResource: EntitlementResource;
     SystemStatus: SystemStatus;
     JSONObject: Scalars['JSONObject'];
+    Marketplace: Marketplace;
+    EntitlementResource: EntitlementResource;
     Organization: Organization;
     FilterInput: Scalars['FilterInput'];
     SortInput: SortInput;
@@ -2144,11 +2605,32 @@ export type ResolversParentTypes = {
     CampaignTemplateEdge: CampaignTemplateEdge;
     VendorConnection: VendorConnection;
     VendorEdge: VendorEdge;
+    CreativeTemplateConnection: CreativeTemplateConnection;
+    CreativeTemplateEdge: CreativeTemplateEdge;
+    CreativeTemplate: CreativeTemplate;
+    CreativeLayerConnection: CreativeLayerConnection;
+    CreativeLayerEdge: CreativeLayerEdge;
+    CreativeLayer: CreativeLayer;
+    CreativeLayerTypes: CreativeLayerTypes;
+    CreativeFont: CreativeFont;
+    CreativeFontConnection: CreativeFontConnection;
+    CreativeFontEdge: CreativeFontEdge;
+    CreativeImage: CreativeImage;
+    CreativeImageConnection: CreativeImageConnection;
+    CreativeImageEdge: CreativeImageEdge;
     Mutation: {};
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
     Deletion: Deletion;
     CatalogUpdateInput: CatalogUpdateInput;
+    CreativeFontCreateInput: CreativeFontCreateInput;
+    CreativeFontUpdateInput: CreativeFontUpdateInput;
+    CreativeImageCreateInput: CreativeImageCreateInput;
+    CreativeImageUpdateInput: CreativeImageUpdateInput;
+    CreativeLayerCreateInput: CreativeLayerCreateInput;
+    CreativeLayerUpdateInput: CreativeLayerUpdateInput;
+    CreativeTemplateCreateInput: CreativeTemplateCreateInput;
+    CreativeTemplateUpdateInput: CreativeTemplateUpdateInput;
     EntitlementInput: EntitlementInput;
     EntitlementUpdateInput: EntitlementUpdateInput;
     MarketingCampaignInput: MarketingCampaignInput;
@@ -2214,13 +2696,23 @@ export type CampaignTemplateResolvers<
     description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     platform?: Resolver<ResolversTypes['Platform'], ParentType, ContextType>;
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
     marketplace?: Resolver<
         ResolversTypes['Marketplace'],
         ParentType,
         ContextType
     >;
     marketingCampaigns?: Resolver<
-        Maybe<ResolversTypes['MarketingCampaignConnection']>,
+        ResolversTypes['MarketingCampaignConnection'],
         ParentType,
         ContextType,
         RequireFields<CampaignTemplateMarketingCampaignsArgs, 'showDeleted'>
@@ -2232,7 +2724,7 @@ export type CampaignTemplateConnectionResolvers<
     ParentType extends ResolversParentTypes['CampaignTemplateConnection'] = ResolversParentTypes['CampaignTemplateConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['CampaignTemplateEdge']>>>,
+        Array<ResolversTypes['CampaignTemplateEdge']>,
         ParentType,
         ContextType
     >;
@@ -2245,7 +2737,7 @@ export type CampaignTemplateEdgeResolvers<
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<
-        Maybe<ResolversTypes['CampaignTemplate']>,
+        ResolversTypes['CampaignTemplate'],
         ParentType,
         ContextType
     >;
@@ -2299,7 +2791,7 @@ export type CatalogResolvers<
         ContextType
     >;
     products?: Resolver<
-        Maybe<ResolversTypes['ProductConnection']>,
+        ResolversTypes['ProductConnection'],
         ParentType,
         ContextType,
         RequireFields<CatalogProductsArgs, 'showDeleted'>
@@ -2311,7 +2803,7 @@ export type CatalogConnectionResolvers<
     ParentType extends ResolversParentTypes['CatalogConnection'] = ResolversParentTypes['CatalogConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['CatalogEdge']>>>,
+        Array<ResolversTypes['CatalogEdge']>,
         ParentType,
         ContextType
     >;
@@ -2323,7 +2815,242 @@ export type CatalogEdgeResolvers<
     ParentType extends ResolversParentTypes['CatalogEdge'] = ResolversParentTypes['CatalogEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<Maybe<ResolversTypes['Catalog']>, ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
+};
+
+export type CreativeFontResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeFont'] = ResolversParentTypes['CreativeFont']
+> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    url?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    properties?: Resolver<
+        ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    marketplace?: Resolver<
+        ResolversTypes['Marketplace'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
+};
+
+export type CreativeFontConnectionResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeFontConnection'] = ResolversParentTypes['CreativeFontConnection']
+> = {
+    edges?: Resolver<
+        Array<ResolversTypes['CreativeFontEdge']>,
+        ParentType,
+        ContextType
+    >;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+
+export type CreativeFontEdgeResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeFontEdge'] = ResolversParentTypes['CreativeFontEdge']
+> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['CreativeFont'], ParentType, ContextType>;
+};
+
+export type CreativeImageResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeImage'] = ResolversParentTypes['CreativeImage']
+> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    url?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    properties?: Resolver<
+        ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    marketplace?: Resolver<
+        ResolversTypes['Marketplace'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
+};
+
+export type CreativeImageConnectionResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeImageConnection'] = ResolversParentTypes['CreativeImageConnection']
+> = {
+    edges?: Resolver<
+        Array<ResolversTypes['CreativeImageEdge']>,
+        ParentType,
+        ContextType
+    >;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+
+export type CreativeImageEdgeResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeImageEdge'] = ResolversParentTypes['CreativeImageEdge']
+> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['CreativeImage'], ParentType, ContextType>;
+};
+
+export type CreativeLayerResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeLayer'] = ResolversParentTypes['CreativeLayer']
+> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    x?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    y?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    type?: Resolver<
+        ResolversTypes['CreativeLayerTypes'],
+        ParentType,
+        ContextType
+    >;
+    properties?: Resolver<
+        ResolversTypes['JSONObject'],
+        ParentType,
+        ContextType
+    >;
+    creativeTemplate?: Resolver<
+        ResolversTypes['CreativeTemplate'],
+        ParentType,
+        ContextType
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
+};
+
+export type CreativeLayerConnectionResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeLayerConnection'] = ResolversParentTypes['CreativeLayerConnection']
+> = {
+    edges?: Resolver<
+        Array<ResolversTypes['CreativeLayerEdge']>,
+        ParentType,
+        ContextType
+    >;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+
+export type CreativeLayerEdgeResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeLayerEdge'] = ResolversParentTypes['CreativeLayerEdge']
+> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['CreativeLayer'], ParentType, ContextType>;
+};
+
+export type CreativeTemplateResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeTemplate'] = ResolversParentTypes['CreativeTemplate']
+> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<
+        ResolversTypes['DateISO'],
+        ParentType,
+        ContextType
+    >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    marketplace?: Resolver<
+        ResolversTypes['Marketplace'],
+        ParentType,
+        ContextType
+    >;
+    creativeLayers?: Resolver<
+        ResolversTypes['CreativeLayerConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<CreativeTemplateCreativeLayersArgs, 'showDeleted'>
+    >;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
+};
+
+export type CreativeTemplateConnectionResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeTemplateConnection'] = ResolversParentTypes['CreativeTemplateConnection']
+> = {
+    edges?: Resolver<
+        Array<ResolversTypes['CreativeTemplateEdge']>,
+        ParentType,
+        ContextType
+    >;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+
+export type CreativeTemplateEdgeResolvers<
+    ContextType = any,
+    ParentType extends ResolversParentTypes['CreativeTemplateEdge'] = ResolversParentTypes['CreativeTemplateEdge']
+> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<
+        ResolversTypes['CreativeTemplate'],
+        ParentType,
+        ContextType
+    >;
 };
 
 export interface DateIsoScalarConfig
@@ -2372,7 +3099,7 @@ export type EntitlementConnectionResolvers<
     ParentType extends ResolversParentTypes['EntitlementConnection'] = ResolversParentTypes['EntitlementConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['EntitlementEdge']>>>,
+        Array<ResolversTypes['EntitlementEdge']>,
         ParentType,
         ContextType
     >;
@@ -2384,11 +3111,7 @@ export type EntitlementEdgeResolvers<
     ParentType extends ResolversParentTypes['EntitlementEdge'] = ResolversParentTypes['EntitlementEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<
-        Maybe<ResolversTypes['Entitlement']>,
-        ParentType,
-        ContextType
-    >;
+    node?: Resolver<ResolversTypes['Entitlement'], ParentType, ContextType>;
 };
 
 export type EntitlementResourceResolvers<
@@ -2442,6 +3165,16 @@ export type MarketingAdResolvers<
         ContextType
     >;
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    systemStatus?: Resolver<
+        ResolversTypes['SystemStatus'],
+        ParentType,
+        ContextType
+    >;
+    errors?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
     preview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     resultsSource?: Resolver<
         Array<Maybe<ResolversTypes['NonEmptyString']>>,
@@ -2449,7 +3182,7 @@ export type MarketingAdResolvers<
         ContextType
     >;
     results?: Resolver<
-        Maybe<ResolversTypes['ResultConnection']>,
+        ResolversTypes['ResultConnection'],
         ParentType,
         ContextType,
         MarketingAdResultsArgs
@@ -2467,7 +3200,7 @@ export type MarketingAdConnectionResolvers<
     ParentType extends ResolversParentTypes['MarketingAdConnection'] = ResolversParentTypes['MarketingAdConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['MarketingAdEdge']>>>,
+        Array<ResolversTypes['MarketingAdEdge']>,
         ParentType,
         ContextType
     >;
@@ -2479,11 +3212,7 @@ export type MarketingAdEdgeResolvers<
     ParentType extends ResolversParentTypes['MarketingAdEdge'] = ResolversParentTypes['MarketingAdEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<
-        Maybe<ResolversTypes['MarketingAd']>,
-        ParentType,
-        ContextType
-    >;
+    node?: Resolver<ResolversTypes['MarketingAd'], ParentType, ContextType>;
 };
 
 export type MarketingCampaignResolvers<
@@ -2504,13 +3233,13 @@ export type MarketingCampaignResolvers<
         ContextType
     >;
     marketingAds?: Resolver<
-        Maybe<ResolversTypes['MarketingAdConnection']>,
+        ResolversTypes['MarketingAdConnection'],
         ParentType,
         ContextType,
         MarketingCampaignMarketingAdsArgs
     >;
     products?: Resolver<
-        Maybe<ResolversTypes['ProductConnection']>,
+        ResolversTypes['ProductConnection'],
         ParentType,
         ContextType,
         RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>
@@ -2528,7 +3257,7 @@ export type MarketingCampaignResolvers<
         ContextType
     >;
     results?: Resolver<
-        Maybe<ResolversTypes['ResultConnection']>,
+        ResolversTypes['ResultConnection'],
         ParentType,
         ContextType,
         MarketingCampaignResultsArgs
@@ -2565,7 +3294,7 @@ export type MarketingCampaignConnectionResolvers<
     ParentType extends ResolversParentTypes['MarketingCampaignConnection'] = ResolversParentTypes['MarketingCampaignConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['MarketingCampaignEdge']>>>,
+        Array<ResolversTypes['MarketingCampaignEdge']>,
         ParentType,
         ContextType
     >;
@@ -2578,7 +3307,7 @@ export type MarketingCampaignEdgeResolvers<
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<
-        Maybe<ResolversTypes['MarketingCampaign']>,
+        ResolversTypes['MarketingCampaign'],
         ParentType,
         ContextType
     >;
@@ -2602,25 +3331,25 @@ export type MarketplaceResolvers<
         ContextType
     >;
     mediaChannels?: Resolver<
-        Maybe<ResolversTypes['MediaChannelConnection']>,
+        ResolversTypes['MediaChannelConnection'],
         ParentType,
         ContextType,
         RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>
     >;
     campaignTemplates?: Resolver<
-        Maybe<ResolversTypes['CampaignTemplateConnection']>,
+        ResolversTypes['CampaignTemplateConnection'],
         ParentType,
         ContextType,
         MarketplaceCampaignTemplatesArgs
     >;
     vendors?: Resolver<
-        Maybe<ResolversTypes['VendorConnection']>,
+        ResolversTypes['VendorConnection'],
         ParentType,
         ContextType,
         RequireFields<MarketplaceVendorsArgs, 'showDeleted'>
     >;
     vendorTokens?: Resolver<
-        Maybe<ResolversTypes['VendorTokenConnection']>,
+        ResolversTypes['VendorTokenConnection'],
         ParentType,
         ContextType,
         MarketplaceVendorTokensArgs
@@ -2635,6 +3364,12 @@ export type MarketplaceResolvers<
         ParentType,
         ContextType
     >;
+    creativeTemplates?: Resolver<
+        ResolversTypes['CreativeTemplateConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<MarketplaceCreativeTemplatesArgs, 'showDeleted'>
+    >;
 };
 
 export type MarketplaceConnectionResolvers<
@@ -2642,7 +3377,7 @@ export type MarketplaceConnectionResolvers<
     ParentType extends ResolversParentTypes['MarketplaceConnection'] = ResolversParentTypes['MarketplaceConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['MarketplaceEdge']>>>,
+        Array<ResolversTypes['MarketplaceEdge']>,
         ParentType,
         ContextType
     >;
@@ -2654,11 +3389,7 @@ export type MarketplaceEdgeResolvers<
     ParentType extends ResolversParentTypes['MarketplaceEdge'] = ResolversParentTypes['MarketplaceEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<
-        Maybe<ResolversTypes['Marketplace']>,
-        ParentType,
-        ContextType
-    >;
+    node?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
 };
 
 export type MeResolvers<
@@ -2751,7 +3482,7 @@ export type MediaChannelConnectionResolvers<
     ParentType extends ResolversParentTypes['MediaChannelConnection'] = ResolversParentTypes['MediaChannelConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['MediaChannelEdge']>>>,
+        Array<ResolversTypes['MediaChannelEdge']>,
         ParentType,
         ContextType
     >;
@@ -2763,11 +3494,7 @@ export type MediaChannelEdgeResolvers<
     ParentType extends ResolversParentTypes['MediaChannelEdge'] = ResolversParentTypes['MediaChannelEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<
-        Maybe<ResolversTypes['MediaChannel']>,
-        ParentType,
-        ContextType
-    >;
+    node?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType>;
 };
 
 export type MutationResolvers<
@@ -2775,187 +3502,259 @@ export type MutationResolvers<
     ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
 > = {
     createCatalog?: Resolver<
-        Maybe<ResolversTypes['Catalog']>,
+        ResolversTypes['Catalog'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateCatalogArgs, 'input'>
     >;
     importCatalog?: Resolver<
-        Maybe<ResolversTypes['Catalog']>,
+        ResolversTypes['Catalog'],
         ParentType,
         ContextType,
         RequireFields<MutationImportCatalogArgs, 'input'>
     >;
     deleteCatalog?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteCatalogArgs, 'id'>
     >;
     updateCatalog?: Resolver<
-        Maybe<ResolversTypes['Catalog']>,
+        ResolversTypes['Catalog'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateCatalogArgs, 'id' | 'input'>
     >;
+    createCreativeFont?: Resolver<
+        ResolversTypes['CreativeFont'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationCreateCreativeFontArgs, 'input'>
+    >;
+    updateCreativeFont?: Resolver<
+        ResolversTypes['CreativeFont'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationUpdateCreativeFontArgs, 'id' | 'input'>
+    >;
+    deleteCreativeFont?: Resolver<
+        ResolversTypes['Deletion'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteCreativeFontArgs, 'id'>
+    >;
+    createCreativeImage?: Resolver<
+        ResolversTypes['CreativeImage'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationCreateCreativeImageArgs, 'input'>
+    >;
+    updateCreativeImage?: Resolver<
+        ResolversTypes['CreativeImage'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationUpdateCreativeImageArgs, 'id' | 'input'>
+    >;
+    deleteCreativeImage?: Resolver<
+        ResolversTypes['Deletion'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteCreativeImageArgs, 'id'>
+    >;
+    createCreativeLayer?: Resolver<
+        ResolversTypes['CreativeLayer'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationCreateCreativeLayerArgs, 'input'>
+    >;
+    updateCreativeLayer?: Resolver<
+        ResolversTypes['CreativeLayer'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationUpdateCreativeLayerArgs, 'id' | 'input'>
+    >;
+    deleteCreativeLayer?: Resolver<
+        ResolversTypes['Deletion'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteCreativeLayerArgs, 'id'>
+    >;
+    createCreativeTemplate?: Resolver<
+        ResolversTypes['CreativeTemplate'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationCreateCreativeTemplateArgs, 'input'>
+    >;
+    updateCreativeTemplate?: Resolver<
+        ResolversTypes['CreativeTemplate'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationUpdateCreativeTemplateArgs, 'id' | 'input'>
+    >;
+    deleteCreativeTemplate?: Resolver<
+        ResolversTypes['Deletion'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationDeleteCreativeTemplateArgs, 'id'>
+    >;
     createEntitlement?: Resolver<
-        Maybe<ResolversTypes['Entitlement']>,
+        ResolversTypes['Entitlement'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateEntitlementArgs, 'input'>
     >;
     updateEntitlement?: Resolver<
-        Maybe<ResolversTypes['Entitlement']>,
+        ResolversTypes['Entitlement'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateEntitlementArgs, 'id' | 'input'>
     >;
     deleteEntitlement?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteEntitlementArgs, 'id'>
     >;
     createMarketingCampaign?: Resolver<
-        Maybe<ResolversTypes['MarketingCampaign']>,
+        ResolversTypes['MarketingCampaign'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateMarketingCampaignArgs, 'input'>
     >;
     updateMarketingCampaign?: Resolver<
-        Maybe<ResolversTypes['MarketingCampaign']>,
+        ResolversTypes['MarketingCampaign'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateMarketingCampaignArgs, 'id' | 'input'>
     >;
     deleteMarketingCampaign?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteMarketingCampaignArgs, 'id'>
     >;
     createMarketplace?: Resolver<
-        Maybe<ResolversTypes['Marketplace']>,
+        ResolversTypes['Marketplace'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateMarketplaceArgs, 'input'>
     >;
     updateMarketplace?: Resolver<
-        Maybe<ResolversTypes['Marketplace']>,
+        ResolversTypes['Marketplace'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateMarketplaceArgs, 'id' | 'input'>
     >;
     deleteMarketplace?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteMarketplaceArgs, 'id'>
     >;
     createMediaChannel?: Resolver<
-        Maybe<ResolversTypes['MediaChannel']>,
+        ResolversTypes['MediaChannel'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateMediaChannelArgs, 'input'>
     >;
     importMediaChannel?: Resolver<
-        Maybe<ResolversTypes['MediaChannel']>,
+        ResolversTypes['MediaChannel'],
         ParentType,
         ContextType,
         RequireFields<MutationImportMediaChannelArgs, 'input'>
     >;
     updateMediaChannel?: Resolver<
-        Maybe<ResolversTypes['MediaChannel']>,
+        ResolversTypes['MediaChannel'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateMediaChannelArgs, 'id' | 'input'>
     >;
     deleteMediaChannel?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteMediaChannelArgs, 'id'>
     >;
     createOrganization?: Resolver<
-        Maybe<ResolversTypes['Organization']>,
+        ResolversTypes['Organization'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateOrganizationArgs, 'input'>
     >;
     updateOrganization?: Resolver<
-        Maybe<ResolversTypes['Organization']>,
+        ResolversTypes['Organization'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateOrganizationArgs, 'id' | 'input'>
     >;
     deleteOrganization?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteOrganizationArgs, 'id'>
     >;
     createProduct?: Resolver<
-        Maybe<ResolversTypes['Product']>,
+        ResolversTypes['Product'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateProductArgs, 'input'>
     >;
     updateProduct?: Resolver<
-        Maybe<ResolversTypes['Product']>,
+        ResolversTypes['Product'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateProductArgs, 'id' | 'input'>
     >;
     deleteProduct?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteProductArgs, 'id'>
     >;
     login?: Resolver<
-        Maybe<ResolversTypes['Token']>,
+        ResolversTypes['Token'],
         ParentType,
         ContextType,
         RequireFields<MutationLoginArgs, 'input'>
     >;
     updateUser?: Resolver<
-        Maybe<ResolversTypes['User']>,
+        ResolversTypes['User'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateUserArgs, 'input'>
     >;
     refreshLogin?: Resolver<
-        Maybe<ResolversTypes['Token']>,
+        ResolversTypes['Token'],
         ParentType,
         ContextType,
         RequireFields<MutationRefreshLoginArgs, 'input'>
     >;
     createVendorToken?: Resolver<
-        Maybe<ResolversTypes['VendorToken']>,
+        ResolversTypes['VendorToken'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateVendorTokenArgs, 'input'>
     >;
     deleteVendorToken?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteVendorTokenArgs, 'id'>
     >;
     createVendor?: Resolver<
-        Maybe<ResolversTypes['Vendor']>,
+        ResolversTypes['Vendor'],
         ParentType,
         ContextType,
         RequireFields<MutationCreateVendorArgs, 'input'>
     >;
     updateVendor?: Resolver<
-        Maybe<ResolversTypes['Vendor']>,
+        ResolversTypes['Vendor'],
         ParentType,
         ContextType,
         RequireFields<MutationUpdateVendorArgs, 'id' | 'input'>
     >;
     deleteVendor?: Resolver<
-        Maybe<ResolversTypes['Deletion']>,
+        ResolversTypes['Deletion'],
         ParentType,
         ContextType,
         RequireFields<MutationDeleteVendorArgs, 'id'>
@@ -2984,13 +3783,13 @@ export type OrganizationResolvers<
         ContextType
     >;
     users?: Resolver<
-        Maybe<ResolversTypes['UserConnection']>,
+        ResolversTypes['UserConnection'],
         ParentType,
         ContextType,
         OrganizationUsersArgs
     >;
     marketplaces?: Resolver<
-        Maybe<ResolversTypes['MarketplaceConnection']>,
+        ResolversTypes['MarketplaceConnection'],
         ParentType,
         ContextType,
         RequireFields<OrganizationMarketplacesArgs, 'showDeleted'>
@@ -3018,7 +3817,7 @@ export type OrganizationConnectionResolvers<
     ParentType extends ResolversParentTypes['OrganizationConnection'] = ResolversParentTypes['OrganizationConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['OrganizationEdge']>>>,
+        Array<ResolversTypes['OrganizationEdge']>,
         ParentType,
         ContextType
     >;
@@ -3030,11 +3829,7 @@ export type OrganizationEdgeResolvers<
     ParentType extends ResolversParentTypes['OrganizationEdge'] = ResolversParentTypes['OrganizationEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<
-        Maybe<ResolversTypes['Organization']>,
-        ParentType,
-        ContextType
-    >;
+    node?: Resolver<ResolversTypes['Organization'], ParentType, ContextType>;
 };
 
 export type PageInfoResolvers<
@@ -3078,7 +3873,7 @@ export type ProductResolvers<
         ContextType
     >;
     marketingCampaigns?: Resolver<
-        Maybe<ResolversTypes['MarketingCampaignConnection']>,
+        ResolversTypes['MarketingCampaignConnection'],
         ParentType,
         ContextType,
         RequireFields<ProductMarketingCampaignsArgs, 'showDeleted'>
@@ -3108,7 +3903,7 @@ export type ProductConnectionResolvers<
     ParentType extends ResolversParentTypes['ProductConnection'] = ResolversParentTypes['ProductConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['ProductEdge']>>>,
+        Array<ResolversTypes['ProductEdge']>,
         ParentType,
         ContextType
     >;
@@ -3120,7 +3915,7 @@ export type ProductEdgeResolvers<
     ParentType extends ResolversParentTypes['ProductEdge'] = ResolversParentTypes['ProductEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['Product'], ParentType, ContextType>;
 };
 
 export type QueryResolvers<
@@ -3128,52 +3923,100 @@ export type QueryResolvers<
     ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
     campaignTemplate?: Resolver<
-        Maybe<ResolversTypes['CampaignTemplate']>,
+        ResolversTypes['CampaignTemplate'],
         ParentType,
         ContextType,
         RequireFields<QueryCampaignTemplateArgs, 'id'>
     >;
     campaignTemplates?: Resolver<
-        Maybe<ResolversTypes['CampaignTemplateConnection']>,
+        ResolversTypes['CampaignTemplateConnection'],
         ParentType,
         ContextType,
-        QueryCampaignTemplatesArgs
+        RequireFields<QueryCampaignTemplatesArgs, 'showDeleted'>
     >;
     catalog?: Resolver<
-        Maybe<ResolversTypes['Catalog']>,
+        ResolversTypes['Catalog'],
         ParentType,
         ContextType,
         RequireFields<QueryCatalogArgs, 'id'>
     >;
     catalogs?: Resolver<
-        Maybe<ResolversTypes['CatalogConnection']>,
+        ResolversTypes['CatalogConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryCatalogsArgs, 'showDeleted'>
     >;
+    creativeFont?: Resolver<
+        ResolversTypes['CreativeFont'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeFontArgs, 'id'>
+    >;
+    creativeFonts?: Resolver<
+        ResolversTypes['CreativeFontConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeFontsArgs, 'showDeleted'>
+    >;
+    creativeImage?: Resolver<
+        ResolversTypes['CreativeImage'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeImageArgs, 'id'>
+    >;
+    creativeImages?: Resolver<
+        ResolversTypes['CreativeImageConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeImagesArgs, 'showDeleted'>
+    >;
+    creativeLayer?: Resolver<
+        ResolversTypes['CreativeLayer'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeLayerArgs, 'id'>
+    >;
+    creativeLayers?: Resolver<
+        ResolversTypes['CreativeLayerConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeLayersArgs, 'showDeleted'>
+    >;
+    creativeTemplate?: Resolver<
+        ResolversTypes['CreativeTemplate'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeTemplateArgs, 'id'>
+    >;
+    creativeTemplates?: Resolver<
+        ResolversTypes['CreativeTemplateConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCreativeTemplatesArgs, 'showDeleted'>
+    >;
     entitlement?: Resolver<
-        Maybe<ResolversTypes['Entitlement']>,
+        ResolversTypes['Entitlement'],
         ParentType,
         ContextType,
         RequireFields<QueryEntitlementArgs, 'id'>
     >;
     entitlements?: Resolver<
-        Maybe<ResolversTypes['EntitlementConnection']>,
+        ResolversTypes['EntitlementConnection'],
         ParentType,
         ContextType,
         QueryEntitlementsArgs
     >;
     marketingAd?: Resolver<
-        Maybe<ResolversTypes['MarketingAd']>,
+        ResolversTypes['MarketingAd'],
         ParentType,
         ContextType,
         RequireFields<QueryMarketingAdArgs, 'id'>
     >;
     marketingAds?: Resolver<
-        Maybe<ResolversTypes['MarketingAdConnection']>,
+        ResolversTypes['MarketingAdConnection'],
         ParentType,
         ContextType,
-        QueryMarketingAdsArgs
+        RequireFields<QueryMarketingAdsArgs, 'showDeleted'>
     >;
     marketingCampaign?: Resolver<
         Maybe<ResolversTypes['MarketingCampaign']>,
@@ -3182,19 +4025,19 @@ export type QueryResolvers<
         RequireFields<QueryMarketingCampaignArgs, 'id'>
     >;
     marketingCampaigns?: Resolver<
-        Maybe<ResolversTypes['MarketingCampaignConnection']>,
+        ResolversTypes['MarketingCampaignConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryMarketingCampaignsArgs, 'showDeleted'>
     >;
     marketplace?: Resolver<
-        Maybe<ResolversTypes['Marketplace']>,
+        ResolversTypes['Marketplace'],
         ParentType,
         ContextType,
         RequireFields<QueryMarketplaceArgs, 'id'>
     >;
     marketplaces?: Resolver<
-        Maybe<ResolversTypes['MarketplaceConnection']>,
+        ResolversTypes['MarketplaceConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryMarketplacesArgs, 'showDeleted'>
@@ -3206,68 +4049,68 @@ export type QueryResolvers<
         RequireFields<QueryMediaChannelArgs, 'id'>
     >;
     mediaChannels?: Resolver<
-        Maybe<ResolversTypes['MediaChannelConnection']>,
+        ResolversTypes['MediaChannelConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryMediaChannelsArgs, 'showDeleted'>
     >;
     organization?: Resolver<
-        Maybe<ResolversTypes['Organization']>,
+        ResolversTypes['Organization'],
         ParentType,
         ContextType,
         RequireFields<QueryOrganizationArgs, 'id'>
     >;
     organizations?: Resolver<
-        Maybe<ResolversTypes['OrganizationConnection']>,
+        ResolversTypes['OrganizationConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryOrganizationsArgs, 'showDeleted'>
     >;
     product?: Resolver<
-        Maybe<ResolversTypes['Product']>,
+        ResolversTypes['Product'],
         ParentType,
         ContextType,
         RequireFields<QueryProductArgs, 'id'>
     >;
     products?: Resolver<
-        Maybe<ResolversTypes['ProductConnection']>,
+        ResolversTypes['ProductConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryProductsArgs, 'showDeleted'>
     >;
     result?: Resolver<
-        Maybe<ResolversTypes['Result']>,
+        ResolversTypes['Result'],
         ParentType,
         ContextType,
         RequireFields<QueryResultArgs, 'id'>
     >;
     results?: Resolver<
-        Maybe<ResolversTypes['ResultConnection']>,
+        ResolversTypes['ResultConnection'],
         ParentType,
         ContextType,
         QueryResultsArgs
     >;
-    me?: Resolver<Maybe<ResolversTypes['Me']>, ParentType, ContextType>;
+    me?: Resolver<ResolversTypes['Me'], ParentType, ContextType>;
     vendorToken?: Resolver<
-        Maybe<ResolversTypes['VendorToken']>,
+        ResolversTypes['VendorToken'],
         ParentType,
         ContextType,
         RequireFields<QueryVendorTokenArgs, 'id'>
     >;
     vendorTokens?: Resolver<
-        Maybe<ResolversTypes['VendorTokenConnection']>,
+        ResolversTypes['VendorTokenConnection'],
         ParentType,
         ContextType,
         QueryVendorTokensArgs
     >;
     vendor?: Resolver<
-        Maybe<ResolversTypes['Vendor']>,
+        ResolversTypes['Vendor'],
         ParentType,
         ContextType,
         RequireFields<QueryVendorArgs, 'id'>
     >;
     vendors?: Resolver<
-        Maybe<ResolversTypes['VendorConnection']>,
+        ResolversTypes['VendorConnection'],
         ParentType,
         ContextType,
         RequireFields<QueryVendorsArgs, 'showDeleted'>
@@ -3329,7 +4172,7 @@ export type ResultConnectionResolvers<
     ParentType extends ResolversParentTypes['ResultConnection'] = ResolversParentTypes['ResultConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['ResultEdge']>>>,
+        Array<ResolversTypes['ResultEdge']>,
         ParentType,
         ContextType
     >;
@@ -3341,7 +4184,7 @@ export type ResultEdgeResolvers<
     ParentType extends ResolversParentTypes['ResultEdge'] = ResolversParentTypes['ResultEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<Maybe<ResolversTypes['Result']>, ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['Result'], ParentType, ContextType>;
 };
 
 export type ResultResourceResolvers<
@@ -3401,13 +4244,13 @@ export type UserResolvers<
         ContextType
     >;
     organizations?: Resolver<
-        Maybe<ResolversTypes['OrganizationConnection']>,
+        ResolversTypes['OrganizationConnection'],
         ParentType,
         ContextType,
         RequireFields<UserOrganizationsArgs, 'showDeleted'>
     >;
     entitlements?: Resolver<
-        Maybe<ResolversTypes['EntitlementConnection']>,
+        ResolversTypes['EntitlementConnection'],
         ParentType,
         ContextType,
         UserEntitlementsArgs
@@ -3419,7 +4262,7 @@ export type UserConnectionResolvers<
     ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['UserEdge']>>>,
+        Array<ResolversTypes['UserEdge']>,
         ParentType,
         ContextType
     >;
@@ -3431,7 +4274,7 @@ export type UserEdgeResolvers<
     ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 
 export type VendorResolvers<
@@ -3452,13 +4295,13 @@ export type VendorResolvers<
         ContextType
     >;
     vendorTokens?: Resolver<
-        Maybe<ResolversTypes['VendorTokenConnection']>,
+        ResolversTypes['VendorTokenConnection'],
         ParentType,
         ContextType,
         VendorVendorTokensArgs
     >;
     products?: Resolver<
-        Maybe<ResolversTypes['ProductConnection']>,
+        ResolversTypes['ProductConnection'],
         ParentType,
         ContextType,
         RequireFields<VendorProductsArgs, 'showDeleted'>
@@ -3480,7 +4323,7 @@ export type VendorConnectionResolvers<
     ParentType extends ResolversParentTypes['VendorConnection'] = ResolversParentTypes['VendorConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['VendorEdge']>>>,
+        Array<ResolversTypes['VendorEdge']>,
         ParentType,
         ContextType
     >;
@@ -3492,7 +4335,7 @@ export type VendorEdgeResolvers<
     ParentType extends ResolversParentTypes['VendorEdge'] = ResolversParentTypes['VendorEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
 };
 
 export type VendorTokenResolvers<
@@ -3520,7 +4363,7 @@ export type VendorTokenConnectionResolvers<
     ParentType extends ResolversParentTypes['VendorTokenConnection'] = ResolversParentTypes['VendorTokenConnection']
 > = {
     edges?: Resolver<
-        Maybe<Array<Maybe<ResolversTypes['VendorTokenEdge']>>>,
+        Array<ResolversTypes['VendorTokenEdge']>,
         ParentType,
         ContextType
     >;
@@ -3532,11 +4375,7 @@ export type VendorTokenEdgeResolvers<
     ParentType extends ResolversParentTypes['VendorTokenEdge'] = ResolversParentTypes['VendorTokenEdge']
 > = {
     cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    node?: Resolver<
-        Maybe<ResolversTypes['VendorToken']>,
-        ParentType,
-        ContextType
-    >;
+    node?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
@@ -3548,6 +4387,20 @@ export type Resolvers<ContextType = any> = {
     Catalog?: CatalogResolvers<ContextType>;
     CatalogConnection?: CatalogConnectionResolvers<ContextType>;
     CatalogEdge?: CatalogEdgeResolvers<ContextType>;
+    CreativeFont?: CreativeFontResolvers<ContextType>;
+    CreativeFontConnection?: CreativeFontConnectionResolvers<ContextType>;
+    CreativeFontEdge?: CreativeFontEdgeResolvers<ContextType>;
+    CreativeImage?: CreativeImageResolvers<ContextType>;
+    CreativeImageConnection?: CreativeImageConnectionResolvers<ContextType>;
+    CreativeImageEdge?: CreativeImageEdgeResolvers<ContextType>;
+    CreativeLayer?: CreativeLayerResolvers<ContextType>;
+    CreativeLayerConnection?: CreativeLayerConnectionResolvers<ContextType>;
+    CreativeLayerEdge?: CreativeLayerEdgeResolvers<ContextType>;
+    CreativeTemplate?: CreativeTemplateResolvers<ContextType>;
+    CreativeTemplateConnection?: CreativeTemplateConnectionResolvers<
+        ContextType
+    >;
+    CreativeTemplateEdge?: CreativeTemplateEdgeResolvers<ContextType>;
     DateISO?: GraphQLScalarType;
     Deletion?: DeletionResolvers<ContextType>;
     Entitlement?: EntitlementResolvers<ContextType>;
