@@ -1,5 +1,5 @@
 import { codes } from '@adgorithmics/graphql-errors';
-import { PageInfo, Scalars, Mutation, Query, SortInput, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput } from './generated/graphql';
+import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput } from './generated/graphql';
 import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, VendorTokenFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields, CreativeFontFields, CreativeImageFields, CreativeLayerFields, CreativeTemplateFields } from './inputFields';
 export interface Config {
     url: string;
@@ -45,17 +45,17 @@ export declare class Cinnamon {
     login(input: UserLoginInput): Promise<import("./generated/graphql").Token>;
     refreshLogin(input: RefreshTokenInput): Promise<import("./generated/graphql").Token>;
     setToken(token: string): void;
-    me({ fields, headers, token, }?: {
+    me<T extends Vendor | User>({ fields, headers, token, }?: {
         fields?: Array<keyof UserFields | keyof VendorFields | string>;
         headers?: Headers;
         token?: string;
-    }): Promise<import("./generated/graphql").Me>;
+    }): Promise<T>;
     updateUser({ input, fields, headers, token, }: {
         input: UserUpdateInput;
         fields?: Array<keyof UserFields | string>;
         headers?: Headers;
         token?: string;
-    }): Promise<import("./generated/graphql").User>;
+    }): Promise<User>;
     private defaultOrganizationFields;
     organization({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];

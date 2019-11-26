@@ -8,6 +8,7 @@ import {
     Mutation,
     Query,
     SortInput,
+    User,
     UserLoginInput,
     UserUpdateInput,
     RefreshTokenInput,
@@ -269,7 +270,7 @@ export class Cinnamon {
     }
 
     @bind
-    async me({
+    async me<T extends Vendor | User>({
         fields,
         headers,
         token,
@@ -297,7 +298,7 @@ export class Cinnamon {
                 headers,
                 token,
             })
-        ).data.me;
+        ).data.me as T;
     }
 
     @bind
@@ -2109,11 +2110,7 @@ export class Cinnamon {
     // Result
     // ####################################
 
-    private defaultResultFields = [
-        ResultFields.id,
-        ResultFields.date,
-        'analytics {results}',
-    ];
+    private defaultResultFields = [ResultFields.id, ResultFields.date];
 
     @bind
     async result({
