@@ -1,7 +1,7 @@
 export declare type ObjectId = string;
 export declare type NonEmptyString = string;
 export declare type DateISO = Date | string;
-export declare type JSONObject = object;
+export declare type JSONObject = Record<string, unknown>;
 interface SingleValueFilter {
     field: string;
     operator: 'EQUALS' | 'NOT_EQUALS' | 'CONTAINS' | 'ICONTAINS' | 'GT' | 'GTE' | 'LT' | 'LTE';
