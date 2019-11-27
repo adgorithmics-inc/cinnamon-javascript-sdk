@@ -2129,6 +2129,14 @@ export class Cinnamon {
                 query: `query($id: ObjectId!) {
                     result(id: $id) {
                         ${fields.join(' ')}
+                        analytics {
+                            results
+                            impressions
+                            clicks
+                            spend
+                            purchases
+                            purchasesValue
+                        }
                     }
                 }`,
                 variables: { id },
@@ -2165,6 +2173,14 @@ export class Cinnamon {
                         edges {
                             node {
                                 ${fields.join(' ')}
+                                analytics {
+                                    results
+                                    impressions
+                                    clicks
+                                    spend
+                                    purchases
+                                    purchasesValue
+                                }
                             }
                         }
                     }
