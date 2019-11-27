@@ -1,7 +1,7 @@
 export type ObjectId = string;
 export type NonEmptyString = string;
 export type DateISO = Date | string;
-export type JSONObject = object;
+export type JSONObject = Record<string, unknown>;
 
 interface SingleValueFilter {
     field: string;
