@@ -153,6 +153,9 @@ export class Cinnamon {
                 json.errors.map((error: Error) => error.message).join('\n'),
             );
         }
+        if (!json.data) {
+            throw new Error(`Invalid server response: ${JSON.stringify(json)}`);
+        }
         return json;
     }
 
