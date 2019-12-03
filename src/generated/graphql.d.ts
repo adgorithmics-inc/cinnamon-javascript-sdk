@@ -668,7 +668,7 @@ export declare type Entitlement = {
     /** Type of resource related to the entitlement */
     type: EntitlementResourceTypeEnum;
     /** Resource related to the entitlement */
-    resource: EntitlementResource;
+    resource?: Maybe<EntitlementResource>;
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
@@ -750,7 +750,7 @@ export declare type MarketingAd = ResultResource & {
     /** Marketing campaigns related to the marketing ad */
     marketingCampaign: MarketingCampaign;
     /** Vendor related to the marketing ad */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
 };
 /**
  * Marketing ad represents an specific ad on a platform belonging
@@ -800,11 +800,11 @@ export declare type MarketingCampaign = ResultResource & {
     /** Products referenced by the marketing campaign */
     products: ProductConnection;
     /** Vendor related to the marketing campaign */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
     /** Catalog related to the marketing campaign */
     catalog: Catalog;
     /** Campaign template related to the marketing campaign */
-    campaignTemplate: CampaignTemplate;
+    campaignTemplate?: Maybe<CampaignTemplate>;
     /** Media channel the marketing campaign is delivering to */
     mediaChannel: MediaChannel;
     /** Results referencing the marketing campaign */
@@ -922,7 +922,7 @@ export declare type Marketplace = EntitlementResource & {
     /** Name of the marketplace */
     name: Scalars['NonEmptyString'];
     /** Organization related to the marketplace */
-    organization: Organization;
+    organization?: Maybe<Organization>;
     /** Media channels related to the marketplace */
     mediaChannels: MediaChannelConnection;
     /** Campaign templates related to the marketplace */
@@ -1064,7 +1064,7 @@ export declare type MediaChannel = EntitlementResource & {
     /** Product catalogs referenced by the media channel */
     catalogs: CatalogConnection;
     /** Marketplace related to the media channel */
-    marketplace: Marketplace;
+    marketplace?: Maybe<Marketplace>;
 };
 /** Media channel represents an ad account on a specific platform */
 export declare type MediaChannelCatalogsArgs = {
@@ -1491,7 +1491,7 @@ export declare type Product = {
     /** Data related to the product */
     metadata: Scalars['JSONObject'];
     /** Vendor owning the product */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
     /** System status of the product */
     systemStatus: SystemStatus;
     /** Validation errors of the product */
@@ -1821,7 +1821,7 @@ export declare type Result = {
     /** Resource related to the result */
     resource: ResultResource;
     /** Vendor related to the result */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
 };
 /** Analytics data referenced by a result */
 export declare type ResultAnalytics = {
@@ -1861,7 +1861,7 @@ export declare type ResultResource = {
     /** Date and time the result resource was last modified */
     lastChangeDate: Scalars['DateISO'];
     /** Vendor related with the result resource */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
 };
 /** Resource related to a result */
 export declare enum ResultResourceTypeEnum {
@@ -2521,7 +2521,7 @@ export declare type EntitlementResolvers<ContextType = any, ParentType extends R
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
     type?: Resolver<ResolversTypes['EntitlementResourceTypeEnum'], ParentType, ContextType>;
-    resource?: Resolver<ResolversTypes['EntitlementResource'], ParentType, ContextType>;
+    resource?: Resolver<Maybe<ResolversTypes['EntitlementResource']>, ParentType, ContextType>;
     permissions?: Resolver<Array<ResolversTypes['AuthPermission']>, ParentType, ContextType>;
 };
 export declare type EntitlementConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntitlementConnection'] = ResolversParentTypes['EntitlementConnection']> = {
@@ -2558,7 +2558,7 @@ export declare type MarketingAdResolvers<ContextType = any, ParentType extends R
     resultsSource?: Resolver<Array<Maybe<ResolversTypes['NonEmptyString']>>, ParentType, ContextType>;
     results?: Resolver<ResolversTypes['ResultConnection'], ParentType, ContextType, MarketingAdResultsArgs>;
     marketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 export declare type MarketingAdConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingAdConnection'] = ResolversParentTypes['MarketingAdConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MarketingAdEdge']>, ParentType, ContextType>;
@@ -2576,9 +2576,9 @@ export declare type MarketingCampaignResolvers<ContextType = any, ParentType ext
     status?: Resolver<ResolversTypes['MarketingCampaignStatus'], ParentType, ContextType>;
     marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, MarketingCampaignMarketingAdsArgs>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
-    campaignTemplate?: Resolver<ResolversTypes['CampaignTemplate'], ParentType, ContextType>;
+    campaignTemplate?: Resolver<Maybe<ResolversTypes['CampaignTemplate']>, ParentType, ContextType>;
     mediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType>;
     results?: Resolver<ResolversTypes['ResultConnection'], ParentType, ContextType, MarketingCampaignResultsArgs>;
     creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
@@ -2600,7 +2600,7 @@ export declare type MarketplaceResolvers<ContextType = any, ParentType extends R
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    organization?: Resolver<ResolversTypes['Organization'], ParentType, ContextType>;
+    organization?: Resolver<Maybe<ResolversTypes['Organization']>, ParentType, ContextType>;
     mediaChannels?: Resolver<ResolversTypes['MediaChannelConnection'], ParentType, ContextType, RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>>;
     campaignTemplates?: Resolver<ResolversTypes['CampaignTemplateConnection'], ParentType, ContextType, MarketplaceCampaignTemplatesArgs>;
     vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorsArgs, 'showDeleted'>>;
@@ -2639,7 +2639,7 @@ export declare type MediaChannelResolvers<ContextType = any, ParentType extends 
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     catalogs?: Resolver<ResolversTypes['CatalogConnection'], ParentType, ContextType, RequireFields<MediaChannelCatalogsArgs, 'showDeleted'>>;
-    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    marketplace?: Resolver<Maybe<ResolversTypes['Marketplace']>, ParentType, ContextType>;
 };
 export declare type MediaChannelConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaChannelConnection'] = ResolversParentTypes['MediaChannelConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MediaChannelEdge']>, ParentType, ContextType>;
@@ -2735,7 +2735,7 @@ export declare type ProductResolvers<ContextType = any, ParentType extends Resol
     marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<ProductMarketingCampaignsArgs, 'showDeleted'>>;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
@@ -2791,7 +2791,7 @@ export declare type ResultResolvers<ContextType = any, ParentType extends Resolv
     analytics?: Resolver<ResolversTypes['ResultAnalytics'], ParentType, ContextType>;
     type?: Resolver<ResolversTypes['ResultResourceTypeEnum'], ParentType, ContextType>;
     resource?: Resolver<ResolversTypes['ResultResource'], ParentType, ContextType>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 export declare type ResultAnalyticsResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultAnalytics'] = ResolversParentTypes['ResultAnalytics']> = {
     results?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -2814,7 +2814,7 @@ export declare type ResultResourceResolvers<ContextType = any, ParentType extend
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 export declare type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

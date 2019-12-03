@@ -2359,13 +2359,9 @@
                         "description": "Organization related to the marketplace",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Organization",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Organization",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -4119,13 +4115,9 @@
                         "description": "Resource related to the entitlement",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "INTERFACE",
-                                "name": "EntitlementResource",
-                                "ofType": null
-                            }
+                            "kind": "INTERFACE",
+                            "name": "EntitlementResource",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -4740,13 +4732,9 @@
                         "description": "Marketplace related to the media channel",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Marketplace",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Marketplace",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -5548,13 +5536,9 @@
                         "description": "Vendor owning the product",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Vendor",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Vendor",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -5969,13 +5953,9 @@
                         "description": "Vendor related to the marketing campaign",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Vendor",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Vendor",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -6001,13 +5981,9 @@
                         "description": "Campaign template related to the marketing campaign",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "CampaignTemplate",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "CampaignTemplate",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -6263,13 +6239,9 @@
                         "description": "Vendor related with the result resource",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Vendor",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Vendor",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -7145,13 +7117,9 @@
                         "description": "Vendor related to the marketing ad",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Vendor",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Vendor",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -7384,13 +7352,9 @@
                         "description": "Vendor related to the result",
                         "args": [],
                         "type": {
-                            "kind": "NON_NULL",
-                            "name": null,
-                            "ofType": {
-                                "kind": "OBJECT",
-                                "name": "Vendor",
-                                "ofType": null
-                            }
+                            "kind": "OBJECT",
+                            "name": "Vendor",
+                            "ofType": null
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
