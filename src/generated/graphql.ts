@@ -712,7 +712,7 @@ export type Entitlement = {
     /** Type of resource related to the entitlement */
     type: EntitlementResourceTypeEnum;
     /** Resource related to the entitlement */
-    resource: EntitlementResource;
+    resource?: Maybe<EntitlementResource>;
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
@@ -801,7 +801,7 @@ export type MarketingAd = ResultResource & {
     /** Marketing campaigns related to the marketing ad */
     marketingCampaign: MarketingCampaign;
     /** Vendor related to the marketing ad */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
 };
 
 /**
@@ -855,11 +855,11 @@ export type MarketingCampaign = ResultResource & {
     /** Products referenced by the marketing campaign */
     products: ProductConnection;
     /** Vendor related to the marketing campaign */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
     /** Catalog related to the marketing campaign */
     catalog: Catalog;
     /** Campaign template related to the marketing campaign */
-    campaignTemplate: CampaignTemplate;
+    campaignTemplate?: Maybe<CampaignTemplate>;
     /** Media channel the marketing campaign is delivering to */
     mediaChannel: MediaChannel;
     /** Results referencing the marketing campaign */
@@ -986,7 +986,7 @@ export type Marketplace = EntitlementResource & {
     /** Name of the marketplace */
     name: Scalars['NonEmptyString'];
     /** Organization related to the marketplace */
-    organization: Organization;
+    organization?: Maybe<Organization>;
     /** Media channels related to the marketplace */
     mediaChannels: MediaChannelConnection;
     /** Campaign templates related to the marketplace */
@@ -1139,7 +1139,7 @@ export type MediaChannel = EntitlementResource & {
     /** Product catalogs referenced by the media channel */
     catalogs: CatalogConnection;
     /** Marketplace related to the media channel */
-    marketplace: Marketplace;
+    marketplace?: Maybe<Marketplace>;
 };
 
 /** Media channel represents an ad account on a specific platform */
@@ -1628,7 +1628,7 @@ export type Product = {
     /** Data related to the product */
     metadata: Scalars['JSONObject'];
     /** Vendor owning the product */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
     /** System status of the product */
     systemStatus: SystemStatus;
     /** Validation errors of the product */
@@ -1998,7 +1998,7 @@ export type Result = {
     /** Resource related to the result */
     resource: ResultResource;
     /** Vendor related to the result */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
 };
 
 /** Analytics data referenced by a result */
@@ -2042,7 +2042,7 @@ export type ResultResource = {
     /** Date and time the result resource was last modified */
     lastChangeDate: Scalars['DateISO'];
     /** Vendor related with the result resource */
-    vendor: Vendor;
+    vendor?: Maybe<Vendor>;
 };
 
 /** Resource related to a result */
@@ -3083,7 +3083,7 @@ export type EntitlementResolvers<
         ContextType
     >;
     resource?: Resolver<
-        ResolversTypes['EntitlementResource'],
+        Maybe<ResolversTypes['EntitlementResource']>,
         ParentType,
         ContextType
     >;
@@ -3192,7 +3192,7 @@ export type MarketingAdResolvers<
         ParentType,
         ContextType
     >;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 
 export type MarketingAdConnectionResolvers<
@@ -3244,10 +3244,10 @@ export type MarketingCampaignResolvers<
         ContextType,
         RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>
     >;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     campaignTemplate?: Resolver<
-        ResolversTypes['CampaignTemplate'],
+        Maybe<ResolversTypes['CampaignTemplate']>,
         ParentType,
         ContextType
     >;
@@ -3326,7 +3326,7 @@ export type MarketplaceResolvers<
     >;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     organization?: Resolver<
-        ResolversTypes['Organization'],
+        Maybe<ResolversTypes['Organization']>,
         ParentType,
         ContextType
     >;
@@ -3471,7 +3471,7 @@ export type MediaChannelResolvers<
         RequireFields<MediaChannelCatalogsArgs, 'showDeleted'>
     >;
     marketplace?: Resolver<
-        ResolversTypes['Marketplace'],
+        Maybe<ResolversTypes['Marketplace']>,
         ParentType,
         ContextType
     >;
@@ -3880,7 +3880,7 @@ export type ProductResolvers<
     >;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<
         ResolversTypes['SystemStatus'],
         ParentType,
@@ -4144,7 +4144,7 @@ export type ResultResolvers<
         ParentType,
         ContextType
     >;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 
 export type ResultAnalyticsResolvers<
@@ -4203,7 +4203,7 @@ export type ResultResourceResolvers<
         ParentType,
         ContextType
     >;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 
 export type TokenResolvers<
