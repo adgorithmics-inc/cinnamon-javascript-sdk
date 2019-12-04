@@ -78,7 +78,7 @@ import {
     CreativeTemplateFields,
 } from './inputFields';
 
-import { bind } from './helpers';
+import { bind, pageQueryGenerator } from './helpers';
 
 export interface Config {
     url: string;
@@ -371,34 +371,38 @@ export class Cinnamon {
     async organizations({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultOrganizationFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof OrganizationFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'organizations'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    organizations(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('organizations', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -410,17 +414,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultOrganizationFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof OrganizationFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<Organization>((after: PageInfo['endCursor']) =>
-            this.organizations({ filter, sort, after, fields, headers, token }),
+            this.organizations({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -429,17 +443,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultOrganizationFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof OrganizationFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<Organization>((after: PageInfo['endCursor']) =>
-            this.organizations({ filter, sort, after, fields, headers, token }),
+            this.organizations({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -538,34 +562,38 @@ export class Cinnamon {
     async marketplaces({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultMarketplaceFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MarketplaceFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'marketplaces'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    marketplaces(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('marketplaces', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -577,17 +605,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMarketplaceFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketplaceFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<Marketplace>((after: PageInfo['endCursor']) =>
-            this.marketplaces({ filter, sort, after, fields, headers, token }),
+            this.marketplaces({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -596,17 +634,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMarketplaceFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketplaceFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<Marketplace>((after: PageInfo['endCursor']) =>
-            this.marketplaces({ filter, sort, after, fields, headers, token }),
+            this.marketplaces({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -727,34 +775,38 @@ export class Cinnamon {
     async mediaChannels({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultMediaChannelFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MediaChannelFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'mediaChannels'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    mediaChannels(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('mediaChannels', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -766,17 +818,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMediaChannelFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MediaChannelFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<MediaChannel>((after: PageInfo['endCursor']) =>
-            this.mediaChannels({ filter, sort, after, fields, headers, token }),
+            this.mediaChannels({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -785,17 +847,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMediaChannelFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MediaChannelFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<MediaChannel>((after: PageInfo['endCursor']) =>
-            this.mediaChannels({ filter, sort, after, fields, headers, token }),
+            this.mediaChannels({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -942,34 +1014,38 @@ export class Cinnamon {
     async campaignTemplates({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultCampaignTemplateFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CampaignTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'campaignTemplates'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    campaignTemplates(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('campaignTemplates', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -981,12 +1057,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCampaignTemplateFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CampaignTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -996,6 +1074,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -1007,12 +1086,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCampaignTemplateFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CampaignTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -1022,6 +1103,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -1069,34 +1151,38 @@ export class Cinnamon {
     async vendors({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultVendorFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof VendorFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'vendors'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    vendors(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('vendors', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -1108,17 +1194,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultVendorFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<Vendor>((after: PageInfo['endCursor']) =>
-            this.vendors({ filter, sort, after, fields, headers, token }),
+            this.vendors({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1127,17 +1223,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultVendorFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<Vendor>((after: PageInfo['endCursor']) =>
-            this.vendors({ filter, sort, after, fields, headers, token }),
+            this.vendors({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1258,34 +1364,38 @@ export class Cinnamon {
     async vendorTokens({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultVendorTokenFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof VendorTokenFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'vendorTokens'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    vendorTokens(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('vendorTokens', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -1297,17 +1407,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultVendorTokenFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorTokenFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<VendorToken>((after: PageInfo['endCursor']) =>
-            this.vendorTokens({ filter, sort, after, fields, headers, token }),
+            this.vendorTokens({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1316,17 +1436,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultVendorTokenFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorTokenFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<VendorToken>((after: PageInfo['endCursor']) =>
-            this.vendorTokens({ filter, sort, after, fields, headers, token }),
+            this.vendorTokens({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1422,34 +1552,38 @@ export class Cinnamon {
     async catalogs({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultCatalogFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CatalogFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'catalogs'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    catalogs(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('catalogs', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -1461,17 +1595,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCatalogFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CatalogFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<Catalog>((after: PageInfo['endCursor']) =>
-            this.catalogs({ filter, sort, after, fields, headers, token }),
+            this.catalogs({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1480,17 +1624,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCatalogFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CatalogFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<Catalog>((after: PageInfo['endCursor']) =>
-            this.catalogs({ filter, sort, after, fields, headers, token }),
+            this.catalogs({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1641,34 +1795,38 @@ export class Cinnamon {
     async products({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultProductFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof ProductFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'products'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    products(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('products', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -1680,17 +1838,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultProductFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ProductFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<Product>((after: PageInfo['endCursor']) =>
-            this.products({ filter, sort, after, fields, headers, token }),
+            this.products({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1699,17 +1867,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultProductFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ProductFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<Product>((after: PageInfo['endCursor']) =>
-            this.products({ filter, sort, after, fields, headers, token }),
+            this.products({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -1832,34 +2010,38 @@ export class Cinnamon {
     async marketingCampaigns({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultMarketingCampaignFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MarketingCampaignFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'marketingCampaigns'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    marketingCampaigns(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('marketingCampaigns', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -1871,12 +2053,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMarketingCampaignFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -1887,6 +2071,7 @@ export class Cinnamon {
                     sort,
                     after,
                     fields,
+                    showDeleted,
                     headers,
                     token,
                 }),
@@ -1898,12 +2083,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMarketingCampaignFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -1914,6 +2101,7 @@ export class Cinnamon {
                     sort,
                     after,
                     fields,
+                    showDeleted,
                     headers,
                     token,
                 }),
@@ -2037,34 +2225,38 @@ export class Cinnamon {
     async marketingAds({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultMarketingAdFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MarketingAdFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'marketingAds'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    marketingAds(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('marketingAds', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -2076,17 +2268,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMarketingAdFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingAdFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<MarketingAd>((after: PageInfo['endCursor']) =>
-            this.marketingAds({ filter, sort, after, fields, headers, token }),
+            this.marketingAds({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -2095,17 +2297,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultMarketingAdFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingAdFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<MarketingAd>((after: PageInfo['endCursor']) =>
-            this.marketingAds({ filter, sort, after, fields, headers, token }),
+            this.marketingAds({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -2113,7 +2325,11 @@ export class Cinnamon {
     // Result
     // ####################################
 
-    private defaultResultFields = [ResultFields.id, ResultFields.date];
+    private defaultResultFields = [
+        ResultFields.id,
+        ResultFields.date,
+        'analytics { results impressions clicks spend purchases purchasesValue }',
+    ];
 
     @bind
     async result({
@@ -2132,14 +2348,6 @@ export class Cinnamon {
                 query: `query($id: ObjectId!) {
                     result(id: $id) {
                         ${fields.join(' ')}
-                        analytics {
-                            results
-                            impressions
-                            clicks
-                            spend
-                            purchases
-                            purchasesValue
-                        }
                     }
                 }`,
                 variables: { id },
@@ -2153,42 +2361,28 @@ export class Cinnamon {
     async results({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultResultFields,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'results'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    results(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                                analytics {
-                                    results
-                                    impressions
-                                    clicks
-                                    spend
-                                    purchases
-                                    purchasesValue
-                                }
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('results', fields),
+                variables: { filter, sort, first, last, after, before },
                 headers,
                 token,
             })
@@ -2273,34 +2467,28 @@ export class Cinnamon {
     async entitlements({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultEntitlementFields,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'entitlements'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    entitlements(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('entitlements', fields),
+                variables: { filter, sort, first, last, after, before },
                 headers,
                 token,
             })
@@ -2462,34 +2650,38 @@ export class Cinnamon {
     async creativeFonts({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultCreativeFontFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeFontFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeFonts'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    creativeFonts(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('creativeFonts', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -2501,17 +2693,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeFontFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeFontFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.allPages<CreativeFont>((after: PageInfo['endCursor']) =>
-            this.creativeFonts({ filter, sort, after, fields, headers, token }),
+            this.creativeFonts({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -2520,17 +2722,27 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeFontFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeFontFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return this.eachNode<CreativeFont>((after: PageInfo['endCursor']) =>
-            this.creativeFonts({ filter, sort, after, fields, headers, token }),
+            this.creativeFonts({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
         );
     }
 
@@ -2651,34 +2863,38 @@ export class Cinnamon {
     async creativeImages({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultCreativeImageFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeImageFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeImages'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    creativeImages(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('creativeImages', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -2690,12 +2906,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeImageFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeImageFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2705,6 +2923,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -2716,12 +2935,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeImageFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeImageFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2731,6 +2952,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -2854,34 +3076,38 @@ export class Cinnamon {
     async creativeLayers({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultCreativeLayerFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeLayerFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeLayers'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    creativeLayers(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('creativeLayers', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -2893,12 +3119,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeLayerFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeLayerFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2908,6 +3136,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -2919,12 +3148,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeLayerFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeLayerFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2934,6 +3165,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -3057,34 +3289,38 @@ export class Cinnamon {
     async creativeTemplates({
         filter,
         sort,
+        first,
+        last,
         after,
+        before,
         fields = this.defaultCreativeTemplateFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeTemplates'>({
-                query: `query($filter: FilterInput, $sort: SortInput, $after: String) {
-                    creativeTemplates(filter: $filter, sort: $sort, after: $after) {
-                        pageInfo {
-                            hasNextPage
-                            endCursor
-                        }
-                        edges {
-                            node {
-                                ${fields.join(' ')}
-                            }
-                        }
-                    }
-                }`,
-                variables: { filter, sort, after },
+                query: pageQueryGenerator('creativeTemplates', fields, true),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
                 headers,
                 token,
             })
@@ -3096,12 +3332,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeTemplateFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -3111,6 +3349,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),
@@ -3122,12 +3361,14 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultCreativeTemplateFields,
+        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -3137,6 +3378,7 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
+                showDeleted,
                 headers,
                 token,
             }),

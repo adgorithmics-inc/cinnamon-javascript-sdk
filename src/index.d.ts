@@ -63,25 +63,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Organization>;
-    organizations({ filter, sort, after, fields, headers, token, }?: {
+    organizations({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof OrganizationFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").OrganizationConnection>;
-    organizationsAll({ filter, sort, fields, headers, token, }?: {
+    organizationsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof OrganizationFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<Organization[]>;
-    organizationsEach({ filter, sort, fields, headers, token, }?: {
+    organizationsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof OrganizationFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Organization, void, unknown>;
@@ -105,25 +111,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace>;
-    marketplaces({ filter, sort, after, fields, headers, token, }?: {
+    marketplaces({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MarketplaceFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").MarketplaceConnection>;
-    marketplacesAll({ filter, sort, fields, headers, token, }?: {
+    marketplacesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketplaceFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace[]>;
-    marketplacesEach({ filter, sort, fields, headers, token, }?: {
+    marketplacesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketplaceFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Marketplace, void, unknown>;
@@ -152,25 +164,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;
-    mediaChannels({ filter, sort, after, fields, headers, token, }?: {
+    mediaChannels({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MediaChannelFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").MediaChannelConnection>;
-    mediaChannelsAll({ filter, sort, fields, headers, token, }?: {
+    mediaChannelsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MediaChannelFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel[]>;
-    mediaChannelsEach({ filter, sort, fields, headers, token, }?: {
+    mediaChannelsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MediaChannelFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<MediaChannel, void, unknown>;
@@ -205,25 +223,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CampaignTemplate>;
-    campaignTemplates({ filter, sort, after, fields, headers, token, }?: {
+    campaignTemplates({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CampaignTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").CampaignTemplateConnection>;
-    campaignTemplatesAll({ filter, sort, fields, headers, token, }?: {
+    campaignTemplatesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CampaignTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<CampaignTemplate[]>;
-    campaignTemplatesEach({ filter, sort, fields, headers, token, }?: {
+    campaignTemplatesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CampaignTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CampaignTemplate, void, unknown>;
@@ -234,25 +258,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Vendor>;
-    vendors({ filter, sort, after, fields, headers, token, }?: {
+    vendors({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof VendorFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").VendorConnection>;
-    vendorsAll({ filter, sort, fields, headers, token, }?: {
+    vendorsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<Vendor[]>;
-    vendorsEach({ filter, sort, fields, headers, token, }?: {
+    vendorsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Vendor, void, unknown>;
@@ -281,25 +311,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken>;
-    vendorTokens({ filter, sort, after, fields, headers, token, }?: {
+    vendorTokens({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof VendorTokenFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").VendorTokenConnection>;
-    vendorTokensAll({ filter, sort, fields, headers, token, }?: {
+    vendorTokensAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorTokenFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken[]>;
-    vendorTokensEach({ filter, sort, fields, headers, token, }?: {
+    vendorTokensEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof VendorTokenFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<VendorToken, void, unknown>;
@@ -321,25 +357,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
-    catalogs({ filter, sort, after, fields, headers, token, }?: {
+    catalogs({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CatalogFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").CatalogConnection>;
-    catalogsAll({ filter, sort, fields, headers, token, }?: {
+    catalogsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CatalogFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<Catalog[]>;
-    catalogsEach({ filter, sort, fields, headers, token, }?: {
+    catalogsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CatalogFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Catalog, void, unknown>;
@@ -374,25 +416,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Product>;
-    products({ filter, sort, after, fields, headers, token, }?: {
+    products({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof ProductFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").ProductConnection>;
-    productsAll({ filter, sort, fields, headers, token, }?: {
+    productsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ProductFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<Product[]>;
-    productsEach({ filter, sort, fields, headers, token, }?: {
+    productsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof ProductFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Product, void, unknown>;
@@ -421,25 +469,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
-    marketingCampaigns({ filter, sort, after, fields, headers, token, }?: {
+    marketingCampaigns({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MarketingCampaignFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").MarketingCampaignConnection>;
-    marketingCampaignsAll({ filter, sort, fields, headers, token, }?: {
+    marketingCampaignsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign[]>;
-    marketingCampaignsEach({ filter, sort, fields, headers, token, }?: {
+    marketingCampaignsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingCampaignFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<MarketingCampaign, void, unknown>;
@@ -468,25 +522,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingAd>;
-    marketingAds({ filter, sort, after, fields, headers, token, }?: {
+    marketingAds({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof MarketingAdFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").MarketingAdConnection>;
-    marketingAdsAll({ filter, sort, fields, headers, token, }?: {
+    marketingAdsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingAdFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<MarketingAd[]>;
-    marketingAdsEach({ filter, sort, fields, headers, token, }?: {
+    marketingAdsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof MarketingAdFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<MarketingAd, void, unknown>;
@@ -497,10 +557,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Result>;
-    results({ filter, sort, after, fields, headers, token, }?: {
+    results({ filter, sort, first, last, after, before, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof ResultFields | string>;
         headers?: Headers;
         token?: string;
@@ -526,10 +589,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement>;
-    entitlements({ filter, sort, after, fields, headers, token, }?: {
+    entitlements({ filter, sort, first, last, after, before, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof EntitlementFields | string>;
         headers?: Headers;
         token?: string;
@@ -573,25 +639,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeFont>;
-    creativeFonts({ filter, sort, after, fields, headers, token, }?: {
+    creativeFonts({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeFontFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").CreativeFontConnection>;
-    creativeFontsAll({ filter, sort, fields, headers, token, }?: {
+    creativeFontsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeFontFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<CreativeFont[]>;
-    creativeFontsEach({ filter, sort, fields, headers, token, }?: {
+    creativeFontsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeFontFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeFont, void, unknown>;
@@ -620,25 +692,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeImage>;
-    creativeImages({ filter, sort, after, fields, headers, token, }?: {
+    creativeImages({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeImageFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").CreativeImageConnection>;
-    creativeImagesAll({ filter, sort, fields, headers, token, }?: {
+    creativeImagesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeImageFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<CreativeImage[]>;
-    creativeImagesEach({ filter, sort, fields, headers, token, }?: {
+    creativeImagesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeImageFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeImage, void, unknown>;
@@ -667,25 +745,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeLayer>;
-    creativeLayers({ filter, sort, after, fields, headers, token, }?: {
+    creativeLayers({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeLayerFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").CreativeLayerConnection>;
-    creativeLayersAll({ filter, sort, fields, headers, token, }?: {
+    creativeLayersAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeLayerFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<CreativeLayer[]>;
-    creativeLayersEach({ filter, sort, fields, headers, token, }?: {
+    creativeLayersEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeLayerFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeLayer, void, unknown>;
@@ -714,25 +798,31 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeTemplate>;
-    creativeTemplates({ filter, sort, after, fields, headers, token, }?: {
+    creativeTemplates({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
+        first?: number;
+        last?: number;
         after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
         fields?: Array<keyof CreativeTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").CreativeTemplateConnection>;
-    creativeTemplatesAll({ filter, sort, fields, headers, token, }?: {
+    creativeTemplatesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<CreativeTemplate[]>;
-    creativeTemplatesEach({ filter, sort, fields, headers, token, }?: {
+    creativeTemplatesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: Array<keyof CreativeTemplateFields | string>;
+        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeTemplate, void, unknown>;
