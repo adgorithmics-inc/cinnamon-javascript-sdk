@@ -146,7 +146,7 @@ export type Scalars = {
      *   }
      * }
      * ```
-     **/
+     */
     FilterInput: FilterInput;
     /** The `Upload` scalar type represents a file upload. */
     Upload: any;
@@ -245,7 +245,7 @@ export enum CacheControlScope {
 /**
  * Campaign templates contain targeting and creative information tailored
  * to your objectives specific to your goals and business needs
- **/
+ */
 export type CampaignTemplate = {
     /** Id of the campaign template */
     id: Scalars['ObjectId'];
@@ -274,7 +274,7 @@ export type CampaignTemplate = {
 /**
  * Campaign templates contain targeting and creative information tailored
  * to your objectives specific to your goals and business needs
- **/
+ */
 export type CampaignTemplateMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -778,7 +778,7 @@ export type EntitlementUpdateInput = {
 /**
  * Marketing ad represents an specific ad on a platform belonging
  * to a marketing campaign and associated with a single vendor
- **/
+ */
 export type MarketingAd = ResultResource & {
     /** Id of the marketing ad */
     id: Scalars['ObjectId'];
@@ -807,7 +807,7 @@ export type MarketingAd = ResultResource & {
 /**
  * Marketing ad represents an specific ad on a platform belonging
  * to a marketing campaign and associated with a single vendor
- **/
+ */
 export type MarketingAdResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -838,7 +838,7 @@ export type MarketingAdEdge = {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export type MarketingCampaign = ResultResource & {
     /** Id of the marketing campaign */
     id: Scalars['ObjectId'];
@@ -881,7 +881,7 @@ export type MarketingCampaign = ResultResource & {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export type MarketingCampaignMarketingAdsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -896,7 +896,7 @@ export type MarketingCampaignMarketingAdsArgs = {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export type MarketingCampaignProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -912,7 +912,7 @@ export type MarketingCampaignProductsArgs = {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export type MarketingCampaignResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -975,7 +975,7 @@ export type MarketingCampaignUpdateInput = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export type Marketplace = EntitlementResource & {
     /** Id of the marketplace */
     id: Scalars['ObjectId'];
@@ -1005,7 +1005,7 @@ export type Marketplace = EntitlementResource & {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export type MarketplaceMediaChannelsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1019,7 +1019,7 @@ export type MarketplaceMediaChannelsArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export type MarketplaceCampaignTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1032,7 +1032,7 @@ export type MarketplaceCampaignTemplatesArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export type MarketplaceVendorsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1046,7 +1046,7 @@ export type MarketplaceVendorsArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export type MarketplaceVendorTokensArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1059,7 +1059,7 @@ export type MarketplaceVendorTokensArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export type MarketplaceCreativeTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1501,7 +1501,7 @@ export enum Operator {
 /**
  * Organization is the top level of your resources hierarchy
  * and links to all owned marketplaces
- **/
+ */
 export type Organization = EntitlementResource & {
     /** Id of the organization */
     id: Scalars['ObjectId'];
@@ -1524,7 +1524,7 @@ export type Organization = EntitlementResource & {
 /**
  * Organization is the top level of your resources hierarchy
  * and links to all owned marketplaces
- **/
+ */
 export type OrganizationUsersArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1537,7 +1537,7 @@ export type OrganizationUsersArgs = {
 /**
  * Organization is the top level of your resources hierarchy
  * and links to all owned marketplaces
- **/
+ */
 export type OrganizationMarketplacesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1607,7 +1607,7 @@ export enum Platform {
  * single product associated with a specific catalog
  * and vendor which can be used to generate
  * dynamic ads via a marekting campaign
- **/
+ */
 export type Product = {
     /** Id of the product */
     id: Scalars['ObjectId'];
@@ -1642,7 +1642,7 @@ export type Product = {
  * single product associated with a specific catalog
  * and vendor which can be used to generate
  * dynamic ads via a marekting campaign
- **/
+ */
 export type ProductMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -2116,7 +2116,7 @@ export enum TokenStatus {
 /**
  * User of the system that is granted access to resources
  * through entitlements
- **/
+ */
 export type User = Me & {
     /** Id of the user */
     id: Scalars['ObjectId'];
@@ -2139,7 +2139,7 @@ export type User = Me & {
 /**
  * User of the system that is granted access to resources
  * through entitlements
- **/
+ */
 export type UserOrganizationsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -2153,7 +2153,7 @@ export type UserOrganizationsArgs = {
 /**
  * User of the system that is granted access to resources
  * through entitlements
- **/
+ */
 export type UserEntitlementsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -2202,7 +2202,7 @@ export type UserUpdateInput = {
 /**
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
- **/
+ */
 export type Vendor = Me & {
     /** Id of the vendor */
     id: Scalars['ObjectId'];
@@ -2227,7 +2227,7 @@ export type Vendor = Me & {
 /**
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
- **/
+ */
 export type VendorVendorTokensArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -2240,7 +2240,7 @@ export type VendorVendorTokensArgs = {
 /**
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
- **/
+ */
 export type VendorProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;

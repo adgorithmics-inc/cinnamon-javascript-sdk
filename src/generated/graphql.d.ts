@@ -143,7 +143,7 @@ export declare type Scalars = {
      *   }
      * }
      * ```
-     **/
+     */
     FilterInput: FilterInput;
     /** The `Upload` scalar type represents a file upload. */
     Upload: any;
@@ -236,7 +236,7 @@ export declare enum CacheControlScope {
 /**
  * Campaign templates contain targeting and creative information tailored
  * to your objectives specific to your goals and business needs
- **/
+ */
 export declare type CampaignTemplate = {
     /** Id of the campaign template */
     id: Scalars['ObjectId'];
@@ -264,7 +264,7 @@ export declare type CampaignTemplate = {
 /**
  * Campaign templates contain targeting and creative information tailored
  * to your objectives specific to your goals and business needs
- **/
+ */
 export declare type CampaignTemplateMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -727,7 +727,7 @@ export declare type EntitlementUpdateInput = {
 /**
  * Marketing ad represents an specific ad on a platform belonging
  * to a marketing campaign and associated with a single vendor
- **/
+ */
 export declare type MarketingAd = ResultResource & {
     /** Id of the marketing ad */
     id: Scalars['ObjectId'];
@@ -755,7 +755,7 @@ export declare type MarketingAd = ResultResource & {
 /**
  * Marketing ad represents an specific ad on a platform belonging
  * to a marketing campaign and associated with a single vendor
- **/
+ */
 export declare type MarketingAdResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -783,7 +783,7 @@ export declare type MarketingAdEdge = {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export declare type MarketingCampaign = ResultResource & {
     /** Id of the marketing campaign */
     id: Scalars['ObjectId'];
@@ -825,7 +825,7 @@ export declare type MarketingCampaign = ResultResource & {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export declare type MarketingCampaignMarketingAdsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -839,7 +839,7 @@ export declare type MarketingCampaignMarketingAdsArgs = {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export declare type MarketingCampaignProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -854,7 +854,7 @@ export declare type MarketingCampaignProductsArgs = {
  * utilizing a specified campaign template, list of products, run
  * time and creative specifications that are launched on a provided
  * media channel
- **/
+ */
 export declare type MarketingCampaignResultsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -911,7 +911,7 @@ export declare type MarketingCampaignUpdateInput = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export declare type Marketplace = EntitlementResource & {
     /** Id of the marketplace */
     id: Scalars['ObjectId'];
@@ -940,7 +940,7 @@ export declare type Marketplace = EntitlementResource & {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export declare type MarketplaceMediaChannelsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -953,7 +953,7 @@ export declare type MarketplaceMediaChannelsArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export declare type MarketplaceCampaignTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -965,7 +965,7 @@ export declare type MarketplaceCampaignTemplatesArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export declare type MarketplaceVendorsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -978,7 +978,7 @@ export declare type MarketplaceVendorsArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export declare type MarketplaceVendorTokensArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -990,7 +990,7 @@ export declare type MarketplaceVendorTokensArgs = {
 /**
  * Marketplace represents a collection of media channels, campaign templates
  * and vendors. A marketplace belongs to a single organization.
- **/
+ */
 export declare type MarketplaceCreativeTemplatesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1374,7 +1374,7 @@ export declare enum Operator {
 /**
  * Organization is the top level of your resources hierarchy
  * and links to all owned marketplaces
- **/
+ */
 export declare type Organization = EntitlementResource & {
     /** Id of the organization */
     id: Scalars['ObjectId'];
@@ -1396,7 +1396,7 @@ export declare type Organization = EntitlementResource & {
 /**
  * Organization is the top level of your resources hierarchy
  * and links to all owned marketplaces
- **/
+ */
 export declare type OrganizationUsersArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1408,7 +1408,7 @@ export declare type OrganizationUsersArgs = {
 /**
  * Organization is the top level of your resources hierarchy
  * and links to all owned marketplaces
- **/
+ */
 export declare type OrganizationMarketplacesArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1470,7 +1470,7 @@ export declare enum Platform {
  * single product associated with a specific catalog
  * and vendor which can be used to generate
  * dynamic ads via a marekting campaign
- **/
+ */
 export declare type Product = {
     /** Id of the product */
     id: Scalars['ObjectId'];
@@ -1504,7 +1504,7 @@ export declare type Product = {
  * single product associated with a specific catalog
  * and vendor which can be used to generate
  * dynamic ads via a marekting campaign
- **/
+ */
 export declare type ProductMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1928,7 +1928,7 @@ export declare enum TokenStatus {
 /**
  * User of the system that is granted access to resources
  * through entitlements
- **/
+ */
 export declare type User = Me & {
     /** Id of the user */
     id: Scalars['ObjectId'];
@@ -1950,7 +1950,7 @@ export declare type User = Me & {
 /**
  * User of the system that is granted access to resources
  * through entitlements
- **/
+ */
 export declare type UserOrganizationsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -1963,7 +1963,7 @@ export declare type UserOrganizationsArgs = {
 /**
  * User of the system that is granted access to resources
  * through entitlements
- **/
+ */
 export declare type UserEntitlementsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -2007,7 +2007,7 @@ export declare type UserUpdateInput = {
 /**
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
- **/
+ */
 export declare type Vendor = Me & {
     /** Id of the vendor */
     id: Scalars['ObjectId'];
@@ -2031,7 +2031,7 @@ export declare type Vendor = Me & {
 /**
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
- **/
+ */
 export declare type VendorVendorTokensArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;
@@ -2043,7 +2043,7 @@ export declare type VendorVendorTokensArgs = {
 /**
  * Vendor belongs to a marketplace and is granted access to specific
  * products they can use to create a marketing campaign
- **/
+ */
 export declare type VendorProductsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     sort?: Maybe<SortInput>;

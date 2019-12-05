@@ -50,7 +50,7 @@ jobs:
             - run: git commit -m "Automatic NPM version bump ${CIRCLE_TAG}"
             - run: git checkout -b temp
             - run: git push origin temp:$BRANCH
-            - run: npm publish
+            - run: npm publish --access public
 
     publish-hot:
         docker:
@@ -60,7 +60,7 @@ jobs:
             - *pin-npm-version
             - checkout
             - run: npm version --no-git-tag-version ${CIRCLE_TAG}
-            - run: npm publish
+            - run: npm publish --access public
 
 workflows:
     version: 2

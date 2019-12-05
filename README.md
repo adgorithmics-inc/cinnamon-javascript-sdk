@@ -5,13 +5,13 @@
 Install the SDK from npm
 
 ```bash
-npm install @adgorithmics/cinnamon-javascript-sdk
+npm install @adgorithmics/cinnamon-sdk
 ```
 
 Create an instance and configure it.
 
 ```javascript
-const { Cinnamon } = require('@adgorithmics/cinnamon-javascript-sdk');
+const { Cinnamon } = require('@adgorithmics/cinnamon-sdk');
 const cinnamon = new Cinnamon({ url: 'https://api.adgo.io/v1/graphql' });
 ```
 
