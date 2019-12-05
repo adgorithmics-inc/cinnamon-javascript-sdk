@@ -1,19 +1,9 @@
 {
-    "rules": {
-        "@typescript-eslint/no-explicit-any": "warn",
-        "@typescript-eslint/explicit-function-return-type": "off"
-    },
     "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "@adgorithmics/eslint-config-base"
+        "@adgorithmics/eslint-config-base",
+        "@adgorithmics/eslint-config-base/typescript"
     ],
-    "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint"],
     "env": {
         "node": true
-    },
-    "parserOptions": {
-        "sourceType": "module"
     }
 }
