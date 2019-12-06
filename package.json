@@ -44,7 +44,6 @@
     "graphql": "14.5.8",
     "prettier": "1.19.1",
     "ts-loader": "6.2.1",
-    "ts-transformer-keys": "0.4.1",
     "typescript": "3.7.3",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10"

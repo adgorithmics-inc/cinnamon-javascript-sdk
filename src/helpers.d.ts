@@ -1,2 +1,7 @@
+import { Query } from './generated/graphql';
+export declare type Deep<T> = {
+    0: T;
+    1: Deep<T[keyof T]>;
+}[T extends string ? 0 : 1];
 export declare function bind<T extends Function>(_target: object, propertyKey: string, descriptor: TypedPropertyDescriptor<T>): TypedPropertyDescriptor<T> | void;
-export declare const pageQueryGenerator: (name: "campaignTemplate" | "campaignTemplates" | "catalog" | "catalogs" | "creativeFont" | "creativeFonts" | "creativeImage" | "creativeImages" | "creativeLayer" | "creativeLayers" | "creativeTemplate" | "creativeTemplates" | "entitlement" | "entitlements" | "marketingAd" | "marketingAds" | "marketingCampaign" | "marketingCampaigns" | "marketplace" | "marketplaces" | "mediaChannel" | "mediaChannels" | "organization" | "organizations" | "product" | "products" | "result" | "results" | "me" | "vendorToken" | "vendorTokens" | "vendor" | "vendors", fields: string[], hasShowDeleted?: boolean) => string;
+export declare function pageQueryGenerator<T>(name: keyof Query, fields: Deep<T>[], hasShowDeleted?: boolean): string;

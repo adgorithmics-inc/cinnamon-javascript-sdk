@@ -20,3 +20,27 @@ generates:
         plugins:
             - 'typescript'
             - 'typescript-resolvers'
+    src/generated/fields.ts:
+        plugins:
+            - generateFields.js
+        config:
+            maxDepth: 3
+            baseTypes:
+                - Organization
+                - Marketplace
+                - Product
+                - CampaignTemplate
+                - User
+                - Token
+                - Entitlement
+                - MediaChannel
+                - MarketingCampaign
+                - MarketingAd
+                - Catalog
+                - Vendor
+                - VendorToken
+                - Result
+                - CreativeFont
+                - CreativeImage
+                - CreativeTemplate
+                - CreativeLayer

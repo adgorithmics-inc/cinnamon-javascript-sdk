@@ -1,5 +1,10 @@
 import { Query } from './generated/graphql';
 
+export type Deep<T> = {
+    0: T;
+    1: Deep<T[keyof T]>;
+}[T extends string ? 0 : 1];
+
 // stripped down version of https://github.com/NoHomey/bind-decorator
 export function bind<T extends Function>(
     _target: object,
@@ -20,11 +25,12 @@ export function bind<T extends Function>(
     };
 }
 
-export const pageQueryGenerator = (
+export function pageQueryGenerator<T>(
     name: keyof Query,
-    fields: Array<string>,
+    fields: Deep<T>[],
     hasShowDeleted = false,
-) => `
+) {
+    return `
 query(
     $filter: FilterInput,
     $sort: SortInput,
@@ -56,3 +62,4 @@ query(
         }
     }
 }`;
+}
