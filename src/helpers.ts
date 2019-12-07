@@ -1,4 +1,5 @@
 import { Query } from './generated/graphql';
+import { nameMap } from './generated/fields';
 
 export type Deep<T> = {
     0: T;
@@ -25,9 +26,22 @@ export function bind<T extends Function>(
     };
 }
 
-export function pageQueryGenerator<T>(
+export function getFormattedFields(fields: Array<string> = []) {
+    return fields
+        .map(field => {
+            const subfield = field.split(',');
+            return (
+                subfield
+                    .map(subField => nameMap[subField] || subField)
+                    .join('{') + '}'.repeat(subfield.length - 1)
+            );
+        })
+        .join(' ');
+}
+
+export function pageQueryGenerator(
     name: keyof Query,
-    fields: Deep<T>[],
+    fields: Array<string> = [],
     hasShowDeleted = false,
 ) {
     return `
@@ -57,7 +71,7 @@ query(
         }
         edges {
             node {
-                ${fields.join(' ')}
+                ${getFormattedFields(fields)}
             }
         }
     }

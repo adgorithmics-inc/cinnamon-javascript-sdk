@@ -78,7 +78,7 @@ import {
     CreativeTemplateFields,
 } from './generated/fields';
 
-import { Deep, bind, pageQueryGenerator } from './helpers';
+import { Deep, bind, pageQueryGenerator, getFormattedFields } from './helpers';
 
 export interface Config {
     url: string;
@@ -223,11 +223,11 @@ export class Cinnamon {
             await this.api<'login'>({
                 query: `mutation($input: UserLoginInput!) {
                     login(input: $input) {
-                        ${[
+                        ${getFormattedFields([
                             TokenFields.expiryDate,
                             TokenFields.token,
                             TokenFields.refreshToken,
-                        ].join(' ')}
+                        ])}
                     }
                 }`,
                 variables: { input },
@@ -248,11 +248,11 @@ export class Cinnamon {
             await this.api<'refreshLogin'>({
                 query: `mutation($input: RefreshTokenInput!) {
                     refreshLogin(input: $input) {
-                        ${[
+                        ${getFormattedFields([
                             TokenFields.expiryDate,
                             TokenFields.token,
                             TokenFields.refreshToken,
-                        ].join(' ')}
+                        ])}
                     }
                 }`,
                 variables: { input },
@@ -288,12 +288,14 @@ export class Cinnamon {
                     me {
                         ${
                             this.isVendorToken(token || this.token)
-                                ? `... on Vendor { ${(
-                                      fields || this.defaultVendorFields
-                                  ).join(' ')} }`
-                                : `... on User { ${(
-                                      fields || this.defaultUserFields
-                                  ).join(' ')} }`
+                                ? `... on Vendor { ${getFormattedFields(
+                                      (fields as string[]) ||
+                                          this.defaultVendorFields,
+                                  )} }`
+                                : `... on User { ${getFormattedFields(
+                                      (fields as string[]) ||
+                                          this.defaultUserFields,
+                                  )} }`
                         }
                     }
                 }`,
@@ -320,7 +322,7 @@ export class Cinnamon {
             await this.api<'updateUser'>({
                 query: `mutation($input: UserUpdateInput!) {
                     updateUser(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -357,7 +359,7 @@ export class Cinnamon {
             await this.api<'organization'>({
                 query: `query($id: ObjectId!) {
                     organization(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -393,9 +395,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'organizations'>({
-                query: pageQueryGenerator<OrganizationFields>(
+                query: pageQueryGenerator(
                     'organizations',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -487,7 +489,7 @@ export class Cinnamon {
             await this.api<'createOrganization'>({
                 query: `mutation($input: OrganizationInput!) {
                     createOrganization(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -515,7 +517,7 @@ export class Cinnamon {
             await this.api<'updateOrganization'>({
                 query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
                     updateOrganization(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -552,7 +554,7 @@ export class Cinnamon {
             await this.api<'marketplace'>({
                 query: `query($id: ObjectId!) {
                     marketplace(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -588,9 +590,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'marketplaces'>({
-                query: pageQueryGenerator<MarketplaceFields>(
+                query: pageQueryGenerator(
                     'marketplaces',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -682,7 +684,7 @@ export class Cinnamon {
             await this.api<'createMarketplace'>({
                 query: `mutation($input: MarketplaceInput!) {
                     createMarketplace(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -710,7 +712,7 @@ export class Cinnamon {
             await this.api<'updateMarketplace'>({
                 query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
                     updateMarketplace(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -769,7 +771,7 @@ export class Cinnamon {
             await this.api<'mediaChannel'>({
                 query: `query($id: ObjectId!) {
                     mediaChannel(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -805,9 +807,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'mediaChannels'>({
-                query: pageQueryGenerator<MediaChannelFields>(
+                query: pageQueryGenerator(
                     'mediaChannels',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -899,7 +901,7 @@ export class Cinnamon {
             await this.api<'createMediaChannel'>({
                 query: `mutation($input: MediaChannelCreateInput!) {
                     createMediaChannel(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -925,7 +927,7 @@ export class Cinnamon {
             await this.api<'importMediaChannel'>({
                 query: `mutation($input: MediaChannelImportInput!) {
                     importMediaChannel(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -953,7 +955,7 @@ export class Cinnamon {
             await this.api<'updateMediaChannel'>({
                 query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
                     updateMediaChannel(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -1012,7 +1014,7 @@ export class Cinnamon {
             await this.api<'campaignTemplate'>({
                 query: `query($id: ObjectId!) {
                     campaignTemplate(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1048,9 +1050,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'campaignTemplates'>({
-                query: pageQueryGenerator<CampaignTemplateFields>(
+                query: pageQueryGenerator(
                     'campaignTemplates',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -1153,7 +1155,7 @@ export class Cinnamon {
             await this.api<'vendor'>({
                 query: `query($id: ObjectId!) {
                     vendor(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1189,11 +1191,7 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'vendors'>({
-                query: pageQueryGenerator<VendorFields>(
-                    'vendors',
-                    fields,
-                    true,
-                ),
+                query: pageQueryGenerator('vendors', fields as string[], true),
                 variables: {
                     filter,
                     sort,
@@ -1283,7 +1281,7 @@ export class Cinnamon {
             await this.api<'createVendor'>({
                 query: `mutation($input: VendorInput!) {
                     createVendor(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1311,7 +1309,7 @@ export class Cinnamon {
             await this.api<'updateVendor'>({
                 query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
                     updateVendor(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -1370,7 +1368,7 @@ export class Cinnamon {
             await this.api<'vendorToken'>({
                 query: `query($id: ObjectId!) {
                     vendorToken(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1406,9 +1404,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'vendorTokens'>({
-                query: pageQueryGenerator<VendorTokenFields>(
+                query: pageQueryGenerator(
                     'vendorTokens',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -1500,7 +1498,7 @@ export class Cinnamon {
             await this.api<'createVendorToken'>({
                 query: `mutation($input: VendorTokenInput!) {
                     createVendorToken(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1562,7 +1560,7 @@ export class Cinnamon {
             await this.api<'catalog'>({
                 query: `query($id: ObjectId!) {
                     catalog(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1598,11 +1596,7 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'catalogs'>({
-                query: pageQueryGenerator<CatalogFields>(
-                    'catalogs',
-                    fields,
-                    true,
-                ),
+                query: pageQueryGenerator('catalogs', fields as string[], true),
                 variables: {
                     filter,
                     sort,
@@ -1692,7 +1686,7 @@ export class Cinnamon {
             await this.api<'createCatalog'>({
                 query: `mutation($input: CatalogCreateInput!) {
                     createCatalog(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1718,7 +1712,7 @@ export class Cinnamon {
             await this.api<'importCatalog'>({
                 query: `mutation($input: CatalogImportInput!) {
                     importCatalog(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1746,7 +1740,7 @@ export class Cinnamon {
             await this.api<'updateCatalog'>({
                 query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
                     updateCatalog(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -1809,7 +1803,7 @@ export class Cinnamon {
             await this.api<'product'>({
                 query: `query($id: ObjectId!) {
                     product(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1845,11 +1839,7 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'products'>({
-                query: pageQueryGenerator<ProductFields>(
-                    'products',
-                    fields,
-                    true,
-                ),
+                query: pageQueryGenerator('products', fields as string[], true),
                 variables: {
                     filter,
                     sort,
@@ -1939,7 +1929,7 @@ export class Cinnamon {
             await this.api<'createProduct'>({
                 query: `mutation($input: ProductInput!) {
                     createProduct(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1967,7 +1957,7 @@ export class Cinnamon {
             await this.api<'updateProduct'>({
                 query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
                     updateProduct(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2028,7 +2018,7 @@ export class Cinnamon {
             await this.api<'marketingCampaign'>({
                 query: `query($id: ObjectId!) {
                     marketingCampaign(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2064,9 +2054,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'marketingCampaigns'>({
-                query: pageQueryGenerator<MarketingCampaignFields>(
+                query: pageQueryGenerator(
                     'marketingCampaigns',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -2160,7 +2150,7 @@ export class Cinnamon {
             await this.api<'createMarketingCampaign'>({
                 query: `mutation($input: MarketingCampaignInput!) {
                     createMarketingCampaign(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -2188,7 +2178,7 @@ export class Cinnamon {
             await this.api<'updateMarketingCampaign'>({
                 query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
                     updateMarketingCampaign(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2275,7 +2265,7 @@ export class Cinnamon {
             await this.api<'marketingAd'>({
                 query: `query($id: ObjectId!) {
                     marketingAd(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2311,9 +2301,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'marketingAds'>({
-                query: pageQueryGenerator<MarketingAdFields>(
+                query: pageQueryGenerator(
                     'marketingAds',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -2420,7 +2410,7 @@ export class Cinnamon {
             await this.api<'result'>({
                 query: `query($id: ObjectId!) {
                     result(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2454,7 +2444,7 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'results'>({
-                query: pageQueryGenerator<ResultFields>('results', fields),
+                query: pageQueryGenerator('results', fields as string[]),
                 variables: { filter, sort, first, last, after, before },
                 headers,
                 token,
@@ -2526,7 +2516,7 @@ export class Cinnamon {
             await this.api<'entitlement'>({
                 query: `query($id: ObjectId!) {
                     entitlement(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2560,10 +2550,7 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'entitlements'>({
-                query: pageQueryGenerator<EntitlementFields>(
-                    'entitlements',
-                    fields,
-                ),
+                query: pageQueryGenerator('entitlements', fields as string[]),
                 variables: { filter, sort, first, last, after, before },
                 headers,
                 token,
@@ -2625,7 +2612,7 @@ export class Cinnamon {
             await this.api<'createEntitlement'>({
                 query: `mutation($input: EntitlementInput!) {
                     createEntitlement(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -2653,7 +2640,7 @@ export class Cinnamon {
             await this.api<'updateEntitlement'>({
                 query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
                     updateEntitlement(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2712,7 +2699,7 @@ export class Cinnamon {
             await this.api<'creativeFont'>({
                 query: `query($id: ObjectId!) {
                     creativeFont(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2748,9 +2735,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeFonts'>({
-                query: pageQueryGenerator<CreativeFontFields>(
+                query: pageQueryGenerator(
                     'creativeFonts',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -2842,7 +2829,7 @@ export class Cinnamon {
             await this.api<'createCreativeFont'>({
                 query: `mutation($input: CreativeFontCreateInput!) {
                     createCreativeFont(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -2870,7 +2857,7 @@ export class Cinnamon {
             await this.api<'updateCreativeFont'>({
                 query: `mutation($id: ObjectId!, $input: CreativeFontUpdateInput!) {
                     updateCreativeFont(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2929,7 +2916,7 @@ export class Cinnamon {
             await this.api<'creativeImage'>({
                 query: `query($id: ObjectId!) {
                     creativeImage(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2965,9 +2952,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeImages'>({
-                query: pageQueryGenerator<CreativeImageFields>(
+                query: pageQueryGenerator(
                     'creativeImages',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -3059,7 +3046,7 @@ export class Cinnamon {
             await this.api<'createCreativeImage'>({
                 query: `mutation($input: CreativeImageCreateInput!) {
                     createCreativeImage(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -3087,7 +3074,7 @@ export class Cinnamon {
             await this.api<'updateCreativeImage'>({
                 query: `mutation($id: ObjectId!, $input: CreativeImageUpdateInput!) {
                     updateCreativeImage(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -3146,7 +3133,7 @@ export class Cinnamon {
             await this.api<'creativeLayer'>({
                 query: `query($id: ObjectId!) {
                     creativeLayer(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -3182,9 +3169,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeLayers'>({
-                query: pageQueryGenerator<CreativeLayerFields>(
+                query: pageQueryGenerator(
                     'creativeLayers',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -3276,7 +3263,7 @@ export class Cinnamon {
             await this.api<'createCreativeLayer'>({
                 query: `mutation($input: CreativeLayerCreateInput!) {
                     createCreativeLayer(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -3304,7 +3291,7 @@ export class Cinnamon {
             await this.api<'updateCreativeLayer'>({
                 query: `mutation($id: ObjectId!, $input: CreativeLayerUpdateInput!) {
                     updateCreativeLayer(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -3363,7 +3350,7 @@ export class Cinnamon {
             await this.api<'creativeTemplate'>({
                 query: `query($id: ObjectId!) {
                     creativeTemplate(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -3399,9 +3386,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeTemplates'>({
-                query: pageQueryGenerator<CreativeTemplateFields>(
+                query: pageQueryGenerator(
                     'creativeTemplates',
-                    fields,
+                    fields as string[],
                     true,
                 ),
                 variables: {
@@ -3493,7 +3480,7 @@ export class Cinnamon {
             await this.api<'createCreativeTemplate'>({
                 query: `mutation($input: CreativeTemplateCreateInput!) {
                     createCreativeTemplate(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -3521,7 +3508,7 @@ export class Cinnamon {
             await this.api<'updateCreativeTemplate'>({
                 query: `mutation($id: ObjectId!, $input: CreativeTemplateUpdateInput!) {
                     updateCreativeTemplate(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
