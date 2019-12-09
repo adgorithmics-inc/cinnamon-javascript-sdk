@@ -50,6 +50,7 @@ jobs:
             - run: git commit -m "Automatic NPM version bump ${CIRCLE_TAG}"
             - run: git checkout -b temp
             - run: git push origin temp:$BRANCH
+            - run: npm config set '//registry.npmjs.org/:_authToken' '${NPM_TOKEN}'
             - run: npm publish --access public
 
     publish-hot:
@@ -60,6 +61,7 @@ jobs:
             - *pin-npm-version
             - checkout
             - run: npm version --no-git-tag-version ${CIRCLE_TAG}
+            - run: npm config set '//registry.npmjs.org/:_authToken' '${NPM_TOKEN}'
             - run: npm publish --access public
 
 workflows:
@@ -67,7 +69,6 @@ workflows:
     test-and-publish:
         jobs:
             - test:
-                  context: npm-publish
                   filters:
                       tags:
                           only: /.*/
