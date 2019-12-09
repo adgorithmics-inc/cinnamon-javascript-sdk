@@ -29,7 +29,7 @@ export function bind<T extends Function>(
 export function getFormattedFields(fields: Array<string> = []) {
     return fields
         .map(field => {
-            const subfield = field.split(',');
+            const subfield = field.split('%');
             return (
                 subfield
                     .map(subField => nameMap[subField] || subField)

@@ -19,7 +19,7 @@ const generateFields = ({ type, maxDepth }, fields, parents = []) =>
             if (!nextFields) {
                 const value = [...parents, field.name]
                     .map(name => getName(name))
-                    .join(',');
+                    .join('%');
                 return `${field.name}: ${type ? 'string' : `'${value}'`}`;
             }
             if (parents.length > maxDepth) {
