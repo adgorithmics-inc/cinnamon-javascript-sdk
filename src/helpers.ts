@@ -29,11 +29,11 @@ export function bind<T extends Function>(
 export function getFormattedFields(fields: Array<string> = []) {
     return fields
         .map(field => {
-            const subfield = field.split('%');
+            const subfields = field.split('%');
             return (
-                subfield
+                subfields
                     .map(subField => nameMap[subField] || subField)
-                    .join('{') + '}'.repeat(subfield.length - 1)
+                    .join('{') + '}'.repeat(subfields.length - 1)
             );
         })
         .join(' ');
