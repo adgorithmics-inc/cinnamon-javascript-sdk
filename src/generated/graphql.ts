@@ -1246,6 +1246,8 @@ export type Mutation = {
     updateMarketingCampaign: MarketingCampaign;
     /** Deletes a marketing campaign identified by a given id */
     deleteMarketingCampaign: Deletion;
+    /** Approves a marketing campaign in PENDING_APPROVAL systemStatus */
+    approveMarketingCampaign: MarketingCampaign;
     /** Creates a marketplace using input data */
     createMarketplace: Marketplace;
     /** Updates a marketplace identified by a given id using input data */
@@ -1383,6 +1385,11 @@ export type MutationUpdateMarketingCampaignArgs = {
 
 export type MutationDeleteMarketingCampaignArgs = {
     id: Scalars['ObjectId'];
+};
+
+export type MutationApproveMarketingCampaignArgs = {
+    id: Scalars['ObjectId'];
+    lastChangeDate: Scalars['DateISO'];
 };
 
 export type MutationCreateMarketplaceArgs = {
@@ -2087,6 +2094,8 @@ export enum SystemStatus {
     Error = 'ERROR',
     /** Marked as deleted */
     Deleted = 'DELETED',
+    /** Pending approval from a User */
+    PendingApproval = 'PENDING_APPROVAL',
 }
 
 /** Authentication token */
@@ -3632,6 +3641,15 @@ export type MutationResolvers<
         ParentType,
         ContextType,
         RequireFields<MutationDeleteMarketingCampaignArgs, 'id'>
+    >;
+    approveMarketingCampaign?: Resolver<
+        ResolversTypes['MarketingCampaign'],
+        ParentType,
+        ContextType,
+        RequireFields<
+            MutationApproveMarketingCampaignArgs,
+            'id' | 'lastChangeDate'
+        >
     >;
     createMarketplace?: Resolver<
         ResolversTypes['Marketplace'],

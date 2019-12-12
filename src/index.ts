@@ -2163,6 +2163,34 @@ export class Cinnamon {
     }
 
     @bind
+    async approveMarketingCampaign({
+        id,
+        lastChangeDate,
+        fields = this.defaultMarketingCampaignFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        lastChangeDate: Scalars['DateISO'];
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'approveMarketingCampaign'>({
+                query: `mutation($id: ObjectId!, $lastChangeDate: DateISO!) {
+                    approveMarketingCampaign(id: $id, lastChangeDate: $lastChangeDate) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, lastChangeDate },
+                headers,
+                token,
+            })
+        ).data.approveMarketingCampaign;
+    }
+
+    @bind
     async deleteMarketingCampaign({
         id,
         headers,

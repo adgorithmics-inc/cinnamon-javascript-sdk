@@ -1164,6 +1164,8 @@ export declare type Mutation = {
     updateMarketingCampaign: MarketingCampaign;
     /** Deletes a marketing campaign identified by a given id */
     deleteMarketingCampaign: Deletion;
+    /** Approves a marketing campaign in PENDING_APPROVAL systemStatus */
+    approveMarketingCampaign: MarketingCampaign;
     /** Creates a marketplace using input data */
     createMarketplace: Marketplace;
     /** Updates a marketplace identified by a given id using input data */
@@ -1279,6 +1281,10 @@ export declare type MutationUpdateMarketingCampaignArgs = {
 };
 export declare type MutationDeleteMarketingCampaignArgs = {
     id: Scalars['ObjectId'];
+};
+export declare type MutationApproveMarketingCampaignArgs = {
+    id: Scalars['ObjectId'];
+    lastChangeDate: Scalars['DateISO'];
 };
 export declare type MutationCreateMarketplaceArgs = {
     input: MarketplaceInput;
@@ -1901,7 +1907,9 @@ export declare enum SystemStatus {
     /** Having errors */
     Error = "ERROR",
     /** Marked as deleted */
-    Deleted = "DELETED"
+    Deleted = "DELETED",
+    /** Pending approval from a User */
+    PendingApproval = "PENDING_APPROVAL"
 }
 /** Authentication token */
 export declare type Token = {
@@ -2672,6 +2680,7 @@ export declare type MutationResolvers<ContextType = any, ParentType extends Reso
     createMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationCreateMarketingCampaignArgs, 'input'>>;
     updateMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationUpdateMarketingCampaignArgs, 'id' | 'input'>>;
     deleteMarketingCampaign?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketingCampaignArgs, 'id'>>;
+    approveMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationApproveMarketingCampaignArgs, 'id' | 'lastChangeDate'>>;
     createMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationCreateMarketplaceArgs, 'input'>>;
     updateMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationUpdateMarketplaceArgs, 'id' | 'input'>>;
     deleteMarketplace?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketplaceArgs, 'id'>>;
