@@ -510,6 +510,13 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
+    approveMarketingCampaign({ id, lastChangeDate, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        lastChangeDate: Scalars['DateISO'];
+        fields?: Array<keyof MarketingCampaignFields | string>;
+        headers?: Headers;
+        token?: string;
+    }): Promise<MarketingCampaign>;
     deleteMarketingCampaign({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
