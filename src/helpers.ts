@@ -1,4 +1,10 @@
 import { Query } from './generated/graphql';
+import { nameMap } from './generated/fields';
+
+export type Deep<T> = {
+    0: T;
+    1: Deep<T[keyof T]>;
+}[T extends string ? 0 : 1];
 
 // stripped down version of https://github.com/NoHomey/bind-decorator
 export function bind<T extends Function>(
@@ -20,11 +26,30 @@ export function bind<T extends Function>(
     };
 }
 
-export const pageQueryGenerator = (
+export function getFormattedFields(fields: Array<string> = []) {
+    return fields
+        .map(field => {
+            if (typeof field !== 'string') {
+                throw new Error(
+                    `Invalid field type "${typeof field}", needs to be string.`,
+                );
+            }
+            const subfields = field.split('%');
+            return (
+                subfields
+                    .map(subField => nameMap[subField] || subField)
+                    .join('{') + '}'.repeat(subfields.length - 1)
+            );
+        })
+        .join(' ');
+}
+
+export function pageQueryGenerator(
     name: keyof Query,
-    fields: Array<string>,
+    fields: Array<string> = [],
     hasShowDeleted = false,
-) => `
+) {
+    return `
 query(
     $filter: FilterInput,
     $sort: SortInput,
@@ -51,8 +76,9 @@ query(
         }
         edges {
             node {
-                ${fields.join(' ')}
+                ${getFormattedFields(fields)}
             }
         }
     }
 }`;
+}

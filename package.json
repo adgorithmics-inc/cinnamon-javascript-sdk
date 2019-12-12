@@ -30,7 +30,6 @@
   "devDependencies": {
     "@adgorithmics/eslint-config-base": "1.4.3",
     "@graphql-codegen/cli": "1.9.1",
-    "@graphql-codegen/introspection": "1.9.1",
     "@graphql-codegen/typescript": "1.9.1",
     "@graphql-codegen/typescript-resolvers": "1.9.1",
     "@types/graphql": "14.5.0",
@@ -44,7 +43,6 @@
     "graphql": "14.5.8",
     "prettier": "1.19.1",
     "ts-loader": "6.2.1",
-    "ts-transformer-keys": "0.4.1",
     "typescript": "3.7.3",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10"

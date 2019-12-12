@@ -76,9 +76,9 @@ import {
     CreativeImageFields,
     CreativeLayerFields,
     CreativeTemplateFields,
-} from './inputFields';
+} from './generated/fields';
 
-import { bind, pageQueryGenerator } from './helpers';
+import { Deep, bind, pageQueryGenerator, getFormattedFields } from './helpers';
 
 export interface Config {
     url: string;
@@ -223,11 +223,11 @@ export class Cinnamon {
             await this.api<'login'>({
                 query: `mutation($input: UserLoginInput!) {
                     login(input: $input) {
-                        ${[
+                        ${getFormattedFields([
                             TokenFields.expiryDate,
                             TokenFields.token,
                             TokenFields.refreshToken,
-                        ].join(' ')}
+                        ])}
                     }
                 }`,
                 variables: { input },
@@ -248,11 +248,11 @@ export class Cinnamon {
             await this.api<'refreshLogin'>({
                 query: `mutation($input: RefreshTokenInput!) {
                     refreshLogin(input: $input) {
-                        ${[
+                        ${getFormattedFields([
                             TokenFields.expiryDate,
                             TokenFields.token,
                             TokenFields.refreshToken,
-                        ].join(' ')}
+                        ])}
                     }
                 }`,
                 variables: { input },
@@ -278,7 +278,7 @@ export class Cinnamon {
         headers,
         token,
     }: {
-        fields?: Array<keyof UserFields | keyof VendorFields | string>;
+        fields?: Deep<UserFields>[] | Deep<VendorFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -288,12 +288,14 @@ export class Cinnamon {
                     me {
                         ${
                             this.isVendorToken(token || this.token)
-                                ? `... on Vendor { ${(
-                                      fields || this.defaultVendorFields
-                                  ).join(' ')} }`
-                                : `... on User { ${(
-                                      fields || this.defaultUserFields
-                                  ).join(' ')} }`
+                                ? `... on Vendor { ${getFormattedFields(
+                                      (fields as string[]) ||
+                                          this.defaultVendorFields,
+                                  )} }`
+                                : `... on User { ${getFormattedFields(
+                                      (fields as string[]) ||
+                                          this.defaultUserFields,
+                                  )} }`
                         }
                     }
                 }`,
@@ -312,7 +314,7 @@ export class Cinnamon {
         token,
     }: {
         input: UserUpdateInput;
-        fields?: Array<keyof UserFields | string>;
+        fields?: Deep<UserFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -320,7 +322,7 @@ export class Cinnamon {
             await this.api<'updateUser'>({
                 query: `mutation($input: UserUpdateInput!) {
                     updateUser(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -349,7 +351,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof OrganizationFields | string>;
+        fields?: Deep<OrganizationFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -357,7 +359,7 @@ export class Cinnamon {
             await this.api<'organization'>({
                 query: `query($id: ObjectId!) {
                     organization(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -386,14 +388,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof OrganizationFields | string>;
+        fields?: Deep<OrganizationFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'organizations'>({
-                query: pageQueryGenerator('organizations', fields, true),
+                query: pageQueryGenerator(
+                    'organizations',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -420,7 +426,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof OrganizationFields | string>;
+        fields?: Deep<OrganizationFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -449,7 +455,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof OrganizationFields | string>;
+        fields?: Deep<OrganizationFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -475,7 +481,7 @@ export class Cinnamon {
         token,
     }: {
         input: OrganizationInput;
-        fields?: Array<keyof OrganizationFields | string>;
+        fields?: Deep<OrganizationFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -483,7 +489,7 @@ export class Cinnamon {
             await this.api<'createOrganization'>({
                 query: `mutation($input: OrganizationInput!) {
                     createOrganization(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -503,7 +509,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: OrganizationUpdateInput;
-        fields?: Array<keyof OrganizationFields | string>;
+        fields?: Deep<OrganizationFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -511,7 +517,7 @@ export class Cinnamon {
             await this.api<'updateOrganization'>({
                 query: `mutation($id: ObjectId!, $input: OrganizationUpdateInput!) {
                     updateOrganization(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -540,7 +546,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof MarketplaceFields | string>;
+        fields?: Deep<MarketplaceFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -548,7 +554,7 @@ export class Cinnamon {
             await this.api<'marketplace'>({
                 query: `query($id: ObjectId!) {
                     marketplace(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -577,14 +583,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof MarketplaceFields | string>;
+        fields?: Deep<MarketplaceFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'marketplaces'>({
-                query: pageQueryGenerator('marketplaces', fields, true),
+                query: pageQueryGenerator(
+                    'marketplaces',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -611,7 +621,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MarketplaceFields | string>;
+        fields?: Deep<MarketplaceFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -640,7 +650,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MarketplaceFields | string>;
+        fields?: Deep<MarketplaceFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -666,7 +676,7 @@ export class Cinnamon {
         token,
     }: {
         input: MarketplaceInput;
-        fields?: Array<keyof MarketplaceFields | string>;
+        fields?: Deep<MarketplaceFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -674,7 +684,7 @@ export class Cinnamon {
             await this.api<'createMarketplace'>({
                 query: `mutation($input: MarketplaceInput!) {
                     createMarketplace(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -694,7 +704,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: MarketplaceUpdateInput;
-        fields?: Array<keyof MarketplaceFields | string>;
+        fields?: Deep<MarketplaceFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -702,7 +712,7 @@ export class Cinnamon {
             await this.api<'updateMarketplace'>({
                 query: `mutation($id: ObjectId!, $input: MarketplaceUpdateInput!) {
                     updateMarketplace(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -741,8 +751,8 @@ export class Cinnamon {
     // ####################################
 
     private defaultMediaChannelFields = [
-        MarketplaceFields.id,
-        MarketplaceFields.name,
+        MediaChannelFields.id,
+        MediaChannelFields.name,
     ];
 
     @bind
@@ -753,7 +763,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -761,7 +771,7 @@ export class Cinnamon {
             await this.api<'mediaChannel'>({
                 query: `query($id: ObjectId!) {
                     mediaChannel(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -790,14 +800,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'mediaChannels'>({
-                query: pageQueryGenerator('mediaChannels', fields, true),
+                query: pageQueryGenerator(
+                    'mediaChannels',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -824,7 +838,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -853,7 +867,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -879,7 +893,7 @@ export class Cinnamon {
         token,
     }: {
         input: MediaChannelCreateInput;
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -887,7 +901,7 @@ export class Cinnamon {
             await this.api<'createMediaChannel'>({
                 query: `mutation($input: MediaChannelCreateInput!) {
                     createMediaChannel(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -905,7 +919,7 @@ export class Cinnamon {
         token,
     }: {
         input: MediaChannelImportInput;
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -913,7 +927,7 @@ export class Cinnamon {
             await this.api<'importMediaChannel'>({
                 query: `mutation($input: MediaChannelImportInput!) {
                     importMediaChannel(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -933,7 +947,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: MediaChannelUpdateInput;
-        fields?: Array<keyof MediaChannelFields | string>;
+        fields?: Deep<MediaChannelFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -941,7 +955,7 @@ export class Cinnamon {
             await this.api<'updateMediaChannel'>({
                 query: `mutation($id: ObjectId!, $input: MediaChannelUpdateInput!) {
                     updateMediaChannel(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -992,7 +1006,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof CampaignTemplateFields | string>;
+        fields?: Deep<CampaignTemplateFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1000,7 +1014,7 @@ export class Cinnamon {
             await this.api<'campaignTemplate'>({
                 query: `query($id: ObjectId!) {
                     campaignTemplate(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1029,14 +1043,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof CampaignTemplateFields | string>;
+        fields?: Deep<CampaignTemplateFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'campaignTemplates'>({
-                query: pageQueryGenerator('campaignTemplates', fields, true),
+                query: pageQueryGenerator(
+                    'campaignTemplates',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -1063,7 +1081,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CampaignTemplateFields | string>;
+        fields?: Deep<CampaignTemplateFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1092,7 +1110,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CampaignTemplateFields | string>;
+        fields?: Deep<CampaignTemplateFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1129,7 +1147,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof VendorFields | string>;
+        fields?: Deep<VendorFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1137,7 +1155,7 @@ export class Cinnamon {
             await this.api<'vendor'>({
                 query: `query($id: ObjectId!) {
                     vendor(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1166,14 +1184,14 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof VendorFields | string>;
+        fields?: Deep<VendorFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'vendors'>({
-                query: pageQueryGenerator('vendors', fields, true),
+                query: pageQueryGenerator('vendors', fields as string[], true),
                 variables: {
                     filter,
                     sort,
@@ -1200,7 +1218,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof VendorFields | string>;
+        fields?: Deep<VendorFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1229,7 +1247,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof VendorFields | string>;
+        fields?: Deep<VendorFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1255,7 +1273,7 @@ export class Cinnamon {
         token,
     }: {
         input: VendorInput;
-        fields?: Array<keyof VendorFields | string>;
+        fields?: Deep<VendorFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1263,7 +1281,7 @@ export class Cinnamon {
             await this.api<'createVendor'>({
                 query: `mutation($input: VendorInput!) {
                     createVendor(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1283,7 +1301,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: VendorUpdateInput;
-        fields?: Array<keyof VendorFields | string>;
+        fields?: Deep<VendorFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1291,7 +1309,7 @@ export class Cinnamon {
             await this.api<'updateVendor'>({
                 query: `mutation($id: ObjectId!, $input: VendorUpdateInput!) {
                     updateVendor(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -1342,7 +1360,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof VendorTokenFields | string>;
+        fields?: Deep<VendorTokenFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1350,7 +1368,7 @@ export class Cinnamon {
             await this.api<'vendorToken'>({
                 query: `query($id: ObjectId!) {
                     vendorToken(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1379,14 +1397,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof VendorTokenFields | string>;
+        fields?: Deep<VendorTokenFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'vendorTokens'>({
-                query: pageQueryGenerator('vendorTokens', fields, true),
+                query: pageQueryGenerator(
+                    'vendorTokens',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -1413,7 +1435,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof VendorTokenFields | string>;
+        fields?: Deep<VendorTokenFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1442,7 +1464,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof VendorTokenFields | string>;
+        fields?: Deep<VendorTokenFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1468,7 +1490,7 @@ export class Cinnamon {
         token,
     }: {
         input: VendorTokenInput;
-        fields?: Array<keyof VendorTokenFields | string>;
+        fields?: Deep<VendorTokenFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1476,7 +1498,7 @@ export class Cinnamon {
             await this.api<'createVendorToken'>({
                 query: `mutation($input: VendorTokenInput!) {
                     createVendorToken(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1530,7 +1552,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1538,7 +1560,7 @@ export class Cinnamon {
             await this.api<'catalog'>({
                 query: `query($id: ObjectId!) {
                     catalog(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1567,14 +1589,14 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'catalogs'>({
-                query: pageQueryGenerator('catalogs', fields, true),
+                query: pageQueryGenerator('catalogs', fields as string[], true),
                 variables: {
                     filter,
                     sort,
@@ -1601,7 +1623,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1630,7 +1652,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1656,7 +1678,7 @@ export class Cinnamon {
         token,
     }: {
         input: CatalogCreateInput;
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1664,7 +1686,7 @@ export class Cinnamon {
             await this.api<'createCatalog'>({
                 query: `mutation($input: CatalogCreateInput!) {
                     createCatalog(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1682,7 +1704,7 @@ export class Cinnamon {
         token,
     }: {
         input: CatalogImportInput;
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1690,7 +1712,7 @@ export class Cinnamon {
             await this.api<'importCatalog'>({
                 query: `mutation($input: CatalogImportInput!) {
                     importCatalog(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1710,7 +1732,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CatalogUpdateInput;
-        fields?: Array<keyof CatalogFields | string>;
+        fields?: Deep<CatalogFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1718,7 +1740,7 @@ export class Cinnamon {
             await this.api<'updateCatalog'>({
                 query: `mutation($id: ObjectId!, $input: CatalogUpdateInput!) {
                     updateCatalog(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -1773,7 +1795,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof ProductFields | string>;
+        fields?: Deep<ProductFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1781,7 +1803,7 @@ export class Cinnamon {
             await this.api<'product'>({
                 query: `query($id: ObjectId!) {
                     product(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -1810,14 +1832,14 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof ProductFields | string>;
+        fields?: Deep<ProductFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'products'>({
-                query: pageQueryGenerator('products', fields, true),
+                query: pageQueryGenerator('products', fields as string[], true),
                 variables: {
                     filter,
                     sort,
@@ -1844,7 +1866,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof ProductFields | string>;
+        fields?: Deep<ProductFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1873,7 +1895,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof ProductFields | string>;
+        fields?: Deep<ProductFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1899,7 +1921,7 @@ export class Cinnamon {
         token,
     }: {
         input: ProductInput;
-        fields?: Array<keyof ProductFields | string>;
+        fields?: Deep<ProductFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1907,7 +1929,7 @@ export class Cinnamon {
             await this.api<'createProduct'>({
                 query: `mutation($input: ProductInput!) {
                     createProduct(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -1927,7 +1949,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: ProductUpdateInput;
-        fields?: Array<keyof ProductFields | string>;
+        fields?: Deep<ProductFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1935,7 +1957,7 @@ export class Cinnamon {
             await this.api<'updateProduct'>({
                 query: `mutation($id: ObjectId!, $input: ProductUpdateInput!) {
                     updateProduct(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -1988,7 +2010,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1996,7 +2018,7 @@ export class Cinnamon {
             await this.api<'marketingCampaign'>({
                 query: `query($id: ObjectId!) {
                     marketingCampaign(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2025,14 +2047,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'marketingCampaigns'>({
-                query: pageQueryGenerator('marketingCampaigns', fields, true),
+                query: pageQueryGenerator(
+                    'marketingCampaigns',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -2059,7 +2085,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2089,7 +2115,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2116,7 +2142,7 @@ export class Cinnamon {
         token,
     }: {
         input: MarketingCampaignInput;
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2124,7 +2150,7 @@ export class Cinnamon {
             await this.api<'createMarketingCampaign'>({
                 query: `mutation($input: MarketingCampaignInput!) {
                     createMarketingCampaign(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -2144,7 +2170,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: MarketingCampaignUpdateInput;
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2152,7 +2178,7 @@ export class Cinnamon {
             await this.api<'updateMarketingCampaign'>({
                 query: `mutation($id: ObjectId!, $input: MarketingCampaignUpdateInput!) {
                     updateMarketingCampaign(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2172,7 +2198,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         lastChangeDate: Scalars['DateISO'];
-        fields?: Array<keyof MarketingCampaignFields | string>;
+        fields?: Deep<MarketingCampaignFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2231,7 +2257,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof MarketingAdFields | string>;
+        fields?: Deep<MarketingAdFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2239,7 +2265,7 @@ export class Cinnamon {
             await this.api<'marketingAd'>({
                 query: `query($id: ObjectId!) {
                     marketingAd(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2268,14 +2294,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof MarketingAdFields | string>;
+        fields?: Deep<MarketingAdFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'marketingAds'>({
-                query: pageQueryGenerator('marketingAds', fields, true),
+                query: pageQueryGenerator(
+                    'marketingAds',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -2302,7 +2332,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MarketingAdFields | string>;
+        fields?: Deep<MarketingAdFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2331,7 +2361,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof MarketingAdFields | string>;
+        fields?: Deep<MarketingAdFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2356,7 +2386,12 @@ export class Cinnamon {
     private defaultResultFields = [
         ResultFields.id,
         ResultFields.date,
-        'analytics { results impressions clicks spend purchases purchasesValue }',
+        ResultFields.analytics.results,
+        ResultFields.analytics.impressions,
+        ResultFields.analytics.clicks,
+        ResultFields.analytics.spend,
+        ResultFields.analytics.purchases,
+        ResultFields.analytics.purchasesValue,
     ];
 
     @bind
@@ -2367,7 +2402,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof ResultFields | string>;
+        fields?: Deep<ResultFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2375,7 +2410,7 @@ export class Cinnamon {
             await this.api<'result'>({
                 query: `query($id: ObjectId!) {
                     result(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2403,13 +2438,13 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof ResultFields | string>;
+        fields?: Deep<ResultFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'results'>({
-                query: pageQueryGenerator('results', fields),
+                query: pageQueryGenerator('results', fields as string[]),
                 variables: { filter, sort, first, last, after, before },
                 headers,
                 token,
@@ -2427,7 +2462,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof ResultFields | string>;
+        fields?: Deep<ResultFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2446,7 +2481,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof ResultFields | string>;
+        fields?: Deep<ResultFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2473,7 +2508,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof EntitlementFields | string>;
+        fields?: Deep<EntitlementFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2481,7 +2516,7 @@ export class Cinnamon {
             await this.api<'entitlement'>({
                 query: `query($id: ObjectId!) {
                     entitlement(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2509,13 +2544,13 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof EntitlementFields | string>;
+        fields?: Deep<EntitlementFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'entitlements'>({
-                query: pageQueryGenerator('entitlements', fields),
+                query: pageQueryGenerator('entitlements', fields as string[]),
                 variables: { filter, sort, first, last, after, before },
                 headers,
                 token,
@@ -2533,7 +2568,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof EntitlementFields | string>;
+        fields?: Deep<EntitlementFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2552,7 +2587,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof EntitlementFields | string>;
+        fields?: Deep<EntitlementFields>[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2569,7 +2604,7 @@ export class Cinnamon {
         token,
     }: {
         input: EntitlementInput;
-        fields?: Array<keyof EntitlementFields | string>;
+        fields?: Deep<EntitlementFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2577,7 +2612,7 @@ export class Cinnamon {
             await this.api<'createEntitlement'>({
                 query: `mutation($input: EntitlementInput!) {
                     createEntitlement(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -2597,7 +2632,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: EntitlementUpdateInput;
-        fields?: Array<keyof EntitlementFields | string>;
+        fields?: Deep<EntitlementFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2605,7 +2640,7 @@ export class Cinnamon {
             await this.api<'updateEntitlement'>({
                 query: `mutation($id: ObjectId!, $input: EntitlementUpdateInput!) {
                     updateEntitlement(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2656,7 +2691,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof CreativeFontFields | string>;
+        fields?: Deep<CreativeFontFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2664,7 +2699,7 @@ export class Cinnamon {
             await this.api<'creativeFont'>({
                 query: `query($id: ObjectId!) {
                     creativeFont(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2693,14 +2728,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof CreativeFontFields | string>;
+        fields?: Deep<CreativeFontFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeFonts'>({
-                query: pageQueryGenerator('creativeFonts', fields, true),
+                query: pageQueryGenerator(
+                    'creativeFonts',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -2727,7 +2766,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeFontFields | string>;
+        fields?: Deep<CreativeFontFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2756,7 +2795,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeFontFields | string>;
+        fields?: Deep<CreativeFontFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2782,7 +2821,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeFontCreateInput;
-        fields?: Array<keyof CreativeFontFields | string>;
+        fields?: Deep<CreativeFontFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2790,7 +2829,7 @@ export class Cinnamon {
             await this.api<'createCreativeFont'>({
                 query: `mutation($input: CreativeFontCreateInput!) {
                     createCreativeFont(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -2810,7 +2849,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeFontUpdateInput;
-        fields?: Array<keyof CreativeFontFields | string>;
+        fields?: Deep<CreativeFontFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2818,7 +2857,7 @@ export class Cinnamon {
             await this.api<'updateCreativeFont'>({
                 query: `mutation($id: ObjectId!, $input: CreativeFontUpdateInput!) {
                     updateCreativeFont(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -2869,7 +2908,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof CreativeImageFields | string>;
+        fields?: Deep<CreativeImageFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2877,7 +2916,7 @@ export class Cinnamon {
             await this.api<'creativeImage'>({
                 query: `query($id: ObjectId!) {
                     creativeImage(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -2906,14 +2945,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof CreativeImageFields | string>;
+        fields?: Deep<CreativeImageFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeImages'>({
-                query: pageQueryGenerator('creativeImages', fields, true),
+                query: pageQueryGenerator(
+                    'creativeImages',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -2940,7 +2983,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeImageFields | string>;
+        fields?: Deep<CreativeImageFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2969,7 +3012,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeImageFields | string>;
+        fields?: Deep<CreativeImageFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2995,7 +3038,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeImageCreateInput;
-        fields?: Array<keyof CreativeImageFields | string>;
+        fields?: Deep<CreativeImageFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3003,7 +3046,7 @@ export class Cinnamon {
             await this.api<'createCreativeImage'>({
                 query: `mutation($input: CreativeImageCreateInput!) {
                     createCreativeImage(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -3023,7 +3066,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeImageUpdateInput;
-        fields?: Array<keyof CreativeImageFields | string>;
+        fields?: Deep<CreativeImageFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3031,7 +3074,7 @@ export class Cinnamon {
             await this.api<'updateCreativeImage'>({
                 query: `mutation($id: ObjectId!, $input: CreativeImageUpdateInput!) {
                     updateCreativeImage(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -3082,7 +3125,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof CreativeLayerFields | string>;
+        fields?: Deep<CreativeLayerFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3090,7 +3133,7 @@ export class Cinnamon {
             await this.api<'creativeLayer'>({
                 query: `query($id: ObjectId!) {
                     creativeLayer(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -3119,14 +3162,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof CreativeLayerFields | string>;
+        fields?: Deep<CreativeLayerFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeLayers'>({
-                query: pageQueryGenerator('creativeLayers', fields, true),
+                query: pageQueryGenerator(
+                    'creativeLayers',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -3153,7 +3200,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeLayerFields | string>;
+        fields?: Deep<CreativeLayerFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3182,7 +3229,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeLayerFields | string>;
+        fields?: Deep<CreativeLayerFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3208,7 +3255,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeLayerCreateInput;
-        fields?: Array<keyof CreativeLayerFields | string>;
+        fields?: Deep<CreativeLayerFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3216,7 +3263,7 @@ export class Cinnamon {
             await this.api<'createCreativeLayer'>({
                 query: `mutation($input: CreativeLayerCreateInput!) {
                     createCreativeLayer(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -3236,7 +3283,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeLayerUpdateInput;
-        fields?: Array<keyof CreativeLayerFields | string>;
+        fields?: Deep<CreativeLayerFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3244,7 +3291,7 @@ export class Cinnamon {
             await this.api<'updateCreativeLayer'>({
                 query: `mutation($id: ObjectId!, $input: CreativeLayerUpdateInput!) {
                     updateCreativeLayer(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -3295,7 +3342,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Array<keyof CreativeTemplateFields | string>;
+        fields?: Deep<CreativeTemplateFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3303,7 +3350,7 @@ export class Cinnamon {
             await this.api<'creativeTemplate'>({
                 query: `query($id: ObjectId!) {
                     creativeTemplate(id: $id) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id },
@@ -3332,14 +3379,18 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Array<keyof CreativeTemplateFields | string>;
+        fields?: Deep<CreativeTemplateFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'creativeTemplates'>({
-                query: pageQueryGenerator('creativeTemplates', fields, true),
+                query: pageQueryGenerator(
+                    'creativeTemplates',
+                    fields as string[],
+                    true,
+                ),
                 variables: {
                     filter,
                     sort,
@@ -3366,7 +3417,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeTemplateFields | string>;
+        fields?: Deep<CreativeTemplateFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3395,7 +3446,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Array<keyof CreativeTemplateFields | string>;
+        fields?: Deep<CreativeTemplateFields>[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3421,7 +3472,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeTemplateCreateInput;
-        fields?: Array<keyof CreativeTemplateFields | string>;
+        fields?: Deep<CreativeTemplateFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3429,7 +3480,7 @@ export class Cinnamon {
             await this.api<'createCreativeTemplate'>({
                 query: `mutation($input: CreativeTemplateCreateInput!) {
                     createCreativeTemplate(input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { input },
@@ -3449,7 +3500,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeTemplateUpdateInput;
-        fields?: Array<keyof CreativeTemplateFields | string>;
+        fields?: Deep<CreativeTemplateFields>[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3457,7 +3508,7 @@ export class Cinnamon {
             await this.api<'updateCreativeTemplate'>({
                 query: `mutation($id: ObjectId!, $input: CreativeTemplateUpdateInput!) {
                     updateCreativeTemplate(id: $id, input: $input) {
-                        ${fields.join(' ')}
+                        ${getFormattedFields(fields as string[])}
                     }
                 }`,
                 variables: { id, input },
@@ -3493,5 +3544,6 @@ export class Cinnamon {
 }
 
 export * from './generated/graphql';
-export * from './inputFields';
+export * from './generated/fields';
+// export * from './inputFields';
 export * from './helpers';
