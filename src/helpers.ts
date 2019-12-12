@@ -29,6 +29,11 @@ export function bind<T extends Function>(
 export function getFormattedFields(fields: Array<string> = []) {
     return fields
         .map(field => {
+            if (typeof field !== 'string') {
+                throw new Error(
+                    `Invalid field type "${typeof field}", needs to be string.`,
+                );
+            }
             const subfields = field.split('%');
             return (
                 subfields
