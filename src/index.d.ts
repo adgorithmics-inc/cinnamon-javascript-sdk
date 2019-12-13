@@ -39,6 +39,7 @@ export declare class Cinnamon {
     login(input: UserLoginInput): Promise<import("./generated/graphql").Token>;
     refreshLogin(input: RefreshTokenInput): Promise<import("./generated/graphql").Token>;
     setToken(token: string): void;
+    setRefreshToken(refreshToken: string): void;
     me<T extends Vendor | User>({ fields, headers, token, }?: {
         fields?: Deep<UserFields>[] | Deep<VendorFields>[];
         headers?: Headers;

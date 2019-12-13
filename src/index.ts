@@ -280,6 +280,11 @@ export class Cinnamon {
     }
 
     @bind
+    setRefreshToken(refreshToken: string) {
+        this.refreshToken = refreshToken;
+    }
+
+    @bind
     async me<T extends Vendor | User>({
         fields,
         headers,
