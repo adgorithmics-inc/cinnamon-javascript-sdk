@@ -1,3 +1,4 @@
+import { codes } from '@adgorithmics/graphql-errors';
 import { Query } from './generated/graphql';
 import { nameMap } from './generated/fields';
 
@@ -81,4 +82,22 @@ query(
         }
     }
 }`;
+}
+
+export interface APIError {
+    message?: string;
+    extentions?: { code?: codes };
+}
+
+export class CinnamonError extends Error {
+    raw?: { data?: unknown; errors?: Array<APIError> };
+
+    constructor(
+        message: string,
+        raw?: { data?: unknown; errors?: Array<APIError> },
+    ) {
+        super(message);
+
+        this.raw = raw;
+    }
 }

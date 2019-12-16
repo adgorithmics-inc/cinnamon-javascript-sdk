@@ -78,7 +78,14 @@ import {
     CreativeTemplateFields,
 } from './generated/fields';
 
-import { Deep, bind, pageQueryGenerator, getFormattedFields } from './helpers';
+import {
+    Deep,
+    bind,
+    pageQueryGenerator,
+    getFormattedFields,
+    APIError,
+    CinnamonError,
+} from './helpers';
 
 export interface Config {
     url: string;
@@ -86,11 +93,6 @@ export interface Config {
 
 export interface Headers {
     [key: string]: string;
-}
-
-export interface Error {
-    message?: string;
-    extentions?: { code?: codes };
 }
 
 export type APIKey = keyof (Query & Mutation);
@@ -129,7 +131,8 @@ export class Cinnamon {
         const response = await fetch(this.config.url, {
             method: 'POST',
             headers: {
-                authorization: `Bearer ${token || this.token}`,
+                authorization:
+                    token || this.token ? `Bearer ${token || this.token}` : '',
                 accept: 'application/json',
                 'content-type': 'application/json',
                 ...headers,
@@ -141,7 +144,7 @@ export class Cinnamon {
         if (json.errors) {
             if (
                 json.errors.some(
-                    (error: Error) =>
+                    (error: APIError) =>
                         get(error, 'extensions.code') === codes.TOKEN_EXPIRED,
                 ) &&
                 !token
@@ -149,12 +152,16 @@ export class Cinnamon {
                 await this.refreshLogin({ refreshToken: this.refreshToken });
                 return this.api({ query, variables, headers, token });
             }
-            throw new Error(
+            throw new CinnamonError(
                 json.errors.map((error: Error) => error.message).join('\n'),
+                json,
             );
         }
         if (!json.data) {
-            throw new Error(`Invalid server response: ${JSON.stringify(json)}`);
+            throw new CinnamonError(
+                `Invalid server response: ${JSON.stringify(json)}`,
+                json,
+            );
         }
         return json;
     }
