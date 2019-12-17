@@ -1,4 +1,3 @@
-import { codes } from '@adgorithmics/graphql-errors';
 import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput } from './generated/graphql';
 import { OrganizationFields, UserFields, MarketplaceFields, MediaChannelFields, CampaignTemplateFields, VendorFields, VendorTokenFields, CatalogFields, ProductFields, MarketingCampaignFields, MarketingAdFields, ResultFields, EntitlementFields, CreativeFontFields, CreativeImageFields, CreativeLayerFields, CreativeTemplateFields } from './generated/fields';
 import { Deep } from './helpers';
@@ -7,12 +6,6 @@ export interface Config {
 }
 export interface Headers {
     [key: string]: string;
-}
-export interface Error {
-    message?: string;
-    extentions?: {
-        code?: codes;
-    };
 }
 export declare type APIKey = keyof (Query & Mutation);
 export declare type APIResult<T extends APIKey, U extends string = T> = {
