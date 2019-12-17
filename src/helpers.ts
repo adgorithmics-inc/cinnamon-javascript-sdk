@@ -1,6 +1,6 @@
 import { codes } from '@adgorithmics/graphql-errors';
 import { Query } from './generated/graphql';
-import { nameMap } from './generated/fields';
+import { nameMap as defaultNameMap } from './generated/fields';
 
 export type Deep<T> = {
     0: T;
@@ -27,7 +27,10 @@ export function bind<T extends Function>(
     };
 }
 
-export function getFormattedFields(fields: Array<string> = []) {
+export function getFormattedFields(
+    fields: Array<string> = [],
+    nameMap: Record<string, string> = defaultNameMap,
+) {
     return fields
         .map(field => {
             if (typeof field !== 'string') {
