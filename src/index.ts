@@ -280,6 +280,11 @@ export class Cinnamon {
     }
 
     @bind
+    setRefreshToken(refreshToken: string) {
+        this.refreshToken = refreshToken;
+    }
+
+    @bind
     async me<T extends Vendor | User>({
         fields,
         headers,
@@ -3552,5 +3557,4 @@ export class Cinnamon {
 
 export * from './generated/graphql';
 export * from './generated/fields';
-// export * from './inputFields';
 export * from './helpers';
