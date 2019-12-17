@@ -28,6 +28,8 @@ jobs:
                   key: jscache-{{ checksum "package.json" }}
 
             - run: npm run lint
+            - run: npm run build-ts
+            - run: git diff --quiet || (echo 'build does not match' && exit 1)
 
     publish:
         docker:
