@@ -889,6 +889,7 @@ export type MarketingCampaignMarketingAdsArgs = {
     after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
     before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 /**
@@ -3245,7 +3246,7 @@ export type MarketingCampaignResolvers<
         ResolversTypes['MarketingAdConnection'],
         ParentType,
         ContextType,
-        MarketingCampaignMarketingAdsArgs
+        RequireFields<MarketingCampaignMarketingAdsArgs, 'showDeleted'>
     >;
     products?: Resolver<
         ResolversTypes['ProductConnection'],

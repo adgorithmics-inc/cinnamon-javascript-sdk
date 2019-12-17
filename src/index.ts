@@ -290,7 +290,7 @@ export class Cinnamon {
         headers,
         token,
     }: {
-        fields?: Deep<UserFields>[] | Deep<VendorFields>[];
+        fields?: Deep<UserFields>[] | Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -326,7 +326,7 @@ export class Cinnamon {
         token,
     }: {
         input: UserUpdateInput;
-        fields?: Deep<UserFields>[];
+        fields?: Deep<UserFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -363,7 +363,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -400,7 +400,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -438,7 +438,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -467,7 +467,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -493,7 +493,7 @@ export class Cinnamon {
         token,
     }: {
         input: OrganizationInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -521,7 +521,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: OrganizationUpdateInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -558,7 +558,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -595,7 +595,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -633,7 +633,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -662,7 +662,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -688,7 +688,7 @@ export class Cinnamon {
         token,
     }: {
         input: MarketplaceInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -716,7 +716,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: MarketplaceUpdateInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -775,7 +775,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -812,7 +812,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -850,7 +850,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -879,7 +879,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -905,7 +905,7 @@ export class Cinnamon {
         token,
     }: {
         input: MediaChannelCreateInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -931,7 +931,7 @@ export class Cinnamon {
         token,
     }: {
         input: MediaChannelImportInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -959,7 +959,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: MediaChannelUpdateInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1018,7 +1018,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1055,7 +1055,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1093,7 +1093,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1122,7 +1122,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1159,7 +1159,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1196,7 +1196,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1230,7 +1230,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1259,7 +1259,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1285,7 +1285,7 @@ export class Cinnamon {
         token,
     }: {
         input: VendorInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1313,7 +1313,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: VendorUpdateInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1372,7 +1372,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1409,7 +1409,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1447,7 +1447,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1476,7 +1476,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1502,7 +1502,7 @@ export class Cinnamon {
         token,
     }: {
         input: VendorTokenInput;
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1564,7 +1564,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1601,7 +1601,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1635,7 +1635,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1664,7 +1664,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1690,7 +1690,7 @@ export class Cinnamon {
         token,
     }: {
         input: CatalogCreateInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1716,7 +1716,7 @@ export class Cinnamon {
         token,
     }: {
         input: CatalogImportInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1744,7 +1744,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CatalogUpdateInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1807,7 +1807,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1844,7 +1844,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1878,7 +1878,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1907,7 +1907,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -1933,7 +1933,7 @@ export class Cinnamon {
         token,
     }: {
         input: ProductInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -1961,7 +1961,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: ProductUpdateInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2022,7 +2022,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2059,7 +2059,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2097,7 +2097,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2127,7 +2127,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2154,7 +2154,7 @@ export class Cinnamon {
         token,
     }: {
         input: MarketingCampaignInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2182,7 +2182,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: MarketingCampaignUpdateInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2210,7 +2210,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         lastChangeDate: Scalars['DateISO'];
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2269,7 +2269,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2306,7 +2306,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2344,7 +2344,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2373,7 +2373,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2414,7 +2414,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2450,7 +2450,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2474,7 +2474,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2493,7 +2493,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2520,7 +2520,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2556,7 +2556,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2580,7 +2580,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2599,7 +2599,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -2616,7 +2616,7 @@ export class Cinnamon {
         token,
     }: {
         input: EntitlementInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2644,7 +2644,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: EntitlementUpdateInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2703,7 +2703,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2740,7 +2740,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2778,7 +2778,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2807,7 +2807,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2833,7 +2833,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeFontCreateInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2861,7 +2861,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeFontUpdateInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2920,7 +2920,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -2957,7 +2957,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -2995,7 +2995,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3024,7 +3024,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3050,7 +3050,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeImageCreateInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3078,7 +3078,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeImageUpdateInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3137,7 +3137,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3174,7 +3174,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3212,7 +3212,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3241,7 +3241,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3267,7 +3267,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeLayerCreateInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3295,7 +3295,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeLayerUpdateInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3354,7 +3354,7 @@ export class Cinnamon {
         token,
     }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3391,7 +3391,7 @@ export class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3429,7 +3429,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3458,7 +3458,7 @@ export class Cinnamon {
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -3484,7 +3484,7 @@ export class Cinnamon {
         token,
     }: {
         input: CreativeTemplateCreateInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {
@@ -3512,7 +3512,7 @@ export class Cinnamon {
     }: {
         id: Scalars['ObjectId'];
         input: CreativeTemplateUpdateInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }) {

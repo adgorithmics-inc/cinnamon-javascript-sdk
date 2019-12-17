@@ -41,20 +41,20 @@ export declare class Cinnamon {
     setToken(token: string): void;
     setRefreshToken(refreshToken: string): void;
     me<T extends Vendor | User>({ fields, headers, token, }?: {
-        fields?: Deep<UserFields>[] | Deep<VendorFields>[];
+        fields?: Deep<UserFields>[] | Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<T>;
     updateUser({ input, fields, headers, token, }: {
         input: UserUpdateInput;
-        fields?: Deep<UserFields>[];
+        fields?: Deep<UserFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<User>;
     private defaultOrganizationFields;
     organization({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Organization>;
@@ -65,7 +65,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -73,7 +73,7 @@ export declare class Cinnamon {
     organizationsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -81,28 +81,28 @@ export declare class Cinnamon {
     organizationsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Organization, void, unknown>;
     createOrganization({ input, fields, headers, token, }: {
         input: OrganizationInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Organization>;
     updateOrganization({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: OrganizationUpdateInput;
-        fields?: Deep<OrganizationFields>[];
+        fields?: Deep<OrganizationFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Organization>;
     private defaultMarketplaceFields;
     marketplace({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace>;
@@ -113,7 +113,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -121,7 +121,7 @@ export declare class Cinnamon {
     marketplacesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -129,21 +129,21 @@ export declare class Cinnamon {
     marketplacesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Marketplace, void, unknown>;
     createMarketplace({ input, fields, headers, token, }: {
         input: MarketplaceInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace>;
     updateMarketplace({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: MarketplaceUpdateInput;
-        fields?: Deep<MarketplaceFields>[];
+        fields?: Deep<MarketplaceFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace>;
@@ -155,7 +155,7 @@ export declare class Cinnamon {
     private defaultMediaChannelFields;
     mediaChannel({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;
@@ -166,7 +166,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -174,7 +174,7 @@ export declare class Cinnamon {
     mediaChannelsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -182,27 +182,27 @@ export declare class Cinnamon {
     mediaChannelsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<MediaChannel, void, unknown>;
     createMediaChannel({ input, fields, headers, token, }: {
         input: MediaChannelCreateInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;
     importMediaChannel({ input, fields, headers, token, }: {
         input: MediaChannelImportInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;
     updateMediaChannel({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: MediaChannelUpdateInput;
-        fields?: Deep<MediaChannelFields>[];
+        fields?: Deep<MediaChannelFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;
@@ -214,7 +214,7 @@ export declare class Cinnamon {
     private defaultCampaignTemplateFields;
     campaignTemplate({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CampaignTemplate>;
@@ -225,7 +225,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -233,7 +233,7 @@ export declare class Cinnamon {
     campaignTemplatesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -241,7 +241,7 @@ export declare class Cinnamon {
     campaignTemplatesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CampaignTemplateFields>[];
+        fields?: Deep<CampaignTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -249,7 +249,7 @@ export declare class Cinnamon {
     private defaultVendorFields;
     vendor({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Vendor>;
@@ -260,7 +260,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -268,7 +268,7 @@ export declare class Cinnamon {
     vendorsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -276,21 +276,21 @@ export declare class Cinnamon {
     vendorsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Vendor, void, unknown>;
     createVendor({ input, fields, headers, token, }: {
         input: VendorInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Vendor>;
     updateVendor({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: VendorUpdateInput;
-        fields?: Deep<VendorFields>[];
+        fields?: Deep<VendorFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Vendor>;
@@ -302,7 +302,7 @@ export declare class Cinnamon {
     private defaultVendorTokenFields;
     vendorToken({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken>;
@@ -313,7 +313,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -321,7 +321,7 @@ export declare class Cinnamon {
     vendorTokensAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -329,14 +329,14 @@ export declare class Cinnamon {
     vendorTokensEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<VendorToken, void, unknown>;
     createVendorToken({ input, fields, headers, token, }: {
         input: VendorTokenInput;
-        fields?: Deep<VendorTokenFields>[];
+        fields?: Deep<VendorTokenFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken>;
@@ -348,7 +348,7 @@ export declare class Cinnamon {
     private defaultCatalogFields;
     catalog({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
@@ -359,7 +359,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -367,7 +367,7 @@ export declare class Cinnamon {
     catalogsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -375,27 +375,27 @@ export declare class Cinnamon {
     catalogsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Catalog, void, unknown>;
     createCatalog({ input, fields, headers, token, }: {
         input: CatalogCreateInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
     importCatalog({ input, fields, headers, token, }: {
         input: CatalogImportInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
     updateCatalog({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: CatalogUpdateInput;
-        fields?: Deep<CatalogFields>[];
+        fields?: Deep<CatalogFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
@@ -407,7 +407,7 @@ export declare class Cinnamon {
     private defaultProductFields;
     product({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Product>;
@@ -418,7 +418,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -426,7 +426,7 @@ export declare class Cinnamon {
     productsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -434,21 +434,21 @@ export declare class Cinnamon {
     productsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Product, void, unknown>;
     createProduct({ input, fields, headers, token, }: {
         input: ProductInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Product>;
     updateProduct({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: ProductUpdateInput;
-        fields?: Deep<ProductFields>[];
+        fields?: Deep<ProductFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Product>;
@@ -460,7 +460,7 @@ export declare class Cinnamon {
     private defaultMarketingCampaignFields;
     marketingCampaign({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
@@ -471,7 +471,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -479,7 +479,7 @@ export declare class Cinnamon {
     marketingCampaignsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -487,28 +487,28 @@ export declare class Cinnamon {
     marketingCampaignsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<MarketingCampaign, void, unknown>;
     createMarketingCampaign({ input, fields, headers, token, }: {
         input: MarketingCampaignInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
     updateMarketingCampaign({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: MarketingCampaignUpdateInput;
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
     approveMarketingCampaign({ id, lastChangeDate, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         lastChangeDate: Scalars['DateISO'];
-        fields?: Deep<MarketingCampaignFields>[];
+        fields?: Deep<MarketingCampaignFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
@@ -520,7 +520,7 @@ export declare class Cinnamon {
     private defaultMarketingAdFields;
     marketingAd({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<MarketingAd>;
@@ -531,7 +531,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -539,7 +539,7 @@ export declare class Cinnamon {
     marketingAdsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -547,7 +547,7 @@ export declare class Cinnamon {
     marketingAdsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<MarketingAdFields>[];
+        fields?: Deep<MarketingAdFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -555,7 +555,7 @@ export declare class Cinnamon {
     private defaultResultFields;
     result({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Result>;
@@ -566,28 +566,28 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").ResultConnection>;
     resultsAll({ filter, sort, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Result[]>;
     resultsEach({ filter, sort, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<ResultFields>[];
+        fields?: Deep<ResultFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Result, void, unknown>;
     private defaultEntitlementFields;
     entitlement({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement>;
@@ -598,34 +598,34 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").EntitlementConnection>;
     entitlementsAll({ filter, sort, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement[]>;
     entitlementsEach({ filter, sort, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Entitlement, void, unknown>;
     createEntitlement({ input, fields, headers, token, }: {
         input: EntitlementInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement>;
     updateEntitlement({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: EntitlementUpdateInput;
-        fields?: Deep<EntitlementFields>[];
+        fields?: Deep<EntitlementFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement>;
@@ -637,7 +637,7 @@ export declare class Cinnamon {
     private defaultCreativeFontFields;
     creativeFont({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeFont>;
@@ -648,7 +648,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -656,7 +656,7 @@ export declare class Cinnamon {
     creativeFontsAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -664,21 +664,21 @@ export declare class Cinnamon {
     creativeFontsEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeFont, void, unknown>;
     createCreativeFont({ input, fields, headers, token, }: {
         input: CreativeFontCreateInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeFont>;
     updateCreativeFont({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: CreativeFontUpdateInput;
-        fields?: Deep<CreativeFontFields>[];
+        fields?: Deep<CreativeFontFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeFont>;
@@ -690,7 +690,7 @@ export declare class Cinnamon {
     private defaultCreativeImageFields;
     creativeImage({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeImage>;
@@ -701,7 +701,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -709,7 +709,7 @@ export declare class Cinnamon {
     creativeImagesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -717,21 +717,21 @@ export declare class Cinnamon {
     creativeImagesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeImage, void, unknown>;
     createCreativeImage({ input, fields, headers, token, }: {
         input: CreativeImageCreateInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeImage>;
     updateCreativeImage({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: CreativeImageUpdateInput;
-        fields?: Deep<CreativeImageFields>[];
+        fields?: Deep<CreativeImageFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeImage>;
@@ -743,7 +743,7 @@ export declare class Cinnamon {
     private defaultCreativeLayerFields;
     creativeLayer({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeLayer>;
@@ -754,7 +754,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -762,7 +762,7 @@ export declare class Cinnamon {
     creativeLayersAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -770,21 +770,21 @@ export declare class Cinnamon {
     creativeLayersEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeLayer, void, unknown>;
     createCreativeLayer({ input, fields, headers, token, }: {
         input: CreativeLayerCreateInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeLayer>;
     updateCreativeLayer({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: CreativeLayerUpdateInput;
-        fields?: Deep<CreativeLayerFields>[];
+        fields?: Deep<CreativeLayerFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeLayer>;
@@ -796,7 +796,7 @@ export declare class Cinnamon {
     private defaultCreativeTemplateFields;
     creativeTemplate({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeTemplate>;
@@ -807,7 +807,7 @@ export declare class Cinnamon {
         last?: number;
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -815,7 +815,7 @@ export declare class Cinnamon {
     creativeTemplatesAll({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
@@ -823,21 +823,21 @@ export declare class Cinnamon {
     creativeTemplatesEach({ filter, sort, fields, showDeleted, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CreativeTemplate, void, unknown>;
     createCreativeTemplate({ input, fields, headers, token, }: {
         input: CreativeTemplateCreateInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeTemplate>;
     updateCreativeTemplate({ id, input, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         input: CreativeTemplateUpdateInput;
-        fields?: Deep<CreativeTemplateFields>[];
+        fields?: Deep<CreativeTemplateFields>[] | string[];
         headers?: Headers;
         token?: string;
     }): Promise<CreativeTemplate>;
