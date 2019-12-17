@@ -52,6 +52,7 @@ export function pageQueryGenerator(
     name: keyof Query,
     fields: Array<string> = [],
     hasShowDeleted = false,
+    nameMap: Record<string, string> = defaultNameMap,
 ) {
     return `
 query(
@@ -80,7 +81,7 @@ query(
         }
         edges {
             node {
-                ${getFormattedFields(fields)}
+                ${getFormattedFields(fields, nameMap)}
             }
         }
     }
