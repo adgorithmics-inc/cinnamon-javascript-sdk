@@ -833,6 +833,7 @@ export declare type MarketingCampaignMarketingAdsArgs = {
     after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
     before?: Maybe<Scalars['String']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
  * Marketing campaign is a collection of dynamic marketing ads
@@ -2582,7 +2583,7 @@ export declare type MarketingCampaignResolvers<ContextType = any, ParentType ext
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     status?: Resolver<ResolversTypes['MarketingCampaignStatus'], ParentType, ContextType>;
-    marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, MarketingCampaignMarketingAdsArgs>;
+    marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, RequireFields<MarketingCampaignMarketingAdsArgs, 'showDeleted'>>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>>;
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
