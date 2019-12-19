@@ -1,11 +1,5 @@
 import { codes } from '@adgorithmics/graphql-errors';
 import { Query } from './generated/graphql';
-import { nameMap as defaultNameMap } from './generated/fields';
-
-export type Deep<T> = {
-    0: T;
-    1: Deep<T[keyof T]>;
-}[T extends string ? 0 : 1];
 
 // stripped down version of https://github.com/NoHomey/bind-decorator
 export function bind<T extends Function>(
@@ -27,32 +21,10 @@ export function bind<T extends Function>(
     };
 }
 
-export function getFormattedFields(
-    fields: Array<string> = [],
-    nameMap: Record<string, string> = defaultNameMap,
-) {
-    return fields
-        .map(field => {
-            if (typeof field !== 'string') {
-                throw new Error(
-                    `Invalid field type "${typeof field}", needs to be string.`,
-                );
-            }
-            const subfields = field.split('%');
-            return (
-                subfields
-                    .map(subField => nameMap[subField] || subField)
-                    .join('{') + '}'.repeat(subfields.length - 1)
-            );
-        })
-        .join(' ');
-}
-
 export function pageQueryGenerator(
     name: keyof Query,
     fields: Array<string> = [],
     hasShowDeleted = false,
-    nameMap: Record<string, string> = defaultNameMap,
 ) {
     return `
 query(
@@ -81,7 +53,7 @@ query(
         }
         edges {
             node {
-                ${getFormattedFields(fields, nameMap)}
+                ${fields.join(' ')}
             }
         }
     }
