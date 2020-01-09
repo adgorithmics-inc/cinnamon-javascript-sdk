@@ -10447,6 +10447,13 @@ export type CreativeImageField =
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'systemStatus'
     | 'errors';
+export type RequestResultFields = {
+    result: 'result';
+};
+export const RequestResultFields: RequestResultFields = {
+    result: 'result',
+};
+export type RequestResultField = 'result';
 export type TokenFields = {
     token: 'token';
     refreshToken: 'refreshToken';

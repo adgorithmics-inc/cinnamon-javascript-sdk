@@ -44,3 +44,4 @@ generates:
                 - CreativeImage
                 - CreativeTemplate
                 - CreativeLayer
+                - RequestResult
