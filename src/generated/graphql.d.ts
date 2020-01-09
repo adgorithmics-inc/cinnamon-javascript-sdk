@@ -809,9 +809,9 @@ export declare type MarketingCampaign = ResultResource & {
     mediaChannel: MediaChannel;
     /** Results referencing the marketing campaign */
     results: ResultConnection;
-    /** Marketing campaign creative data */
+    /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
     creativeSpec: Scalars['JSONObject'];
-    /** Marketing campaign scheduling data */
+    /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec: Scalars['JSONObject'];
     /** The source of the analytics used to derive results data */
     resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
@@ -882,9 +882,9 @@ export declare type MarketingCampaignEdge = {
 export declare type MarketingCampaignInput = {
     /** Id of the campaign template referenced by the marketing campaign */
     campaignTemplateId: Scalars['ObjectId'];
-    /** Marketing campaign creative data */
+    /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
     creativeSpec: Scalars['JSONObject'];
-    /** Marketing campaign scheduling data */
+    /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec: Scalars['JSONObject'];
     /** Ids of the products advertised in the marketing campaign */
     productIds: Array<Scalars['ObjectId']>;
@@ -901,9 +901,9 @@ export declare enum MarketingCampaignStatus {
 }
 /** Marketing campaign update input data */
 export declare type MarketingCampaignUpdateInput = {
-    /** Marketing campaign creative data */
+    /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
     creativeSpec?: Maybe<Scalars['JSONObject']>;
-    /** Marketing campaign scheduling data */
+    /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
@@ -1167,6 +1167,8 @@ export declare type Mutation = {
     deleteMarketingCampaign: Deletion;
     /** Approves a marketing campaign in PENDING_APPROVAL systemStatus */
     approveMarketingCampaign: MarketingCampaign;
+    /** Attempt synchronization of marketingCampaign with mediaChannel platforms, removing all errors on success */
+    syncMarketingCampaign: MarketingCampaign;
     /** Creates a marketplace using input data */
     createMarketplace: Marketplace;
     /** Updates a marketplace identified by a given id using input data */
@@ -1193,6 +1195,10 @@ export declare type Mutation = {
     updateProduct: Product;
     /** Deletes a product identified by a given id */
     deleteProduct: Deletion;
+    /** Request an email containing a token and link to reset password */
+    requestResetPassword: RequestResult;
+    /** Use the reset password token to update user password */
+    resetPassword: User;
     /** Authenticates the user using login input data */
     login: Token;
     /** Updates the user using update input data */
@@ -1287,6 +1293,9 @@ export declare type MutationApproveMarketingCampaignArgs = {
     id: Scalars['ObjectId'];
     lastChangeDate: Scalars['DateISO'];
 };
+export declare type MutationSyncMarketingCampaignArgs = {
+    id: Scalars['ObjectId'];
+};
 export declare type MutationCreateMarketplaceArgs = {
     input: MarketplaceInput;
 };
@@ -1329,6 +1338,12 @@ export declare type MutationUpdateProductArgs = {
 };
 export declare type MutationDeleteProductArgs = {
     id: Scalars['ObjectId'];
+};
+export declare type MutationRequestResetPasswordArgs = {
+    input: RequestResetPasswordInput;
+};
+export declare type MutationResetPasswordArgs = {
+    input: ResetPasswordInput;
 };
 export declare type MutationLoginArgs = {
     input: UserLoginInput;
@@ -1495,7 +1510,7 @@ export declare type Product = {
     marketingCampaigns: MarketingCampaignConnection;
     /** Product catalog containing the product */
     catalog: Catalog;
-    /** Data related to the product */
+    /** Data related to the product. [Product Metadata](https://docs.adgo.io/API/ProductMetadata) */
     metadata: Scalars['JSONObject'];
     /** Vendor owning the product */
     vendor?: Maybe<Vendor>;
@@ -1541,12 +1556,12 @@ export declare type ProductInput = {
     vendorId: Scalars['ObjectId'];
     /** Id of the product catalog containing the product */
     catalogId: Scalars['ObjectId'];
-    /** Data related to the product */
+    /** Data related to the product. [Product Metadata](https://docs.adgo.io/API/ProductMetadata) */
     metadata: Scalars['JSONObject'];
 };
 /** Product update input data */
 export declare type ProductUpdateInput = {
-    /** Data related to the product */
+    /** Data related to the product. [Product Metadata](https://docs.adgo.io/API/ProductMetadata) */
     metadata: Scalars['JSONObject'];
 };
 export declare type Query = {
@@ -1811,6 +1826,23 @@ export declare type RefreshTokenInput = {
     /** Secondary token value */
     refreshToken: Scalars['String'];
 };
+/** Request reset password input data */
+export declare type RequestResetPasswordInput = {
+    /** Email for the user requesting password reset */
+    email: Scalars['NonEmptyString'];
+};
+/** Request result message */
+export declare type RequestResult = {
+    /** Message stating the result status */
+    result: Scalars['String'];
+};
+/** Reset password input data */
+export declare type ResetPasswordInput = {
+    /** Reset password token received via email */
+    token: Scalars['NonEmptyString'];
+    /** New password */
+    password: Scalars['NonEmptyString'];
+};
 /** Result */
 export declare type Result = {
     /** Id of the result */
@@ -1875,6 +1907,33 @@ export declare enum ResultResourceTypeEnum {
     MarketingAd = "MarketingAd",
     MarketingCampaign = "MarketingCampaign"
 }
+/** Token used for a single user update */
+export declare type SingleUseToken = {
+    /** Id of the token */
+    id: Scalars['ObjectId'];
+    /** Date and time the token was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the token was last updated */
+    lastChangeDate: Scalars['DateISO'];
+    /** Token string */
+    token: Scalars['NonEmptyString'];
+    /** User associated with the token */
+    user?: Maybe<User>;
+};
+/** Single use token collection */
+export declare type SingleUseTokenConnection = {
+    /** Collection of single use tokens */
+    edges: Array<SingleUseTokenEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+};
+/** Single use token in  a collection */
+export declare type SingleUseTokenEdge = {
+    /** Id of the contained single use token */
+    cursor: Scalars['ObjectId'];
+    /** Container for a single use token */
+    node: SingleUseToken;
+};
 /** Sorting direction */
 export declare enum Sort_Order {
     /** Ascending sort order */
@@ -2249,6 +2308,9 @@ export declare type ResolversTypes = {
     OrganizationUpdateInput: OrganizationUpdateInput;
     ProductInput: ProductInput;
     ProductUpdateInput: ProductUpdateInput;
+    RequestResetPasswordInput: RequestResetPasswordInput;
+    RequestResult: ResolverTypeWrapper<RequestResult>;
+    ResetPasswordInput: ResetPasswordInput;
     UserLoginInput: UserLoginInput;
     Token: ResolverTypeWrapper<Token>;
     UserUpdateInput: UserUpdateInput;
@@ -2261,6 +2323,9 @@ export declare type ResolversTypes = {
     AuthType: AuthType;
     CacheControlScope: CacheControlScope;
     OPERATOR: Operator;
+    SingleUseToken: ResolverTypeWrapper<SingleUseToken>;
+    SingleUseTokenConnection: ResolverTypeWrapper<SingleUseTokenConnection>;
+    SingleUseTokenEdge: ResolverTypeWrapper<SingleUseTokenEdge>;
     Upload: ResolverTypeWrapper<Scalars['Upload']>;
 };
 /** Mapping between all available schema types and the resolvers parents */
@@ -2369,6 +2434,9 @@ export declare type ResolversParentTypes = {
     OrganizationUpdateInput: OrganizationUpdateInput;
     ProductInput: ProductInput;
     ProductUpdateInput: ProductUpdateInput;
+    RequestResetPasswordInput: RequestResetPasswordInput;
+    RequestResult: RequestResult;
+    ResetPasswordInput: ResetPasswordInput;
     UserLoginInput: UserLoginInput;
     Token: Token;
     UserUpdateInput: UserUpdateInput;
@@ -2381,6 +2449,9 @@ export declare type ResolversParentTypes = {
     AuthType: AuthType;
     CacheControlScope: CacheControlScope;
     OPERATOR: Operator;
+    SingleUseToken: SingleUseToken;
+    SingleUseTokenConnection: SingleUseTokenConnection;
+    SingleUseTokenEdge: SingleUseTokenEdge;
     Upload: Scalars['Upload'];
 };
 export declare type AuthDirectiveResolver<Result, Parent, ContextType = any, Args = {
@@ -2682,6 +2753,7 @@ export declare type MutationResolvers<ContextType = any, ParentType extends Reso
     updateMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationUpdateMarketingCampaignArgs, 'id' | 'input'>>;
     deleteMarketingCampaign?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketingCampaignArgs, 'id'>>;
     approveMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationApproveMarketingCampaignArgs, 'id' | 'lastChangeDate'>>;
+    syncMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationSyncMarketingCampaignArgs, 'id'>>;
     createMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationCreateMarketplaceArgs, 'input'>>;
     updateMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationUpdateMarketplaceArgs, 'id' | 'input'>>;
     deleteMarketplace?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketplaceArgs, 'id'>>;
@@ -2695,6 +2767,8 @@ export declare type MutationResolvers<ContextType = any, ParentType extends Reso
     createProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
     updateProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationUpdateProductArgs, 'id' | 'input'>>;
     deleteProduct?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'id'>>;
+    requestResetPassword?: Resolver<ResolversTypes['RequestResult'], ParentType, ContextType, RequireFields<MutationRequestResetPasswordArgs, 'input'>>;
+    resetPassword?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'input'>>;
     login?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
     updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
     refreshLogin?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationRefreshLoginArgs, 'input'>>;
@@ -2793,6 +2867,9 @@ export declare type QueryResolvers<ContextType = any, ParentType extends Resolve
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<QueryVendorArgs, 'id'>>;
     vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<QueryVendorsArgs, 'showDeleted'>>;
 };
+export declare type RequestResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['RequestResult'] = ResolversParentTypes['RequestResult']> = {
+    result?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
 export declare type ResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['Result'] = ResolversParentTypes['Result']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
@@ -2825,6 +2902,21 @@ export declare type ResultResourceResolvers<ContextType = any, ParentType extend
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
+};
+export declare type SingleUseTokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseToken'] = ResolversParentTypes['SingleUseToken']> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    token?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+};
+export declare type SingleUseTokenConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseTokenConnection'] = ResolversParentTypes['SingleUseTokenConnection']> = {
+    edges?: Resolver<Array<ResolversTypes['SingleUseTokenEdge']>, ParentType, ContextType>;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+};
+export declare type SingleUseTokenEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseTokenEdge'] = ResolversParentTypes['SingleUseTokenEdge']> = {
+    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    node?: Resolver<ResolversTypes['SingleUseToken'], ParentType, ContextType>;
 };
 export declare type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -2939,11 +3031,15 @@ export declare type Resolvers<ContextType = any> = {
     ProductConnection?: ProductConnectionResolvers<ContextType>;
     ProductEdge?: ProductEdgeResolvers<ContextType>;
     Query?: QueryResolvers<ContextType>;
+    RequestResult?: RequestResultResolvers<ContextType>;
     Result?: ResultResolvers<ContextType>;
     ResultAnalytics?: ResultAnalyticsResolvers<ContextType>;
     ResultConnection?: ResultConnectionResolvers<ContextType>;
     ResultEdge?: ResultEdgeResolvers<ContextType>;
     ResultResource?: ResultResourceResolvers;
+    SingleUseToken?: SingleUseTokenResolvers<ContextType>;
+    SingleUseTokenConnection?: SingleUseTokenConnectionResolvers<ContextType>;
+    SingleUseTokenEdge?: SingleUseTokenEdgeResolvers<ContextType>;
     Token?: TokenResolvers<ContextType>;
     Upload?: GraphQLScalarType;
     User?: UserResolvers<ContextType>;

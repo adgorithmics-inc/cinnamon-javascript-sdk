@@ -55,6 +55,8 @@ import {
     CreativeTemplate,
     CreativeTemplateCreateInput,
     CreativeTemplateUpdateInput,
+    RequestResetPasswordInput,
+    ResetPasswordInput,
 } from './generated/graphql';
 
 import {
@@ -63,6 +65,8 @@ import {
     OrganizationField,
     UserFields,
     UserField,
+    RequestResultFields,
+    RequestResultField,
     MarketplaceFields,
     MarketplaceField,
     MediaChannelFields,
@@ -346,6 +350,64 @@ export class Cinnamon {
                 token,
             })
         ).data.updateUser;
+    }
+
+    // ####################################
+    // SingleUseToken
+    // ####################################
+
+    private defaultRequestResultFields = [RequestResultFields.result];
+
+    @bind
+    async requestResetPassword({
+        input,
+        fields = this.defaultRequestResultFields,
+        headers,
+        token,
+    }: {
+        input: RequestResetPasswordInput;
+        fields?: RequestResultField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'requestResetPassword'>({
+                query: `mutation($input: RequestResetPasswordInput!) {
+                    requestResetPassword(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.requestResetPassword;
+    }
+
+    @bind
+    async resetPassword({
+        input,
+        fields = this.defaultUserFields,
+        headers,
+        token,
+    }: {
+        input: ResetPasswordInput;
+        fields?: UserField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'resetPassword'>({
+                query: `mutation($input: ResetPasswordInput!) {
+                    resetPassword(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.resetPassword;
     }
 
     // ####################################
