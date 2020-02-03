@@ -1,6 +1,6 @@
 {
   "name": "@adgorithmics/cinnamon-sdk",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Adgorithmics Cinnamon API SDK",
   "main": "index.node.js",
   "browser": "index.web.js",
