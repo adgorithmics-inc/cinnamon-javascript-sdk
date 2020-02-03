@@ -19,7 +19,7 @@ export declare type Scalars = {
     Float: number;
     /** The ObjectId is a 24 byte unique identifier for an object */
     ObjectId: ObjectId;
-    /** Date strings must follow ISO 8601 specifications */
+    /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
     DateISO: DateISO;
     /** String must contain at least one character */
     NonEmptyString: NonEmptyString;
@@ -41,7 +41,7 @@ export declare type Scalars = {
      *     {
      *       "type": "array",
      *       "items": {
-     *         "anyOf": [
+     *         "oneOf": [
      *           {
      *             "$ref": "#/definitions/filterInput"
      *           },
@@ -74,7 +74,8 @@ export declare type Scalars = {
      *             "operator": {
      *               "type": "string",
      *               "enum": [
-     *                 "IN"
+     *                 "IN",
+     *                 "NOT_IN"
      *               ],
      *               "required": true
      *             },
@@ -105,6 +106,8 @@ export declare type Scalars = {
      *                 "NOT_EQUALS",
      *                 "CONTAINS",
      *                 "ICONTAINS",
+     *                 "NOT_CONTAINS",
+     *                 "NOT_ICONTAINS",
      *                 "GT",
      *                 "GTE",
      *                 "LT",
@@ -132,7 +135,8 @@ export declare type Scalars = {
      *             "operator": {
      *               "type": "string",
      *               "enum": [
-     *                 "IS_NULL"
+     *                 "IS_NULL",
+     *                 "NOT_NULL"
      *               ],
      *               "required": true
      *             }
@@ -145,104 +149,24 @@ export declare type Scalars = {
      * ```
      */
     FilterInput: FilterInput;
-    /** The `Upload` scalar type represents a file upload. */
-    Upload: any;
 };
-/** Authorization field type */
-export declare enum AuthField {
-    /** Generic object id */
-    Id = "id",
-    /** User id */
-    UserId = "userId",
-    /** Vendor id */
-    VendorId = "vendorId",
-    /** Organization id */
-    OrganizationId = "organizationId",
-    /** Marketplace id */
-    MarketplaceId = "marketplaceId",
-    /** Media channel id */
-    MediaChannelId = "mediaChannelId",
-    /** Campaign template id */
-    CampaignTemplateId = "campaignTemplateId",
-    /** Entitlement target resource id */
-    ResourceId = "resourceId",
-    /** Product catalog id */
-    CatalogId = "catalogId",
-    /** Product ids */
-    ProductIds = "productIds",
-    /** Creative template id */
-    CreativeTemplateId = "creativeTemplateId"
-}
-/** Location of the authorization operation */
-export declare enum AuthLocation {
-    /** On the query arguments */
-    Arg = "ARG",
-    /** On the mutation input */
-    Input = "INPUT",
-    /** On the parent object */
-    Parent = "PARENT",
-    /** On the referenced catalog */
-    Catalog = "CATALOG",
-    /** On the referenced entitlement */
-    Entitlement = "ENTITLEMENT",
-    /** On the referenced marketing ad */
-    MarketingAd = "MARKETING_AD",
-    /** On the referenced marketing campaign */
-    MarketingCampaign = "MARKETING_CAMPAIGN",
-    /** On the referenced campaign template */
-    CampaignTemplate = "CAMPAIGN_TEMPLATE",
-    /** On the referenced media channel */
-    MediaChannel = "MEDIA_CHANNEL",
-    /** On the referenced product */
-    Product = "PRODUCT",
-    /** On the referenced result */
-    Result = "RESULT",
-    /** On the referenced vendor */
-    Vendor = "VENDOR",
-    VendorToken = "VENDOR_TOKEN",
-    /** On the referenced creative layer */
-    CreativeLayer = "CREATIVE_LAYER",
-    /** On the referenced creative template */
-    CreativeTemplate = "CREATIVE_TEMPLATE",
-    /** On the referenced creative font */
-    CreativeFont = "CREATIVE_FONT",
-    /** On the referenced creative image */
-    CreativeImage = "CREATIVE_IMAGE"
-}
 /** Types of permissions that can be granted to resources */
 export declare enum AuthPermission {
-    /** Allows fetching the resource */
     Read = "READ",
-    /** Allows creation and updating the resource */
     Write = "WRITE",
-    /** Allows deleting the resource */
     Delete = "DELETE",
-    /** Allows managing entitlements targeting the resource  */
     ManageEntitlements = "MANAGE_ENTITLEMENTS"
 }
-/** Permission check type */
-export declare enum AuthType {
-    /** Permission granted by entitlement */
-    Entitlement = "ENTITLEMENT",
-    /** Permission granted by vendor relationship */
-    Vendor = "VENDOR",
-    /** Permission granted by user ownership */
-    UserOnly = "USER_ONLY"
-}
-export declare enum CacheControlScope {
-    Public = "PUBLIC",
-    Private = "PRIVATE"
-}
 /**
- * Campaign templates contain targeting and creative information tailored
- * to your objectives specific to your goals and business needs
+ * Campaign templates contain targeting and creative information tailored to your
+ * objectives specific to your goals and business needs
  */
 export declare type CampaignTemplate = {
-    /** Id of the campaign template */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the campaign template was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the campaign template was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the campaign template */
     name: Scalars['NonEmptyString'];
@@ -262,44 +186,44 @@ export declare type CampaignTemplate = {
     marketingCampaigns: MarketingCampaignConnection;
 };
 /**
- * Campaign templates contain targeting and creative information tailored
- * to your objectives specific to your goals and business needs
+ * Campaign templates contain targeting and creative information tailored to your
+ * objectives specific to your goals and business needs
  */
 export declare type CampaignTemplateMarketingCampaignsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/** Campaign templates collection */
 export declare type CampaignTemplateConnection = {
-    /** Collection of campaign templates */
+    /** Collection of this object */
     edges: Array<CampaignTemplateEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Campaign template in a collection */
 export declare type CampaignTemplateEdge = {
-    /** Id of the contained campaign template */
-    cursor: Scalars['ObjectId'];
-    /** Container for a campaign template */
+    /** Record or data of this object */
     node: CampaignTemplate;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Catalogs contain products linked to a specific platform and media channel */
 export declare type Catalog = {
-    /** Id of the product catalog */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
+    /** Date and time of creation */
+    creationDate: Scalars['DateISO'];
+    /** Date and time of last updated */
+    lastChangeDate: Scalars['DateISO'];
     /** Name of the product catalog */
     name: Scalars['NonEmptyString'];
     /** Category of the products referenced by the product catalog */
     catalogType: CatalogType;
-    /** Date and time the product catalog was created */
-    creationDate: Scalars['DateISO'];
-    /** Date and time the product catalog was last modified */
-    lastChangeDate: Scalars['DateISO'];
     /** Id of the product catalog on the related platform */
     remoteId?: Maybe<Scalars['String']>;
     /** System status of the product catalog */
@@ -317,20 +241,21 @@ export declare type Catalog = {
 };
 /** Catalogs contain products linked to a specific platform and media channel */
 export declare type CatalogProductsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/** Product catalogs collection */
 export declare type CatalogConnection = {
-    /** Collection of product catalogs */
+    /** Collection of this object */
     edges: Array<CatalogEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
 /** Product catalog creation input data */
 export declare type CatalogCreateInput = {
@@ -341,12 +266,11 @@ export declare type CatalogCreateInput = {
     /** Category of the products referenced by the catalog */
     catalogType: CatalogType;
 };
-/** Product catalog in a collection */
 export declare type CatalogEdge = {
-    /** Id of the contained product catalog */
-    cursor: Scalars['ObjectId'];
-    /** Container for a product catalog */
+    /** Record or data of this object */
     node: Catalog;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Product catalog import input data */
 export declare type CatalogImportInput = {
@@ -355,27 +279,17 @@ export declare type CatalogImportInput = {
     /** Id of the product catalog on the related platform */
     remoteId: Scalars['String'];
 };
-/** Product catalog type */
+/** Category of the products referenced by the product catalog */
 export declare enum CatalogType {
-    /** Catalog of bookable services */
     Bookable = "bookable",
-    /** Catalog of standard products or services */
     Commerce = "commerce",
-    /** Catalog of travel destinations */
     Destinations = "destinations",
-    /** Catalog of plane tickets */
     Flights = "flights",
-    /** Catalog of home rentals */
     HomeListings = "home_listings",
-    /** Catalog of hotel rooms */
     Hotels = "hotels",
-    /** Catalog of store-based products or services */
     OfflineCommerce = "offline_commerce",
-    /** Catalog of event tickets */
     TicketedExperiences = "ticketed_experiences",
-    /** Catalog of transactable goods */
     TransactableItems = "transactable_items",
-    /** Catalog of vehicle rentals or sales */
     Vehicles = "vehicles"
 }
 /** Product catalog update input data */
@@ -383,13 +297,17 @@ export declare type CatalogUpdateInput = {
     /** Name of the product catalog */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
-/** Creative Font */
+/**
+ * Creative font is a collection of font properties and parameters associated with
+ * a specific marketplace used by [Adgo Creative Editor](https://adgogh.adgo.io/)
+ * to modify the text that exists on a text layer
+ */
 export declare type CreativeFont = {
-    /** Id of the creative font */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the creative font was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the creative font was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the creative font */
     name: Scalars['NonEmptyString'];
@@ -397,19 +315,20 @@ export declare type CreativeFont = {
     url: Scalars['NonEmptyString'];
     /** Properties of the creative font */
     properties: Scalars['JSONObject'];
-    /** Marketplace related to the creative font */
-    marketplace: Marketplace;
     /** System status of the creative font */
     systemStatus: SystemStatus;
     /** Validation errors of the creative font */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Marketplace related to the creative font */
+    marketplace: Marketplace;
 };
-/** Creative font collection */
 export declare type CreativeFontConnection = {
-    /** Collection of creative fonts */
+    /** Collection of this object */
     edges: Array<CreativeFontEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
 /** Creative font creation input data */
 export declare type CreativeFontCreateInput = {
@@ -419,15 +338,14 @@ export declare type CreativeFontCreateInput = {
     url: Scalars['NonEmptyString'];
     /** Properties of the creative font */
     properties: Scalars['JSONObject'];
-    /** Marketplace related to the creative font */
+    /** Id of the marketplace related to the creative font */
     marketplaceId: Scalars['ObjectId'];
 };
-/** Creative font in a collection */
 export declare type CreativeFontEdge = {
-    /** Id of the contained creative font */
-    cursor: Scalars['ObjectId'];
-    /** Container for a creative font */
+    /** Record or data of this object */
     node: CreativeFont;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Creative font update input data */
 export declare type CreativeFontUpdateInput = {
@@ -438,13 +356,17 @@ export declare type CreativeFontUpdateInput = {
     /** Properties of the creative font */
     properties?: Maybe<Scalars['JSONObject']>;
 };
-/** Creative Image */
+/**
+ * Creative image is a collection of image properties and parameters associated
+ * with a specific marketplace used by [Adgo Creative
+ * Editor](https://adgogh.adgo.io/) to modify the image that exists on an image layer
+ */
 export declare type CreativeImage = {
-    /** Id of the creative image */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the creative image was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the creative image was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the creative image */
     name: Scalars['NonEmptyString'];
@@ -452,19 +374,20 @@ export declare type CreativeImage = {
     url: Scalars['NonEmptyString'];
     /** Properties of the creative image */
     properties: Scalars['JSONObject'];
-    /** Marketplace related to the creative image */
-    marketplace: Marketplace;
     /** System status of the creative image */
     systemStatus: SystemStatus;
     /** Validation errors of the creative image */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Marketplace related to the creative image */
+    marketplace: Marketplace;
 };
-/** Creative image collection */
 export declare type CreativeImageConnection = {
-    /** Collection of creative images */
+    /** Collection of this object */
     edges: Array<CreativeImageEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
 /** Creative image creation input data */
 export declare type CreativeImageCreateInput = {
@@ -474,15 +397,14 @@ export declare type CreativeImageCreateInput = {
     url: Scalars['NonEmptyString'];
     /** Properties of the creative image */
     properties: Scalars['JSONObject'];
-    /** Marketplace related to the creative image */
+    /** Id of the marketplace referenced by the creative image */
     marketplaceId: Scalars['ObjectId'];
 };
-/** Creative image in a collection */
 export declare type CreativeImageEdge = {
-    /** Id of the contained creative image */
-    cursor: Scalars['ObjectId'];
-    /** Container for a creative image */
+    /** Record or data of this object */
     node: CreativeImage;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Creative image update input data */
 export declare type CreativeImageUpdateInput = {
@@ -493,14 +415,51 @@ export declare type CreativeImageUpdateInput = {
     /** Properties of the creative image */
     properties?: Maybe<Scalars['JSONObject']>;
 };
-/** Creative Layer */
+/**
+ * Creative layer is a collection of properties and parameters associated with a
+ * specific creative template used by [Adgo Creative
+ * Editor](https://adgogh.adgo.io/) to modify creative objects
+ */
 export declare type CreativeLayer = {
-    /** Id of the creative layer */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the creative layer was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the creative layer was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
+    /** Name of the creative layer */
+    name: Scalars['NonEmptyString'];
+    /** Height of the creative layer */
+    height: Scalars['Int'];
+    /** Width of the creative layer */
+    width: Scalars['Int'];
+    /** X position of the creative layer */
+    x: Scalars['Int'];
+    /** Y position of the creative layer */
+    y: Scalars['Int'];
+    /** Order of the creative layer */
+    order: Scalars['Int'];
+    /** Type of the creative layer */
+    type: CreativeLayerTypes;
+    /** Creative template used by the creative layer */
+    properties: Scalars['JSONObject'];
+    /** System status of the creative layer */
+    systemStatus: SystemStatus;
+    /** Validation errors of the creative layer */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Creative template used by the creative layer */
+    creativeTemplate: CreativeTemplate;
+};
+export declare type CreativeLayerConnection = {
+    /** Collection of this object */
+    edges: Array<CreativeLayerEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
+};
+/** Creative layer creation input data */
+export declare type CreativeLayerCreateInput = {
     /** Name of the creative layer */
     name: Scalars['NonEmptyString'];
     /** Height of the creative layer */
@@ -517,47 +476,14 @@ export declare type CreativeLayer = {
     type: CreativeLayerTypes;
     /** Properties of the creative layer */
     properties: Scalars['JSONObject'];
-    /** Creative template used by the creative layer */
-    creativeTemplate: CreativeTemplate;
-    /** System status of the creative layer */
-    systemStatus: SystemStatus;
-    /** Validation errors of the creative layer */
-    errors?: Maybe<Array<Scalars['JSONObject']>>;
-};
-/** Creative Layers collection */
-export declare type CreativeLayerConnection = {
-    /** Collection of creative layers */
-    edges: Array<CreativeLayerEdge>;
-    /** Pagination information */
-    pageInfo: PageInfo;
-};
-/** Creative layer creation input data */
-export declare type CreativeLayerCreateInput = {
-    /** Name of the creative layer */
-    name: Scalars['NonEmptyString'];
-    /** Height of the creative layer */
-    height: Scalars['Int'];
-    /** Width of the creative layer */
-    width: Scalars['Int'];
-    /** X position of the creative layer */
-    x: Scalars['Int'];
-    /** Y position of the creative layer */
-    y: Scalars['Int'];
-    /** Order of the creative layer */
-    order: Scalars['Int'];
-    /** Type of creative layer */
-    type: CreativeLayerTypes;
     /** Creative template related to this creative layer */
     creativeTemplateId: Scalars['ObjectId'];
-    /** Properties of the creative layer */
-    properties: Scalars['JSONObject'];
 };
-/** Creative layer in a collection */
 export declare type CreativeLayerEdge = {
-    /** Id of the contained creative layer */
-    cursor: Scalars['ObjectId'];
-    /** Container for a creative layer */
+    /** Record or data of this object */
     node: CreativeLayer;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Types of creative layer */
 export declare enum CreativeLayerTypes {
@@ -578,18 +504,22 @@ export declare type CreativeLayerUpdateInput = {
     y?: Maybe<Scalars['Int']>;
     /** Order of the creative layer */
     order?: Maybe<Scalars['Int']>;
-    /** Type of the creative layer */
+    /** Type of creative layer */
     type?: Maybe<CreativeLayerTypes>;
     /** Properties of the creative layer */
     properties?: Maybe<Scalars['JSONObject']>;
 };
-/** Creative Template */
+/**
+ * Creative template is the top level of a marketplace's creative objects
+ * hierarchy. It is a collection of ad creative parameters used by [Adgo Creative
+ * Editor](https://adgogh.adgo.io/)
+ */
 export declare type CreativeTemplate = {
-    /** Id of the creative template */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the creative template was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the creative template was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the creative template */
     name: Scalars['NonEmptyString'];
@@ -597,31 +527,35 @@ export declare type CreativeTemplate = {
     height: Scalars['Int'];
     /** Width of the creative template */
     width: Scalars['Int'];
-    /** Marketplace related to the creative template */
-    marketplace: Marketplace;
-    /** Creative layers available for the creative template */
-    creativeLayers: CreativeLayerConnection;
     /** System status of the creative template */
     systemStatus: SystemStatus;
     /** Validation errors of the creative template */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Marketplace related to the creative template */
+    marketplace: Marketplace;
+    /** Creative layers available for the creative template */
+    creativeLayers: CreativeLayerConnection;
 };
-/** Creative Template */
+/**
+ * Creative template is the top level of a marketplace's creative objects
+ * hierarchy. It is a collection of ad creative parameters used by [Adgo Creative
+ * Editor](https://adgogh.adgo.io/)
+ */
 export declare type CreativeTemplateCreativeLayersArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
-    showDeleted?: Maybe<Scalars['Boolean']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/** Creative templates collection */
 export declare type CreativeTemplateConnection = {
-    /** Collection of creative templates */
+    /** Collection of this object */
     edges: Array<CreativeTemplateEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
 /** Creative template creation input data */
 export declare type CreativeTemplateCreateInput = {
@@ -634,12 +568,11 @@ export declare type CreativeTemplateCreateInput = {
     /** Id of the marketplace referenced by the creative template */
     marketplaceId: Scalars['ObjectId'];
 };
-/** Creative template in a collection */
 export declare type CreativeTemplateEdge = {
-    /** Id of the contained creative template */
-    cursor: Scalars['ObjectId'];
-    /** Container for a creative template */
+    /** Record or data of this object */
     node: CreativeTemplate;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Creative template update input data */
 export declare type CreativeTemplateUpdateInput = {
@@ -657,66 +590,62 @@ export declare type Deletion = {
 };
 /** A set of user permissions related to a resource */
 export declare type Entitlement = {
-    /** Id of the entitlement */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the entitlement was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the entitlement was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
-    /** User the permissions are granted to */
-    user: User;
     /** Type of resource related to the entitlement */
     type: EntitlementResourceTypeEnum;
-    /** Resource related to the entitlement */
-    resource?: Maybe<EntitlementResource>;
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
+    /** User the permissions are granted to */
+    user: User;
+    /** Resource related to the entitlement */
+    resource: EntitlementResource;
 };
-/** Entitlement collection */
 export declare type EntitlementConnection = {
-    /** Collection of entitlements */
+    /** Collection of this object */
     edges: Array<EntitlementEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Entitlement in a collection */
 export declare type EntitlementEdge = {
-    /** Id of the contained entitlement */
-    cursor: Scalars['ObjectId'];
-    /** Container for an entitlement */
+    /** Record or data of this object */
     node: Entitlement;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Entitlement creation input data */
 export declare type EntitlementInput = {
-    /** Id of the user the permissions are granted to */
-    userId: Scalars['ObjectId'];
     /** Id of the resource related to the entitlement */
     resourceId: Scalars['ObjectId'];
+    /** Id of the user the permissions are granted to */
+    userId: Scalars['ObjectId'];
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
-/** Resource targeted by an entitlement */
 export declare type EntitlementResource = {
     /** Id of the resource */
     id: Scalars['ObjectId'];
+    /** Date and time the resource was created */
+    creationDate: Scalars['DateISO'];
+    /** Date and time the resource was last updated */
+    lastChangeDate: Scalars['DateISO'];
     /** Name of the resource */
     name: Scalars['NonEmptyString'];
     /** System status of the resource */
     systemStatus: SystemStatus;
-    /** Date and time the resource was created */
-    creationDate: Scalars['DateISO'];
-    /** Date and time the resource was last modified */
-    lastChangeDate: Scalars['DateISO'];
     /** Validation errors of the resource */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 /** Resource types that can be granted permissions to */
 export declare enum EntitlementResourceTypeEnum {
-    /** Marketplace resource type */
-    Marketplace = "Marketplace",
-    /** Organization resource type */
     Organization = "Organization",
-    /** Media channel resource type */
+    Marketplace = "Marketplace",
     MediaChannel = "MediaChannel"
 }
 /** Entitlement update input data */
@@ -724,83 +653,86 @@ export declare type EntitlementUpdateInput = {
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
-/**
- * Marketing ad represents an specific ad on a platform belonging
- * to a marketing campaign and associated with a single vendor
- */
+/** Marketing ad represents a specific ad on a platform belonging to a marketing campaign and associated with a single vendor */
 export declare type MarketingAd = ResultResource & {
-    /** Id of the marketing ad */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the marketing ad was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the marketing ad was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
-    /** Id of the marketing ad on the related marketing campaign platform */
-    remoteId: Scalars['String'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Scalars['NonEmptyString']>;
+    /** Vendor related to the marketing ad */
+    vendor?: Maybe<Vendor>;
     /** System status of the marketing ad */
     systemStatus: SystemStatus;
     /** Validation errors of the marketing ad */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Id of the marketing ad on the related marketing campaign platform. */
+    remoteId: Scalars['String'];
     /** Preview data of the marketing ad */
     preview: Scalars['String'];
-    /** The source of the analytics used to derive results data */
-    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
     /** Results related to the marketing ad */
     results: ResultConnection;
     /** Marketing campaigns related to the marketing ad */
     marketingCampaign: MarketingCampaign;
-    /** Vendor related to the marketing ad */
-    vendor?: Maybe<Vendor>;
 };
-/**
- * Marketing ad represents an specific ad on a platform belonging
- * to a marketing campaign and associated with a single vendor
- */
+/** Marketing ad represents a specific ad on a platform belonging to a marketing campaign and associated with a single vendor */
 export declare type MarketingAdResultsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/** Marketing ads collection */
 export declare type MarketingAdConnection = {
-    /** Collection of marketing ads */
+    /** Collection of this object */
     edges: Array<MarketingAdEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Marketing ad in a collection */
 export declare type MarketingAdEdge = {
-    /** Id of the contained marketing ad */
-    cursor: Scalars['ObjectId'];
-    /** Container for a marketing ad */
+    /** Record or data of this object */
     node: MarketingAd;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /**
- * Marketing campaign is a collection of dynamic marketing ads
- * utilizing a specified campaign template, list of products, run
- * time and creative specifications that are launched on a provided
- * media channel
+ * Marketing campaign is a collection of dynamic marketing ads utilizing a
+ * specified campaign template, list of products, run time and creative
+ * specifications that are launched on a provided media channel
  */
 export declare type MarketingCampaign = ResultResource & {
-    /** Id of the marketing campaign */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the marketing campaign was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the marketing campaign was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Scalars['NonEmptyString']>;
+    /** Vendor related to the marketing campaign */
+    vendor?: Maybe<Vendor>;
+    /** System status of the marketing campaign */
+    systemStatus: SystemStatus;
+    /** Validation errors of the marketing campaign */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Name of the marketing campaign */
     name: Scalars['NonEmptyString'];
     /** Delivering status of the marketing campaign */
     status: MarketingCampaignStatus;
+    /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
+    creativeSpec: Scalars['JSONObject'];
+    /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
+    runTimeSpec: Scalars['JSONObject'];
     /** Marketing ads contained by the marketing campaign */
     marketingAds: MarketingAdConnection;
     /** Products referenced by the marketing campaign */
     products: ProductConnection;
-    /** Vendor related to the marketing campaign */
-    vendor?: Maybe<Vendor>;
     /** Catalog related to the marketing campaign */
     catalog: Catalog;
     /** Campaign template related to the marketing campaign */
@@ -809,74 +741,61 @@ export declare type MarketingCampaign = ResultResource & {
     mediaChannel: MediaChannel;
     /** Results referencing the marketing campaign */
     results: ResultConnection;
-    /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
-    creativeSpec: Scalars['JSONObject'];
-    /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
-    runTimeSpec: Scalars['JSONObject'];
-    /** The source of the analytics used to derive results data */
-    resultsSource: Array<Maybe<Scalars['NonEmptyString']>>;
-    /** System status of the marketing campaign */
-    systemStatus: SystemStatus;
-    /** Validation errors of the marketing campaign */
-    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 /**
- * Marketing campaign is a collection of dynamic marketing ads
- * utilizing a specified campaign template, list of products, run
- * time and creative specifications that are launched on a provided
- * media channel
+ * Marketing campaign is a collection of dynamic marketing ads utilizing a
+ * specified campaign template, list of products, run time and creative
+ * specifications that are launched on a provided media channel
  */
 export declare type MarketingCampaignMarketingAdsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
- * Marketing campaign is a collection of dynamic marketing ads
- * utilizing a specified campaign template, list of products, run
- * time and creative specifications that are launched on a provided
- * media channel
+ * Marketing campaign is a collection of dynamic marketing ads utilizing a
+ * specified campaign template, list of products, run time and creative
+ * specifications that are launched on a provided media channel
  */
 export declare type MarketingCampaignProductsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
- * Marketing campaign is a collection of dynamic marketing ads
- * utilizing a specified campaign template, list of products, run
- * time and creative specifications that are launched on a provided
- * media channel
+ * Marketing campaign is a collection of dynamic marketing ads utilizing a
+ * specified campaign template, list of products, run time and creative
+ * specifications that are launched on a provided media channel
  */
 export declare type MarketingCampaignResultsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/** Marketing campaign collection */
 export declare type MarketingCampaignConnection = {
-    /** Collection of marketing campaigns */
+    /** Collection of this object */
     edges: Array<MarketingCampaignEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Marketing campaign in a collection */
 export declare type MarketingCampaignEdge = {
-    /** Id of the marketing campaign */
-    cursor: Scalars['ObjectId'];
-    /** Container for a marketing campaign */
+    /** Record or data of this object */
     node: MarketingCampaign;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Marketing campaign creation input data */
 export declare type MarketingCampaignInput = {
@@ -890,13 +809,12 @@ export declare type MarketingCampaignInput = {
     productIds: Array<Scalars['ObjectId']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
+    /** Name of the marketing campaign */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 /** Delivering status a of a marketing campaign */
 export declare enum MarketingCampaignStatus {
-    /** Active status */
     Active = "ACTIVE",
-    /** Paused status */
     Paused = "PAUSED"
 }
 /** Marketing campaign update input data */
@@ -907,21 +825,26 @@ export declare type MarketingCampaignUpdateInput = {
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
+    /** Name of the marketing campaign */
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 /**
- * Marketplace represents a collection of media channels, campaign templates
- * and vendors. A marketplace belongs to a single organization.
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
  */
 export declare type Marketplace = EntitlementResource & {
-    /** Id of the marketplace */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the marketplace was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the marketplace was last updated */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the marketplace */
     name: Scalars['NonEmptyString'];
+    /** System status of the marketplace */
+    systemStatus: SystemStatus;
+    /** Validation errors of the marketplace */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Organization related to the marketplace */
     organization?: Maybe<Organization>;
     /** Media channels related to the marketplace */
@@ -932,88 +855,87 @@ export declare type Marketplace = EntitlementResource & {
     vendors: VendorConnection;
     /** Vendor tokens associated with the marketplace that can be used to access the api as a vendor */
     vendorTokens: VendorTokenConnection;
-    /** System status of the marketplace */
-    systemStatus: SystemStatus;
-    /** Validation errors of the marketplace */
-    errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Creative templates of the marketplace */
     creativeTemplates: CreativeTemplateConnection;
 };
 /**
- * Marketplace represents a collection of media channels, campaign templates
- * and vendors. A marketplace belongs to a single organization.
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
  */
 export declare type MarketplaceMediaChannelsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
- * Marketplace represents a collection of media channels, campaign templates
- * and vendors. A marketplace belongs to a single organization.
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
  */
 export declare type MarketplaceCampaignTemplatesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
- * Marketplace represents a collection of media channels, campaign templates
- * and vendors. A marketplace belongs to a single organization.
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
  */
 export declare type MarketplaceVendorsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
- * Marketplace represents a collection of media channels, campaign templates
- * and vendors. A marketplace belongs to a single organization.
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
  */
 export declare type MarketplaceVendorTokensArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
-    before?: Maybe<Scalars['String']>;
     after?: Maybe<Scalars['String']>;
-};
-/**
- * Marketplace represents a collection of media channels, campaign templates
- * and vendors. A marketplace belongs to a single organization.
- */
-export declare type MarketplaceCreativeTemplatesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
+    before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
-    first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
-    last?: Maybe<Scalars['Int']>;
-    before?: Maybe<Scalars['String']>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/** Marketplaces collection */
+/**
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
+ */
+export declare type MarketplaceCreativeTemplatesArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
 export declare type MarketplaceConnection = {
-    /** Collection of marketplaces */
+    /** Collection of this object */
     edges: Array<MarketplaceEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Marketplace in a collection */
 export declare type MarketplaceEdge = {
-    /** Id of the contained marketplace */
-    cursor: Scalars['ObjectId'];
-    /** Container for a marketplace */
+    /** Record or data of this object */
     node: Marketplace;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Marketplace creation input */
 export declare type MarketplaceInput = {
@@ -1028,20 +950,27 @@ export declare type MarketplaceUpdateInput = {
     name?: Maybe<Scalars['NonEmptyString']>;
 };
 export declare type Me = {
+    /** Id of the user making this query */
     id: Scalars['ObjectId'];
+    /** Date and time of the user making this query was created */
     creationDate: Scalars['DateISO'];
+    /** Date and time of the user making this query was last modified */
     lastChangeDate: Scalars['DateISO'];
 };
 /** Media channel represents an ad account on a specific platform */
 export declare type MediaChannel = EntitlementResource & {
-    /** Id of the media channel */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the media channel was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the media channel was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the media channel */
     name: Scalars['NonEmptyString'];
+    /** System status of the media channel */
+    systemStatus: SystemStatus;
+    /** Validation errors of the media channel */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Platform the media channel is available for */
     platform: Platform;
     /** Id of the media channel on the corresponding platform */
@@ -1058,10 +987,6 @@ export declare type MediaChannel = EntitlementResource & {
     timezone?: Maybe<Scalars['NonEmptyString']>;
     /** Status of the platform authentication token */
     tokenStatus: TokenStatus;
-    /** System status of the media channel */
-    systemStatus: SystemStatus;
-    /** Validation errors of the media channel */
-    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Product catalogs referenced by the media channel */
     catalogs: CatalogConnection;
     /** Marketplace related to the media channel */
@@ -1069,20 +994,21 @@ export declare type MediaChannel = EntitlementResource & {
 };
 /** Media channel represents an ad account on a specific platform */
 export declare type MediaChannelCatalogsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/** Media channels collection */
 export declare type MediaChannelConnection = {
-    /** Collection of media channels */
+    /** Collection of this object */
     edges: Array<MediaChannelEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
 /** Media channel creation input data */
 export declare type MediaChannelCreateInput = {
@@ -1095,12 +1021,11 @@ export declare type MediaChannelCreateInput = {
     /** Media channel platform authentication token */
     token: Scalars['NonEmptyString'];
 };
-/** Media channel in  a collection */
 export declare type MediaChannelEdge = {
-    /** Id of the contained media channel */
-    cursor: Scalars['ObjectId'];
-    /** Container for a media channel */
+    /** Record or data of this object */
     node: MediaChannel;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Media channel import input data */
 export declare type MediaChannelImportInput = {
@@ -1121,59 +1046,69 @@ export declare type MediaChannelUpdateInput = {
     token?: Maybe<Scalars['NonEmptyString']>;
 };
 export declare type Mutation = {
+    /** Authenticates the user using login input data */
+    login: Token;
+    /** Refreshed the user authentication using refresh login input data */
+    refreshLogin: Token;
     /** Creates a product catalog using input data */
     createCatalog: Catalog;
     /** Imports a product catalog using input data */
     importCatalog: Catalog;
-    /** Deletes a product catalog identified by a given id */
-    deleteCatalog: Deletion;
     /** Updates a product catalog identified by an id using input data */
     updateCatalog: Catalog;
+    /**
+     * Marks a product catalog and all its associated products by the catalog's given
+     * id as DELETED. The catalog resource will not be deleted on the remote platform
+     */
+    deleteCatalog: Deletion;
     /** Creates a creative font using input data */
     createCreativeFont: CreativeFont;
     /** Updates a creative font identified by an id using input data */
     updateCreativeFont: CreativeFont;
-    /** Deletes a creative font identified by an id */
+    /** Marks a creative font identified by an id as DELETED */
     deleteCreativeFont: Deletion;
     /** Creates a creative image using input data */
     createCreativeImage: CreativeImage;
     /** Updates a creative image identified by an id using input data */
     updateCreativeImage: CreativeImage;
-    /** Deletes a creative image identified by an id */
+    /** Marks a creative image identified by an id as DELETED */
     deleteCreativeImage: Deletion;
     /** Creates a creative layer using input data */
     createCreativeLayer: CreativeLayer;
     /** Updates a creative layer identified by an id using input data */
     updateCreativeLayer: CreativeLayer;
-    /** Deletes a creative layer identified by an id */
+    /** Marks a creative layer identified by an id as DELETED */
     deleteCreativeLayer: Deletion;
     /** Creates a creative template using input data */
     createCreativeTemplate: CreativeTemplate;
     /** Updates a creative template identified by an id using input data */
     updateCreativeTemplate: CreativeTemplate;
-    /** Deletes a creative template identified by a given id */
+    /** Marks a creative template identified by an id as DELETED */
     deleteCreativeTemplate: Deletion;
     /** Creates an entitlement using input data */
     createEntitlement: Entitlement;
     /** Updates an entitlement identified by an id using input data */
     updateEntitlement: Entitlement;
-    /** Deletes an entitlement identified by an id */
+    /** Marks an entitlement identified by an id as DELETED */
     deleteEntitlement: Deletion;
     /** Creates a marketing campaign using input data */
     createMarketingCampaign: MarketingCampaign;
     /** Updates a marketing campaign identified by a given id using input data */
     updateMarketingCampaign: MarketingCampaign;
-    /** Deletes a marketing campaign identified by a given id */
-    deleteMarketingCampaign: Deletion;
-    /** Approves a marketing campaign in PENDING_APPROVAL systemStatus */
-    approveMarketingCampaign: MarketingCampaign;
     /** Attempt synchronization of marketingCampaign with mediaChannel platforms, removing all errors on success */
     syncMarketingCampaign: MarketingCampaign;
+    /** Approves a marketing campaign in PENDING_APPROVAL systemStatus */
+    approveMarketingCampaign: MarketingCampaign;
+    /** Marks a marketing campaign identified by an id as DELETED */
+    deleteMarketingCampaign: Deletion;
     /** Creates a marketplace using input data */
     createMarketplace: Marketplace;
     /** Updates a marketplace identified by a given id using input data */
     updateMarketplace: Marketplace;
-    /** Deletes a marketplace identified by an id */
+    /**
+     * Marks a marketplace identified by an id as DELETED. The associated product
+     * catalogs of this marketplace will also be marked as DELETED
+     */
     deleteMarketplace: Deletion;
     /** Creates a media channel using input data */
     createMediaChannel: MediaChannel;
@@ -1181,40 +1116,45 @@ export declare type Mutation = {
     importMediaChannel: MediaChannel;
     /** Updates a media channel identified by an id using input data */
     updateMediaChannel: MediaChannel;
-    /** Deletes a media channel identified by an id */
+    /**
+     * Marks a media channel identified by an id as DELETED. The associated results,
+     * products and marketing ads of this media channel will also be marked as DELETED
+     */
     deleteMediaChannel: Deletion;
     /** Creates an organization using input data */
     createOrganization: Organization;
     /** Updates an organization identified by a given id using input data */
     updateOrganization: Organization;
-    /** Deletes an organization identified by a given id */
+    /** Marks an organization identified by a given id as DELETED */
     deleteOrganization: Deletion;
     /** Creates a product using input data */
     createProduct: Product;
     /** Updates a product identified by an id using input data */
     updateProduct: Product;
-    /** Deletes a product identified by a given id */
+    /** Marks a product identified by a given id as DELETED */
     deleteProduct: Deletion;
     /** Request an email containing a token and link to reset password */
     requestResetPassword: RequestResult;
     /** Use the reset password token to update user password */
     resetPassword: User;
-    /** Authenticates the user using login input data */
-    login: Token;
     /** Updates the user using update input data */
     updateUser: User;
-    /** Refreshed the user authentication using refresh login input data */
-    refreshLogin: Token;
-    /** Creates a vendor token using input data */
-    createVendorToken: VendorToken;
-    /** Deletes a vendor token identified by a given id */
-    deleteVendorToken: Deletion;
     /** Creates a vendor using input data */
     createVendor: Vendor;
     /** Updates a vendor identified by a given id using input data */
     updateVendor: Vendor;
-    /** Deletes a vendor identified by a given id */
+    /** Marks a vendor identified by a given id as DELETED. The associated products of this vendor be marked as DELETED */
     deleteVendor: Deletion;
+    /** Creates a vendor token using input data */
+    createVendorToken: VendorToken;
+    /** Deletes a vendor token identified by a given id */
+    deleteVendorToken: Deletion;
+};
+export declare type MutationLoginArgs = {
+    input: UserLoginInput;
+};
+export declare type MutationRefreshLoginArgs = {
+    input: RefreshTokenInput;
 };
 export declare type MutationCreateCatalogArgs = {
     input: CatalogCreateInput;
@@ -1222,19 +1162,19 @@ export declare type MutationCreateCatalogArgs = {
 export declare type MutationImportCatalogArgs = {
     input: CatalogImportInput;
 };
-export declare type MutationDeleteCatalogArgs = {
+export declare type MutationUpdateCatalogArgs = {
+    input: CatalogUpdateInput;
     id: Scalars['ObjectId'];
 };
-export declare type MutationUpdateCatalogArgs = {
+export declare type MutationDeleteCatalogArgs = {
     id: Scalars['ObjectId'];
-    input: CatalogUpdateInput;
 };
 export declare type MutationCreateCreativeFontArgs = {
     input: CreativeFontCreateInput;
 };
 export declare type MutationUpdateCreativeFontArgs = {
-    id: Scalars['ObjectId'];
     input: CreativeFontUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteCreativeFontArgs = {
     id: Scalars['ObjectId'];
@@ -1243,8 +1183,8 @@ export declare type MutationCreateCreativeImageArgs = {
     input: CreativeImageCreateInput;
 };
 export declare type MutationUpdateCreativeImageArgs = {
-    id: Scalars['ObjectId'];
     input: CreativeImageUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteCreativeImageArgs = {
     id: Scalars['ObjectId'];
@@ -1253,8 +1193,8 @@ export declare type MutationCreateCreativeLayerArgs = {
     input: CreativeLayerCreateInput;
 };
 export declare type MutationUpdateCreativeLayerArgs = {
-    id: Scalars['ObjectId'];
     input: CreativeLayerUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteCreativeLayerArgs = {
     id: Scalars['ObjectId'];
@@ -1263,8 +1203,8 @@ export declare type MutationCreateCreativeTemplateArgs = {
     input: CreativeTemplateCreateInput;
 };
 export declare type MutationUpdateCreativeTemplateArgs = {
-    id: Scalars['ObjectId'];
     input: CreativeTemplateUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteCreativeTemplateArgs = {
     id: Scalars['ObjectId'];
@@ -1273,8 +1213,8 @@ export declare type MutationCreateEntitlementArgs = {
     input: EntitlementInput;
 };
 export declare type MutationUpdateEntitlementArgs = {
-    id: Scalars['ObjectId'];
     input: EntitlementUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteEntitlementArgs = {
     id: Scalars['ObjectId'];
@@ -1283,25 +1223,25 @@ export declare type MutationCreateMarketingCampaignArgs = {
     input: MarketingCampaignInput;
 };
 export declare type MutationUpdateMarketingCampaignArgs = {
-    id: Scalars['ObjectId'];
     input: MarketingCampaignUpdateInput;
+    id: Scalars['ObjectId'];
 };
-export declare type MutationDeleteMarketingCampaignArgs = {
+export declare type MutationSyncMarketingCampaignArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type MutationApproveMarketingCampaignArgs = {
-    id: Scalars['ObjectId'];
     lastChangeDate: Scalars['DateISO'];
+    id: Scalars['ObjectId'];
 };
-export declare type MutationSyncMarketingCampaignArgs = {
+export declare type MutationDeleteMarketingCampaignArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type MutationCreateMarketplaceArgs = {
     input: MarketplaceInput;
 };
 export declare type MutationUpdateMarketplaceArgs = {
-    id: Scalars['ObjectId'];
     input: MarketplaceUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteMarketplaceArgs = {
     id: Scalars['ObjectId'];
@@ -1313,8 +1253,8 @@ export declare type MutationImportMediaChannelArgs = {
     input: MediaChannelImportInput;
 };
 export declare type MutationUpdateMediaChannelArgs = {
-    id: Scalars['ObjectId'];
     input: MediaChannelUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteMediaChannelArgs = {
     id: Scalars['ObjectId'];
@@ -1323,8 +1263,8 @@ export declare type MutationCreateOrganizationArgs = {
     input: OrganizationInput;
 };
 export declare type MutationUpdateOrganizationArgs = {
-    id: Scalars['ObjectId'];
     input: OrganizationUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteOrganizationArgs = {
     id: Scalars['ObjectId'];
@@ -1333,8 +1273,8 @@ export declare type MutationCreateProductArgs = {
     input: ProductInput;
 };
 export declare type MutationUpdateProductArgs = {
-    id: Scalars['ObjectId'];
     input: ProductUpdateInput;
+    id: Scalars['ObjectId'];
 };
 export declare type MutationDeleteProductArgs = {
     id: Scalars['ObjectId'];
@@ -1345,14 +1285,18 @@ export declare type MutationRequestResetPasswordArgs = {
 export declare type MutationResetPasswordArgs = {
     input: ResetPasswordInput;
 };
-export declare type MutationLoginArgs = {
-    input: UserLoginInput;
-};
 export declare type MutationUpdateUserArgs = {
     input: UserUpdateInput;
 };
-export declare type MutationRefreshLoginArgs = {
-    input: RefreshTokenInput;
+export declare type MutationCreateVendorArgs = {
+    input: VendorInput;
+};
+export declare type MutationUpdateVendorArgs = {
+    input: VendorUpdateInput;
+    id: Scalars['ObjectId'];
+};
+export declare type MutationDeleteVendorArgs = {
+    id: Scalars['ObjectId'];
 };
 export declare type MutationCreateVendorTokenArgs = {
     input: VendorTokenInput;
@@ -1360,99 +1304,59 @@ export declare type MutationCreateVendorTokenArgs = {
 export declare type MutationDeleteVendorTokenArgs = {
     id: Scalars['ObjectId'];
 };
-export declare type MutationCreateVendorArgs = {
-    input: VendorInput;
-};
-export declare type MutationUpdateVendorArgs = {
-    id: Scalars['ObjectId'];
-    input: VendorUpdateInput;
-};
-export declare type MutationDeleteVendorArgs = {
-    id: Scalars['ObjectId'];
-};
-/** Filter operator */
-export declare enum Operator {
-    /** Field value equals the given value */
-    Equals = "EQUALS",
-    /** Field value is not equal to the given value */
-    NotEquals = "NOT_EQUALS",
-    /** Field contains the given value (case sensitive) */
-    Contains = "CONTAINS",
-    /** Field contains the given value (case insensitive) */
-    Icontains = "ICONTAINS",
-    /** Field value is greater than the given value */
-    Gt = "GT",
-    /** Field value is equal or greater than the given value */
-    Gte = "GTE",
-    /** Field value is lower than the given value */
-    Lt = "LT",
-    /** Field value is equal or lower than the given value */
-    Lte = "LTE",
-    /** Field value is contained in the given list of values */
-    In = "IN",
-    /** Field value is null */
-    IsNull = "IS_NULL"
-}
-/**
- * Organization is the top level of your resources hierarchy
- * and links to all owned marketplaces
- */
+/** Organization is the top level of your resources hierarchy and links to all owned marketplaces */
 export declare type Organization = EntitlementResource & {
-    /** Id of the organization */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the organization was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the organization was last updated */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
-    users: UserConnection;
-    marketplaces: MarketplaceConnection;
     /** Name of the organization */
     name: Scalars['NonEmptyString'];
-    /** Tier type of the organization */
-    tier: OrganizationTierEnum;
     /** System status of the organization */
     systemStatus: SystemStatus;
     /** Validation errors of the organization */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Tier type of the organization */
+    tier: OrganizationTierEnum;
+    /** Users that are members of this organization */
+    users: UserConnection;
+    /** Marketplaces that belong to this organization */
+    marketplaces: MarketplaceConnection;
 };
-/**
- * Organization is the top level of your resources hierarchy
- * and links to all owned marketplaces
- */
+/** Organization is the top level of your resources hierarchy and links to all owned marketplaces */
 export declare type OrganizationUsersArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/**
- * Organization is the top level of your resources hierarchy
- * and links to all owned marketplaces
- */
+/** Organization is the top level of your resources hierarchy and links to all owned marketplaces */
 export declare type OrganizationMarketplacesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/** Organizations collection */
 export declare type OrganizationConnection = {
-    /** Collection of organizations */
+    /** Collection of this object */
     edges: Array<OrganizationEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Organization in a collection */
 export declare type OrganizationEdge = {
-    /** Id of the contained organization */
-    cursor: Scalars['ObjectId'];
-    /** Container for an organization */
+    /** Record or data of this object */
     node: Organization;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Organization creation input data */
 export declare type OrganizationInput = {
@@ -1471,34 +1375,31 @@ export declare type OrganizationUpdateInput = {
 };
 /** Pagination information */
 export declare type PageInfo = {
+    /** Id of the last object contained on the page */
+    endCursor?: Maybe<Scalars['String']>;
+    /** Id of the first object contained on the page */
+    startCursor?: Maybe<Scalars['String']>;
     /** Whether there's more pages to retrieve after this page */
     hasNextPage: Scalars['Boolean'];
     /** Whether there's more pages to retrieve before this page */
     hasPreviousPage: Scalars['Boolean'];
-    /** Id of the first object contained on the page */
-    startCursor?: Maybe<Scalars['String']>;
-    /** Id of the last object contained on the page */
-    endCursor?: Maybe<Scalars['String']>;
 };
 /** Marketing platform */
 export declare enum Platform {
-    /** Facebook marketing platform */
     Facebook = "facebook",
-    /** A sandbox testing platform environment that makes no outside media channel communications */
     Sandbox = "sandbox"
 }
 /**
- * Product is a collection of data representing a
- * single product associated with a specific catalog
- * and vendor which can be used to generate
- * dynamic ads via a marekting campaign
+ * Product is a collection of data representing a single product associated with a
+ * specific catalog and vendor which can be used to generate dynamic ads via a
+ * marketing campaign
  */
 export declare type Product = {
-    /** Id of the product */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the product was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the product was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the product */
     name: Scalars['NonEmptyString'];
@@ -1506,49 +1407,48 @@ export declare type Product = {
     sku: Scalars['NonEmptyString'];
     /** Data related to the product stored on the remote platform */
     remoteState?: Maybe<Scalars['JSONObject']>;
-    /** Marketing campaigns referenced by the product */
-    marketingCampaigns: MarketingCampaignConnection;
-    /** Product catalog containing the product */
-    catalog: Catalog;
     /** Data related to the product. [Product Metadata](https://docs.adgo.io/API/ProductMetadata) */
     metadata: Scalars['JSONObject'];
-    /** Vendor owning the product */
-    vendor?: Maybe<Vendor>;
     /** System status of the product */
     systemStatus: SystemStatus;
     /** Validation errors of the product */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Validation warnings */
     warnings?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Marketing campaigns referenced by the product */
+    marketingCampaigns: MarketingCampaignConnection;
+    /** Product catalog containing the product */
+    catalog: Catalog;
+    /** Vendor owning the product */
+    vendor?: Maybe<Vendor>;
 };
 /**
- * Product is a collection of data representing a
- * single product associated with a specific catalog
- * and vendor which can be used to generate
- * dynamic ads via a marekting campaign
+ * Product is a collection of data representing a single product associated with a
+ * specific catalog and vendor which can be used to generate dynamic ads via a
+ * marketing campaign
  */
 export declare type ProductMarketingCampaignsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/** Products collection */
 export declare type ProductConnection = {
-    /** Collection of products */
+    /** Collection of this object */
     edges: Array<ProductEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Product in a collection */
 export declare type ProductEdge = {
-    /** Id of the contained product */
-    cursor: Scalars['ObjectId'];
-    /** Container for a product */
+    /** Record or data of this object */
     node: Product;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Product creation input */
 export declare type ProductInput = {
@@ -1581,7 +1481,7 @@ export declare type Query = {
     creativeImage: CreativeImage;
     /** Returns a collection of creative images */
     creativeImages: CreativeImageConnection;
-    /** Returns a single product catalog identified by a given id */
+    /** Returns a single creative layer identified by a given id */
     creativeLayer: CreativeLayer;
     /** Returns a collection of creative layers */
     creativeLayers: CreativeLayerConnection;
@@ -1598,15 +1498,17 @@ export declare type Query = {
     /** Returns a collection of marketing ads */
     marketingAds: MarketingAdConnection;
     /** Returns a single marketing campaign identified by a given id */
-    marketingCampaign?: Maybe<MarketingCampaign>;
+    marketingCampaign: MarketingCampaign;
     /** Returns a collection of marketing campaigns */
     marketingCampaigns: MarketingCampaignConnection;
     /** Returns a single marketplace identified by a given id */
     marketplace: Marketplace;
     /** Returns a collection of marketplaces */
     marketplaces: MarketplaceConnection;
-    /** Returns a single product catalog identified by a given id */
-    mediaChannel?: Maybe<MediaChannel>;
+    /** Returns the user or vendor making this query */
+    me: Me;
+    /** Returns a single media channel identified by a given id */
+    mediaChannel: MediaChannel;
     /** Returns a collection of media channels */
     mediaChannels: MediaChannelConnection;
     /** Returns a single organization identified by a given id */
@@ -1621,205 +1523,203 @@ export declare type Query = {
     result: Result;
     /** Returns a collecton of results */
     results: ResultConnection;
-    /** Returns the user making this query */
-    me: Me;
-    /** Returns a single vendor token identified by a given id */
-    vendorToken: VendorToken;
-    /** Returns a collection of vendor tokens */
-    vendorTokens: VendorTokenConnection;
     /** Returns a single vendor identified by a given id */
     vendor: Vendor;
     /** Returns a collection of vendors */
     vendors: VendorConnection;
+    /** Returns a single vendor token identified by a given id */
+    vendorToken: VendorToken;
+    /** Returns a collection of vendor tokens */
+    vendorTokens: VendorTokenConnection;
 };
 export declare type QueryCampaignTemplateArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryCampaignTemplatesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryCatalogArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryCatalogsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryCreativeFontArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryCreativeFontsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryCreativeImageArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryCreativeImagesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryCreativeLayerArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryCreativeLayersArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryCreativeTemplateArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryCreativeTemplatesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryEntitlementArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryEntitlementsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
 export declare type QueryMarketingAdArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryMarketingAdsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryMarketingCampaignArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryMarketingCampaignsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryMarketplaceArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryMarketplacesArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryMediaChannelArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryMediaChannelsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryOrganizationArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryOrganizationsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryProductArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryProductsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type QueryResultArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryResultsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
-    first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
-    last?: Maybe<Scalars['Int']>;
-    before?: Maybe<Scalars['String']>;
-};
-export declare type QueryVendorTokenArgs = {
-    id: Scalars['ObjectId'];
-};
-export declare type QueryVendorTokensArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
-    before?: Maybe<Scalars['String']>;
     after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
 export declare type QueryVendorArgs = {
     id: Scalars['ObjectId'];
 };
 export declare type QueryVendorsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
+};
+export declare type QueryVendorTokenArgs = {
+    id: Scalars['ObjectId'];
+};
+export declare type QueryVendorTokensArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
 /** Refresh login input data */
 export declare type RefreshTokenInput = {
@@ -1845,11 +1745,11 @@ export declare type ResetPasswordInput = {
 };
 /** Result */
 export declare type Result = {
-    /** Id of the result */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the result was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the result was last modified */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Date and time the result data was generated */
     date: Scalars['DateISO'];
@@ -1877,19 +1777,19 @@ export declare type ResultAnalytics = {
     /** Amount of purchases value */
     purchasesValue?: Maybe<Scalars['Float']>;
 };
-/** Results collection */
 export declare type ResultConnection = {
-    /** Collection of results */
+    /** Collection of this object */
     edges: Array<ResultEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Result in a collection */
 export declare type ResultEdge = {
-    /** Id of the contained result */
-    cursor: Scalars['ObjectId'];
-    /** Container for a result */
+    /** Record or data of this object */
     node: Result;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Resource referenced by a result */
 export declare type ResultResource = {
@@ -1899,8 +1799,14 @@ export declare type ResultResource = {
     creationDate: Scalars['DateISO'];
     /** Date and time the result resource was last modified */
     lastChangeDate: Scalars['DateISO'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Scalars['NonEmptyString']>;
     /** Vendor related with the result resource */
     vendor?: Maybe<Vendor>;
+    /** System status of the resource */
+    systemStatus: SystemStatus;
+    /** Validation errors of the resource */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
 /** Resource related to a result */
 export declare enum ResultResourceTypeEnum {
@@ -1909,36 +1815,34 @@ export declare enum ResultResourceTypeEnum {
 }
 /** Token used for a single user update */
 export declare type SingleUseToken = {
-    /** Id of the token */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the token was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the token was last updated */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Token string */
     token: Scalars['NonEmptyString'];
     /** User associated with the token */
-    user?: Maybe<User>;
+    user: User;
 };
-/** Single use token collection */
 export declare type SingleUseTokenConnection = {
-    /** Collection of single use tokens */
+    /** Collection of this object */
     edges: Array<SingleUseTokenEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Single use token in  a collection */
 export declare type SingleUseTokenEdge = {
-    /** Id of the contained single use token */
-    cursor: Scalars['ObjectId'];
-    /** Container for a single use token */
+    /** Record or data of this object */
     node: SingleUseToken;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Sorting direction */
 export declare enum Sort_Order {
-    /** Ascending sort order */
     Asc = "ASC",
-    /** Descending sort order */
     Desc = "DESC"
 }
 /** Sort input data */
@@ -1950,26 +1854,16 @@ export declare type SortInput = {
 };
 /** System status */
 export declare enum SystemStatus {
-    /** Awaiting an update */
     Pending = "PENDING",
-    /** Awaiting deletion */
-    PendingDeletion = "PENDING_DELETION",
-    /** Awaiting synchronization */
     PendingSync = "PENDING_SYNC",
-    /** Being processed for an update */
+    PendingDeletion = "PENDING_DELETION",
+    PendingApproval = "PENDING_APPROVAL",
     Processing = "PROCESSING",
-    /** Being processed for synchronization */
     ProcessingSync = "PROCESSING_SYNC",
-    /** Being processed for deletion */
     ProcessingDeletion = "PROCESSING_DELETION",
-    /** Already been processed */
     Processed = "PROCESSED",
-    /** Having errors */
     Error = "ERROR",
-    /** Marked as deleted */
-    Deleted = "DELETED",
-    /** Pending approval from a User */
-    PendingApproval = "PENDING_APPROVAL"
+    Deleted = "DELETED"
 }
 /** Authentication token */
 export declare type Token = {
@@ -1982,21 +1876,14 @@ export declare type Token = {
     /** User the token was created for */
     user: User;
 };
-/** Platform token processing status */
+/** Status of the platform authentication token */
 export declare enum TokenStatus {
-    /** Token submitted and awaiting processing */
     Pending = "PENDING",
-    /** Token not submitted */
     Missing = "MISSING",
-    /** Token successfully validated */
     Valid = "VALID",
-    /** Invalid token */
     Invalid = "INVALID"
 }
-/**
- * User of the system that is granted access to resources
- * through entitlements
- */
+/** User of the system that is granted access to resources through entitlements */
 export declare type User = Me & {
     /** Id of the user */
     id: Scalars['ObjectId'];
@@ -2015,125 +1902,109 @@ export declare type User = Me & {
     /** Entitlements granting permissions to the user */
     entitlements: EntitlementConnection;
 };
-/**
- * User of the system that is granted access to resources
- * through entitlements
- */
+/** User of the system that is granted access to resources through entitlements */
 export declare type UserOrganizationsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
-/**
- * User of the system that is granted access to resources
- * through entitlements
- */
+/** User of the system that is granted access to resources through entitlements */
 export declare type UserEntitlementsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/** User collection */
 export declare type UserConnection = {
-    /** Collection of users */
+    /** Collection of this object */
     edges: Array<UserEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** User in a collection */
 export declare type UserEdge = {
-    /** Id of the contained user */
-    cursor: Scalars['ObjectId'];
-    /** Container for a user */
+    /** Record or data of this object */
     node: User;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** User login input data */
 export declare type UserLoginInput = {
-    /** Password used for the login */
-    password: Scalars['NonEmptyString'];
     /** Email used for the login */
     email: Scalars['NonEmptyString'];
+    /** Password used for the login */
+    password: Scalars['NonEmptyString'];
 };
 /** User update input data */
 export declare type UserUpdateInput = {
+    /** Email of the user */
+    email?: Maybe<Scalars['NonEmptyString']>;
     /** First name of the user */
     firstName?: Maybe<Scalars['NonEmptyString']>;
     /** Last name of the user */
     lastName?: Maybe<Scalars['NonEmptyString']>;
     /** Password of the user */
     password?: Maybe<Scalars['NonEmptyString']>;
-    /** Email of the user */
-    email?: Maybe<Scalars['NonEmptyString']>;
 };
-/**
- * Vendor belongs to a marketplace and is granted access to specific
- * products they can use to create a marketing campaign
- */
+/** Vendor belongs to a marketplace and is granted access to specific products they can use to create a marketing campaign */
 export declare type Vendor = Me & {
-    /** Id of the vendor */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the vendor was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the vendor was last updated */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the vendor */
     name: Scalars['NonEmptyString'];
+    /** System status of the vendor */
+    systemStatus: SystemStatus;
+    /** Validation errors of the vendor */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace referenced by the vendor */
     marketplace: Marketplace;
     /** Vendor tokens associated with the vendor that can be used to access the api */
     vendorTokens: VendorTokenConnection;
     /** Products related to the vendor */
     products: ProductConnection;
-    /** System status of the vendor */
-    systemStatus: SystemStatus;
-    /** Validation errors of the vendor */
-    errors?: Maybe<Array<Scalars['JSONObject']>>;
 };
-/**
- * Vendor belongs to a marketplace and is granted access to specific
- * products they can use to create a marketing campaign
- */
+/** Vendor belongs to a marketplace and is granted access to specific products they can use to create a marketing campaign */
 export declare type VendorVendorTokensArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
-    before?: Maybe<Scalars['String']>;
     after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/**
- * Vendor belongs to a marketplace and is granted access to specific
- * products they can use to create a marketing campaign
- */
+/** Vendor belongs to a marketplace and is granted access to specific products they can use to create a marketing campaign */
 export declare type VendorProductsArgs = {
-    filter?: Maybe<Scalars['FilterInput']>;
-    sort?: Maybe<SortInput>;
     first?: Maybe<Scalars['Int']>;
-    after?: Maybe<Scalars['String']>;
     last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
     before?: Maybe<Scalars['String']>;
-    showDeleted?: Maybe<Scalars['Boolean']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
-/** Vendors collection */
 export declare type VendorConnection = {
-    /** Collection of vendors */
+    /** Collection of this object */
     edges: Array<VendorEdge>;
     /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Vendor in a collection */
 export declare type VendorEdge = {
-    /** Id of the contained vendor */
-    cursor: Scalars['ObjectId'];
-    /** Container for a vendor */
+    /** Record or data of this object */
     node: Vendor;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Vendor creation input data */
 export declare type VendorInput = {
@@ -2144,31 +2015,36 @@ export declare type VendorInput = {
 };
 /** Vendor token is an API access token associated with a vendor and marketplace */
 export declare type VendorToken = {
-    /** Id of the vendor */
+    /** Unique identifier */
     id: Scalars['ObjectId'];
-    /** Date and time the vendor was created */
+    /** Date and time of creation */
     creationDate: Scalars['DateISO'];
-    /** Date and time the vendor was last updated */
+    /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
-    /** Marketplace associated with the vendor token */
-    marketplace: Marketplace;
-    /** Vendor associated with the vendor token */
-    vendor: Vendor;
     /** API access token associated with the vendor */
     token: Scalars['String'];
+    /** Vendor associated with the vendor token */
+    vendor: Vendor;
+    /** Marketplace associated with the vendor token */
+    marketplace: Marketplace;
 };
-/** Vendor tokens collection */
 export declare type VendorTokenConnection = {
+    /** Collection of this object */
     edges: Array<VendorTokenEdge>;
+    /** Pagination information */
     pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
 };
-/** Vendor token in a collection */
 export declare type VendorTokenEdge = {
-    cursor: Scalars['ObjectId'];
+    /** Record or data of this object */
     node: VendorToken;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Vendor token creation input data */
 export declare type VendorTokenInput = {
+    /** Id of the vendor */
     vendorId: Scalars['ObjectId'];
 };
 /** Vendor update input data */
@@ -2216,10 +2092,11 @@ export declare type ResolversTypes = {
     Marketplace: ResolverTypeWrapper<Marketplace>;
     EntitlementResource: ResolverTypeWrapper<EntitlementResource>;
     Organization: ResolverTypeWrapper<Organization>;
-    FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
+    OrganizationTierEnum: OrganizationTierEnum;
+    Int: ResolverTypeWrapper<Scalars['Int']>;
     SortInput: SortInput;
     SORT_ORDER: Sort_Order;
-    Int: ResolverTypeWrapper<Scalars['Int']>;
+    FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
     UserConnection: ResolverTypeWrapper<UserConnection>;
     UserEdge: ResolverTypeWrapper<UserEdge>;
     User: ResolverTypeWrapper<User>;
@@ -2235,7 +2112,6 @@ export declare type ResolversTypes = {
     AuthPermission: AuthPermission;
     MarketplaceConnection: ResolverTypeWrapper<MarketplaceConnection>;
     MarketplaceEdge: ResolverTypeWrapper<MarketplaceEdge>;
-    OrganizationTierEnum: OrganizationTierEnum;
     MediaChannelConnection: ResolverTypeWrapper<MediaChannelConnection>;
     MediaChannelEdge: ResolverTypeWrapper<MediaChannelEdge>;
     MediaChannel: ResolverTypeWrapper<MediaChannel>;
@@ -2283,10 +2159,13 @@ export declare type ResolversTypes = {
     CreativeImageConnection: ResolverTypeWrapper<CreativeImageConnection>;
     CreativeImageEdge: ResolverTypeWrapper<CreativeImageEdge>;
     Mutation: ResolverTypeWrapper<{}>;
+    UserLoginInput: UserLoginInput;
+    Token: ResolverTypeWrapper<Token>;
+    RefreshTokenInput: RefreshTokenInput;
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
-    Deletion: ResolverTypeWrapper<Deletion>;
     CatalogUpdateInput: CatalogUpdateInput;
+    Deletion: ResolverTypeWrapper<Deletion>;
     CreativeFontCreateInput: CreativeFontCreateInput;
     CreativeFontUpdateInput: CreativeFontUpdateInput;
     CreativeImageCreateInput: CreativeImageCreateInput;
@@ -2311,22 +2190,13 @@ export declare type ResolversTypes = {
     RequestResetPasswordInput: RequestResetPasswordInput;
     RequestResult: ResolverTypeWrapper<RequestResult>;
     ResetPasswordInput: ResetPasswordInput;
-    UserLoginInput: UserLoginInput;
-    Token: ResolverTypeWrapper<Token>;
     UserUpdateInput: UserUpdateInput;
-    RefreshTokenInput: RefreshTokenInput;
-    VendorTokenInput: VendorTokenInput;
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
-    AuthField: AuthField;
-    AuthLocation: AuthLocation;
-    AuthType: AuthType;
-    CacheControlScope: CacheControlScope;
-    OPERATOR: Operator;
+    VendorTokenInput: VendorTokenInput;
     SingleUseToken: ResolverTypeWrapper<SingleUseToken>;
     SingleUseTokenConnection: ResolverTypeWrapper<SingleUseTokenConnection>;
     SingleUseTokenEdge: ResolverTypeWrapper<SingleUseTokenEdge>;
-    Upload: ResolverTypeWrapper<Scalars['Upload']>;
 };
 /** Mapping between all available schema types and the resolvers parents */
 export declare type ResolversParentTypes = {
@@ -2342,10 +2212,11 @@ export declare type ResolversParentTypes = {
     Marketplace: Marketplace;
     EntitlementResource: EntitlementResource;
     Organization: Organization;
-    FilterInput: Scalars['FilterInput'];
+    OrganizationTierEnum: OrganizationTierEnum;
+    Int: Scalars['Int'];
     SortInput: SortInput;
     SORT_ORDER: Sort_Order;
-    Int: Scalars['Int'];
+    FilterInput: Scalars['FilterInput'];
     UserConnection: UserConnection;
     UserEdge: UserEdge;
     User: User;
@@ -2361,7 +2232,6 @@ export declare type ResolversParentTypes = {
     AuthPermission: AuthPermission;
     MarketplaceConnection: MarketplaceConnection;
     MarketplaceEdge: MarketplaceEdge;
-    OrganizationTierEnum: OrganizationTierEnum;
     MediaChannelConnection: MediaChannelConnection;
     MediaChannelEdge: MediaChannelEdge;
     MediaChannel: MediaChannel;
@@ -2409,10 +2279,13 @@ export declare type ResolversParentTypes = {
     CreativeImageConnection: CreativeImageConnection;
     CreativeImageEdge: CreativeImageEdge;
     Mutation: {};
+    UserLoginInput: UserLoginInput;
+    Token: Token;
+    RefreshTokenInput: RefreshTokenInput;
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
-    Deletion: Deletion;
     CatalogUpdateInput: CatalogUpdateInput;
+    Deletion: Deletion;
     CreativeFontCreateInput: CreativeFontCreateInput;
     CreativeFontUpdateInput: CreativeFontUpdateInput;
     CreativeImageCreateInput: CreativeImageCreateInput;
@@ -2437,33 +2310,14 @@ export declare type ResolversParentTypes = {
     RequestResetPasswordInput: RequestResetPasswordInput;
     RequestResult: RequestResult;
     ResetPasswordInput: ResetPasswordInput;
-    UserLoginInput: UserLoginInput;
-    Token: Token;
     UserUpdateInput: UserUpdateInput;
-    RefreshTokenInput: RefreshTokenInput;
-    VendorTokenInput: VendorTokenInput;
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
-    AuthField: AuthField;
-    AuthLocation: AuthLocation;
-    AuthType: AuthType;
-    CacheControlScope: CacheControlScope;
-    OPERATOR: Operator;
+    VendorTokenInput: VendorTokenInput;
     SingleUseToken: SingleUseToken;
     SingleUseTokenConnection: SingleUseTokenConnection;
     SingleUseTokenEdge: SingleUseTokenEdge;
-    Upload: Scalars['Upload'];
 };
-export declare type AuthDirectiveResolver<Result, Parent, ContextType = any, Args = {
-    field?: Maybe<Maybe<AuthField>>;
-    location?: Maybe<Maybe<AuthLocation>>;
-    type?: Maybe<Maybe<AuthType>>;
-    permissions?: Maybe<Maybe<Array<Maybe<AuthPermission>>>>;
-}> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-export declare type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = {
-    maxAge?: Maybe<Maybe<Scalars['Int']>>;
-    scope?: Maybe<Maybe<CacheControlScope>>;
-}> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 export declare type CampaignTemplateResolvers<ContextType = any, ParentType extends ResolversParentTypes['CampaignTemplate'] = ResolversParentTypes['CampaignTemplate']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
@@ -2480,17 +2334,18 @@ export declare type CampaignTemplateResolvers<ContextType = any, ParentType exte
 export declare type CampaignTemplateConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CampaignTemplateConnection'] = ResolversParentTypes['CampaignTemplateConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CampaignTemplateEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type CampaignTemplateEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CampaignTemplateEdge'] = ResolversParentTypes['CampaignTemplateEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['CampaignTemplate'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type CatalogResolvers<ContextType = any, ParentType extends ResolversParentTypes['Catalog'] = ResolversParentTypes['Catalog']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    catalogType?: Resolver<ResolversTypes['CatalogType'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    catalogType?: Resolver<ResolversTypes['CatalogType'], ParentType, ContextType>;
     remoteId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     remoteState?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
@@ -2502,10 +2357,11 @@ export declare type CatalogResolvers<ContextType = any, ParentType extends Resol
 export declare type CatalogConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CatalogConnection'] = ResolversParentTypes['CatalogConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CatalogEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type CatalogEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CatalogEdge'] = ResolversParentTypes['CatalogEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type CreativeFontResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeFont'] = ResolversParentTypes['CreativeFont']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
@@ -2514,17 +2370,18 @@ export declare type CreativeFontResolvers<ContextType = any, ParentType extends 
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     url?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     properties?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
 };
 export declare type CreativeFontConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeFontConnection'] = ResolversParentTypes['CreativeFontConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CreativeFontEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type CreativeFontEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeFontEdge'] = ResolversParentTypes['CreativeFontEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['CreativeFont'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type CreativeImageResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeImage'] = ResolversParentTypes['CreativeImage']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
@@ -2533,17 +2390,18 @@ export declare type CreativeImageResolvers<ContextType = any, ParentType extends
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     url?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     properties?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
 };
 export declare type CreativeImageConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeImageConnection'] = ResolversParentTypes['CreativeImageConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CreativeImageEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type CreativeImageEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeImageEdge'] = ResolversParentTypes['CreativeImageEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['CreativeImage'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type CreativeLayerResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeLayer'] = ResolversParentTypes['CreativeLayer']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
@@ -2557,17 +2415,18 @@ export declare type CreativeLayerResolvers<ContextType = any, ParentType extends
     order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     type?: Resolver<ResolversTypes['CreativeLayerTypes'], ParentType, ContextType>;
     properties?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    creativeTemplate?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    creativeTemplate?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType>;
 };
 export declare type CreativeLayerConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeLayerConnection'] = ResolversParentTypes['CreativeLayerConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CreativeLayerEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type CreativeLayerEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeLayerEdge'] = ResolversParentTypes['CreativeLayerEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['CreativeLayer'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type CreativeTemplateResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeTemplate'] = ResolversParentTypes['CreativeTemplate']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
@@ -2576,18 +2435,19 @@ export declare type CreativeTemplateResolvers<ContextType = any, ParentType exte
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     height?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
-    creativeLayers?: Resolver<ResolversTypes['CreativeLayerConnection'], ParentType, ContextType, RequireFields<CreativeTemplateCreativeLayersArgs, 'showDeleted'>>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    creativeLayers?: Resolver<ResolversTypes['CreativeLayerConnection'], ParentType, ContextType, CreativeTemplateCreativeLayersArgs>;
 };
 export declare type CreativeTemplateConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeTemplateConnection'] = ResolversParentTypes['CreativeTemplateConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CreativeTemplateEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type CreativeTemplateEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeTemplateEdge'] = ResolversParentTypes['CreativeTemplateEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export interface DateIsoScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateISO'], any> {
     name: 'DateISO';
@@ -2599,26 +2459,27 @@ export declare type EntitlementResolvers<ContextType = any, ParentType extends R
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
     type?: Resolver<ResolversTypes['EntitlementResourceTypeEnum'], ParentType, ContextType>;
-    resource?: Resolver<Maybe<ResolversTypes['EntitlementResource']>, ParentType, ContextType>;
     permissions?: Resolver<Array<ResolversTypes['AuthPermission']>, ParentType, ContextType>;
+    user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+    resource?: Resolver<ResolversTypes['EntitlementResource'], ParentType, ContextType>;
 };
 export declare type EntitlementConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntitlementConnection'] = ResolversParentTypes['EntitlementConnection']> = {
     edges?: Resolver<Array<ResolversTypes['EntitlementEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type EntitlementEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntitlementEdge'] = ResolversParentTypes['EntitlementEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Entitlement'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type EntitlementResourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['EntitlementResource'] = ResolversParentTypes['EntitlementResource']> = {
     __resolveType: TypeResolveFn<'Marketplace' | 'Organization' | 'MediaChannel', ParentType, ContextType>;
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
-    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
 export interface FilterInputScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['FilterInput'], any> {
@@ -2631,71 +2492,74 @@ export declare type MarketingAdResolvers<ContextType = any, ParentType extends R
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    resultsSource?: Resolver<Array<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     preview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-    resultsSource?: Resolver<Array<Maybe<ResolversTypes['NonEmptyString']>>, ParentType, ContextType>;
     results?: Resolver<ResolversTypes['ResultConnection'], ParentType, ContextType, MarketingAdResultsArgs>;
     marketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType>;
-    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 export declare type MarketingAdConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingAdConnection'] = ResolversParentTypes['MarketingAdConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MarketingAdEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type MarketingAdEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingAdEdge'] = ResolversParentTypes['MarketingAdEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['MarketingAd'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type MarketingCampaignResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingCampaign'] = ResolversParentTypes['MarketingCampaign']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    resultsSource?: Resolver<Array<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
+    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
+    errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     status?: Resolver<ResolversTypes['MarketingCampaignStatus'], ParentType, ContextType>;
+    creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    runTimeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, RequireFields<MarketingCampaignMarketingAdsArgs, 'showDeleted'>>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>>;
-    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     campaignTemplate?: Resolver<Maybe<ResolversTypes['CampaignTemplate']>, ParentType, ContextType>;
     mediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType>;
     results?: Resolver<ResolversTypes['ResultConnection'], ParentType, ContextType, MarketingCampaignResultsArgs>;
-    creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    runTimeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    resultsSource?: Resolver<Array<Maybe<ResolversTypes['NonEmptyString']>>, ParentType, ContextType>;
-    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
-    errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
 export declare type MarketingCampaignConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingCampaignConnection'] = ResolversParentTypes['MarketingCampaignConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MarketingCampaignEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type MarketingCampaignEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingCampaignEdge'] = ResolversParentTypes['MarketingCampaignEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type MarketplaceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Marketplace'] = ResolversParentTypes['Marketplace']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    organization?: Resolver<Maybe<ResolversTypes['Organization']>, ParentType, ContextType>;
-    mediaChannels?: Resolver<ResolversTypes['MediaChannelConnection'], ParentType, ContextType, RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>>;
-    campaignTemplates?: Resolver<ResolversTypes['CampaignTemplateConnection'], ParentType, ContextType, MarketplaceCampaignTemplatesArgs>;
-    vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorsArgs, 'showDeleted'>>;
-    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, MarketplaceVendorTokensArgs>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    organization?: Resolver<Maybe<ResolversTypes['Organization']>, ParentType, ContextType>;
+    mediaChannels?: Resolver<ResolversTypes['MediaChannelConnection'], ParentType, ContextType, RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>>;
+    campaignTemplates?: Resolver<ResolversTypes['CampaignTemplateConnection'], ParentType, ContextType, RequireFields<MarketplaceCampaignTemplatesArgs, 'showDeleted'>>;
+    vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorsArgs, 'showDeleted'>>;
+    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorTokensArgs, 'showDeleted'>>;
     creativeTemplates?: Resolver<ResolversTypes['CreativeTemplateConnection'], ParentType, ContextType, RequireFields<MarketplaceCreativeTemplatesArgs, 'showDeleted'>>;
 };
 export declare type MarketplaceConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketplaceConnection'] = ResolversParentTypes['MarketplaceConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MarketplaceEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type MarketplaceEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketplaceEdge'] = ResolversParentTypes['MarketplaceEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type MeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Me'] = ResolversParentTypes['Me']> = {
     __resolveType: TypeResolveFn<'User' | 'Vendor', ParentType, ContextType>;
@@ -2708,6 +2572,8 @@ export declare type MediaChannelResolvers<ContextType = any, ParentType extends 
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
+    errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     platform?: Resolver<ResolversTypes['Platform'], ParentType, ContextType>;
     remoteId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     remoteState?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
@@ -2716,67 +2582,66 @@ export declare type MediaChannelResolvers<ContextType = any, ParentType extends 
     currencyOffset?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     timezone?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
     tokenStatus?: Resolver<ResolversTypes['TokenStatus'], ParentType, ContextType>;
-    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
-    errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     catalogs?: Resolver<ResolversTypes['CatalogConnection'], ParentType, ContextType, RequireFields<MediaChannelCatalogsArgs, 'showDeleted'>>;
     marketplace?: Resolver<Maybe<ResolversTypes['Marketplace']>, ParentType, ContextType>;
 };
 export declare type MediaChannelConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaChannelConnection'] = ResolversParentTypes['MediaChannelConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MediaChannelEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type MediaChannelEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['MediaChannelEdge'] = ResolversParentTypes['MediaChannelEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+    login?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
+    refreshLogin?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationRefreshLoginArgs, 'input'>>;
     createCatalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType, RequireFields<MutationCreateCatalogArgs, 'input'>>;
     importCatalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType, RequireFields<MutationImportCatalogArgs, 'input'>>;
+    updateCatalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType, RequireFields<MutationUpdateCatalogArgs, 'input' | 'id'>>;
     deleteCatalog?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteCatalogArgs, 'id'>>;
-    updateCatalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType, RequireFields<MutationUpdateCatalogArgs, 'id' | 'input'>>;
     createCreativeFont?: Resolver<ResolversTypes['CreativeFont'], ParentType, ContextType, RequireFields<MutationCreateCreativeFontArgs, 'input'>>;
-    updateCreativeFont?: Resolver<ResolversTypes['CreativeFont'], ParentType, ContextType, RequireFields<MutationUpdateCreativeFontArgs, 'id' | 'input'>>;
+    updateCreativeFont?: Resolver<ResolversTypes['CreativeFont'], ParentType, ContextType, RequireFields<MutationUpdateCreativeFontArgs, 'input' | 'id'>>;
     deleteCreativeFont?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteCreativeFontArgs, 'id'>>;
     createCreativeImage?: Resolver<ResolversTypes['CreativeImage'], ParentType, ContextType, RequireFields<MutationCreateCreativeImageArgs, 'input'>>;
-    updateCreativeImage?: Resolver<ResolversTypes['CreativeImage'], ParentType, ContextType, RequireFields<MutationUpdateCreativeImageArgs, 'id' | 'input'>>;
+    updateCreativeImage?: Resolver<ResolversTypes['CreativeImage'], ParentType, ContextType, RequireFields<MutationUpdateCreativeImageArgs, 'input' | 'id'>>;
     deleteCreativeImage?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteCreativeImageArgs, 'id'>>;
     createCreativeLayer?: Resolver<ResolversTypes['CreativeLayer'], ParentType, ContextType, RequireFields<MutationCreateCreativeLayerArgs, 'input'>>;
-    updateCreativeLayer?: Resolver<ResolversTypes['CreativeLayer'], ParentType, ContextType, RequireFields<MutationUpdateCreativeLayerArgs, 'id' | 'input'>>;
+    updateCreativeLayer?: Resolver<ResolversTypes['CreativeLayer'], ParentType, ContextType, RequireFields<MutationUpdateCreativeLayerArgs, 'input' | 'id'>>;
     deleteCreativeLayer?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteCreativeLayerArgs, 'id'>>;
     createCreativeTemplate?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType, RequireFields<MutationCreateCreativeTemplateArgs, 'input'>>;
-    updateCreativeTemplate?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType, RequireFields<MutationUpdateCreativeTemplateArgs, 'id' | 'input'>>;
+    updateCreativeTemplate?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType, RequireFields<MutationUpdateCreativeTemplateArgs, 'input' | 'id'>>;
     deleteCreativeTemplate?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteCreativeTemplateArgs, 'id'>>;
     createEntitlement?: Resolver<ResolversTypes['Entitlement'], ParentType, ContextType, RequireFields<MutationCreateEntitlementArgs, 'input'>>;
-    updateEntitlement?: Resolver<ResolversTypes['Entitlement'], ParentType, ContextType, RequireFields<MutationUpdateEntitlementArgs, 'id' | 'input'>>;
+    updateEntitlement?: Resolver<ResolversTypes['Entitlement'], ParentType, ContextType, RequireFields<MutationUpdateEntitlementArgs, 'input' | 'id'>>;
     deleteEntitlement?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteEntitlementArgs, 'id'>>;
     createMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationCreateMarketingCampaignArgs, 'input'>>;
-    updateMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationUpdateMarketingCampaignArgs, 'id' | 'input'>>;
-    deleteMarketingCampaign?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketingCampaignArgs, 'id'>>;
-    approveMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationApproveMarketingCampaignArgs, 'id' | 'lastChangeDate'>>;
+    updateMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationUpdateMarketingCampaignArgs, 'input' | 'id'>>;
     syncMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationSyncMarketingCampaignArgs, 'id'>>;
+    approveMarketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<MutationApproveMarketingCampaignArgs, 'lastChangeDate' | 'id'>>;
+    deleteMarketingCampaign?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketingCampaignArgs, 'id'>>;
     createMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationCreateMarketplaceArgs, 'input'>>;
-    updateMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationUpdateMarketplaceArgs, 'id' | 'input'>>;
+    updateMarketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<MutationUpdateMarketplaceArgs, 'input' | 'id'>>;
     deleteMarketplace?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMarketplaceArgs, 'id'>>;
     createMediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType, RequireFields<MutationCreateMediaChannelArgs, 'input'>>;
     importMediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType, RequireFields<MutationImportMediaChannelArgs, 'input'>>;
-    updateMediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType, RequireFields<MutationUpdateMediaChannelArgs, 'id' | 'input'>>;
+    updateMediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType, RequireFields<MutationUpdateMediaChannelArgs, 'input' | 'id'>>;
     deleteMediaChannel?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteMediaChannelArgs, 'id'>>;
     createOrganization?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationCreateOrganizationArgs, 'input'>>;
-    updateOrganization?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationUpdateOrganizationArgs, 'id' | 'input'>>;
+    updateOrganization?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<MutationUpdateOrganizationArgs, 'input' | 'id'>>;
     deleteOrganization?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteOrganizationArgs, 'id'>>;
     createProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
-    updateProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationUpdateProductArgs, 'id' | 'input'>>;
+    updateProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationUpdateProductArgs, 'input' | 'id'>>;
     deleteProduct?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'id'>>;
     requestResetPassword?: Resolver<ResolversTypes['RequestResult'], ParentType, ContextType, RequireFields<MutationRequestResetPasswordArgs, 'input'>>;
     resetPassword?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationResetPasswordArgs, 'input'>>;
-    login?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
     updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'input'>>;
-    refreshLogin?: Resolver<ResolversTypes['Token'], ParentType, ContextType, RequireFields<MutationRefreshLoginArgs, 'input'>>;
+    createVendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<MutationCreateVendorArgs, 'input'>>;
+    updateVendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<MutationUpdateVendorArgs, 'input' | 'id'>>;
+    deleteVendor?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteVendorArgs, 'id'>>;
     createVendorToken?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType, RequireFields<MutationCreateVendorTokenArgs, 'input'>>;
     deleteVendorToken?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteVendorTokenArgs, 'id'>>;
-    createVendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<MutationCreateVendorArgs, 'input'>>;
-    updateVendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<MutationUpdateVendorArgs, 'id' | 'input'>>;
-    deleteVendor?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteVendorArgs, 'id'>>;
 };
 export interface NonEmptyStringScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NonEmptyString'], any> {
     name: 'NonEmptyString';
@@ -2788,26 +2653,27 @@ export declare type OrganizationResolvers<ContextType = any, ParentType extends 
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, OrganizationUsersArgs>;
-    marketplaces?: Resolver<ResolversTypes['MarketplaceConnection'], ParentType, ContextType, RequireFields<OrganizationMarketplacesArgs, 'showDeleted'>>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    tier?: Resolver<ResolversTypes['OrganizationTierEnum'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    tier?: Resolver<ResolversTypes['OrganizationTierEnum'], ParentType, ContextType>;
+    users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, OrganizationUsersArgs>;
+    marketplaces?: Resolver<ResolversTypes['MarketplaceConnection'], ParentType, ContextType, RequireFields<OrganizationMarketplacesArgs, 'showDeleted'>>;
 };
 export declare type OrganizationConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['OrganizationConnection'] = ResolversParentTypes['OrganizationConnection']> = {
     edges?: Resolver<Array<ResolversTypes['OrganizationEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type OrganizationEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['OrganizationEdge'] = ResolversParentTypes['OrganizationEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Organization'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+    endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+    startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
     hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-    startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-    endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 };
 export declare type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
@@ -2816,21 +2682,22 @@ export declare type ProductResolvers<ContextType = any, ParentType extends Resol
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     sku?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     remoteState?: Resolver<Maybe<ResolversTypes['JSONObject']>, ParentType, ContextType>;
-    marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<ProductMarketingCampaignsArgs, 'showDeleted'>>;
-    catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
     metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<ProductMarketingCampaignsArgs, 'showDeleted'>>;
+    catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 export declare type ProductConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductConnection'] = ResolversParentTypes['ProductConnection']> = {
     edges?: Resolver<Array<ResolversTypes['ProductEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type ProductEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['ProductEdge'] = ResolversParentTypes['ProductEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Product'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
     campaignTemplate?: Resolver<ResolversTypes['CampaignTemplate'], ParentType, ContextType, RequireFields<QueryCampaignTemplateArgs, 'id'>>;
@@ -2849,11 +2716,12 @@ export declare type QueryResolvers<ContextType = any, ParentType extends Resolve
     entitlements?: Resolver<ResolversTypes['EntitlementConnection'], ParentType, ContextType, QueryEntitlementsArgs>;
     marketingAd?: Resolver<ResolversTypes['MarketingAd'], ParentType, ContextType, RequireFields<QueryMarketingAdArgs, 'id'>>;
     marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, RequireFields<QueryMarketingAdsArgs, 'showDeleted'>>;
-    marketingCampaign?: Resolver<Maybe<ResolversTypes['MarketingCampaign']>, ParentType, ContextType, RequireFields<QueryMarketingCampaignArgs, 'id'>>;
+    marketingCampaign?: Resolver<ResolversTypes['MarketingCampaign'], ParentType, ContextType, RequireFields<QueryMarketingCampaignArgs, 'id'>>;
     marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<QueryMarketingCampaignsArgs, 'showDeleted'>>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType, RequireFields<QueryMarketplaceArgs, 'id'>>;
     marketplaces?: Resolver<ResolversTypes['MarketplaceConnection'], ParentType, ContextType, RequireFields<QueryMarketplacesArgs, 'showDeleted'>>;
-    mediaChannel?: Resolver<Maybe<ResolversTypes['MediaChannel']>, ParentType, ContextType, RequireFields<QueryMediaChannelArgs, 'id'>>;
+    me?: Resolver<ResolversTypes['Me'], ParentType, ContextType>;
+    mediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType, RequireFields<QueryMediaChannelArgs, 'id'>>;
     mediaChannels?: Resolver<ResolversTypes['MediaChannelConnection'], ParentType, ContextType, RequireFields<QueryMediaChannelsArgs, 'showDeleted'>>;
     organization?: Resolver<ResolversTypes['Organization'], ParentType, ContextType, RequireFields<QueryOrganizationArgs, 'id'>>;
     organizations?: Resolver<ResolversTypes['OrganizationConnection'], ParentType, ContextType, RequireFields<QueryOrganizationsArgs, 'showDeleted'>>;
@@ -2861,11 +2729,10 @@ export declare type QueryResolvers<ContextType = any, ParentType extends Resolve
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<QueryProductsArgs, 'showDeleted'>>;
     result?: Resolver<ResolversTypes['Result'], ParentType, ContextType, RequireFields<QueryResultArgs, 'id'>>;
     results?: Resolver<ResolversTypes['ResultConnection'], ParentType, ContextType, QueryResultsArgs>;
-    me?: Resolver<ResolversTypes['Me'], ParentType, ContextType>;
-    vendorToken?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType, RequireFields<QueryVendorTokenArgs, 'id'>>;
-    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, QueryVendorTokensArgs>;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<QueryVendorArgs, 'id'>>;
     vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<QueryVendorsArgs, 'showDeleted'>>;
+    vendorToken?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType, RequireFields<QueryVendorTokenArgs, 'id'>>;
+    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, QueryVendorTokensArgs>;
 };
 export declare type RequestResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['RequestResult'] = ResolversParentTypes['RequestResult']> = {
     result?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -2891,32 +2758,37 @@ export declare type ResultAnalyticsResolvers<ContextType = any, ParentType exten
 export declare type ResultConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultConnection'] = ResolversParentTypes['ResultConnection']> = {
     edges?: Resolver<Array<ResolversTypes['ResultEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type ResultEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultEdge'] = ResolversParentTypes['ResultEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Result'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type ResultResourceResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResultResource'] = ResolversParentTypes['ResultResource']> = {
     __resolveType: TypeResolveFn<'MarketingCampaign' | 'MarketingAd', ParentType, ContextType>;
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    resultsSource?: Resolver<Array<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
+    systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
+    errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
 export declare type SingleUseTokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseToken'] = ResolversParentTypes['SingleUseToken']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     token?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
+    user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
 export declare type SingleUseTokenConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseTokenConnection'] = ResolversParentTypes['SingleUseTokenConnection']> = {
     edges?: Resolver<Array<ResolversTypes['SingleUseTokenEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type SingleUseTokenEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseTokenEdge'] = ResolversParentTypes['SingleUseTokenEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['SingleUseToken'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type TokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['Token'] = ResolversParentTypes['Token']> = {
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -2924,9 +2796,6 @@ export declare type TokenResolvers<ContextType = any, ParentType extends Resolve
     expiryDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
 };
-export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
-    name: 'Upload';
-}
 export declare type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
@@ -2940,45 +2809,48 @@ export declare type UserResolvers<ContextType = any, ParentType extends Resolver
 export declare type UserConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = {
     edges?: Resolver<Array<ResolversTypes['UserEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type UserEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type VendorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Vendor'] = ResolversParentTypes['Vendor']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
-    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, VendorVendorTokensArgs>;
-    products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<VendorProductsArgs, 'showDeleted'>>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, VendorVendorTokensArgs>;
+    products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, VendorProductsArgs>;
 };
 export declare type VendorConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorConnection'] = ResolversParentTypes['VendorConnection']> = {
     edges?: Resolver<Array<ResolversTypes['VendorEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type VendorEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorEdge'] = ResolversParentTypes['VendorEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type VendorTokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorToken'] = ResolversParentTypes['VendorToken']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
-    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
-    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
 };
 export declare type VendorTokenConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorTokenConnection'] = ResolversParentTypes['VendorTokenConnection']> = {
     edges?: Resolver<Array<ResolversTypes['VendorTokenEdge']>, ParentType, ContextType>;
     pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 export declare type VendorTokenEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorTokenEdge'] = ResolversParentTypes['VendorTokenEdge']> = {
-    cursor?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
     node?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 export declare type Resolvers<ContextType = any> = {
     CampaignTemplate?: CampaignTemplateResolvers<ContextType>;
@@ -3041,7 +2913,6 @@ export declare type Resolvers<ContextType = any> = {
     SingleUseTokenConnection?: SingleUseTokenConnectionResolvers<ContextType>;
     SingleUseTokenEdge?: SingleUseTokenEdgeResolvers<ContextType>;
     Token?: TokenResolvers<ContextType>;
-    Upload?: GraphQLScalarType;
     User?: UserResolvers<ContextType>;
     UserConnection?: UserConnectionResolvers<ContextType>;
     UserEdge?: UserEdgeResolvers<ContextType>;
@@ -3057,12 +2928,3 @@ export declare type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
 export declare type IResolvers<ContextType = any> = Resolvers<ContextType>;
-export declare type DirectiveResolvers<ContextType = any> = {
-    auth?: AuthDirectiveResolver<any, any, ContextType>;
-    cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>;
-};
-/**
- * @deprecated
- * Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
- */
-export declare type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;
