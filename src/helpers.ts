@@ -45,6 +45,7 @@ query(
         before: $before,
         ${hasShowDeleted ? 'showDeleted: $showDeleted,' : ''}
     ) {
+        totalCount
         pageInfo {
             hasNextPage
             hasPreviousPage
