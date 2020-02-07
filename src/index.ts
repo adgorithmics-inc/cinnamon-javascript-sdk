@@ -28,6 +28,8 @@ import {
     VendorUpdateInput,
     VendorToken,
     VendorTokenInput,
+    SetVendorPasswordInput,
+    LoginVendorInput,
     Catalog,
     CatalogCreateInput,
     CatalogImportInput,
@@ -1564,6 +1566,58 @@ export class Cinnamon {
                 token,
             })
         ).data.createVendorToken;
+    }
+
+    @bind
+    async loginVendor({
+        input,
+        fields = this.defaultVendorTokenFields,
+        headers,
+        token,
+    }: {
+        input: LoginVendorInput;
+        fields?: VendorTokenField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'loginVendor'>({
+                query: `mutation($input: LoginVendorInput!) {
+                    loginVendor(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.loginVendor;
+    }
+
+    @bind
+    async setVendorPassword({
+        input,
+        fields = this.defaultVendorTokenFields,
+        headers,
+        token,
+    }: {
+        input: SetVendorPasswordInput;
+        fields?: VendorTokenField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'setVendorPassword'>({
+                query: `mutation($input: SetVendorPasswordInput!) {
+                    setVendorPassword(input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { input },
+                headers,
+                token,
+            })
+        ).data.setVendorPassword;
     }
 
     @bind

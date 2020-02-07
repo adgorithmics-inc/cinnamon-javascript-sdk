@@ -653,6 +653,15 @@ export declare type EntitlementUpdateInput = {
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
 };
+/** Vendor login input data */
+export declare type LoginVendorInput = {
+    /** Id of the marketplace associated with the vendor login */
+    marketplaceId: Scalars['ObjectId'];
+    /** Email associated with the vendor login */
+    email: Scalars['NonEmptyString'];
+    /** Password associated with the vendor login */
+    password: Scalars['NonEmptyString'];
+};
 /** Marketing ad represents a specific ad on a platform belonging to a marketing campaign and associated with a single vendor */
 export declare type MarketingAd = ResultResource & {
     /** Unique identifier */
@@ -1147,6 +1156,10 @@ export declare type Mutation = {
     deleteVendor: Deletion;
     /** Creates a vendor token using input data */
     createVendorToken: VendorToken;
+    /** Login as a vendor */
+    loginVendor: VendorToken;
+    /** Sets the password of a vendor token */
+    setVendorPassword: VendorToken;
     /** Deletes a vendor token identified by a given id */
     deleteVendorToken: Deletion;
 };
@@ -1300,6 +1313,12 @@ export declare type MutationDeleteVendorArgs = {
 };
 export declare type MutationCreateVendorTokenArgs = {
     input: VendorTokenInput;
+};
+export declare type MutationLoginVendorArgs = {
+    input: LoginVendorInput;
+};
+export declare type MutationSetVendorPasswordArgs = {
+    input: SetVendorPasswordInput;
 };
 export declare type MutationDeleteVendorTokenArgs = {
     id: Scalars['ObjectId'];
@@ -1813,6 +1832,15 @@ export declare enum ResultResourceTypeEnum {
     MarketingAd = "MarketingAd",
     MarketingCampaign = "MarketingCampaign"
 }
+/** Vendor reset password input data */
+export declare type SetVendorPasswordInput = {
+    /** Id of the marketplace associated with the vendor login */
+    marketplaceId: Scalars['ObjectId'];
+    /** Email associated with the vendor login */
+    email: Scalars['NonEmptyString'];
+    /** Password associated with the vendor login */
+    password: Scalars['NonEmptyString'];
+};
 /** Token used for a single user update */
 export declare type SingleUseToken = {
     /** Unique identifier */
@@ -2027,6 +2055,8 @@ export declare type VendorToken = {
     vendor: Vendor;
     /** Marketplace associated with the vendor token */
     marketplace: Marketplace;
+    /** Email associated with the vendor token */
+    email?: Maybe<Scalars['NonEmptyString']>;
 };
 export declare type VendorTokenConnection = {
     /** Collection of this object */
@@ -2044,8 +2074,12 @@ export declare type VendorTokenEdge = {
 };
 /** Vendor token creation input data */
 export declare type VendorTokenInput = {
-    /** Id of the vendor */
+    /** Id of the vendor associated with the vendor login */
     vendorId: Scalars['ObjectId'];
+    /** Email to associate with the vendor login */
+    email?: Maybe<Scalars['NonEmptyString']>;
+    /** Password to associate with the vendor login */
+    password?: Maybe<Scalars['NonEmptyString']>;
 };
 /** Vendor update input data */
 export declare type VendorUpdateInput = {
@@ -2194,6 +2228,8 @@ export declare type ResolversTypes = {
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
     VendorTokenInput: VendorTokenInput;
+    LoginVendorInput: LoginVendorInput;
+    SetVendorPasswordInput: SetVendorPasswordInput;
     SingleUseToken: ResolverTypeWrapper<SingleUseToken>;
     SingleUseTokenConnection: ResolverTypeWrapper<SingleUseTokenConnection>;
     SingleUseTokenEdge: ResolverTypeWrapper<SingleUseTokenEdge>;
@@ -2314,6 +2350,8 @@ export declare type ResolversParentTypes = {
     VendorInput: VendorInput;
     VendorUpdateInput: VendorUpdateInput;
     VendorTokenInput: VendorTokenInput;
+    LoginVendorInput: LoginVendorInput;
+    SetVendorPasswordInput: SetVendorPasswordInput;
     SingleUseToken: SingleUseToken;
     SingleUseTokenConnection: SingleUseTokenConnection;
     SingleUseTokenEdge: SingleUseTokenEdge;
@@ -2641,6 +2679,8 @@ export declare type MutationResolvers<ContextType = any, ParentType extends Reso
     updateVendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType, RequireFields<MutationUpdateVendorArgs, 'input' | 'id'>>;
     deleteVendor?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteVendorArgs, 'id'>>;
     createVendorToken?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType, RequireFields<MutationCreateVendorTokenArgs, 'input'>>;
+    loginVendor?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType, RequireFields<MutationLoginVendorArgs, 'input'>>;
+    setVendorPassword?: Resolver<ResolversTypes['VendorToken'], ParentType, ContextType, RequireFields<MutationSetVendorPasswordArgs, 'input'>>;
     deleteVendorToken?: Resolver<ResolversTypes['Deletion'], ParentType, ContextType, RequireFields<MutationDeleteVendorTokenArgs, 'id'>>;
 };
 export interface NonEmptyStringScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['NonEmptyString'], any> {
@@ -2842,6 +2882,7 @@ export declare type VendorTokenResolvers<ContextType = any, ParentType extends R
     token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     vendor?: Resolver<ResolversTypes['Vendor'], ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    email?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
 };
 export declare type VendorTokenConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorTokenConnection'] = ResolversParentTypes['VendorTokenConnection']> = {
     edges?: Resolver<Array<ResolversTypes['VendorTokenEdge']>, ParentType, ContextType>;
