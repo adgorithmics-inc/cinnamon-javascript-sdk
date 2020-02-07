@@ -4,12 +4,36 @@ references:
     pin-npm-version: &pin-npm-version
         run:
             name: Pin NPM to specified version
-            command: sudo npm install -g npm@6.4.1
+            command: sudo npm install -g npm@6.13.4
 
 jobs:
     test:
         docker:
-            - image: circleci/node:10.13.0
+            - image: circleci/node:12
+
+        steps:
+            - *pin-npm-version
+            - checkout
+
+            - restore_cache:
+                  keys:
+                      - jscache-{{ checksum "package.json" }}
+                      - jscache-
+
+            - run: npm ci
+
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: jscache-{{ checksum "package.json" }}
+
+            - run: npm run test
+            - store_test_results:
+                  path: test-results
+
+    lint:
+        docker:
+            - image: circleci/node:12
 
         steps:
             - *pin-npm-version
@@ -28,12 +52,33 @@ jobs:
                   key: jscache-{{ checksum "package.json" }}
 
             - run: npm run lint
+
+    check-build:
+        docker:
+            - image: circleci/node:12
+
+        steps:
+            - *pin-npm-version
+            - checkout
+
+            - restore_cache:
+                  keys:
+                      - jscache-{{ checksum "package.json" }}
+                      - jscache-
+
+            - run: npm ci
+
+            - save_cache:
+                  paths:
+                      - node_modules
+                  key: jscache-{{ checksum "package.json" }}
+
             - run: npm run build-ts
             - run: git diff --quiet || (echo 'build does not match' && exit 1)
 
     publish:
         docker:
-            - image: circleci/node:10.13.0
+            - image: circleci/node:12
 
         steps:
             - *pin-npm-version
@@ -57,7 +102,7 @@ jobs:
 
     publish-hot:
         docker:
-            - image: circleci/node:10.13.0
+            - image: circleci/node:12
 
         steps:
             - *pin-npm-version
@@ -70,14 +115,15 @@ workflows:
     version: 2
     test-and-publish:
         jobs:
-            - test:
-                  filters:
-                      tags:
-                          only: /.*/
+            - test
+            - lint
+            - check-build
             - publish:
                   context: npm-publish
                   requires:
                       - test
+                      - lint
+                      - check-build
                   filters:
                       tags:
                           only: /^v[0-9]+(\.[0-9]+)*(-rc\.[0-9]*)*/
@@ -87,6 +133,8 @@ workflows:
                   context: npm-publish
                   requires:
                       - test
+                      - lint
+                      - check-build
                   filters:
                       tags:
                           only: /^v[0-9]+(\.[0-9]+)*-hot/
