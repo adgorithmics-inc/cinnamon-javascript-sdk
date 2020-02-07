@@ -126,6 +126,7 @@ export type CampaignTemplateFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -410,6 +411,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -655,6 +657,7 @@ export type CampaignTemplateField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
@@ -919,6 +922,7 @@ export type MarketplaceFields = {
                     systemStatus: 'vendorTokens{edges{node{marketplace{systemStatus}}}}';
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}';
                 };
+                email: 'vendorTokens{edges{node{email}}}';
             };
             cursor: 'vendorTokens{edges{cursor}}';
         };
@@ -1179,6 +1183,7 @@ export const MarketplaceFields: MarketplaceFields = {
                         'vendorTokens{edges{node{marketplace{systemStatus}}}}',
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}',
                 },
+                email: 'vendorTokens{edges{node{email}}}',
             },
             cursor: 'vendorTokens{edges{cursor}}',
         },
@@ -1353,6 +1358,7 @@ export type MarketplaceField =
     | 'vendorTokens{edges{node{marketplace{name}}}}'
     | 'vendorTokens{edges{node{marketplace{systemStatus}}}}'
     | 'vendorTokens{edges{node{marketplace{errors}}}}'
+    | 'vendorTokens{edges{node{email}}}'
     | 'vendorTokens{edges{cursor}}'
     | 'vendorTokens{pageInfo{endCursor}}'
     | 'vendorTokens{pageInfo{startCursor}}'
@@ -2134,6 +2140,7 @@ export type MediaChannelFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -2393,6 +2400,7 @@ export const MediaChannelFields: MediaChannelFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -2560,6 +2568,7 @@ export type MediaChannelField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
@@ -3392,6 +3401,7 @@ export type ProductFields = {
                     creationDate: 'vendor{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'vendor{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'vendor{vendorTokens{edges{node{token}}}}';
+                    email: 'vendor{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'vendor{vendorTokens{edges{cursor}}}';
             };
@@ -3797,6 +3807,7 @@ export const ProductFields: ProductFields = {
                     lastChangeDate:
                         'vendor{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'vendor{vendorTokens{edges{node{token}}}}',
+                    email: 'vendor{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'vendor{vendorTokens{edges{cursor}}}',
             },
@@ -4024,6 +4035,7 @@ export type ProductField =
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'vendor{vendorTokens{edges{node{token}}}}'
+    | 'vendor{vendorTokens{edges{node{email}}}}'
     | 'vendor{vendorTokens{edges{cursor}}}'
     | 'vendor{vendorTokens{pageInfo{endCursor}}}'
     | 'vendor{vendorTokens{pageInfo{startCursor}}}'
@@ -4148,6 +4160,7 @@ export type MarketingCampaignFields = {
                     creationDate: 'vendor{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'vendor{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'vendor{vendorTokens{edges{node{token}}}}';
+                    email: 'vendor{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'vendor{vendorTokens{edges{cursor}}}';
             };
@@ -4794,6 +4807,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     lastChangeDate:
                         'vendor{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'vendor{vendorTokens{edges{node{token}}}}',
+                    email: 'vendor{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'vendor{vendorTokens{edges{cursor}}}',
             },
@@ -5503,6 +5517,7 @@ export type MarketingCampaignField =
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'vendor{vendorTokens{edges{node{token}}}}'
+    | 'vendor{vendorTokens{edges{node{email}}}}'
     | 'vendor{vendorTokens{edges{cursor}}}'
     | 'vendor{vendorTokens{pageInfo{endCursor}}}'
     | 'vendor{vendorTokens{pageInfo{startCursor}}}'
@@ -5958,6 +5973,7 @@ export type VendorFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -6015,6 +6031,7 @@ export type VendorFields = {
                     systemStatus: 'vendorTokens{edges{node{marketplace{systemStatus}}}}';
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}';
                 };
+                email: 'vendorTokens{edges{node{email}}}';
             };
             cursor: 'vendorTokens{edges{cursor}}';
         };
@@ -6240,6 +6257,7 @@ export const VendorFields: VendorFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -6313,6 +6331,7 @@ export const VendorFields: VendorFields = {
                         'vendorTokens{edges{node{marketplace{systemStatus}}}}',
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}',
                 },
+                email: 'vendorTokens{edges{node{email}}}',
             },
             cursor: 'vendorTokens{edges{cursor}}',
         },
@@ -6460,6 +6479,7 @@ export type VendorField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
@@ -6496,6 +6516,7 @@ export type VendorField =
     | 'vendorTokens{edges{node{marketplace{name}}}}'
     | 'vendorTokens{edges{node{marketplace{systemStatus}}}}'
     | 'vendorTokens{edges{node{marketplace{errors}}}}'
+    | 'vendorTokens{edges{node{email}}}'
     | 'vendorTokens{edges{cursor}}'
     | 'vendorTokens{pageInfo{endCursor}}'
     | 'vendorTokens{pageInfo{startCursor}}'
@@ -6637,6 +6658,7 @@ export type VendorTokenFields = {
                     creationDate: 'vendor{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'vendor{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'vendor{vendorTokens{edges{node{token}}}}';
+                    email: 'vendor{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'vendor{vendorTokens{edges{cursor}}}';
             };
@@ -6791,6 +6813,7 @@ export type VendorTokenFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -6825,6 +6848,7 @@ export type VendorTokenFields = {
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
         };
     };
+    email: 'email';
 };
 export const VendorTokenFields: VendorTokenFields = {
     id: 'id',
@@ -6957,6 +6981,7 @@ export const VendorTokenFields: VendorTokenFields = {
                     lastChangeDate:
                         'vendor{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'vendor{vendorTokens{edges{node{token}}}}',
+                    email: 'vendor{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'vendor{vendorTokens{edges{cursor}}}',
             },
@@ -7154,6 +7179,7 @@ export const VendorTokenFields: VendorTokenFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -7198,6 +7224,7 @@ export const VendorTokenFields: VendorTokenFields = {
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
     },
+    email: 'email',
 };
 export type VendorTokenField =
     | 'id'
@@ -7259,6 +7286,7 @@ export type VendorTokenField =
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'vendor{vendorTokens{edges{node{token}}}}'
+    | 'vendor{vendorTokens{edges{node{email}}}}'
     | 'vendor{vendorTokens{edges{cursor}}}'
     | 'vendor{vendorTokens{pageInfo{endCursor}}}'
     | 'vendor{vendorTokens{pageInfo{startCursor}}}'
@@ -7357,6 +7385,7 @@ export type VendorTokenField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
@@ -7376,7 +7405,8 @@ export type VendorTokenField =
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
-    | 'marketplace{creativeTemplates{totalCount}}';
+    | 'marketplace{creativeTemplates{totalCount}}'
+    | 'email';
 export type MarketingAdFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -7479,6 +7509,7 @@ export type MarketingAdFields = {
                     creationDate: 'vendor{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'vendor{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'vendor{vendorTokens{edges{node{token}}}}';
+                    email: 'vendor{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'vendor{vendorTokens{edges{cursor}}}';
             };
@@ -8001,6 +8032,7 @@ export const MarketingAdFields: MarketingAdFields = {
                     lastChangeDate:
                         'vendor{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'vendor{vendorTokens{edges{node{token}}}}',
+                    email: 'vendor{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'vendor{vendorTokens{edges{cursor}}}',
             },
@@ -8574,6 +8606,7 @@ export type MarketingAdField =
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'vendor{vendorTokens{edges{node{token}}}}'
+    | 'vendor{vendorTokens{edges{node{email}}}}'
     | 'vendor{vendorTokens{edges{cursor}}}'
     | 'vendor{vendorTokens{pageInfo{endCursor}}}'
     | 'vendor{vendorTokens{pageInfo{startCursor}}}'
@@ -9007,6 +9040,7 @@ export type ResultFields = {
                     creationDate: 'vendor{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'vendor{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'vendor{vendorTokens{edges{node{token}}}}';
+                    email: 'vendor{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'vendor{vendorTokens{edges{cursor}}}';
             };
@@ -9273,6 +9307,7 @@ export const ResultFields: ResultFields = {
                     lastChangeDate:
                         'vendor{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'vendor{vendorTokens{edges{node{token}}}}',
+                    email: 'vendor{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'vendor{vendorTokens{edges{cursor}}}',
             },
@@ -9421,6 +9456,7 @@ export type ResultField =
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'vendor{vendorTokens{edges{node{token}}}}'
+    | 'vendor{vendorTokens{edges{node{email}}}}'
     | 'vendor{vendorTokens{edges{cursor}}}'
     | 'vendor{vendorTokens{pageInfo{endCursor}}}'
     | 'vendor{vendorTokens{pageInfo{startCursor}}}'
@@ -9570,6 +9606,7 @@ export type CreativeTemplateFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -9810,6 +9847,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -9983,6 +10021,7 @@ export type CreativeTemplateField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
@@ -10560,6 +10599,7 @@ export type CreativeFontFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -10763,6 +10803,7 @@ export const CreativeFontFields: CreativeFontFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -10893,6 +10934,7 @@ export type CreativeFontField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
@@ -11040,6 +11082,7 @@ export type CreativeImageFields = {
                     creationDate: 'marketplace{vendorTokens{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}';
                     token: 'marketplace{vendorTokens{edges{node{token}}}}';
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}';
                 };
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}';
             };
@@ -11243,6 +11286,7 @@ export const CreativeImageFields: CreativeImageFields = {
                     lastChangeDate:
                         'marketplace{vendorTokens{edges{node{lastChangeDate}}}}',
                     token: 'marketplace{vendorTokens{edges{node{token}}}}',
+                    email: 'marketplace{vendorTokens{edges{node{email}}}}',
                 },
                 cursor: 'marketplace{vendorTokens{edges{cursor}}}',
             },
@@ -11373,6 +11417,7 @@ export type CreativeImageField =
     | 'marketplace{vendorTokens{edges{node{creationDate}}}}'
     | 'marketplace{vendorTokens{edges{node{lastChangeDate}}}}'
     | 'marketplace{vendorTokens{edges{node{token}}}}'
+    | 'marketplace{vendorTokens{edges{node{email}}}}'
     | 'marketplace{vendorTokens{edges{cursor}}}'
     | 'marketplace{vendorTokens{pageInfo{endCursor}}}'
     | 'marketplace{vendorTokens{pageInfo{startCursor}}}'
