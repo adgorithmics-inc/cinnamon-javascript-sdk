@@ -3634,3 +3634,4 @@ export class Cinnamon {
 export * from './generated/graphql';
 export * from './generated/fields';
 export * from './helpers';
+export { Operator } from './scalars';

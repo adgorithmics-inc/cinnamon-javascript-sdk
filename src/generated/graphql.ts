@@ -582,6 +582,7 @@ export type CreativeTemplateCreativeLayersArgs = {
     before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type CreativeTemplateConnection = {
@@ -927,6 +928,8 @@ export type Marketplace = EntitlementResource & {
     vendorTokens: VendorTokenConnection;
     /** Creative templates of the marketplace */
     creativeTemplates: CreativeTemplateConnection;
+    /** Products of the marketplace */
+    products: ProductConnection;
 };
 
 /**
@@ -990,6 +993,20 @@ export type MarketplaceVendorTokensArgs = {
  * vendors. A marketplace belongs to a single organization
  */
 export type MarketplaceCreativeTemplatesArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+/**
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
+ */
+export type MarketplaceProductsArgs = {
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['String']>;
@@ -2225,6 +2242,7 @@ export type VendorProductsArgs = {
     before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 export type VendorConnection = {
@@ -2999,7 +3017,7 @@ export type CreativeTemplateResolvers<
         ResolversTypes['CreativeLayerConnection'],
         ParentType,
         ContextType,
-        CreativeTemplateCreativeLayersArgs
+        RequireFields<CreativeTemplateCreativeLayersArgs, 'showDeleted'>
     >;
 };
 
@@ -3347,6 +3365,12 @@ export type MarketplaceResolvers<
         ParentType,
         ContextType,
         RequireFields<MarketplaceCreativeTemplatesArgs, 'showDeleted'>
+    >;
+    products?: Resolver<
+        ResolversTypes['ProductConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<MarketplaceProductsArgs, 'showDeleted'>
     >;
 };
 
@@ -4390,7 +4414,7 @@ export type VendorResolvers<
         ResolversTypes['ProductConnection'],
         ParentType,
         ContextType,
-        VendorProductsArgs
+        RequireFields<VendorProductsArgs, 'showDeleted'>
     >;
 };
 
