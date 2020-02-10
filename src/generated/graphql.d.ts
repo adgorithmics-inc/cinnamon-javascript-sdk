@@ -548,6 +548,7 @@ export declare type CreativeTemplateCreativeLayersArgs = {
     before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type CreativeTemplateConnection = {
     /** Collection of this object */
@@ -866,6 +867,8 @@ export declare type Marketplace = EntitlementResource & {
     vendorTokens: VendorTokenConnection;
     /** Creative templates of the marketplace */
     creativeTemplates: CreativeTemplateConnection;
+    /** Products of the marketplace */
+    products: ProductConnection;
 };
 /**
  * Marketplace represents a collection of media channels, campaign templates and
@@ -924,6 +927,19 @@ export declare type MarketplaceVendorTokensArgs = {
  * vendors. A marketplace belongs to a single organization
  */
 export declare type MarketplaceCreativeTemplatesArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+/**
+ * Marketplace represents a collection of media channels, campaign templates and
+ * vendors. A marketplace belongs to a single organization
+ */
+export declare type MarketplaceProductsArgs = {
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['String']>;
@@ -2019,6 +2035,7 @@ export declare type VendorProductsArgs = {
     before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 export declare type VendorConnection = {
     /** Collection of this object */
@@ -2476,7 +2493,7 @@ export declare type CreativeTemplateResolvers<ContextType = any, ParentType exte
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
-    creativeLayers?: Resolver<ResolversTypes['CreativeLayerConnection'], ParentType, ContextType, CreativeTemplateCreativeLayersArgs>;
+    creativeLayers?: Resolver<ResolversTypes['CreativeLayerConnection'], ParentType, ContextType, RequireFields<CreativeTemplateCreativeLayersArgs, 'showDeleted'>>;
 };
 export declare type CreativeTemplateConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeTemplateConnection'] = ResolversParentTypes['CreativeTemplateConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CreativeTemplateEdge']>, ParentType, ContextType>;
@@ -2589,6 +2606,7 @@ export declare type MarketplaceResolvers<ContextType = any, ParentType extends R
     vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorsArgs, 'showDeleted'>>;
     vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorTokensArgs, 'showDeleted'>>;
     creativeTemplates?: Resolver<ResolversTypes['CreativeTemplateConnection'], ParentType, ContextType, RequireFields<MarketplaceCreativeTemplatesArgs, 'showDeleted'>>;
+    products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketplaceProductsArgs, 'showDeleted'>>;
 };
 export declare type MarketplaceConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketplaceConnection'] = ResolversParentTypes['MarketplaceConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MarketplaceEdge']>, ParentType, ContextType>;
@@ -2864,7 +2882,7 @@ export declare type VendorResolvers<ContextType = any, ParentType extends Resolv
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
     vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, VendorVendorTokensArgs>;
-    products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, VendorProductsArgs>;
+    products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<VendorProductsArgs, 'showDeleted'>>;
 };
 export declare type VendorConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['VendorConnection'] = ResolversParentTypes['VendorConnection']> = {
     edges?: Resolver<Array<ResolversTypes['VendorEdge']>, ParentType, ContextType>;

@@ -160,6 +160,30 @@ export type CampaignTemplateFields = {
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
         };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
+        };
     };
     marketingCampaigns: {
         edges: {
@@ -455,6 +479,35 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
     marketingCampaigns: {
         edges: {
@@ -678,6 +731,22 @@ export type CampaignTemplateField =
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
     | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}'
     | 'marketingCampaigns{edges{node{id}}}'
     | 'marketingCampaigns{edges{node{creationDate}}}'
     | 'marketingCampaigns{edges{node{lastChangeDate}}}'
@@ -967,6 +1036,53 @@ export type MarketplaceFields = {
         };
         totalCount: 'creativeTemplates{totalCount}';
     };
+    products: {
+        edges: {
+            node: {
+                id: 'products{edges{node{id}}}';
+                creationDate: 'products{edges{node{creationDate}}}';
+                lastChangeDate: 'products{edges{node{lastChangeDate}}}';
+                name: 'products{edges{node{name}}}';
+                sku: 'products{edges{node{sku}}}';
+                remoteState: 'products{edges{node{remoteState}}}';
+                metadata: 'products{edges{node{metadata}}}';
+                systemStatus: 'products{edges{node{systemStatus}}}';
+                errors: 'products{edges{node{errors}}}';
+                warnings: 'products{edges{node{warnings}}}';
+                marketingCampaigns: {
+                    totalCount: 'products{edges{node{marketingCampaigns{totalCount}}}}';
+                };
+                catalog: {
+                    id: 'products{edges{node{catalog{id}}}}';
+                    creationDate: 'products{edges{node{catalog{creationDate}}}}';
+                    lastChangeDate: 'products{edges{node{catalog{lastChangeDate}}}}';
+                    name: 'products{edges{node{catalog{name}}}}';
+                    catalogType: 'products{edges{node{catalog{catalogType}}}}';
+                    remoteId: 'products{edges{node{catalog{remoteId}}}}';
+                    systemStatus: 'products{edges{node{catalog{systemStatus}}}}';
+                    remoteState: 'products{edges{node{catalog{remoteState}}}}';
+                    dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
+                    errors: 'products{edges{node{catalog{errors}}}}';
+                };
+                vendor: {
+                    id: 'products{edges{node{vendor{id}}}}';
+                    creationDate: 'products{edges{node{vendor{creationDate}}}}';
+                    lastChangeDate: 'products{edges{node{vendor{lastChangeDate}}}}';
+                    name: 'products{edges{node{vendor{name}}}}';
+                    systemStatus: 'products{edges{node{vendor{systemStatus}}}}';
+                    errors: 'products{edges{node{vendor{errors}}}}';
+                };
+            };
+            cursor: 'products{edges{cursor}}';
+        };
+        pageInfo: {
+            endCursor: 'products{pageInfo{endCursor}}';
+            startCursor: 'products{pageInfo{startCursor}}';
+            hasNextPage: 'products{pageInfo{hasNextPage}}';
+            hasPreviousPage: 'products{pageInfo{hasPreviousPage}}';
+        };
+        totalCount: 'products{totalCount}';
+    };
 };
 export const MarketplaceFields: MarketplaceFields = {
     id: 'id',
@@ -1234,6 +1350,58 @@ export const MarketplaceFields: MarketplaceFields = {
         },
         totalCount: 'creativeTemplates{totalCount}',
     },
+    products: {
+        edges: {
+            node: {
+                id: 'products{edges{node{id}}}',
+                creationDate: 'products{edges{node{creationDate}}}',
+                lastChangeDate: 'products{edges{node{lastChangeDate}}}',
+                name: 'products{edges{node{name}}}',
+                sku: 'products{edges{node{sku}}}',
+                remoteState: 'products{edges{node{remoteState}}}',
+                metadata: 'products{edges{node{metadata}}}',
+                systemStatus: 'products{edges{node{systemStatus}}}',
+                errors: 'products{edges{node{errors}}}',
+                warnings: 'products{edges{node{warnings}}}',
+                marketingCampaigns: {
+                    totalCount:
+                        'products{edges{node{marketingCampaigns{totalCount}}}}',
+                },
+                catalog: {
+                    id: 'products{edges{node{catalog{id}}}}',
+                    creationDate:
+                        'products{edges{node{catalog{creationDate}}}}',
+                    lastChangeDate:
+                        'products{edges{node{catalog{lastChangeDate}}}}',
+                    name: 'products{edges{node{catalog{name}}}}',
+                    catalogType: 'products{edges{node{catalog{catalogType}}}}',
+                    remoteId: 'products{edges{node{catalog{remoteId}}}}',
+                    systemStatus:
+                        'products{edges{node{catalog{systemStatus}}}}',
+                    remoteState: 'products{edges{node{catalog{remoteState}}}}',
+                    dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
+                    errors: 'products{edges{node{catalog{errors}}}}',
+                },
+                vendor: {
+                    id: 'products{edges{node{vendor{id}}}}',
+                    creationDate: 'products{edges{node{vendor{creationDate}}}}',
+                    lastChangeDate:
+                        'products{edges{node{vendor{lastChangeDate}}}}',
+                    name: 'products{edges{node{vendor{name}}}}',
+                    systemStatus: 'products{edges{node{vendor{systemStatus}}}}',
+                    errors: 'products{edges{node{vendor{errors}}}}',
+                },
+            },
+            cursor: 'products{edges{cursor}}',
+        },
+        pageInfo: {
+            endCursor: 'products{pageInfo{endCursor}}',
+            startCursor: 'products{pageInfo{startCursor}}',
+            hasNextPage: 'products{pageInfo{hasNextPage}}',
+            hasPreviousPage: 'products{pageInfo{hasPreviousPage}}',
+        },
+        totalCount: 'products{totalCount}',
+    },
 };
 export type MarketplaceField =
     | 'id'
@@ -1385,7 +1553,40 @@ export type MarketplaceField =
     | 'creativeTemplates{pageInfo{startCursor}}'
     | 'creativeTemplates{pageInfo{hasNextPage}}'
     | 'creativeTemplates{pageInfo{hasPreviousPage}}'
-    | 'creativeTemplates{totalCount}';
+    | 'creativeTemplates{totalCount}'
+    | 'products{edges{node{id}}}'
+    | 'products{edges{node{creationDate}}}'
+    | 'products{edges{node{lastChangeDate}}}'
+    | 'products{edges{node{name}}}'
+    | 'products{edges{node{sku}}}'
+    | 'products{edges{node{remoteState}}}'
+    | 'products{edges{node{metadata}}}'
+    | 'products{edges{node{systemStatus}}}'
+    | 'products{edges{node{errors}}}'
+    | 'products{edges{node{warnings}}}'
+    | 'products{edges{node{marketingCampaigns{totalCount}}}}'
+    | 'products{edges{node{catalog{id}}}}'
+    | 'products{edges{node{catalog{creationDate}}}}'
+    | 'products{edges{node{catalog{lastChangeDate}}}}'
+    | 'products{edges{node{catalog{name}}}}'
+    | 'products{edges{node{catalog{catalogType}}}}'
+    | 'products{edges{node{catalog{remoteId}}}}'
+    | 'products{edges{node{catalog{systemStatus}}}}'
+    | 'products{edges{node{catalog{remoteState}}}}'
+    | 'products{edges{node{catalog{dataFeedId}}}}'
+    | 'products{edges{node{catalog{errors}}}}'
+    | 'products{edges{node{vendor{id}}}}'
+    | 'products{edges{node{vendor{creationDate}}}}'
+    | 'products{edges{node{vendor{lastChangeDate}}}}'
+    | 'products{edges{node{vendor{name}}}}'
+    | 'products{edges{node{vendor{systemStatus}}}}'
+    | 'products{edges{node{vendor{errors}}}}'
+    | 'products{edges{cursor}}'
+    | 'products{pageInfo{endCursor}}'
+    | 'products{pageInfo{startCursor}}'
+    | 'products{pageInfo{hasNextPage}}'
+    | 'products{pageInfo{hasPreviousPage}}'
+    | 'products{totalCount}';
 export type OrganizationFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -1452,6 +1653,9 @@ export type OrganizationFields = {
                 };
                 creativeTemplates: {
                     totalCount: 'marketplaces{edges{node{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'marketplaces{edges{node{products{totalCount}}}}';
                 };
             };
             cursor: 'marketplaces{edges{cursor}}';
@@ -1540,6 +1744,10 @@ export const OrganizationFields: OrganizationFields = {
                     totalCount:
                         'marketplaces{edges{node{creativeTemplates{totalCount}}}}',
                 },
+                products: {
+                    totalCount:
+                        'marketplaces{edges{node{products{totalCount}}}}',
+                },
             },
             cursor: 'marketplaces{edges{cursor}}',
         },
@@ -1592,6 +1800,7 @@ export type OrganizationField =
     | 'marketplaces{edges{node{vendors{totalCount}}}}'
     | 'marketplaces{edges{node{vendorTokens{totalCount}}}}'
     | 'marketplaces{edges{node{creativeTemplates{totalCount}}}}'
+    | 'marketplaces{edges{node{products{totalCount}}}}'
     | 'marketplaces{edges{cursor}}'
     | 'marketplaces{pageInfo{endCursor}}'
     | 'marketplaces{pageInfo{startCursor}}'
@@ -2174,6 +2383,30 @@ export type MediaChannelFields = {
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
         };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
+        };
     };
 };
 export const MediaChannelFields: MediaChannelFields = {
@@ -2444,6 +2677,35 @@ export const MediaChannelFields: MediaChannelFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
 };
 export type MediaChannelField =
@@ -2588,7 +2850,23 @@ export type MediaChannelField =
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
-    | 'marketplace{creativeTemplates{totalCount}}';
+    | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}';
 export type CatalogFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -2720,6 +2998,18 @@ export type CatalogFields = {
                     hasPreviousPage: 'mediaChannel{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'mediaChannel{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'mediaChannel{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'mediaChannel{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'mediaChannel{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'mediaChannel{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'mediaChannel{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'mediaChannel{marketplace{products{totalCount}}}';
             };
         };
     };
@@ -2943,6 +3233,23 @@ export const CatalogFields: CatalogFields = {
                 totalCount:
                     'mediaChannel{marketplace{creativeTemplates{totalCount}}}',
             },
+            products: {
+                edges: {
+                    cursor:
+                        'mediaChannel{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'mediaChannel{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'mediaChannel{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'mediaChannel{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'mediaChannel{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'mediaChannel{marketplace{products{totalCount}}}',
+            },
         },
     },
     products: {
@@ -3084,6 +3391,12 @@ export type CatalogField =
     | 'mediaChannel{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'mediaChannel{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'mediaChannel{marketplace{creativeTemplates{totalCount}}}'
+    | 'mediaChannel{marketplace{products{edges{cursor}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{endCursor}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{startCursor}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'mediaChannel{marketplace{products{totalCount}}}'
     | 'products{edges{node{id}}}'
     | 'products{edges{node{creationDate}}}'
     | 'products{edges{node{lastChangeDate}}}'
@@ -3277,6 +3590,9 @@ export type ProductFields = {
                 creativeTemplates: {
                     totalCount: 'catalog{mediaChannel{marketplace{creativeTemplates{totalCount}}}}';
                 };
+                products: {
+                    totalCount: 'catalog{mediaChannel{marketplace{products{totalCount}}}}';
+                };
             };
         };
         products: {
@@ -3392,6 +3708,18 @@ export type ProductFields = {
                     hasPreviousPage: 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'vendor{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'vendor{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'vendor{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'vendor{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'vendor{marketplace{products{totalCount}}}';
             };
         };
         vendorTokens: {
@@ -3651,6 +3979,10 @@ export const ProductFields: ProductFields = {
                     totalCount:
                         'catalog{mediaChannel{marketplace{creativeTemplates{totalCount}}}}',
                 },
+                products: {
+                    totalCount:
+                        'catalog{mediaChannel{marketplace{products{totalCount}}}}',
+                },
             },
         },
         products: {
@@ -3796,6 +4128,22 @@ export const ProductFields: ProductFields = {
                 },
                 totalCount:
                     'vendor{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'vendor{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'vendor{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'vendor{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'vendor{marketplace{products{totalCount}}}',
             },
         },
         vendorTokens: {
@@ -3964,6 +4312,7 @@ export type ProductField =
     | 'catalog{mediaChannel{marketplace{vendors{totalCount}}}}'
     | 'catalog{mediaChannel{marketplace{vendorTokens{totalCount}}}}'
     | 'catalog{mediaChannel{marketplace{creativeTemplates{totalCount}}}}'
+    | 'catalog{mediaChannel{marketplace{products{totalCount}}}}'
     | 'catalog{products{edges{node{id}}}}'
     | 'catalog{products{edges{node{creationDate}}}}'
     | 'catalog{products{edges{node{lastChangeDate}}}}'
@@ -4031,6 +4380,12 @@ export type ProductField =
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'vendor{marketplace{creativeTemplates{totalCount}}}'
+    | 'vendor{marketplace{products{edges{cursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{endCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{startCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'vendor{marketplace{products{totalCount}}}'
     | 'vendor{vendorTokens{edges{node{id}}}}'
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
@@ -4151,6 +4506,18 @@ export type MarketingCampaignFields = {
                     hasPreviousPage: 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'vendor{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'vendor{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'vendor{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'vendor{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'vendor{marketplace{products{totalCount}}}';
             };
         };
         vendorTokens: {
@@ -4364,6 +4731,9 @@ export type MarketingCampaignFields = {
                 creativeTemplates: {
                     totalCount: 'catalog{mediaChannel{marketplace{creativeTemplates{totalCount}}}}';
                 };
+                products: {
+                    totalCount: 'catalog{mediaChannel{marketplace{products{totalCount}}}}';
+                };
             };
         };
         products: {
@@ -4482,6 +4852,18 @@ export type MarketingCampaignFields = {
                     hasPreviousPage: 'campaignTemplate{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'campaignTemplate{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'campaignTemplate{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'campaignTemplate{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'campaignTemplate{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'campaignTemplate{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'campaignTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'campaignTemplate{marketplace{products{totalCount}}}';
             };
         };
         marketingCampaigns: {
@@ -4629,6 +5011,18 @@ export type MarketingCampaignFields = {
                     hasPreviousPage: 'mediaChannel{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'mediaChannel{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'mediaChannel{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'mediaChannel{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'mediaChannel{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'mediaChannel{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'mediaChannel{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'mediaChannel{marketplace{products{totalCount}}}';
             };
         };
     };
@@ -4796,6 +5190,22 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 },
                 totalCount:
                     'vendor{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'vendor{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'vendor{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'vendor{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'vendor{marketplace{products{totalCount}}}',
             },
         },
         vendorTokens: {
@@ -5048,6 +5458,10 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     totalCount:
                         'catalog{mediaChannel{marketplace{creativeTemplates{totalCount}}}}',
                 },
+                products: {
+                    totalCount:
+                        'catalog{mediaChannel{marketplace{products{totalCount}}}}',
+                },
             },
         },
         products: {
@@ -5204,6 +5618,24 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 },
                 totalCount:
                     'campaignTemplate{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor:
+                        'campaignTemplate{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'campaignTemplate{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'campaignTemplate{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'campaignTemplate{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'campaignTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'campaignTemplate{marketplace{products{totalCount}}}',
             },
         },
         marketingCampaigns: {
@@ -5405,6 +5837,23 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 totalCount:
                     'mediaChannel{marketplace{creativeTemplates{totalCount}}}',
             },
+            products: {
+                edges: {
+                    cursor:
+                        'mediaChannel{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'mediaChannel{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'mediaChannel{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'mediaChannel{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'mediaChannel{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'mediaChannel{marketplace{products{totalCount}}}',
+            },
         },
     },
     results: {
@@ -5513,6 +5962,12 @@ export type MarketingCampaignField =
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'vendor{marketplace{creativeTemplates{totalCount}}}'
+    | 'vendor{marketplace{products{edges{cursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{endCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{startCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'vendor{marketplace{products{totalCount}}}'
     | 'vendor{vendorTokens{edges{node{id}}}}'
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
@@ -5658,6 +6113,7 @@ export type MarketingCampaignField =
     | 'catalog{mediaChannel{marketplace{vendors{totalCount}}}}'
     | 'catalog{mediaChannel{marketplace{vendorTokens{totalCount}}}}'
     | 'catalog{mediaChannel{marketplace{creativeTemplates{totalCount}}}}'
+    | 'catalog{mediaChannel{marketplace{products{totalCount}}}}'
     | 'catalog{products{edges{node{id}}}}'
     | 'catalog{products{edges{node{creationDate}}}}'
     | 'catalog{products{edges{node{lastChangeDate}}}}'
@@ -5728,6 +6184,12 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'campaignTemplate{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'campaignTemplate{marketplace{creativeTemplates{totalCount}}}'
+    | 'campaignTemplate{marketplace{products{edges{cursor}}}}'
+    | 'campaignTemplate{marketplace{products{pageInfo{endCursor}}}}'
+    | 'campaignTemplate{marketplace{products{pageInfo{startCursor}}}}'
+    | 'campaignTemplate{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'campaignTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'campaignTemplate{marketplace{products{totalCount}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{id}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{creationDate}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}'
@@ -5819,6 +6281,12 @@ export type MarketingCampaignField =
     | 'mediaChannel{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'mediaChannel{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'mediaChannel{marketplace{creativeTemplates{totalCount}}}'
+    | 'mediaChannel{marketplace{products{edges{cursor}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{endCursor}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{startCursor}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'mediaChannel{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'mediaChannel{marketplace{products{totalCount}}}'
     | 'results{edges{node{id}}}'
     | 'results{edges{node{creationDate}}}'
     | 'results{edges{node{lastChangeDate}}}'
@@ -6006,6 +6474,30 @@ export type VendorFields = {
                 hasPreviousPage: 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}';
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
+        };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
         };
     };
     vendorTokens: {
@@ -6301,6 +6793,35 @@ export const VendorFields: VendorFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
     vendorTokens: {
         edges: {
@@ -6500,6 +7021,22 @@ export type VendorField =
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
     | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}'
     | 'vendorTokens{edges{node{id}}}'
     | 'vendorTokens{edges{node{creationDate}}}'
     | 'vendorTokens{edges{node{lastChangeDate}}}'
@@ -6649,6 +7186,18 @@ export type VendorTokenFields = {
                     hasPreviousPage: 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'vendor{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'vendor{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'vendor{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'vendor{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'vendor{marketplace{products{totalCount}}}';
             };
         };
         vendorTokens: {
@@ -6847,6 +7396,30 @@ export type VendorTokenFields = {
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
         };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
+        };
     };
     email: 'email';
 };
@@ -6970,6 +7543,22 @@ export const VendorTokenFields: VendorTokenFields = {
                 },
                 totalCount:
                     'vendor{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'vendor{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'vendor{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'vendor{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'vendor{marketplace{products{totalCount}}}',
             },
         },
         vendorTokens: {
@@ -7223,6 +7812,35 @@ export const VendorTokenFields: VendorTokenFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
     email: 'email',
 };
@@ -7282,6 +7900,12 @@ export type VendorTokenField =
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'vendor{marketplace{creativeTemplates{totalCount}}}'
+    | 'vendor{marketplace{products{edges{cursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{endCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{startCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'vendor{marketplace{products{totalCount}}}'
     | 'vendor{vendorTokens{edges{node{id}}}}'
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
@@ -7406,6 +8030,22 @@ export type VendorTokenField =
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
     | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}'
     | 'email';
 export type MarketingAdFields = {
     id: 'id';
@@ -7500,6 +8140,18 @@ export type MarketingAdFields = {
                     hasPreviousPage: 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'vendor{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'vendor{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'vendor{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'vendor{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'vendor{marketplace{products{totalCount}}}';
             };
         };
         vendorTokens: {
@@ -7635,6 +8287,9 @@ export type MarketingAdFields = {
                 };
                 creativeTemplates: {
                     totalCount: 'marketingCampaign{vendor{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'marketingCampaign{vendor{marketplace{products{totalCount}}}}';
                 };
             };
             vendorTokens: {
@@ -7806,6 +8461,9 @@ export type MarketingAdFields = {
                 creativeTemplates: {
                     totalCount: 'marketingCampaign{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}';
                 };
+                products: {
+                    totalCount: 'marketingCampaign{campaignTemplate{marketplace{products{totalCount}}}}';
+                };
             };
             marketingCampaigns: {
                 edges: {
@@ -7877,6 +8535,9 @@ export type MarketingAdFields = {
                 };
                 creativeTemplates: {
                     totalCount: 'marketingCampaign{mediaChannel{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'marketingCampaign{mediaChannel{marketplace{products{totalCount}}}}';
                 };
             };
         };
@@ -8021,6 +8682,22 @@ export const MarketingAdFields: MarketingAdFields = {
                 },
                 totalCount:
                     'vendor{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'vendor{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'vendor{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'vendor{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'vendor{marketplace{products{totalCount}}}',
             },
         },
         vendorTokens: {
@@ -8181,6 +8858,10 @@ export const MarketingAdFields: MarketingAdFields = {
                 creativeTemplates: {
                     totalCount:
                         'marketingCampaign{vendor{marketplace{creativeTemplates{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'marketingCampaign{vendor{marketplace{products{totalCount}}}}',
                 },
             },
             vendorTokens: {
@@ -8419,6 +9100,10 @@ export const MarketingAdFields: MarketingAdFields = {
                     totalCount:
                         'marketingCampaign{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}',
                 },
+                products: {
+                    totalCount:
+                        'marketingCampaign{campaignTemplate{marketplace{products{totalCount}}}}',
+                },
             },
             marketingCampaigns: {
                 edges: {
@@ -8518,6 +9203,10 @@ export const MarketingAdFields: MarketingAdFields = {
                     totalCount:
                         'marketingCampaign{mediaChannel{marketplace{creativeTemplates{totalCount}}}}',
                 },
+                products: {
+                    totalCount:
+                        'marketingCampaign{mediaChannel{marketplace{products{totalCount}}}}',
+                },
             },
         },
         results: {
@@ -8602,6 +9291,12 @@ export type MarketingAdField =
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'vendor{marketplace{creativeTemplates{totalCount}}}'
+    | 'vendor{marketplace{products{edges{cursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{endCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{startCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'vendor{marketplace{products{totalCount}}}'
     | 'vendor{vendorTokens{edges{node{id}}}}'
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
@@ -8690,6 +9385,7 @@ export type MarketingAdField =
     | 'marketingCampaign{vendor{marketplace{vendors{totalCount}}}}'
     | 'marketingCampaign{vendor{marketplace{vendorTokens{totalCount}}}}'
     | 'marketingCampaign{vendor{marketplace{creativeTemplates{totalCount}}}}'
+    | 'marketingCampaign{vendor{marketplace{products{totalCount}}}}'
     | 'marketingCampaign{vendor{vendorTokens{edges{cursor}}}}'
     | 'marketingCampaign{vendor{vendorTokens{pageInfo{endCursor}}}}'
     | 'marketingCampaign{vendor{vendorTokens{pageInfo{startCursor}}}}'
@@ -8802,6 +9498,7 @@ export type MarketingAdField =
     | 'marketingCampaign{campaignTemplate{marketplace{vendors{totalCount}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{vendorTokens{totalCount}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}'
+    | 'marketingCampaign{campaignTemplate{marketplace{products{totalCount}}}}'
     | 'marketingCampaign{campaignTemplate{marketingCampaigns{edges{cursor}}}}'
     | 'marketingCampaign{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}'
     | 'marketingCampaign{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}'
@@ -8846,6 +9543,7 @@ export type MarketingAdField =
     | 'marketingCampaign{mediaChannel{marketplace{vendors{totalCount}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{vendorTokens{totalCount}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{creativeTemplates{totalCount}}}}'
+    | 'marketingCampaign{mediaChannel{marketplace{products{totalCount}}}}'
     | 'marketingCampaign{results{edges{node{id}}}}'
     | 'marketingCampaign{results{edges{node{creationDate}}}}'
     | 'marketingCampaign{results{edges{node{lastChangeDate}}}}'
@@ -8913,6 +9611,9 @@ export type ResultFields = {
                 };
                 creativeTemplates: {
                     totalCount: 'resource{vendor{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'resource{vendor{marketplace{products{totalCount}}}}';
                 };
             };
             vendorTokens: {
@@ -9032,6 +9733,18 @@ export type ResultFields = {
                 };
                 totalCount: 'vendor{marketplace{creativeTemplates{totalCount}}}';
             };
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'vendor{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'vendor{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'vendor{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'vendor{marketplace{products{totalCount}}}';
+            };
         };
         vendorTokens: {
             edges: {
@@ -9143,6 +9856,10 @@ export const ResultFields: ResultFields = {
                 creativeTemplates: {
                     totalCount:
                         'resource{vendor{marketplace{creativeTemplates{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'resource{vendor{marketplace{products{totalCount}}}}',
                 },
             },
             vendorTokens: {
@@ -9297,6 +10014,22 @@ export const ResultFields: ResultFields = {
                 totalCount:
                     'vendor{marketplace{creativeTemplates{totalCount}}}',
             },
+            products: {
+                edges: {
+                    cursor: 'vendor{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'vendor{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'vendor{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'vendor{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'vendor{marketplace{products{totalCount}}}',
+            },
         },
         vendorTokens: {
             edges: {
@@ -9387,6 +10120,7 @@ export type ResultField =
     | 'resource{vendor{marketplace{vendors{totalCount}}}}'
     | 'resource{vendor{marketplace{vendorTokens{totalCount}}}}'
     | 'resource{vendor{marketplace{creativeTemplates{totalCount}}}}'
+    | 'resource{vendor{marketplace{products{totalCount}}}}'
     | 'resource{vendor{vendorTokens{edges{cursor}}}}'
     | 'resource{vendor{vendorTokens{pageInfo{endCursor}}}}'
     | 'resource{vendor{vendorTokens{pageInfo{startCursor}}}}'
@@ -9452,6 +10186,12 @@ export type ResultField =
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'vendor{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'vendor{marketplace{creativeTemplates{totalCount}}}'
+    | 'vendor{marketplace{products{edges{cursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{endCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{startCursor}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'vendor{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'vendor{marketplace{products{totalCount}}}'
     | 'vendor{vendorTokens{edges{node{id}}}}'
     | 'vendor{vendorTokens{edges{node{creationDate}}}}'
     | 'vendor{vendorTokens{edges{node{lastChangeDate}}}}'
@@ -9639,6 +10379,30 @@ export type CreativeTemplateFields = {
                 hasPreviousPage: 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}';
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
+        };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
         };
     };
     creativeLayers: {
@@ -9891,6 +10655,35 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
     creativeLayers: {
         edges: {
@@ -10042,6 +10835,22 @@ export type CreativeTemplateField =
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
     | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}'
     | 'creativeLayers{edges{node{id}}}'
     | 'creativeLayers{edges{node{creationDate}}}'
     | 'creativeLayers{edges{node{lastChangeDate}}}'
@@ -10173,6 +10982,18 @@ export type CreativeLayerFields = {
                     hasPreviousPage: 'creativeTemplate{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
                 };
                 totalCount: 'creativeTemplate{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'creativeTemplate{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'creativeTemplate{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'creativeTemplate{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'creativeTemplate{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'creativeTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'creativeTemplate{marketplace{products{totalCount}}}';
             };
         };
         creativeLayers: {
@@ -10344,6 +11165,24 @@ export const CreativeLayerFields: CreativeLayerFields = {
                 totalCount:
                     'creativeTemplate{marketplace{creativeTemplates{totalCount}}}',
             },
+            products: {
+                edges: {
+                    cursor:
+                        'creativeTemplate{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'creativeTemplate{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'creativeTemplate{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'creativeTemplate{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'creativeTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'creativeTemplate{marketplace{products{totalCount}}}',
+            },
         },
         creativeLayers: {
             edges: {
@@ -10453,6 +11292,12 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
     | 'creativeTemplate{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
     | 'creativeTemplate{marketplace{creativeTemplates{totalCount}}}'
+    | 'creativeTemplate{marketplace{products{edges{cursor}}}}'
+    | 'creativeTemplate{marketplace{products{pageInfo{endCursor}}}}'
+    | 'creativeTemplate{marketplace{products{pageInfo{startCursor}}}}'
+    | 'creativeTemplate{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'creativeTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'creativeTemplate{marketplace{products{totalCount}}}'
     | 'creativeTemplate{creativeLayers{edges{node{id}}}}'
     | 'creativeTemplate{creativeLayers{edges{node{creationDate}}}}'
     | 'creativeTemplate{creativeLayers{edges{node{lastChangeDate}}}}'
@@ -10632,6 +11477,30 @@ export type CreativeFontFields = {
                 hasPreviousPage: 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}';
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
+        };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
         };
     };
 };
@@ -10847,6 +11716,35 @@ export const CreativeFontFields: CreativeFontFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
 };
 export type CreativeFontField =
@@ -10954,7 +11852,23 @@ export type CreativeFontField =
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
-    | 'marketplace{creativeTemplates{totalCount}}';
+    | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}';
 export type CreativeImageFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -11115,6 +12029,30 @@ export type CreativeImageFields = {
                 hasPreviousPage: 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}';
             };
             totalCount: 'marketplace{creativeTemplates{totalCount}}';
+        };
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}';
+                    creationDate: 'marketplace{products{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketplace{products{edges{node{lastChangeDate}}}}';
+                    name: 'marketplace{products{edges{node{name}}}}';
+                    sku: 'marketplace{products{edges{node{sku}}}}';
+                    remoteState: 'marketplace{products{edges{node{remoteState}}}}';
+                    metadata: 'marketplace{products{edges{node{metadata}}}}';
+                    systemStatus: 'marketplace{products{edges{node{systemStatus}}}}';
+                    errors: 'marketplace{products{edges{node{errors}}}}';
+                    warnings: 'marketplace{products{edges{node{warnings}}}}';
+                };
+                cursor: 'marketplace{products{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}';
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}';
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketplace{products{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketplace{products{totalCount}}';
         };
     };
 };
@@ -11330,6 +12268,35 @@ export const CreativeImageFields: CreativeImageFields = {
             },
             totalCount: 'marketplace{creativeTemplates{totalCount}}',
         },
+        products: {
+            edges: {
+                node: {
+                    id: 'marketplace{products{edges{node{id}}}}',
+                    creationDate:
+                        'marketplace{products{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketplace{products{edges{node{lastChangeDate}}}}',
+                    name: 'marketplace{products{edges{node{name}}}}',
+                    sku: 'marketplace{products{edges{node{sku}}}}',
+                    remoteState:
+                        'marketplace{products{edges{node{remoteState}}}}',
+                    metadata: 'marketplace{products{edges{node{metadata}}}}',
+                    systemStatus:
+                        'marketplace{products{edges{node{systemStatus}}}}',
+                    errors: 'marketplace{products{edges{node{errors}}}}',
+                    warnings: 'marketplace{products{edges{node{warnings}}}}',
+                },
+                cursor: 'marketplace{products{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'marketplace{products{pageInfo{endCursor}}}',
+                startCursor: 'marketplace{products{pageInfo{startCursor}}}',
+                hasNextPage: 'marketplace{products{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketplace{products{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketplace{products{totalCount}}',
+        },
     },
 };
 export type CreativeImageField =
@@ -11437,7 +12404,23 @@ export type CreativeImageField =
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasNextPage}}}'
     | 'marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}'
-    | 'marketplace{creativeTemplates{totalCount}}';
+    | 'marketplace{creativeTemplates{totalCount}}'
+    | 'marketplace{products{edges{node{id}}}}'
+    | 'marketplace{products{edges{node{creationDate}}}}'
+    | 'marketplace{products{edges{node{lastChangeDate}}}}'
+    | 'marketplace{products{edges{node{name}}}}'
+    | 'marketplace{products{edges{node{sku}}}}'
+    | 'marketplace{products{edges{node{remoteState}}}}'
+    | 'marketplace{products{edges{node{metadata}}}}'
+    | 'marketplace{products{edges{node{systemStatus}}}}'
+    | 'marketplace{products{edges{node{errors}}}}'
+    | 'marketplace{products{edges{node{warnings}}}}'
+    | 'marketplace{products{edges{cursor}}}'
+    | 'marketplace{products{pageInfo{endCursor}}}'
+    | 'marketplace{products{pageInfo{startCursor}}}'
+    | 'marketplace{products{pageInfo{hasNextPage}}}'
+    | 'marketplace{products{pageInfo{hasPreviousPage}}}'
+    | 'marketplace{products{totalCount}}';
 export type TokenFields = {
     token: 'token';
     refreshToken: 'refreshToken';
