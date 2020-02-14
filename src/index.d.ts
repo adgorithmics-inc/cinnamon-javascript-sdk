@@ -11,9 +11,10 @@ export declare type APIResult<T extends APIKey, U extends string = T> = {
     data: Record<U, NonNullable<(Query & Mutation)[T]>>;
 };
 export declare class Cinnamon {
-    config: Config;
-    refreshToken: string;
-    token: string;
+    private config;
+    private refreshToken;
+    private token;
+    private refreshTokenRequest;
     constructor(config: Config);
     private isVendorToken;
     api<T extends APIKey, U extends string = T>({ query, variables, headers, token, }: {

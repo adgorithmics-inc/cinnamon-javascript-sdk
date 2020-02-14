@@ -119,9 +119,10 @@ export type APIResult<T extends APIKey, U extends string = T> = {
 const VENDOR_TOKEN_LENGTH = 60;
 
 export class Cinnamon {
-    config: Config;
-    refreshToken = '';
-    token = '';
+    private config: Config;
+    private refreshToken = '';
+    private token = '';
+    private refreshTokenRequest: Promise<null> | null = null;
 
     constructor(config: Config) {
         this.config = config;
@@ -144,6 +145,10 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<APIResult<T, U>> {
+        if (!get(variables, 'input.refreshToken')) {
+            await this.refreshTokenRequest;
+        }
+
         const response = await fetch(this.config.url, {
             method: 'POST',
             headers: {
@@ -165,7 +170,13 @@ export class Cinnamon {
                 ) &&
                 !token
             ) {
-                await this.refreshLogin({ refreshToken: this.refreshToken });
+                if (!this.refreshTokenRequest) {
+                    this.refreshTokenRequest = this.refreshLogin({
+                        refreshToken: this.refreshToken,
+                    }).then(() => null);
+                }
+
+                await this.refreshTokenRequest;
                 return this.api({ query, variables, headers, token });
             }
             throw new CinnamonError(

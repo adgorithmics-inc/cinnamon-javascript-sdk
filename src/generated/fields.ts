@@ -1022,6 +1022,9 @@ export type MarketplaceFields = {
                     systemStatus: 'creativeTemplates{edges{node{marketplace{systemStatus}}}}';
                     errors: 'creativeTemplates{edges{node{marketplace{errors}}}}';
                 };
+                marketingCampaigns: {
+                    totalCount: 'creativeTemplates{edges{node{marketingCampaigns{totalCount}}}}';
+                };
                 creativeLayers: {
                     totalCount: 'creativeTemplates{edges{node{creativeLayers{totalCount}}}}';
                 };
@@ -1335,6 +1338,10 @@ export const MarketplaceFields: MarketplaceFields = {
                     errors:
                         'creativeTemplates{edges{node{marketplace{errors}}}}',
                 },
+                marketingCampaigns: {
+                    totalCount:
+                        'creativeTemplates{edges{node{marketingCampaigns{totalCount}}}}',
+                },
                 creativeLayers: {
                     totalCount:
                         'creativeTemplates{edges{node{creativeLayers{totalCount}}}}',
@@ -1547,6 +1554,7 @@ export type MarketplaceField =
     | 'creativeTemplates{edges{node{marketplace{name}}}}'
     | 'creativeTemplates{edges{node{marketplace{systemStatus}}}}'
     | 'creativeTemplates{edges{node{marketplace{errors}}}}'
+    | 'creativeTemplates{edges{node{marketingCampaigns{totalCount}}}}'
     | 'creativeTemplates{edges{node{creativeLayers{totalCount}}}}'
     | 'creativeTemplates{edges{cursor}}'
     | 'creativeTemplates{pageInfo{endCursor}}'
@@ -10405,6 +10413,86 @@ export type CreativeTemplateFields = {
             totalCount: 'marketplace{products{totalCount}}';
         };
     };
+    marketingCampaigns: {
+        edges: {
+            node: {
+                id: 'marketingCampaigns{edges{node{id}}}';
+                creationDate: 'marketingCampaigns{edges{node{creationDate}}}';
+                lastChangeDate: 'marketingCampaigns{edges{node{lastChangeDate}}}';
+                resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}';
+                vendor: {
+                    id: 'marketingCampaigns{edges{node{vendor{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{vendor{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{vendor{lastChangeDate}}}}';
+                    name: 'marketingCampaigns{edges{node{vendor{name}}}}';
+                    systemStatus: 'marketingCampaigns{edges{node{vendor{systemStatus}}}}';
+                    errors: 'marketingCampaigns{edges{node{vendor{errors}}}}';
+                };
+                systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}';
+                errors: 'marketingCampaigns{edges{node{errors}}}';
+                name: 'marketingCampaigns{edges{node{name}}}';
+                status: 'marketingCampaigns{edges{node{status}}}';
+                creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
+                runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
+                marketingAds: {
+                    totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'marketingCampaigns{edges{node{products{totalCount}}}}';
+                };
+                catalog: {
+                    id: 'marketingCampaigns{edges{node{catalog{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{catalog{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{catalog{lastChangeDate}}}}';
+                    name: 'marketingCampaigns{edges{node{catalog{name}}}}';
+                    catalogType: 'marketingCampaigns{edges{node{catalog{catalogType}}}}';
+                    remoteId: 'marketingCampaigns{edges{node{catalog{remoteId}}}}';
+                    systemStatus: 'marketingCampaigns{edges{node{catalog{systemStatus}}}}';
+                    remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
+                    dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
+                    errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
+                };
+                campaignTemplate: {
+                    id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{campaignTemplate{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{campaignTemplate{lastChangeDate}}}}';
+                    name: 'marketingCampaigns{edges{node{campaignTemplate{name}}}}';
+                    description: 'marketingCampaigns{edges{node{campaignTemplate{description}}}}';
+                    platform: 'marketingCampaigns{edges{node{campaignTemplate{platform}}}}';
+                    remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
+                    systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
+                    errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                };
+                mediaChannel: {
+                    id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{mediaChannel{lastChangeDate}}}}';
+                    name: 'marketingCampaigns{edges{node{mediaChannel{name}}}}';
+                    systemStatus: 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}';
+                    errors: 'marketingCampaigns{edges{node{mediaChannel{errors}}}}';
+                    platform: 'marketingCampaigns{edges{node{mediaChannel{platform}}}}';
+                    remoteId: 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}';
+                    remoteState: 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}';
+                    currency: 'marketingCampaigns{edges{node{mediaChannel{currency}}}}';
+                    currencySymbol: 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}';
+                    currencyOffset: 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}';
+                    timezone: 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}';
+                    tokenStatus: 'marketingCampaigns{edges{node{mediaChannel{tokenStatus}}}}';
+                };
+                results: {
+                    totalCount: 'marketingCampaigns{edges{node{results{totalCount}}}}';
+                };
+            };
+            cursor: 'marketingCampaigns{edges{cursor}}';
+        };
+        pageInfo: {
+            endCursor: 'marketingCampaigns{pageInfo{endCursor}}';
+            startCursor: 'marketingCampaigns{pageInfo{startCursor}}';
+            hasNextPage: 'marketingCampaigns{pageInfo{hasNextPage}}';
+            hasPreviousPage: 'marketingCampaigns{pageInfo{hasPreviousPage}}';
+        };
+        totalCount: 'marketingCampaigns{totalCount}';
+    };
     creativeLayers: {
         edges: {
             node: {
@@ -10685,6 +10773,120 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
             totalCount: 'marketplace{products{totalCount}}',
         },
     },
+    marketingCampaigns: {
+        edges: {
+            node: {
+                id: 'marketingCampaigns{edges{node{id}}}',
+                creationDate: 'marketingCampaigns{edges{node{creationDate}}}',
+                lastChangeDate:
+                    'marketingCampaigns{edges{node{lastChangeDate}}}',
+                resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}',
+                vendor: {
+                    id: 'marketingCampaigns{edges{node{vendor{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{vendor{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{vendor{lastChangeDate}}}}',
+                    name: 'marketingCampaigns{edges{node{vendor{name}}}}',
+                    systemStatus:
+                        'marketingCampaigns{edges{node{vendor{systemStatus}}}}',
+                    errors: 'marketingCampaigns{edges{node{vendor{errors}}}}',
+                },
+                systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}',
+                errors: 'marketingCampaigns{edges{node{errors}}}',
+                name: 'marketingCampaigns{edges{node{name}}}',
+                status: 'marketingCampaigns{edges{node{status}}}',
+                creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
+                runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
+                marketingAds: {
+                    totalCount:
+                        'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'marketingCampaigns{edges{node{products{totalCount}}}}',
+                },
+                catalog: {
+                    id: 'marketingCampaigns{edges{node{catalog{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{catalog{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{catalog{lastChangeDate}}}}',
+                    name: 'marketingCampaigns{edges{node{catalog{name}}}}',
+                    catalogType:
+                        'marketingCampaigns{edges{node{catalog{catalogType}}}}',
+                    remoteId:
+                        'marketingCampaigns{edges{node{catalog{remoteId}}}}',
+                    systemStatus:
+                        'marketingCampaigns{edges{node{catalog{systemStatus}}}}',
+                    remoteState:
+                        'marketingCampaigns{edges{node{catalog{remoteState}}}}',
+                    dataFeedId:
+                        'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
+                    errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
+                },
+                campaignTemplate: {
+                    id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{campaignTemplate{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{campaignTemplate{lastChangeDate}}}}',
+                    name:
+                        'marketingCampaigns{edges{node{campaignTemplate{name}}}}',
+                    description:
+                        'marketingCampaigns{edges{node{campaignTemplate{description}}}}',
+                    platform:
+                        'marketingCampaigns{edges{node{campaignTemplate{platform}}}}',
+                    remoteId:
+                        'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}',
+                    systemStatus:
+                        'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
+                    errors:
+                        'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                },
+                mediaChannel: {
+                    id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{mediaChannel{lastChangeDate}}}}',
+                    name: 'marketingCampaigns{edges{node{mediaChannel{name}}}}',
+                    systemStatus:
+                        'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}',
+                    errors:
+                        'marketingCampaigns{edges{node{mediaChannel{errors}}}}',
+                    platform:
+                        'marketingCampaigns{edges{node{mediaChannel{platform}}}}',
+                    remoteId:
+                        'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}',
+                    remoteState:
+                        'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}',
+                    currency:
+                        'marketingCampaigns{edges{node{mediaChannel{currency}}}}',
+                    currencySymbol:
+                        'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}',
+                    currencyOffset:
+                        'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}',
+                    timezone:
+                        'marketingCampaigns{edges{node{mediaChannel{timezone}}}}',
+                    tokenStatus:
+                        'marketingCampaigns{edges{node{mediaChannel{tokenStatus}}}}',
+                },
+                results: {
+                    totalCount:
+                        'marketingCampaigns{edges{node{results{totalCount}}}}',
+                },
+            },
+            cursor: 'marketingCampaigns{edges{cursor}}',
+        },
+        pageInfo: {
+            endCursor: 'marketingCampaigns{pageInfo{endCursor}}',
+            startCursor: 'marketingCampaigns{pageInfo{startCursor}}',
+            hasNextPage: 'marketingCampaigns{pageInfo{hasNextPage}}',
+            hasPreviousPage: 'marketingCampaigns{pageInfo{hasPreviousPage}}',
+        },
+        totalCount: 'marketingCampaigns{totalCount}',
+    },
     creativeLayers: {
         edges: {
             node: {
@@ -10851,6 +11053,64 @@ export type CreativeTemplateField =
     | 'marketplace{products{pageInfo{hasNextPage}}}'
     | 'marketplace{products{pageInfo{hasPreviousPage}}}'
     | 'marketplace{products{totalCount}}'
+    | 'marketingCampaigns{edges{node{id}}}'
+    | 'marketingCampaigns{edges{node{creationDate}}}'
+    | 'marketingCampaigns{edges{node{lastChangeDate}}}'
+    | 'marketingCampaigns{edges{node{resultsSource}}}'
+    | 'marketingCampaigns{edges{node{vendor{id}}}}'
+    | 'marketingCampaigns{edges{node{vendor{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{vendor{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{vendor{name}}}}'
+    | 'marketingCampaigns{edges{node{vendor{systemStatus}}}}'
+    | 'marketingCampaigns{edges{node{vendor{errors}}}}'
+    | 'marketingCampaigns{edges{node{systemStatus}}}'
+    | 'marketingCampaigns{edges{node{errors}}}'
+    | 'marketingCampaigns{edges{node{name}}}'
+    | 'marketingCampaigns{edges{node{status}}}'
+    | 'marketingCampaigns{edges{node{creativeSpec}}}'
+    | 'marketingCampaigns{edges{node{runTimeSpec}}}'
+    | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
+    | 'marketingCampaigns{edges{node{products{totalCount}}}}'
+    | 'marketingCampaigns{edges{node{catalog{id}}}}'
+    | 'marketingCampaigns{edges{node{catalog{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{catalog{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{catalog{name}}}}'
+    | 'marketingCampaigns{edges{node{catalog{catalogType}}}}'
+    | 'marketingCampaigns{edges{node{catalog{remoteId}}}}'
+    | 'marketingCampaigns{edges{node{catalog{systemStatus}}}}'
+    | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
+    | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
+    | 'marketingCampaigns{edges{node{catalog{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{name}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{description}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{platform}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{name}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{errors}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{platform}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{currency}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{tokenStatus}}}}'
+    | 'marketingCampaigns{edges{node{results{totalCount}}}}'
+    | 'marketingCampaigns{edges{cursor}}'
+    | 'marketingCampaigns{pageInfo{endCursor}}'
+    | 'marketingCampaigns{pageInfo{startCursor}}'
+    | 'marketingCampaigns{pageInfo{hasNextPage}}'
+    | 'marketingCampaigns{pageInfo{hasPreviousPage}}'
+    | 'marketingCampaigns{totalCount}'
     | 'creativeLayers{edges{node{id}}}'
     | 'creativeLayers{edges{node{creationDate}}}'
     | 'creativeLayers{edges{node{lastChangeDate}}}'
@@ -10995,6 +11255,30 @@ export type CreativeLayerFields = {
                 };
                 totalCount: 'creativeTemplate{marketplace{products{totalCount}}}';
             };
+        };
+        marketingCampaigns: {
+            edges: {
+                node: {
+                    id: 'creativeTemplate{marketingCampaigns{edges{node{id}}}}';
+                    creationDate: 'creativeTemplate{marketingCampaigns{edges{node{creationDate}}}}';
+                    lastChangeDate: 'creativeTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}';
+                    resultsSource: 'creativeTemplate{marketingCampaigns{edges{node{resultsSource}}}}';
+                    systemStatus: 'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}';
+                    errors: 'creativeTemplate{marketingCampaigns{edges{node{errors}}}}';
+                    name: 'creativeTemplate{marketingCampaigns{edges{node{name}}}}';
+                    status: 'creativeTemplate{marketingCampaigns{edges{node{status}}}}';
+                    creativeSpec: 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
+                    runTimeSpec: 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
+                };
+                cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}';
+                startCursor: 'creativeTemplate{marketingCampaigns{pageInfo{startCursor}}}';
+                hasNextPage: 'creativeTemplate{marketingCampaigns{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'creativeTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'creativeTemplate{marketingCampaigns{totalCount}}';
         };
         creativeLayers: {
             edges: {
@@ -11184,6 +11468,43 @@ export const CreativeLayerFields: CreativeLayerFields = {
                     'creativeTemplate{marketplace{products{totalCount}}}',
             },
         },
+        marketingCampaigns: {
+            edges: {
+                node: {
+                    id: 'creativeTemplate{marketingCampaigns{edges{node{id}}}}',
+                    creationDate:
+                        'creativeTemplate{marketingCampaigns{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'creativeTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}',
+                    resultsSource:
+                        'creativeTemplate{marketingCampaigns{edges{node{resultsSource}}}}',
+                    systemStatus:
+                        'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}',
+                    errors:
+                        'creativeTemplate{marketingCampaigns{edges{node{errors}}}}',
+                    name:
+                        'creativeTemplate{marketingCampaigns{edges{node{name}}}}',
+                    status:
+                        'creativeTemplate{marketingCampaigns{edges{node{status}}}}',
+                    creativeSpec:
+                        'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}',
+                    runTimeSpec:
+                        'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
+                },
+                cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor:
+                    'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}',
+                startCursor:
+                    'creativeTemplate{marketingCampaigns{pageInfo{startCursor}}}',
+                hasNextPage:
+                    'creativeTemplate{marketingCampaigns{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'creativeTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'creativeTemplate{marketingCampaigns{totalCount}}',
+        },
         creativeLayers: {
             edges: {
                 node: {
@@ -11298,6 +11619,22 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketplace{products{pageInfo{hasNextPage}}}}'
     | 'creativeTemplate{marketplace{products{pageInfo{hasPreviousPage}}}}'
     | 'creativeTemplate{marketplace{products{totalCount}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{id}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{creationDate}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{resultsSource}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{errors}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{name}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{status}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{cursor}}}'
+    | 'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}'
+    | 'creativeTemplate{marketingCampaigns{pageInfo{startCursor}}}'
+    | 'creativeTemplate{marketingCampaigns{pageInfo{hasNextPage}}}'
+    | 'creativeTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}'
+    | 'creativeTemplate{marketingCampaigns{totalCount}}'
     | 'creativeTemplate{creativeLayers{edges{node{id}}}}'
     | 'creativeTemplate{creativeLayers{edges{node{creationDate}}}}'
     | 'creativeTemplate{creativeLayers{edges{node{lastChangeDate}}}}'
