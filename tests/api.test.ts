@@ -154,6 +154,206 @@ describe('API', () => {
         ]);
     });
 
+    it('should handle multiple expired token requests at the same time', async () => {
+        const cinnamon = new Cinnamon({ url: 'url' });
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            makeAPIResponse({
+                errors: [{ extensions: { code: codes.TOKEN_EXPIRED } }],
+            }),
+        );
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            makeAPIResponse({
+                errors: [{ extensions: { code: codes.TOKEN_EXPIRED } }],
+            }),
+        );
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            makeAPIResponse({
+                data: {
+                    refreshLogin: {
+                        token: 'new token',
+                        refreshToken: 'new refresh token',
+                    },
+                },
+            }),
+        );
+
+        cinnamon.setRefreshToken('refresh token');
+
+        await Promise.all([
+            cinnamon.api({ query: 'my query 1' }),
+            cinnamon.api({ query: 'my query 2' }),
+        ]);
+
+        expect(
+            (fetch as jest.MockedFunction<() => Promise<unknown>>).mock.calls,
+        ).toEqual([
+            [
+                'url',
+                {
+                    body: '{"query":"my query 1","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: '',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body: '{"query":"my query 2","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: '',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body:
+                        '{"query":"mutation($input: RefreshTokenInput!) {\\n                    refreshLogin(input: $input) {\\n                        expiryDate\\n                        token\\n                        refreshToken\\n                    }\\n                }","variables":{"input":{"refreshToken":"refresh token"}}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: '',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body: '{"query":"my query 1","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: 'Bearer new token',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body: '{"query":"my query 2","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: 'Bearer new token',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+        ]);
+    });
+
+    it('should hold calls while refresh token is in progress', async () => {
+        const cinnamon = new Cinnamon({ url: 'url' });
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            makeAPIResponse({
+                errors: [{ extensions: { code: codes.TOKEN_EXPIRED } }],
+            }),
+        );
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            new Promise(resolve => {
+                setImmediate(() => {
+                    resolve({
+                        json: () => ({
+                            data: {
+                                refreshLogin: {
+                                    token: 'new token',
+                                    refreshToken: 'new refresh token',
+                                },
+                            },
+                        }),
+                    });
+                });
+            }),
+        );
+
+        cinnamon.setRefreshToken('refresh token');
+
+        const firstCall = cinnamon.api({ query: 'my query 1' });
+        await new Promise(resolve => process.nextTick(() => resolve()));
+        const secondCall = cinnamon.api({ query: 'my query 2' });
+
+        await firstCall;
+        await secondCall;
+
+        expect(
+            (fetch as jest.MockedFunction<() => Promise<unknown>>).mock.calls,
+        ).toEqual([
+            [
+                'url',
+                {
+                    body: '{"query":"my query 1","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: '',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body:
+                        '{"query":"mutation($input: RefreshTokenInput!) {\\n                    refreshLogin(input: $input) {\\n                        expiryDate\\n                        token\\n                        refreshToken\\n                    }\\n                }","variables":{"input":{"refreshToken":"refresh token"}}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: '',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body: '{"query":"my query 2","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: 'Bearer new token',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+            [
+                'url',
+                {
+                    body: '{"query":"my query 1","variables":{}}',
+                    headers: {
+                        accept: 'application/json',
+                        authorization: 'Bearer new token',
+                        'content-type': 'application/json',
+                    },
+                    method: 'POST',
+                },
+            ],
+        ]);
+    });
+
     it('should throw a combined cinnamon error for all errors in the response', async () => {
         const cinnamon = new Cinnamon({ url: 'url' });
 

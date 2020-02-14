@@ -533,8 +533,24 @@ export declare type CreativeTemplate = {
     errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace related to the creative template */
     marketplace: Marketplace;
+    /** Marketing campaigns used by the creative template */
+    marketingCampaigns: MarketingCampaignConnection;
     /** Creative layers available for the creative template */
     creativeLayers: CreativeLayerConnection;
+};
+/**
+ * Creative template is the top level of a marketplace's creative objects
+ * hierarchy. It is a collection of ad creative parameters used by [Adgo Creative
+ * Editor](https://adgogh.adgo.io/)
+ */
+export declare type CreativeTemplateMarketingCampaignsArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
  * Creative template is the top level of a marketplace's creative objects
@@ -2493,6 +2509,7 @@ export declare type CreativeTemplateResolvers<ContextType = any, ParentType exte
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<CreativeTemplateMarketingCampaignsArgs, 'showDeleted'>>;
     creativeLayers?: Resolver<ResolversTypes['CreativeLayerConnection'], ParentType, ContextType, RequireFields<CreativeTemplateCreativeLayersArgs, 'showDeleted'>>;
 };
 export declare type CreativeTemplateConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeTemplateConnection'] = ResolversParentTypes['CreativeTemplateConnection']> = {
