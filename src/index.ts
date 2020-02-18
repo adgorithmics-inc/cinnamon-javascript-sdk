@@ -176,7 +176,7 @@ export class Cinnamon {
                     }).then(() => null);
                 }
 
-                await this.refreshTokenRequest;
+                this.refreshTokenRequest = await this.refreshTokenRequest;
                 return this.api({ query, variables, headers, token });
             }
             throw new CinnamonError(
