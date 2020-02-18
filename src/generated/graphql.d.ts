@@ -28,7 +28,7 @@ export declare type Scalars = {
     /**
      * Accepts a single filterObject (`{field: NonEmptyString!, operator: OPERATOR!,
      * value: [String]}`), a single array of filterObjects (creates an AND'ed query),
-     * or a two dimentional array (each array is OR'ed) to produce your resource query.
+     * or a two dimensional array (each array is OR'ed) to produce your resource query.
      * Refer to the following JSON schema for more filter restriction details:
      *
      * ```json
@@ -755,6 +755,8 @@ export declare type MarketingCampaign = ResultResource & {
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec: Scalars['JSONObject'];
+    /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
+    locationSpec?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketing ads contained by the marketing campaign */
     marketingAds: MarketingAdConnection;
     /** Products referenced by the marketing campaign */
@@ -831,6 +833,8 @@ export declare type MarketingCampaignInput = {
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec: Scalars['JSONObject'];
+    /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
+    locationSpec?: Maybe<Array<Scalars['JSONObject']>>;
     /** Ids of the products advertised in the marketing campaign */
     productIds: Array<Scalars['ObjectId']>;
     /** Delivering status of the marketing campaign */
@@ -849,6 +853,8 @@ export declare type MarketingCampaignUpdateInput = {
     creativeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
+    /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
+    locationSpec?: Maybe<Array<Scalars['JSONObject']>>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -936,7 +942,6 @@ export declare type MarketplaceVendorTokensArgs = {
     before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
-    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 /**
  * Marketplace represents a collection of media channels, campaign templates and
@@ -1961,6 +1966,10 @@ export declare type User = Me & {
     organizations: OrganizationConnection;
     /** Entitlements granting permissions to the user */
     entitlements: EntitlementConnection;
+    /** Set to true to receive urgent emails such as deprecation notices and new releases */
+    noticeOptIn: Scalars['Boolean'];
+    /** Set to true to receive marketing emails such as "tips and hints" */
+    newsletterOptIn: Scalars['Boolean'];
 };
 /** User of the system that is granted access to resources through entitlements */
 export declare type UserOrganizationsArgs = {
@@ -2012,6 +2021,10 @@ export declare type UserUpdateInput = {
     lastName?: Maybe<Scalars['NonEmptyString']>;
     /** Password of the user */
     password?: Maybe<Scalars['NonEmptyString']>;
+    /** Subscription status of user to notices */
+    noticeOptIn?: Maybe<Scalars['Boolean']>;
+    /** Subscription status of user to newsletter */
+    newsletterOptIn?: Maybe<Scalars['Boolean']>;
 };
 /** Vendor belongs to a marketplace and is granted access to specific products they can use to create a marketing campaign */
 export declare type Vendor = Me & {
@@ -2594,6 +2607,7 @@ export declare type MarketingCampaignResolvers<ContextType = any, ParentType ext
     status?: Resolver<ResolversTypes['MarketingCampaignStatus'], ParentType, ContextType>;
     creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     runTimeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    locationSpec?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, RequireFields<MarketingCampaignMarketingAdsArgs, 'showDeleted'>>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>>;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
@@ -2621,7 +2635,7 @@ export declare type MarketplaceResolvers<ContextType = any, ParentType extends R
     mediaChannels?: Resolver<ResolversTypes['MediaChannelConnection'], ParentType, ContextType, RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>>;
     campaignTemplates?: Resolver<ResolversTypes['CampaignTemplateConnection'], ParentType, ContextType, RequireFields<MarketplaceCampaignTemplatesArgs, 'showDeleted'>>;
     vendors?: Resolver<ResolversTypes['VendorConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorsArgs, 'showDeleted'>>;
-    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, RequireFields<MarketplaceVendorTokensArgs, 'showDeleted'>>;
+    vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, MarketplaceVendorTokensArgs>;
     creativeTemplates?: Resolver<ResolversTypes['CreativeTemplateConnection'], ParentType, ContextType, RequireFields<MarketplaceCreativeTemplatesArgs, 'showDeleted'>>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketplaceProductsArgs, 'showDeleted'>>;
 };
@@ -2880,6 +2894,8 @@ export declare type UserResolvers<ContextType = any, ParentType extends Resolver
     lastName?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
     organizations?: Resolver<ResolversTypes['OrganizationConnection'], ParentType, ContextType, RequireFields<UserOrganizationsArgs, 'showDeleted'>>;
     entitlements?: Resolver<ResolversTypes['EntitlementConnection'], ParentType, ContextType, UserEntitlementsArgs>;
+    noticeOptIn?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+    newsletterOptIn?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 };
 export declare type UserConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = {
     edges?: Resolver<Array<ResolversTypes['UserEdge']>, ParentType, ContextType>;

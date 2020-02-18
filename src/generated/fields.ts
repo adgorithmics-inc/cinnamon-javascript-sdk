@@ -206,6 +206,7 @@ export type CampaignTemplateFields = {
                 status: 'marketingCampaigns{edges{node{status}}}';
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
+                locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
                 };
@@ -534,6 +535,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                 status: 'marketingCampaigns{edges{node{status}}}',
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
+                locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
                 marketingAds: {
                     totalCount:
                         'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
@@ -763,6 +765,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{status}}}'
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
+    | 'marketingCampaigns{edges{node{locationSpec}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
     | 'marketingCampaigns{edges{node{catalog{id}}}}'
@@ -829,6 +832,8 @@ export type MarketplaceFields = {
                     email: 'organization{users{edges{node{email}}}}';
                     firstName: 'organization{users{edges{node{firstName}}}}';
                     lastName: 'organization{users{edges{node{lastName}}}}';
+                    noticeOptIn: 'organization{users{edges{node{noticeOptIn}}}}';
+                    newsletterOptIn: 'organization{users{edges{node{newsletterOptIn}}}}';
                 };
                 cursor: 'organization{users{edges{cursor}}}';
             };
@@ -1113,6 +1118,10 @@ export const MarketplaceFields: MarketplaceFields = {
                     email: 'organization{users{edges{node{email}}}}',
                     firstName: 'organization{users{edges{node{firstName}}}}',
                     lastName: 'organization{users{edges{node{lastName}}}}',
+                    noticeOptIn:
+                        'organization{users{edges{node{noticeOptIn}}}}',
+                    newsletterOptIn:
+                        'organization{users{edges{node{newsletterOptIn}}}}',
                 },
                 cursor: 'organization{users{edges{cursor}}}',
             },
@@ -1430,6 +1439,8 @@ export type MarketplaceField =
     | 'organization{users{edges{node{email}}}}'
     | 'organization{users{edges{node{firstName}}}}'
     | 'organization{users{edges{node{lastName}}}}'
+    | 'organization{users{edges{node{noticeOptIn}}}}'
+    | 'organization{users{edges{node{newsletterOptIn}}}}'
     | 'organization{users{edges{cursor}}}'
     | 'organization{users{pageInfo{endCursor}}}'
     | 'organization{users{pageInfo{startCursor}}}'
@@ -1618,6 +1629,8 @@ export type OrganizationFields = {
                 entitlements: {
                     totalCount: 'users{edges{node{entitlements{totalCount}}}}';
                 };
+                noticeOptIn: 'users{edges{node{noticeOptIn}}}';
+                newsletterOptIn: 'users{edges{node{newsletterOptIn}}}';
             };
             cursor: 'users{edges{cursor}}';
         };
@@ -1700,6 +1713,8 @@ export const OrganizationFields: OrganizationFields = {
                 entitlements: {
                     totalCount: 'users{edges{node{entitlements{totalCount}}}}',
                 },
+                noticeOptIn: 'users{edges{node{noticeOptIn}}}',
+                newsletterOptIn: 'users{edges{node{newsletterOptIn}}}',
             },
             cursor: 'users{edges{cursor}}',
         },
@@ -1784,6 +1799,8 @@ export type OrganizationField =
     | 'users{edges{node{lastName}}}'
     | 'users{edges{node{organizations{totalCount}}}}'
     | 'users{edges{node{entitlements{totalCount}}}}'
+    | 'users{edges{node{noticeOptIn}}}'
+    | 'users{edges{node{newsletterOptIn}}}'
     | 'users{edges{cursor}}'
     | 'users{pageInfo{endCursor}}'
     | 'users{pageInfo{startCursor}}'
@@ -1864,6 +1881,8 @@ export type UserFields = {
                     email: 'entitlements{edges{node{user{email}}}}';
                     firstName: 'entitlements{edges{node{user{firstName}}}}';
                     lastName: 'entitlements{edges{node{user{lastName}}}}';
+                    noticeOptIn: 'entitlements{edges{node{user{noticeOptIn}}}}';
+                    newsletterOptIn: 'entitlements{edges{node{user{newsletterOptIn}}}}';
                 };
                 resource: {
                     id: 'entitlements{edges{node{resource{id}}}}';
@@ -1884,6 +1903,8 @@ export type UserFields = {
         };
         totalCount: 'entitlements{totalCount}';
     };
+    noticeOptIn: 'noticeOptIn';
+    newsletterOptIn: 'newsletterOptIn';
 };
 export const UserFields: UserFields = {
     id: 'id',
@@ -1937,6 +1958,9 @@ export const UserFields: UserFields = {
                     email: 'entitlements{edges{node{user{email}}}}',
                     firstName: 'entitlements{edges{node{user{firstName}}}}',
                     lastName: 'entitlements{edges{node{user{lastName}}}}',
+                    noticeOptIn: 'entitlements{edges{node{user{noticeOptIn}}}}',
+                    newsletterOptIn:
+                        'entitlements{edges{node{user{newsletterOptIn}}}}',
                 },
                 resource: {
                     id: 'entitlements{edges{node{resource{id}}}}',
@@ -1960,6 +1984,8 @@ export const UserFields: UserFields = {
         },
         totalCount: 'entitlements{totalCount}',
     },
+    noticeOptIn: 'noticeOptIn',
+    newsletterOptIn: 'newsletterOptIn',
 };
 export type UserField =
     | 'id'
@@ -1994,6 +2020,8 @@ export type UserField =
     | 'entitlements{edges{node{user{email}}}}'
     | 'entitlements{edges{node{user{firstName}}}}'
     | 'entitlements{edges{node{user{lastName}}}}'
+    | 'entitlements{edges{node{user{noticeOptIn}}}}'
+    | 'entitlements{edges{node{user{newsletterOptIn}}}}'
     | 'entitlements{edges{node{resource{id}}}}'
     | 'entitlements{edges{node{resource{creationDate}}}}'
     | 'entitlements{edges{node{resource{lastChangeDate}}}}'
@@ -2005,7 +2033,9 @@ export type UserField =
     | 'entitlements{pageInfo{startCursor}}'
     | 'entitlements{pageInfo{hasNextPage}}'
     | 'entitlements{pageInfo{hasPreviousPage}}'
-    | 'entitlements{totalCount}';
+    | 'entitlements{totalCount}'
+    | 'noticeOptIn'
+    | 'newsletterOptIn';
 export type EntitlementFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -2059,6 +2089,8 @@ export type EntitlementFields = {
             };
             totalCount: 'user{entitlements{totalCount}}';
         };
+        noticeOptIn: 'user{noticeOptIn}';
+        newsletterOptIn: 'user{newsletterOptIn}';
     };
     resource: {
         id: 'resource{id}';
@@ -2129,6 +2161,8 @@ export const EntitlementFields: EntitlementFields = {
             },
             totalCount: 'user{entitlements{totalCount}}',
         },
+        noticeOptIn: 'user{noticeOptIn}',
+        newsletterOptIn: 'user{newsletterOptIn}',
     },
     resource: {
         id: 'resource{id}',
@@ -2175,6 +2209,8 @@ export type EntitlementField =
     | 'user{entitlements{pageInfo{hasNextPage}}}'
     | 'user{entitlements{pageInfo{hasPreviousPage}}}'
     | 'user{entitlements{totalCount}}'
+    | 'user{noticeOptIn}'
+    | 'user{newsletterOptIn}'
     | 'resource{id}'
     | 'resource{creationDate}'
     | 'resource{lastChangeDate}'
@@ -3470,6 +3506,7 @@ export type ProductFields = {
                 status: 'marketingCampaigns{edges{node{status}}}';
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
+                locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
                 };
@@ -3811,6 +3848,7 @@ export const ProductFields: ProductFields = {
                 status: 'marketingCampaigns{edges{node{status}}}',
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
+                locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
                 marketingAds: {
                     totalCount:
                         'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
@@ -4230,6 +4268,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{status}}}'
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
+    | 'marketingCampaigns{edges{node{locationSpec}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
     | 'marketingCampaigns{edges{node{catalog{id}}}}'
@@ -4578,6 +4617,7 @@ export type MarketingCampaignFields = {
     status: 'status';
     creativeSpec: 'creativeSpec';
     runTimeSpec: 'runTimeSpec';
+    locationSpec: 'locationSpec';
     marketingAds: {
         edges: {
             node: {
@@ -4611,6 +4651,7 @@ export type MarketingCampaignFields = {
                     status: 'marketingAds{edges{node{marketingCampaign{status}}}}';
                     creativeSpec: 'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}';
                     runTimeSpec: 'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}';
+                    locationSpec: 'marketingAds{edges{node{marketingCampaign{locationSpec}}}}';
                 };
             };
             cursor: 'marketingAds{edges{cursor}}';
@@ -4887,6 +4928,7 @@ export type MarketingCampaignFields = {
                     status: 'campaignTemplate{marketingCampaigns{edges{node{status}}}}';
                     creativeSpec: 'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
                     runTimeSpec: 'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
+                    locationSpec: 'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}';
                 };
                 cursor: 'campaignTemplate{marketingCampaigns{edges{cursor}}}';
             };
@@ -5270,6 +5312,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
     status: 'status',
     creativeSpec: 'creativeSpec',
     runTimeSpec: 'runTimeSpec',
+    locationSpec: 'locationSpec',
     marketingAds: {
         edges: {
             node: {
@@ -5315,6 +5358,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}',
                     runTimeSpec:
                         'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}',
+                    locationSpec:
+                        'marketingAds{edges{node{marketingCampaign{locationSpec}}}}',
                 },
             },
             cursor: 'marketingAds{edges{cursor}}',
@@ -5668,6 +5713,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}',
                     runTimeSpec:
                         'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
+                    locationSpec:
+                        'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}',
                 },
                 cursor: 'campaignTemplate{marketingCampaigns{edges{cursor}}}',
             },
@@ -6009,6 +6056,7 @@ export type MarketingCampaignField =
     | 'status'
     | 'creativeSpec'
     | 'runTimeSpec'
+    | 'locationSpec'
     | 'marketingAds{edges{node{id}}}'
     | 'marketingAds{edges{node{creationDate}}}'
     | 'marketingAds{edges{node{lastChangeDate}}}'
@@ -6034,6 +6082,7 @@ export type MarketingCampaignField =
     | 'marketingAds{edges{node{marketingCampaign{status}}}}'
     | 'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}'
     | 'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{locationSpec}}}}'
     | 'marketingAds{edges{cursor}}'
     | 'marketingAds{pageInfo{endCursor}}'
     | 'marketingAds{pageInfo{startCursor}}'
@@ -6208,6 +6257,7 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketingCampaigns{edges{node{status}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{cursor}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}'
@@ -8331,6 +8381,7 @@ export type MarketingAdFields = {
         status: 'marketingCampaign{status}';
         creativeSpec: 'marketingCampaign{creativeSpec}';
         runTimeSpec: 'marketingCampaign{runTimeSpec}';
+        locationSpec: 'marketingCampaign{locationSpec}';
         marketingAds: {
             edges: {
                 node: {
@@ -8914,6 +8965,7 @@ export const MarketingAdFields: MarketingAdFields = {
         status: 'marketingCampaign{status}',
         creativeSpec: 'marketingCampaign{creativeSpec}',
         runTimeSpec: 'marketingCampaign{runTimeSpec}',
+        locationSpec: 'marketingCampaign{locationSpec}',
         marketingAds: {
             edges: {
                 node: {
@@ -9412,6 +9464,7 @@ export type MarketingAdField =
     | 'marketingCampaign{status}'
     | 'marketingCampaign{creativeSpec}'
     | 'marketingCampaign{runTimeSpec}'
+    | 'marketingCampaign{locationSpec}'
     | 'marketingCampaign{marketingAds{edges{node{id}}}}'
     | 'marketingCampaign{marketingAds{edges{node{creationDate}}}}'
     | 'marketingCampaign{marketingAds{edges{node{lastChangeDate}}}}'
@@ -10434,6 +10487,7 @@ export type CreativeTemplateFields = {
                 status: 'marketingCampaigns{edges{node{status}}}';
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
+                locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
                 };
@@ -10798,6 +10852,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                 status: 'marketingCampaigns{edges{node{status}}}',
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
+                locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
                 marketingAds: {
                     totalCount:
                         'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
@@ -11069,6 +11124,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{status}}}'
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
+    | 'marketingCampaigns{edges{node{locationSpec}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
     | 'marketingCampaigns{edges{node{catalog{id}}}}'
@@ -11269,6 +11325,7 @@ export type CreativeLayerFields = {
                     status: 'creativeTemplate{marketingCampaigns{edges{node{status}}}}';
                     creativeSpec: 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
                     runTimeSpec: 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
+                    locationSpec: 'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}';
                 };
                 cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}';
             };
@@ -11490,6 +11547,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}',
                     runTimeSpec:
                         'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
+                    locationSpec:
+                        'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}',
                 },
                 cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}',
             },
@@ -11629,6 +11688,7 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketingCampaigns{edges{node{status}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{cursor}}}'
     | 'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}'
     | 'creativeTemplate{marketingCampaigns{pageInfo{startCursor}}}'
@@ -12809,6 +12869,8 @@ export type TokenFields = {
             };
             totalCount: 'user{entitlements{totalCount}}';
         };
+        noticeOptIn: 'user{noticeOptIn}';
+        newsletterOptIn: 'user{newsletterOptIn}';
     };
 };
 export const TokenFields: TokenFields = {
@@ -12869,6 +12931,8 @@ export const TokenFields: TokenFields = {
             },
             totalCount: 'user{entitlements{totalCount}}',
         },
+        noticeOptIn: 'user{noticeOptIn}',
+        newsletterOptIn: 'user{newsletterOptIn}',
     },
 };
 export type TokenField =
@@ -12904,7 +12968,9 @@ export type TokenField =
     | 'user{entitlements{pageInfo{startCursor}}}'
     | 'user{entitlements{pageInfo{hasNextPage}}}'
     | 'user{entitlements{pageInfo{hasPreviousPage}}}'
-    | 'user{entitlements{totalCount}}';
+    | 'user{entitlements{totalCount}}'
+    | 'user{noticeOptIn}'
+    | 'user{newsletterOptIn}';
 export type RequestResultFields = {
     result: 'result';
 };

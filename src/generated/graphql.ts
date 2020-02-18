@@ -31,7 +31,7 @@ export type Scalars = {
     /**
      * Accepts a single filterObject (`{field: NonEmptyString!, operator: OPERATOR!,
      * value: [String]}`), a single array of filterObjects (creates an AND'ed query),
-     * or a two dimentional array (each array is OR'ed) to produce your resource query.
+     * or a two dimensional array (each array is OR'ed) to produce your resource query.
      * Refer to the following JSON schema for more filter restriction details:
      *
      * ```json
@@ -808,6 +808,8 @@ export type MarketingCampaign = ResultResource & {
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec: Scalars['JSONObject'];
+    /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
+    locationSpec?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketing ads contained by the marketing campaign */
     marketingAds: MarketingAdConnection;
     /** Products referenced by the marketing campaign */
@@ -890,6 +892,8 @@ export type MarketingCampaignInput = {
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec: Scalars['JSONObject'];
+    /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
+    locationSpec?: Maybe<Array<Scalars['JSONObject']>>;
     /** Ids of the products advertised in the marketing campaign */
     productIds: Array<Scalars['ObjectId']>;
     /** Delivering status of the marketing campaign */
@@ -910,6 +914,8 @@ export type MarketingCampaignUpdateInput = {
     creativeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
+    /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
+    locationSpec?: Maybe<Array<Scalars['JSONObject']>>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -1002,7 +1008,6 @@ export type MarketplaceVendorTokensArgs = {
     before?: Maybe<Scalars['String']>;
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
-    showDeleted?: Maybe<Scalars['Boolean']>;
 };
 
 /**
@@ -2160,6 +2165,10 @@ export type User = Me & {
     organizations: OrganizationConnection;
     /** Entitlements granting permissions to the user */
     entitlements: EntitlementConnection;
+    /** Set to true to receive urgent emails such as deprecation notices and new releases */
+    noticeOptIn: Scalars['Boolean'];
+    /** Set to true to receive marketing emails such as "tips and hints" */
+    newsletterOptIn: Scalars['Boolean'];
 };
 
 /** User of the system that is granted access to resources through entitlements */
@@ -2217,6 +2226,10 @@ export type UserUpdateInput = {
     lastName?: Maybe<Scalars['NonEmptyString']>;
     /** Password of the user */
     password?: Maybe<Scalars['NonEmptyString']>;
+    /** Subscription status of user to notices */
+    noticeOptIn?: Maybe<Scalars['Boolean']>;
+    /** Subscription status of user to newsletter */
+    newsletterOptIn?: Maybe<Scalars['Boolean']>;
 };
 
 /** Vendor belongs to a marketplace and is granted access to specific products they can use to create a marketing campaign */
@@ -3276,6 +3289,11 @@ export type MarketingCampaignResolvers<
         ParentType,
         ContextType
     >;
+    locationSpec?: Resolver<
+        Maybe<Array<ResolversTypes['JSONObject']>>,
+        ParentType,
+        ContextType
+    >;
     marketingAds?: Resolver<
         ResolversTypes['MarketingAdConnection'],
         ParentType,
@@ -3381,7 +3399,7 @@ export type MarketplaceResolvers<
         ResolversTypes['VendorTokenConnection'],
         ParentType,
         ContextType,
-        RequireFields<MarketplaceVendorTokensArgs, 'showDeleted'>
+        MarketplaceVendorTokensArgs
     >;
     creativeTemplates?: Resolver<
         ResolversTypes['CreativeTemplateConnection'],
@@ -4376,6 +4394,12 @@ export type UserResolvers<
         ParentType,
         ContextType,
         UserEntitlementsArgs
+    >;
+    noticeOptIn?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+    newsletterOptIn?: Resolver<
+        ResolversTypes['Boolean'],
+        ParentType,
+        ContextType
     >;
 };
 
