@@ -145,9 +145,7 @@ export class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<APIResult<T, U>> {
-        if (!get(variables, 'input.refreshToken')) {
-            await this.refreshTokenRequest;
-        }
+        await this.refreshTokenRequest;
 
         const response = await fetch(this.config.url, {
             method: 'POST',
