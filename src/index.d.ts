@@ -319,7 +319,7 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken>;
-    vendorTokens({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
+    vendorTokens({ filter, sort, first, last, after, before, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         first?: number;
@@ -327,23 +327,20 @@ export declare class Cinnamon {
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
         fields?: VendorTokenField[];
-        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").VendorTokenConnection>;
-    vendorTokensAll({ filter, sort, fields, showDeleted, headers, token, }?: {
+    vendorTokensAll({ filter, sort, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: VendorTokenField[];
-        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): Promise<VendorToken[]>;
-    vendorTokensEach({ filter, sort, fields, showDeleted, headers, token, }?: {
+    vendorTokensEach({ filter, sort, fields, headers, token, }?: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: VendorTokenField[];
-        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<VendorToken, void, unknown>;

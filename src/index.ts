@@ -1462,7 +1462,6 @@ export class Cinnamon {
         after,
         before,
         fields = this.defaultVendorTokenFields,
-        showDeleted,
         headers,
         token,
     }: {
@@ -1473,13 +1472,12 @@ export class Cinnamon {
         after?: PageInfo['endCursor'];
         before?: PageInfo['startCursor'];
         fields?: VendorTokenField[];
-        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
         return (
             await this.api<'vendorTokens'>({
-                query: pageQueryGenerator('vendorTokens', fields, true),
+                query: pageQueryGenerator('vendorTokens', fields),
                 variables: {
                     filter,
                     sort,
@@ -1487,7 +1485,6 @@ export class Cinnamon {
                     last,
                     after,
                     before,
-                    showDeleted,
                 },
                 headers,
                 token,
@@ -1500,14 +1497,12 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultVendorTokenFields,
-        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: VendorTokenField[];
-        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -1517,7 +1512,6 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
-                showDeleted,
                 headers,
                 token,
             }),
@@ -1529,14 +1523,12 @@ export class Cinnamon {
         filter,
         sort,
         fields = this.defaultVendorTokenFields,
-        showDeleted,
         headers,
         token,
     }: {
         filter?: Scalars['FilterInput'];
         sort?: SortInput;
         fields?: VendorTokenField[];
-        showDeleted?: boolean;
         headers?: Headers;
         token?: string;
     } = {}) {
@@ -1546,7 +1538,6 @@ export class Cinnamon {
                 sort,
                 after,
                 fields,
-                showDeleted,
                 headers,
                 token,
             }),
