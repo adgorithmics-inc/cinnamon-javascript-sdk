@@ -384,6 +384,7 @@ describe('API', () => {
 
         await cinnamon.api({ query: '' }).catch(error => {
             expect(error.raw).toEqual(raw);
+            expect(error.data.raw).toEqual(raw);
         });
     });
 

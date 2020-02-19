@@ -1,6 +1,7 @@
 import fetch from 'cross-fetch';
 import get from 'lodash.get';
 import { codes } from '@adgorithmics/graphql-errors';
+import { AdgoError } from '@adgorithmics/adgo-errors';
 
 import {
     PageInfo,
@@ -147,19 +148,28 @@ export class Cinnamon {
     }): Promise<APIResult<T, U>> {
         await this.refreshTokenRequest;
 
-        const response = await fetch(this.config.url, {
-            method: 'POST',
-            headers: {
-                authorization:
-                    token || this.token ? `Bearer ${token || this.token}` : '',
-                accept: 'application/json',
-                'content-type': 'application/json',
-                ...headers,
-            },
-            body: JSON.stringify({ query, variables }),
-        });
+        let json;
 
-        const json = await response.json();
+        try {
+            const response = await fetch(this.config.url, {
+                method: 'POST',
+                headers: {
+                    authorization:
+                        token || this.token
+                            ? `Bearer ${token || this.token}`
+                            : '',
+                    accept: 'application/json',
+                    'content-type': 'application/json',
+                    ...headers,
+                },
+                body: JSON.stringify({ query, variables }),
+            });
+
+            json = await response.json();
+        } catch (error) {
+            throw new AdgoError(error);
+        }
+
         if (json.errors) {
             if (
                 json.errors.some(

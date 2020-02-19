@@ -1,4 +1,5 @@
 import { codes } from '@adgorithmics/graphql-errors';
+import { AdgoError } from '@adgorithmics/adgo-errors';
 import { Query } from './generated/graphql';
 
 // stripped down version of https://github.com/NoHomey/bind-decorator
@@ -66,15 +67,15 @@ export interface APIError {
     extentions?: { code?: codes };
 }
 
-export class CinnamonError extends Error {
+export class CinnamonError extends AdgoError {
     raw?: { data?: unknown; errors?: Array<APIError> };
 
     constructor(
-        message: string,
+        error: AdgoError | Error | string,
         raw?: { data?: unknown; errors?: Array<APIError> },
     ) {
-        super(message);
-
+        super(error, { raw }, 'cinnamon_error');
         this.raw = raw;
+        this.name = 'CinnamonError';
     }
 }
