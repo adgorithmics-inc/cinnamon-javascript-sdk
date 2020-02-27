@@ -115,9 +115,18 @@ workflows:
     version: 2
     test-and-publish:
         jobs:
-            - test
-            - lint
-            - check-build
+            - test:
+                  filters:
+                      tags:
+                          only: /.*/
+            - lint:
+                  filters:
+                      tags:
+                          only: /.*/
+            - check-build:
+                  filters:
+                      tags:
+                          only: /.*/
             - publish:
                   context: npm-publish
                   requires:
