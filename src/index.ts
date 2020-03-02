@@ -41,6 +41,7 @@ import {
     MarketingCampaign,
     MarketingCampaignInput,
     MarketingCampaignUpdateInput,
+    MarketingCampaignSyncInput,
     MarketingAd,
     Result,
     Entitlement,
@@ -2332,6 +2333,32 @@ export class Cinnamon {
                 token,
             })
         ).data.approveMarketingCampaign;
+    }
+
+    @bind
+    async syncMarketingCampaign({
+        id,
+        input,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: MarketingCampaignSyncInput;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'syncMarketingCampaign'>({
+                query: `mutation($id: ObjectId!, $input: MarketingCampaignSyncInput) {
+                    syncMarketingCampaign(id: $id, input: $input) {
+                        id
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.syncMarketingCampaign;
     }
 
     @bind

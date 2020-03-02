@@ -255,6 +255,9 @@ export type CampaignTemplateFields = {
                 results: {
                     totalCount: 'marketingCampaigns{edges{node{results{totalCount}}}}';
                 };
+                notifications: {
+                    totalCount: 'marketingCampaigns{edges{node{notifications{totalCount}}}}';
+                };
             };
             cursor: 'marketingCampaigns{edges{cursor}}';
         };
@@ -614,6 +617,10 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     totalCount:
                         'marketingCampaigns{edges{node{results{totalCount}}}}',
                 },
+                notifications: {
+                    totalCount:
+                        'marketingCampaigns{edges{node{notifications{totalCount}}}}',
+                },
             },
             cursor: 'marketingCampaigns{edges{cursor}}',
         },
@@ -802,6 +809,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{tokenStatus}}}}'
     | 'marketingCampaigns{edges{node{results{totalCount}}}}'
+    | 'marketingCampaigns{edges{node{notifications{totalCount}}}}'
     | 'marketingCampaigns{edges{cursor}}'
     | 'marketingCampaigns{pageInfo{endCursor}}'
     | 'marketingCampaigns{pageInfo{startCursor}}'
@@ -3555,6 +3563,9 @@ export type ProductFields = {
                 results: {
                     totalCount: 'marketingCampaigns{edges{node{results{totalCount}}}}';
                 };
+                notifications: {
+                    totalCount: 'marketingCampaigns{edges{node{notifications{totalCount}}}}';
+                };
             };
             cursor: 'marketingCampaigns{edges{cursor}}';
         };
@@ -3926,6 +3937,10 @@ export const ProductFields: ProductFields = {
                 results: {
                     totalCount:
                         'marketingCampaigns{edges{node{results{totalCount}}}}',
+                },
+                notifications: {
+                    totalCount:
+                        'marketingCampaigns{edges{node{notifications{totalCount}}}}',
                 },
             },
             cursor: 'marketingCampaigns{edges{cursor}}',
@@ -4305,6 +4320,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{tokenStatus}}}}'
     | 'marketingCampaigns{edges{node{results{totalCount}}}}'
+    | 'marketingCampaigns{edges{node{notifications{totalCount}}}}'
     | 'marketingCampaigns{edges{cursor}}'
     | 'marketingCampaigns{pageInfo{endCursor}}'
     | 'marketingCampaigns{pageInfo{startCursor}}'
@@ -5118,6 +5134,29 @@ export type MarketingCampaignFields = {
             hasPreviousPage: 'results{pageInfo{hasPreviousPage}}';
         };
         totalCount: 'results{totalCount}';
+    };
+    notifications: {
+        edges: {
+            node: {
+                id: 'notifications{edges{node{id}}}';
+                creationDate: 'notifications{edges{node{creationDate}}}';
+                lastChangeDate: 'notifications{edges{node{lastChangeDate}}}';
+                title: 'notifications{edges{node{title}}}';
+                message: 'notifications{edges{node{message}}}';
+                status: 'notifications{edges{node{status}}}';
+                severity: 'notifications{edges{node{severity}}}';
+                code: 'notifications{edges{node{code}}}';
+                resource: 'notifications{edges{node{resource}}}';
+            };
+            cursor: 'notifications{edges{cursor}}';
+        };
+        pageInfo: {
+            endCursor: 'notifications{pageInfo{endCursor}}';
+            startCursor: 'notifications{pageInfo{startCursor}}';
+            hasNextPage: 'notifications{pageInfo{hasNextPage}}';
+            hasPreviousPage: 'notifications{pageInfo{hasPreviousPage}}';
+        };
+        totalCount: 'notifications{totalCount}';
     };
 };
 export const MarketingCampaignFields: MarketingCampaignFields = {
@@ -5960,6 +5999,29 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         },
         totalCount: 'results{totalCount}',
     },
+    notifications: {
+        edges: {
+            node: {
+                id: 'notifications{edges{node{id}}}',
+                creationDate: 'notifications{edges{node{creationDate}}}',
+                lastChangeDate: 'notifications{edges{node{lastChangeDate}}}',
+                title: 'notifications{edges{node{title}}}',
+                message: 'notifications{edges{node{message}}}',
+                status: 'notifications{edges{node{status}}}',
+                severity: 'notifications{edges{node{severity}}}',
+                code: 'notifications{edges{node{code}}}',
+                resource: 'notifications{edges{node{resource}}}',
+            },
+            cursor: 'notifications{edges{cursor}}',
+        },
+        pageInfo: {
+            endCursor: 'notifications{pageInfo{endCursor}}',
+            startCursor: 'notifications{pageInfo{startCursor}}',
+            hasNextPage: 'notifications{pageInfo{hasNextPage}}',
+            hasPreviousPage: 'notifications{pageInfo{hasPreviousPage}}',
+        },
+        totalCount: 'notifications{totalCount}',
+    },
 };
 export type MarketingCampaignField =
     | 'id'
@@ -6373,7 +6435,22 @@ export type MarketingCampaignField =
     | 'results{pageInfo{startCursor}}'
     | 'results{pageInfo{hasNextPage}}'
     | 'results{pageInfo{hasPreviousPage}}'
-    | 'results{totalCount}';
+    | 'results{totalCount}'
+    | 'notifications{edges{node{id}}}'
+    | 'notifications{edges{node{creationDate}}}'
+    | 'notifications{edges{node{lastChangeDate}}}'
+    | 'notifications{edges{node{title}}}'
+    | 'notifications{edges{node{message}}}'
+    | 'notifications{edges{node{status}}}'
+    | 'notifications{edges{node{severity}}}'
+    | 'notifications{edges{node{code}}}'
+    | 'notifications{edges{node{resource}}}'
+    | 'notifications{edges{cursor}}'
+    | 'notifications{pageInfo{endCursor}}'
+    | 'notifications{pageInfo{startCursor}}'
+    | 'notifications{pageInfo{hasNextPage}}'
+    | 'notifications{pageInfo{hasPreviousPage}}'
+    | 'notifications{totalCount}';
 export type VendorFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -8619,6 +8696,29 @@ export type MarketingAdFields = {
             };
             totalCount: 'marketingCampaign{results{totalCount}}';
         };
+        notifications: {
+            edges: {
+                node: {
+                    id: 'marketingCampaign{notifications{edges{node{id}}}}';
+                    creationDate: 'marketingCampaign{notifications{edges{node{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaign{notifications{edges{node{lastChangeDate}}}}';
+                    title: 'marketingCampaign{notifications{edges{node{title}}}}';
+                    message: 'marketingCampaign{notifications{edges{node{message}}}}';
+                    status: 'marketingCampaign{notifications{edges{node{status}}}}';
+                    severity: 'marketingCampaign{notifications{edges{node{severity}}}}';
+                    code: 'marketingCampaign{notifications{edges{node{code}}}}';
+                    resource: 'marketingCampaign{notifications{edges{node{resource}}}}';
+                };
+                cursor: 'marketingCampaign{notifications{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'marketingCampaign{notifications{pageInfo{endCursor}}}';
+                startCursor: 'marketingCampaign{notifications{pageInfo{startCursor}}}';
+                hasNextPage: 'marketingCampaign{notifications{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'marketingCampaign{notifications{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'marketingCampaign{notifications{totalCount}}';
+        };
     };
 };
 export const MarketingAdFields: MarketingAdFields = {
@@ -9293,6 +9393,40 @@ export const MarketingAdFields: MarketingAdFields = {
             },
             totalCount: 'marketingCampaign{results{totalCount}}',
         },
+        notifications: {
+            edges: {
+                node: {
+                    id: 'marketingCampaign{notifications{edges{node{id}}}}',
+                    creationDate:
+                        'marketingCampaign{notifications{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaign{notifications{edges{node{lastChangeDate}}}}',
+                    title:
+                        'marketingCampaign{notifications{edges{node{title}}}}',
+                    message:
+                        'marketingCampaign{notifications{edges{node{message}}}}',
+                    status:
+                        'marketingCampaign{notifications{edges{node{status}}}}',
+                    severity:
+                        'marketingCampaign{notifications{edges{node{severity}}}}',
+                    code: 'marketingCampaign{notifications{edges{node{code}}}}',
+                    resource:
+                        'marketingCampaign{notifications{edges{node{resource}}}}',
+                },
+                cursor: 'marketingCampaign{notifications{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor:
+                    'marketingCampaign{notifications{pageInfo{endCursor}}}',
+                startCursor:
+                    'marketingCampaign{notifications{pageInfo{startCursor}}}',
+                hasNextPage:
+                    'marketingCampaign{notifications{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'marketingCampaign{notifications{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'marketingCampaign{notifications{totalCount}}',
+        },
     },
 };
 export type MarketingAdField =
@@ -9615,7 +9749,22 @@ export type MarketingAdField =
     | 'marketingCampaign{results{pageInfo{startCursor}}}'
     | 'marketingCampaign{results{pageInfo{hasNextPage}}}'
     | 'marketingCampaign{results{pageInfo{hasPreviousPage}}}'
-    | 'marketingCampaign{results{totalCount}}';
+    | 'marketingCampaign{results{totalCount}}'
+    | 'marketingCampaign{notifications{edges{node{id}}}}'
+    | 'marketingCampaign{notifications{edges{node{creationDate}}}}'
+    | 'marketingCampaign{notifications{edges{node{lastChangeDate}}}}'
+    | 'marketingCampaign{notifications{edges{node{title}}}}'
+    | 'marketingCampaign{notifications{edges{node{message}}}}'
+    | 'marketingCampaign{notifications{edges{node{status}}}}'
+    | 'marketingCampaign{notifications{edges{node{severity}}}}'
+    | 'marketingCampaign{notifications{edges{node{code}}}}'
+    | 'marketingCampaign{notifications{edges{node{resource}}}}'
+    | 'marketingCampaign{notifications{edges{cursor}}}'
+    | 'marketingCampaign{notifications{pageInfo{endCursor}}}'
+    | 'marketingCampaign{notifications{pageInfo{startCursor}}}'
+    | 'marketingCampaign{notifications{pageInfo{hasNextPage}}}'
+    | 'marketingCampaign{notifications{pageInfo{hasPreviousPage}}}'
+    | 'marketingCampaign{notifications{totalCount}}';
 export type ResultFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -10536,6 +10685,9 @@ export type CreativeTemplateFields = {
                 results: {
                     totalCount: 'marketingCampaigns{edges{node{results{totalCount}}}}';
                 };
+                notifications: {
+                    totalCount: 'marketingCampaigns{edges{node{notifications{totalCount}}}}';
+                };
             };
             cursor: 'marketingCampaigns{edges{cursor}}';
         };
@@ -10931,6 +11083,10 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     totalCount:
                         'marketingCampaigns{edges{node{results{totalCount}}}}',
                 },
+                notifications: {
+                    totalCount:
+                        'marketingCampaigns{edges{node{notifications{totalCount}}}}',
+                },
             },
             cursor: 'marketingCampaigns{edges{cursor}}',
         },
@@ -11161,6 +11317,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{tokenStatus}}}}'
     | 'marketingCampaigns{edges{node{results{totalCount}}}}'
+    | 'marketingCampaigns{edges{node{notifications{totalCount}}}}'
     | 'marketingCampaigns{edges{cursor}}'
     | 'marketingCampaigns{pageInfo{endCursor}}'
     | 'marketingCampaigns{pageInfo{startCursor}}'
