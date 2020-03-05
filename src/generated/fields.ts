@@ -10429,6 +10429,38 @@ export type ResultField =
     | 'vendor{products{pageInfo{hasNextPage}}}'
     | 'vendor{products{pageInfo{hasPreviousPage}}}'
     | 'vendor{products{totalCount}}';
+export type NotificationFields = {
+    id: 'id';
+    creationDate: 'creationDate';
+    lastChangeDate: 'lastChangeDate';
+    title: 'title';
+    message: 'message';
+    status: 'status';
+    severity: 'severity';
+    code: 'code';
+    resource: 'resource';
+};
+export const NotificationFields: NotificationFields = {
+    id: 'id',
+    creationDate: 'creationDate',
+    lastChangeDate: 'lastChangeDate',
+    title: 'title',
+    message: 'message',
+    status: 'status',
+    severity: 'severity',
+    code: 'code',
+    resource: 'resource',
+};
+export type NotificationField =
+    | 'id'
+    | 'creationDate'
+    | 'lastChangeDate'
+    | 'title'
+    | 'message'
+    | 'status'
+    | 'severity'
+    | 'code'
+    | 'resource';
 export type CreativeTemplateFields = {
     id: 'id';
     creationDate: 'creationDate';
