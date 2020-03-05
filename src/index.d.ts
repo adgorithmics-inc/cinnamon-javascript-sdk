@@ -1,5 +1,5 @@
-import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, SetVendorPasswordInput, LoginVendorInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingCampaignSyncInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput, RequestResetPasswordInput, ResetPasswordInput } from './generated/graphql';
-import { OrganizationField, UserField, RequestResultField, MarketplaceField, MediaChannelField, CampaignTemplateField, VendorField, VendorTokenField, CatalogField, ProductField, MarketingCampaignField, MarketingAdField, ResultField, EntitlementField, CreativeFontField, CreativeImageField, CreativeLayerField, CreativeTemplateField } from './generated/fields';
+import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, SetVendorPasswordInput, LoginVendorInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingCampaignSyncInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput, RequestResetPasswordInput, ResetPasswordInput, Notification, NotificationUpdateInput } from './generated/graphql';
+import { OrganizationField, UserField, RequestResultField, MarketplaceField, MediaChannelField, CampaignTemplateField, VendorField, VendorTokenField, CatalogField, ProductField, MarketingCampaignField, MarketingAdField, ResultField, EntitlementField, CreativeFontField, CreativeImageField, CreativeLayerField, CreativeTemplateField, NotificationField } from './generated/fields';
 export interface Config {
     url: string;
 }
@@ -874,6 +874,45 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<import("./generated/graphql").Deletion>;
+    private defaultNotificationFields;
+    notification({ id, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<Notification>;
+    notifications({ filter, sort, first, last, after, before, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").NotificationConnection>;
+    notificationsAll({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<Notification[]>;
+    notificationsEach({ filter, sort, fields, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Notification, void, unknown>;
+    updateNotification({ id, input, fields, headers, token, }: {
+        id: Scalars['ObjectId'];
+        input: NotificationUpdateInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<Notification>;
 }
 export * from './generated/graphql';
 export * from './generated/fields';

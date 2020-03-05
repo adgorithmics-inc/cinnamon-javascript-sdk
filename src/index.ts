@@ -61,6 +61,8 @@ import {
     CreativeTemplateUpdateInput,
     RequestResetPasswordInput,
     ResetPasswordInput,
+    Notification,
+    NotificationUpdateInput,
 } from './generated/graphql';
 
 import {
@@ -101,6 +103,8 @@ import {
     CreativeLayerField,
     CreativeTemplateFields,
     CreativeTemplateField,
+    NotificationFields,
+    NotificationField,
 } from './generated/fields';
 
 import { bind, pageQueryGenerator, APIError, CinnamonError } from './helpers';
@@ -3665,6 +3669,164 @@ export class Cinnamon {
                 token,
             })
         ).data.deleteCreativeTemplate;
+    }
+
+    // ####################################
+    // Notification
+    // ####################################
+
+    private defaultNotificationFields = [
+        NotificationFields.id,
+        NotificationFields.title,
+        NotificationFields.message,
+        NotificationFields.status,
+        NotificationFields.severity,
+        NotificationFields.code,
+    ];
+
+    @bind
+    async notification({
+        id,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'notification'>({
+                query: `query($id: ObjectId!) {
+                    notification(id: $id) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.notification;
+    }
+
+    @bind
+    async notifications({
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (
+            await this.api<'notifications'>({
+                query: pageQueryGenerator('notifications', fields, false),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                },
+                headers,
+                token,
+            })
+        ).data.notifications;
+    }
+
+    @bind
+    notificationsAll({
+        filter,
+        sort,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<Notification>((after: PageInfo['endCursor']) =>
+            this.notifications({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    notificationsEach({
+        filter,
+        sort,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.eachNode<Notification>((after: PageInfo['endCursor']) =>
+            this.notifications({
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    async updateNotification({
+        id,
+        input,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: NotificationUpdateInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateNotification'>({
+                query: `mutation($id: ObjectId!, $input: NotificationUpdateInput!) {
+                    updateNotification(id: $id, input: $input) {
+                        ${fields.join(' ')}
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.updateNotification;
     }
 }
 
