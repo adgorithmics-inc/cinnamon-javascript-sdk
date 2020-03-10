@@ -79,3 +79,31 @@ export class CinnamonError extends AdgoError {
         this.name = 'CinnamonError';
     }
 }
+
+export const sleep = (time: number) =>
+    new Promise(resolve => setTimeout(() => resolve(), time));
+
+export type AugmentedRequired<
+    T extends object,
+    K extends keyof T = keyof T
+> = Omit<T, K> & Required<Pick<T, K>>;
+
+export const NON_RETRYABLE_ERROR_CODES = [
+    codes.OBJECT_DUPLICATE,
+    codes.OBJECT_NOT_FOUND,
+    codes.OBJECT_IMMUTABLE,
+    codes.TOKEN_EXPIRED,
+    codes.TOKEN_MALFORMED,
+    codes.INVALID_REFRESH_TOKEN,
+    codes.TOKEN_MISSING,
+    codes.ACCESS_DENIED,
+    codes.INVALID_CREDENTIALS,
+    codes.QUERY_DEPTH_EXCEEDED,
+    codes.QUERY_COMPLEXITY_EXCEEDED,
+    codes.QUERY_BREADTH_EXCEEDED,
+    codes.INPUT_LIST_EMPTY,
+    codes.INPUT_LIST_MIN,
+    codes.INPUT_LIST_MAX,
+    codes.INPUT_INVALID,
+    codes.MAX_PAYLOAD_EXCEEDED,
+];

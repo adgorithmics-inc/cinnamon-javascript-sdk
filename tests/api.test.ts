@@ -1,9 +1,11 @@
 import { codes } from '@adgorithmics/graphql-errors';
-import { Cinnamon } from '../src';
+import { Cinnamon, CinnamonError } from '../src';
 import fetch from 'cross-fetch';
 
 const makeAPIResponse = (response: unknown) =>
     Promise.resolve({ json: () => response });
+
+const retrySleepTime = 0;
 
 jest.mock('cross-fetch', () => ({
     default: jest.fn(() => makeAPIResponse({ data: {} })),
@@ -19,7 +21,7 @@ describe('API', () => {
     });
 
     it('should call fetch with the correct arguments', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         await cinnamon.api({ query: '' });
 
@@ -35,7 +37,7 @@ describe('API', () => {
     });
 
     it('should pass the active token as authorization header', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         cinnamon.setToken('token');
         await cinnamon.api({ query: '' });
@@ -52,7 +54,7 @@ describe('API', () => {
     });
 
     it('should overwrite the active token with a token thats passed as an argument', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         cinnamon.setToken('token');
         await cinnamon.api({ query: '', token: 'new token' });
@@ -69,7 +71,7 @@ describe('API', () => {
     });
 
     it('should pass variables in the body', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         await cinnamon.api({ query: '', variables: { foo: 'bar' } });
 
@@ -85,7 +87,7 @@ describe('API', () => {
     });
 
     it('should refresh the token if it is expired and retry the failed call', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         (fetch as jest.MockedFunction<
             () => Promise<unknown>
@@ -155,7 +157,7 @@ describe('API', () => {
     });
 
     it('should handle multiple expired token requests at the same time', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         (fetch as jest.MockedFunction<
             () => Promise<unknown>
@@ -261,7 +263,7 @@ describe('API', () => {
     });
 
     it('should hold calls while refresh token is in progress', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         (fetch as jest.MockedFunction<
             () => Promise<unknown>
@@ -355,7 +357,11 @@ describe('API', () => {
     });
 
     it('should throw a combined cinnamon error for all errors in the response', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({
+            url: 'url',
+            retryHook: () => false,
+            retrySleepTime,
+        });
 
         (fetch as jest.MockedFunction<
             () => Promise<unknown>
@@ -371,7 +377,7 @@ describe('API', () => {
     });
 
     it('should have the raw data in the error object', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         const raw = {
             data: { some: 'data' },
@@ -389,7 +395,11 @@ describe('API', () => {
     });
 
     it('should throw a invalid response error if there is no data attribute in the response', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({
+            url: 'url',
+            retryHook: () => false,
+            retrySleepTime,
+        });
 
         (fetch as jest.MockedFunction<
             () => Promise<unknown>
@@ -401,7 +411,7 @@ describe('API', () => {
     });
 
     it('should return the server response when there are no errors', async () => {
-        const cinnamon = new Cinnamon({ url: 'url' });
+        const cinnamon = new Cinnamon({ url: 'url', retrySleepTime });
 
         const response = { data: 'hello world' };
 
@@ -410,5 +420,126 @@ describe('API', () => {
         >).mockResolvedValueOnce(makeAPIResponse(response));
 
         expect(await cinnamon.api({ query: '' })).toEqual(response);
+    });
+
+    it('should retry errors', async () => {
+        const retryHook = jest.fn(() => true);
+        const cinnamon = new Cinnamon({
+            url: 'url',
+            retryHook,
+            retrySleepTime,
+        });
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValue(
+            makeAPIResponse({
+                errors: [{ message: 'error 1' }, { message: 'error 2' }],
+            }),
+        );
+
+        await expect(cinnamon.api({ query: '' })).rejects.toThrow(
+            'error 1\nerror 2',
+        );
+
+        expect(retryHook).toHaveBeenCalledTimes(3);
+        expect(retryHook).toHaveBeenNthCalledWith(
+            1,
+            new CinnamonError('error 1\nerror 2'),
+            0,
+        );
+        expect(retryHook).toHaveBeenNthCalledWith(
+            2,
+            new CinnamonError('error 1\nerror 2'),
+            1,
+        );
+        expect(retryHook).toHaveBeenNthCalledWith(
+            3,
+            new CinnamonError('error 1\nerror 2'),
+            2,
+        );
+        expect(fetch).toHaveBeenCalledTimes(4);
+    });
+
+    it('should not retry unretryable errors', async () => {
+        const retryHook = jest.fn(() => true);
+        const cinnamon = new Cinnamon({
+            url: 'url',
+            retryHook,
+            retrySleepTime,
+        });
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            makeAPIResponse({
+                errors: [
+                    {
+                        message: 'error',
+                        extensions: { code: codes.INPUT_INVALID },
+                    },
+                ],
+            }),
+        );
+
+        await expect(cinnamon.api({ query: '' })).rejects.toThrow('error');
+
+        expect(retryHook).not.toHaveBeenCalled();
+        expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not retry if retryHook returns false', async () => {
+        const retryHook = jest.fn(() => false);
+        const cinnamon = new Cinnamon({
+            url: 'url',
+            retryHook,
+            retrySleepTime,
+        });
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValueOnce(
+            makeAPIResponse({
+                errors: [{ message: 'error 1' }, { message: 'error 2' }],
+            }),
+        );
+
+        await expect(cinnamon.api({ query: '' })).rejects.toThrow(
+            'error 1\nerror 2',
+        );
+
+        expect(retryHook).toHaveBeenCalledTimes(1);
+        expect(retryHook).toHaveBeenNthCalledWith(
+            1,
+            new CinnamonError('error 1\nerror 2'),
+            0,
+        );
+        expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should retry errors as often as set in maxRetry', async () => {
+        const retryHook = jest.fn(() => true);
+        const maxRetry = 2;
+        const cinnamon = new Cinnamon({
+            url: 'url',
+            retryHook,
+            maxRetry,
+            retrySleepTime,
+        });
+
+        (fetch as jest.MockedFunction<
+            () => Promise<unknown>
+        >).mockResolvedValue(
+            makeAPIResponse({
+                errors: [{ message: 'error 1' }, { message: 'error 2' }],
+            }),
+        );
+
+        await expect(cinnamon.api({ query: '' })).rejects.toThrow(
+            'error 1\nerror 2',
+        );
+
+        expect(retryHook).toHaveBeenCalledTimes(maxRetry);
+        expect(fetch).toHaveBeenCalledTimes(3);
     });
 });

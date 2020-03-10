@@ -107,10 +107,24 @@ import {
     NotificationField,
 } from './generated/fields';
 
-import { bind, pageQueryGenerator, APIError, CinnamonError } from './helpers';
+import {
+    bind,
+    pageQueryGenerator,
+    APIError,
+    CinnamonError,
+    sleep,
+    AugmentedRequired,
+    NON_RETRYABLE_ERROR_CODES,
+} from './helpers';
 
 export interface Config {
     url: string;
+    retryHook?: (
+        error: AdgoError,
+        retryCount: number,
+    ) => boolean | Promise<boolean>;
+    maxRetry?: number;
+    retrySleepTime?: number;
 }
 
 export interface Headers {
@@ -123,15 +137,27 @@ export type APIResult<T extends APIKey, U extends string = T> = {
 };
 
 const VENDOR_TOKEN_LENGTH = 60;
+const DEFAULT_MAX_RETRY = 3;
+const DEFAULT_RETRY_SLEEP_TIME = 500;
 
 export class Cinnamon {
-    private config: Config;
+    private config: AugmentedRequired<Config, 'maxRetry' | 'retrySleepTime'>;
     private refreshToken = '';
     private token = '';
     private refreshTokenRequest: Promise<null> | null = null;
 
-    constructor(config: Config) {
-        this.config = config;
+    constructor({
+        url,
+        retryHook,
+        maxRetry = DEFAULT_MAX_RETRY,
+        retrySleepTime = DEFAULT_RETRY_SLEEP_TIME,
+    }: Config) {
+        this.config = {
+            url,
+            retryHook,
+            maxRetry,
+            retrySleepTime,
+        };
     }
 
     @bind
@@ -140,70 +166,104 @@ export class Cinnamon {
     }
 
     @bind
-    async api<T extends APIKey, U extends string = T>({
-        query,
-        variables = {},
-        headers = {},
-        token,
-    }: {
-        query: string;
-        variables?: object;
-        headers?: Headers;
-        token?: string;
-    }): Promise<APIResult<T, U>> {
+    async api<T extends APIKey, U extends string = T>(
+        {
+            query,
+            variables = {},
+            headers = {},
+            token,
+        }: {
+            query: string;
+            variables?: object;
+            headers?: Headers;
+            token?: string;
+        },
+        retryCount = 0,
+    ): Promise<APIResult<T, U>> {
         await this.refreshTokenRequest;
 
         let json;
 
         try {
-            const response = await fetch(this.config.url, {
-                method: 'POST',
-                headers: {
-                    authorization:
-                        token || this.token
-                            ? `Bearer ${token || this.token}`
-                            : '',
-                    accept: 'application/json',
-                    'content-type': 'application/json',
-                    ...headers,
-                },
-                body: JSON.stringify({ query, variables }),
-            });
+            try {
+                const response = await fetch(this.config.url, {
+                    method: 'POST',
+                    headers: {
+                        authorization:
+                            token || this.token
+                                ? `Bearer ${token || this.token}`
+                                : '',
+                        accept: 'application/json',
+                        'content-type': 'application/json',
+                        ...headers,
+                    },
+                    body: JSON.stringify({ query, variables }),
+                });
 
-            json = await response.json();
-        } catch (error) {
-            throw new AdgoError(error);
-        }
-
-        if (json.errors) {
-            if (
-                json.errors.some(
-                    (error: APIError) =>
-                        get(error, 'extensions.code') === codes.TOKEN_EXPIRED,
-                ) &&
-                !token
-            ) {
-                if (!this.refreshTokenRequest) {
-                    this.refreshTokenRequest = this.refreshLogin({
-                        refreshToken: this.refreshToken,
-                    }).then(() => null);
-                }
-
-                this.refreshTokenRequest = await this.refreshTokenRequest;
-                return this.api({ query, variables, headers, token });
+                json = await response.json();
+            } catch (error) {
+                throw new AdgoError(error);
             }
-            throw new CinnamonError(
-                json.errors.map((error: Error) => error.message).join('\n'),
-                json,
+
+            if (json.errors) {
+                if (
+                    json.errors.some(
+                        (error: APIError) =>
+                            get(error, 'extensions.code') ===
+                            codes.TOKEN_EXPIRED,
+                    ) &&
+                    !token
+                ) {
+                    if (!this.refreshTokenRequest) {
+                        this.refreshTokenRequest = this.refreshLogin({
+                            refreshToken: this.refreshToken,
+                        }).then(() => null);
+                    }
+
+                    this.refreshTokenRequest = await this.refreshTokenRequest;
+                    return this.api({ query, variables, headers, token });
+                }
+                throw new CinnamonError(
+                    json.errors.map((error: Error) => error.message).join('\n'),
+                    json,
+                );
+            }
+            if (!json.data) {
+                throw new CinnamonError(
+                    `Invalid server response: ${JSON.stringify(json)}`,
+                    json,
+                );
+            }
+            return json;
+        } catch (error) {
+            if (retryCount >= this.config.maxRetry) {
+                throw error;
+            }
+
+            if (
+                error?.raw?.errors?.some((error: APIError) =>
+                    NON_RETRYABLE_ERROR_CODES.includes(
+                        get(error, 'extensions.code'),
+                    ),
+                )
+            ) {
+                throw error;
+            }
+
+            if (
+                this.config.retryHook &&
+                !(await this.config.retryHook(error, retryCount))
+            ) {
+                throw error;
+            }
+
+            await sleep(this.config.retrySleepTime * retryCount);
+
+            return this.api(
+                { query, variables, headers, token },
+                retryCount + 1,
             );
         }
-        if (!json.data) {
-            throw new CinnamonError(
-                `Invalid server response: ${JSON.stringify(json)}`,
-                json,
-            );
-        }
-        return json;
     }
 
     @bind
