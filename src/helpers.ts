@@ -1,6 +1,7 @@
 import { codes } from '@adgorithmics/graphql-errors';
 import { AdgoError } from '@adgorithmics/adgo-errors';
-import { Query } from './generated/graphql';
+import { Query, Mutation, SystemStatus } from './generated/graphql';
+import { Operator } from './scalars';
 
 // stripped down version of https://github.com/NoHomey/bind-decorator
 export function bind<T extends Function>(
@@ -22,20 +23,25 @@ export function bind<T extends Function>(
     };
 }
 
-export function pageQueryGenerator(
-    name: keyof Query,
+export function pageOperationGenerator(
+    operation: 'query' | 'mutation',
+    name: keyof Query | keyof Mutation,
     fields: Array<string> = [],
-    hasShowDeleted = false,
+    variables: Record<string, string>,
 ) {
     return `
-query(
+${operation}(
     $filter: FilterInput,
     $sort: SortInput,
     $first: Int,
     $last: Int,
     $after: String,
-    $before: String,
-    ${hasShowDeleted ? '$showDeleted: Boolean,' : ''}
+    $before: String,${Object.entries(variables)
+        .map(([key, value]) => {
+            return `
+    $${key}: ${value},`;
+        })
+        .join('')}
 ) {
     ${name}(
         filter: $filter,
@@ -43,8 +49,12 @@ query(
         first: $first,
         last: $last,
         after: $after,
-        before: $before,
-        ${hasShowDeleted ? 'showDeleted: $showDeleted,' : ''}
+        before: $before,${Object.keys(variables)
+            .map(key => {
+                return `
+        ${key}: $${key},`;
+            })
+            .join('')}
     ) {
         totalCount
         pageInfo {
@@ -60,6 +70,22 @@ query(
         }
     }
 }`;
+}
+
+export function pageQueryGenerator(
+    name: keyof Query,
+    fields: Array<string> = [],
+    variables: Record<string, string> = {},
+) {
+    return pageOperationGenerator('query', name, fields, variables);
+}
+
+export function pageMutationGenerator(
+    name: keyof Mutation,
+    fields: Array<string> = [],
+    variables: Record<string, string>,
+) {
+    return pageOperationGenerator('mutation', name, fields, variables);
 }
 
 export interface APIError {
@@ -79,3 +105,18 @@ export class CinnamonError extends AdgoError {
         this.name = 'CinnamonError';
     }
 }
+
+export const FILTERS = {
+    MUTABLE_OBJECTS: {
+        field: 'systemStatus',
+        operator: Operator.NotIn,
+        value: [
+            SystemStatus.PendingSync,
+            SystemStatus.PendingDeletion,
+            SystemStatus.Processing,
+            SystemStatus.ProcessingSync,
+            SystemStatus.ProcessingDeletion,
+            SystemStatus.Deleted,
+        ],
+    },
+};

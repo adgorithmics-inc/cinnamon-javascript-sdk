@@ -107,7 +107,13 @@ import {
     NotificationField,
 } from './generated/fields';
 
-import { bind, pageQueryGenerator, APIError, CinnamonError } from './helpers';
+import {
+    bind,
+    pageQueryGenerator,
+    pageMutationGenerator,
+    APIError,
+    CinnamonError,
+} from './helpers';
 
 export interface Config {
     url: string;
@@ -499,7 +505,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'organizations'>({
-                query: pageQueryGenerator('organizations', fields, true),
+                query: pageQueryGenerator('organizations', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -627,6 +635,119 @@ export class Cinnamon {
         ).data.updateOrganization;
     }
 
+    @bind
+    async updateOrganizations({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultOrganizationFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: OrganizationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: OrganizationField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateOrganizations'>({
+                query: pageMutationGenerator('updateOrganizations', fields, {
+                    input: 'OrganizationUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateOrganizations;
+    }
+
+    @bind
+    updateOrganizationsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultOrganizationFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: OrganizationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: OrganizationField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Organization>((after: PageInfo['endCursor']) =>
+            this.updateOrganizations({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateOrganizationsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultOrganizationFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: OrganizationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: OrganizationField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Organization>((after: PageInfo['endCursor']) =>
+            this.updateOrganizations({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
     // ####################################
     // Marketplace
     // ####################################
@@ -690,7 +811,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'marketplaces'>({
-                query: pageQueryGenerator('marketplaces', fields, true),
+                query: pageQueryGenerator('marketplaces', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -819,6 +942,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateMarketplaces({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultMarketplaceFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MarketplaceUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: MarketplaceField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateMarketplaces'>({
+                query: pageMutationGenerator('updateMarketplaces', fields, {
+                    input: 'MarketplaceUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateMarketplaces;
+    }
+
+    @bind
+    updateMarketplacesAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultMarketplaceFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MarketplaceUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketplaceField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Marketplace>((after: PageInfo['endCursor']) =>
+            this.updateMarketplaces({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateMarketplacesEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultMarketplaceFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MarketplaceUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketplaceField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Marketplace>((after: PageInfo['endCursor']) =>
+            this.updateMarketplaces({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteMarketplace({
         id,
         headers,
@@ -903,7 +1139,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'mediaChannels'>({
-                query: pageQueryGenerator('mediaChannels', fields, true),
+                query: pageQueryGenerator('mediaChannels', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -1058,6 +1296,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateMediaChannels({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultMediaChannelFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MediaChannelUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: MediaChannelField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateMediaChannels'>({
+                query: pageMutationGenerator('updateMediaChannels', fields, {
+                    input: 'MediaChannelUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateMediaChannels;
+    }
+
+    @bind
+    updateMediaChannelsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultMediaChannelFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MediaChannelUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MediaChannelField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<MediaChannel>((after: PageInfo['endCursor']) =>
+            this.updateMediaChannels({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateMediaChannelsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultMediaChannelFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MediaChannelUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MediaChannelField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<MediaChannel>((after: PageInfo['endCursor']) =>
+            this.updateMediaChannels({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteMediaChannel({
         id,
         headers,
@@ -1142,7 +1493,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'campaignTemplates'>({
-                query: pageQueryGenerator('campaignTemplates', fields, true),
+                query: pageQueryGenerator('campaignTemplates', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -1279,7 +1632,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'vendors'>({
-                query: pageQueryGenerator('vendors', fields, true),
+                query: pageQueryGenerator('vendors', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -1405,6 +1760,119 @@ export class Cinnamon {
                 token,
             })
         ).data.updateVendor;
+    }
+
+    @bind
+    async updateVendors({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultVendorFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: VendorUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: VendorField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateVendors'>({
+                query: pageMutationGenerator('updateVendors', fields, {
+                    input: 'VendorUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateVendors;
+    }
+
+    @bind
+    updateVendorsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultVendorFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: VendorUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: VendorField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Vendor>((after: PageInfo['endCursor']) =>
+            this.updateVendors({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateVendorsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultVendorFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: VendorUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: VendorField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Vendor>((after: PageInfo['endCursor']) =>
+            this.updateVendors({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
     }
 
     @bind
@@ -1723,7 +2191,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'catalogs'>({
-                query: pageQueryGenerator('catalogs', fields, true),
+                query: pageQueryGenerator('catalogs', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -1878,6 +2348,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateCatalogs({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultCatalogFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CatalogUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CatalogField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCatalogs'>({
+                query: pageMutationGenerator('updateCatalogs', fields, {
+                    input: 'CatalogUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateCatalogs;
+    }
+
+    @bind
+    updateCatalogsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCatalogFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CatalogUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CatalogField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Catalog>((after: PageInfo['endCursor']) =>
+            this.updateCatalogs({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateCatalogsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCatalogFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CatalogUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CatalogField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Catalog>((after: PageInfo['endCursor']) =>
+            this.updateCatalogs({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteCatalog({
         id,
         headers,
@@ -1966,7 +2549,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'products'>({
-                query: pageQueryGenerator('products', fields, true),
+                query: pageQueryGenerator('products', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -2095,6 +2680,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateProducts({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultProductFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: ProductUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: ProductField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateProducts'>({
+                query: pageMutationGenerator('updateProducts', fields, {
+                    input: 'ProductUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateProducts;
+    }
+
+    @bind
+    updateProductsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultProductFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: ProductUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: ProductField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Product>((after: PageInfo['endCursor']) =>
+            this.updateProducts({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateProductsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultProductFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: ProductUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: ProductField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Product>((after: PageInfo['endCursor']) =>
+            this.updateProducts({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteProduct({
         id,
         headers,
@@ -2181,7 +2879,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'marketingCampaigns'>({
-                query: pageQueryGenerator('marketingCampaigns', fields, true),
+                query: pageQueryGenerator('marketingCampaigns', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -2309,6 +3009,125 @@ export class Cinnamon {
                 token,
             })
         ).data.updateMarketingCampaign;
+    }
+
+    @bind
+    async updateMarketingCampaigns({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultMarketingCampaignFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MarketingCampaignUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: MarketingCampaignField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateMarketingCampaigns'>({
+                query: pageMutationGenerator(
+                    'updateMarketingCampaigns',
+                    fields,
+                    {
+                        input: 'MarketingCampaignUpdateInput!',
+                        showDeleted: 'Boolean',
+                    },
+                ),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateMarketingCampaigns;
+    }
+
+    @bind
+    updateMarketingCampaignsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultMarketingCampaignFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MarketingCampaignUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketingCampaignField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<MarketingCampaign>(
+            (after: PageInfo['endCursor']) =>
+                this.updateMarketingCampaigns({
+                    input,
+                    filter,
+                    sort,
+                    after,
+                    fields,
+                    showDeleted,
+                    headers,
+                    token,
+                }),
+        );
+    }
+
+    @bind
+    updateMarketingCampaignsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultMarketingCampaignFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: MarketingCampaignUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketingCampaignField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<MarketingCampaign>(
+            (after: PageInfo['endCursor']) =>
+                this.updateMarketingCampaigns({
+                    input,
+                    filter,
+                    sort,
+                    after,
+                    first: 1,
+                    fields,
+                    showDeleted,
+                    headers,
+                    token,
+                }),
+        );
     }
 
     @bind
@@ -2450,7 +3269,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'marketingAds'>({
-                query: pageQueryGenerator('marketingAds', fields, true),
+                query: pageQueryGenerator('marketingAds', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -2796,6 +3617,109 @@ export class Cinnamon {
     }
 
     @bind
+    async updateEntitlements({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultEntitlementFields,
+        headers,
+        token,
+    }: {
+        input: EntitlementUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: EntitlementField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateEntitlements'>({
+                query: pageMutationGenerator('updateEntitlements', fields, {
+                    input: 'EntitlementUpdateInput!',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                },
+                headers,
+                token,
+            })
+        ).data.updateEntitlements;
+    }
+
+    @bind
+    updateEntitlementsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultEntitlementFields,
+        headers,
+        token,
+    }: {
+        input: EntitlementUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: EntitlementField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Entitlement>((after: PageInfo['endCursor']) =>
+            this.updateEntitlements({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateEntitlementsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultEntitlementFields,
+        headers,
+        token,
+    }: {
+        input: EntitlementUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: EntitlementField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Entitlement>((after: PageInfo['endCursor']) =>
+            this.updateEntitlements({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteEntitlement({
         id,
         headers,
@@ -2880,7 +3804,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeFonts'>({
-                query: pageQueryGenerator('creativeFonts', fields, true),
+                query: pageQueryGenerator('creativeFonts', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -3009,6 +3935,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateCreativeFonts({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultCreativeFontFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeFontUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeFontField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeFonts'>({
+                query: pageMutationGenerator('updateCreativeFonts', fields, {
+                    input: 'CreativeFontUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateCreativeFonts;
+    }
+
+    @bind
+    updateCreativeFontsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeFontFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeFontUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeFontField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<CreativeFont>((after: PageInfo['endCursor']) =>
+            this.updateCreativeFonts({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateCreativeFontsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeFontFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeFontUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeFontField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<CreativeFont>((after: PageInfo['endCursor']) =>
+            this.updateCreativeFonts({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteCreativeFont({
         id,
         headers,
@@ -3093,7 +4132,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeImages'>({
-                query: pageQueryGenerator('creativeImages', fields, true),
+                query: pageQueryGenerator('creativeImages', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -3222,6 +4263,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateCreativeImages({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultCreativeImageFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeImageUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeImageField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeImages'>({
+                query: pageMutationGenerator('updateCreativeImages', fields, {
+                    input: 'CreativeImageUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateCreativeImages;
+    }
+
+    @bind
+    updateCreativeImagesAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeImageFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeImageUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeImageField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<CreativeImage>((after: PageInfo['endCursor']) =>
+            this.updateCreativeImages({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateCreativeImagesEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeImageFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeImageUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeImageField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<CreativeImage>((after: PageInfo['endCursor']) =>
+            this.updateCreativeImages({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteCreativeImage({
         id,
         headers,
@@ -3306,7 +4460,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeLayers'>({
-                query: pageQueryGenerator('creativeLayers', fields, true),
+                query: pageQueryGenerator('creativeLayers', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -3435,6 +4591,119 @@ export class Cinnamon {
     }
 
     @bind
+    async updateCreativeLayers({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultCreativeLayerFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeLayerUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeLayerField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeLayers'>({
+                query: pageMutationGenerator('updateCreativeLayers', fields, {
+                    input: 'CreativeLayerUpdateInput!',
+                    showDeleted: 'Boolean',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateCreativeLayers;
+    }
+
+    @bind
+    updateCreativeLayersAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeLayerFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeLayerUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeLayerField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<CreativeLayer>((after: PageInfo['endCursor']) =>
+            this.updateCreativeLayers({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateCreativeLayersEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeLayerFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeLayerUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeLayerField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<CreativeLayer>((after: PageInfo['endCursor']) =>
+            this.updateCreativeLayers({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteCreativeLayer({
         id,
         headers,
@@ -3519,7 +4788,9 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'creativeTemplates'>({
-                query: pageQueryGenerator('creativeTemplates', fields, true),
+                query: pageQueryGenerator('creativeTemplates', fields, {
+                    showDeleted: 'Boolean',
+                }),
                 variables: {
                     filter,
                     sort,
@@ -3648,6 +4919,123 @@ export class Cinnamon {
     }
 
     @bind
+    async updateCreativeTemplates({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultCreativeTemplateFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeTemplateUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateCreativeTemplates'>({
+                query: pageMutationGenerator(
+                    'updateCreativeTemplates',
+                    fields,
+                    {
+                        input: 'CreativeTemplateUpdateInput!',
+                        showDeleted: 'Boolean',
+                    },
+                ),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.updateCreativeTemplates;
+    }
+
+    @bind
+    updateCreativeTemplatesAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeTemplateFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeTemplateUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<CreativeTemplate>((after: PageInfo['endCursor']) =>
+            this.updateCreativeTemplates({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateCreativeTemplatesEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultCreativeTemplateFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        input: CreativeTemplateUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<CreativeTemplate>((after: PageInfo['endCursor']) =>
+            this.updateCreativeTemplates({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
     async deleteCreativeTemplate({
         id,
         headers,
@@ -3734,7 +5122,7 @@ export class Cinnamon {
     } = {}) {
         return (
             await this.api<'notifications'>({
-                query: pageQueryGenerator('notifications', fields, false),
+                query: pageQueryGenerator('notifications', fields),
                 variables: {
                     filter,
                     sort,
@@ -3827,6 +5215,109 @@ export class Cinnamon {
                 token,
             })
         ).data.updateNotification;
+    }
+
+    @bind
+    async updateNotifications({
+        input,
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        input: NotificationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'updateNotifications'>({
+                query: pageMutationGenerator('updateNotifications', fields, {
+                    input: 'NotificationUpdateInput!',
+                }),
+                variables: {
+                    input,
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                },
+                headers,
+                token,
+            })
+        ).data.updateNotifications;
+    }
+
+    @bind
+    updateNotificationsAll({
+        input,
+        filter,
+        sort,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        input: NotificationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.allPages<Notification>((after: PageInfo['endCursor']) =>
+            this.updateNotifications({
+                input,
+                filter,
+                sort,
+                after,
+                fields,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    updateNotificationsEach({
+        input,
+        filter,
+        sort,
+        fields = this.defaultNotificationFields,
+        headers,
+        token,
+    }: {
+        input: NotificationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return this.eachNode<Notification>((after: PageInfo['endCursor']) =>
+            this.updateNotifications({
+                input,
+                filter,
+                sort,
+                after,
+                first: 1,
+                fields,
+                headers,
+                token,
+            }),
+        );
     }
 }
 
