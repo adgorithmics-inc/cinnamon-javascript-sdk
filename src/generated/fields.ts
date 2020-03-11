@@ -8,6 +8,7 @@ export type CampaignTemplateFields = {
     remoteId: 'remoteId';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    kpi: 'kpi';
     marketplace: {
         id: 'marketplace{id}';
         creationDate: 'marketplace{creationDate}';
@@ -88,6 +89,7 @@ export type CampaignTemplateFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -192,6 +194,7 @@ export type CampaignTemplateFields = {
                 creationDate: 'marketingCampaigns{edges{node{creationDate}}}';
                 lastChangeDate: 'marketingCampaigns{edges{node{lastChangeDate}}}';
                 resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}';
+                kpi: 'marketingCampaigns{edges{node{kpi}}}';
                 vendor: {
                     id: 'marketingCampaigns{edges{node{vendor{id}}}}';
                     creationDate: 'marketingCampaigns{edges{node{vendor{creationDate}}}}';
@@ -207,6 +210,7 @@ export type CampaignTemplateFields = {
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
+                delivering: 'marketingCampaigns{edges{node{delivering}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
                 };
@@ -235,6 +239,7 @@ export type CampaignTemplateFields = {
                     remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                    kpi: 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}';
                 };
                 mediaChannel: {
                     id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}';
@@ -280,6 +285,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
     remoteId: 'remoteId',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    kpi: 'kpi',
     marketplace: {
         id: 'marketplace{id}',
         creationDate: 'marketplace{creationDate}',
@@ -391,6 +397,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -521,6 +528,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                 lastChangeDate:
                     'marketingCampaigns{edges{node{lastChangeDate}}}',
                 resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}',
+                kpi: 'marketingCampaigns{edges{node{kpi}}}',
                 vendor: {
                     id: 'marketingCampaigns{edges{node{vendor{id}}}}',
                     creationDate:
@@ -539,6 +547,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
+                delivering: 'marketingCampaigns{edges{node{delivering}}}',
                 marketingAds: {
                     totalCount:
                         'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
@@ -584,6 +593,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                    kpi:
+                        'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}',
                 },
                 mediaChannel: {
                     id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}',
@@ -643,6 +654,7 @@ export type CampaignTemplateField =
     | 'remoteId'
     | 'systemStatus'
     | 'errors'
+    | 'kpi'
     | 'marketplace{id}'
     | 'marketplace{creationDate}'
     | 'marketplace{lastChangeDate}'
@@ -697,6 +709,7 @@ export type CampaignTemplateField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'
@@ -760,6 +773,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{creationDate}}}'
     | 'marketingCampaigns{edges{node{lastChangeDate}}}'
     | 'marketingCampaigns{edges{node{resultsSource}}}'
+    | 'marketingCampaigns{edges{node{kpi}}}'
     | 'marketingCampaigns{edges{node{vendor{id}}}}'
     | 'marketingCampaigns{edges{node{vendor{creationDate}}}}'
     | 'marketingCampaigns{edges{node{vendor{lastChangeDate}}}}'
@@ -773,6 +787,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
     | 'marketingCampaigns{edges{node{locationSpec}}}'
+    | 'marketingCampaigns{edges{node{delivering}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
     | 'marketingCampaigns{edges{node{catalog{id}}}}'
@@ -794,6 +809,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{lastChangeDate}}}}'
@@ -925,6 +941,7 @@ export type MarketplaceFields = {
                 remoteId: 'campaignTemplates{edges{node{remoteId}}}';
                 systemStatus: 'campaignTemplates{edges{node{systemStatus}}}';
                 errors: 'campaignTemplates{edges{node{errors}}}';
+                kpi: 'campaignTemplates{edges{node{kpi}}}';
                 marketplace: {
                     id: 'campaignTemplates{edges{node{marketplace{id}}}}';
                     creationDate: 'campaignTemplates{edges{node{marketplace{creationDate}}}}';
@@ -1225,6 +1242,7 @@ export const MarketplaceFields: MarketplaceFields = {
                 remoteId: 'campaignTemplates{edges{node{remoteId}}}',
                 systemStatus: 'campaignTemplates{edges{node{systemStatus}}}',
                 errors: 'campaignTemplates{edges{node{errors}}}',
+                kpi: 'campaignTemplates{edges{node{kpi}}}',
                 marketplace: {
                     id: 'campaignTemplates{edges{node{marketplace{id}}}}',
                     creationDate:
@@ -1503,6 +1521,7 @@ export type MarketplaceField =
     | 'campaignTemplates{edges{node{remoteId}}}'
     | 'campaignTemplates{edges{node{systemStatus}}}'
     | 'campaignTemplates{edges{node{errors}}}'
+    | 'campaignTemplates{edges{node{kpi}}}'
     | 'campaignTemplates{edges{node{marketplace{id}}}}'
     | 'campaignTemplates{edges{node{marketplace{creationDate}}}}'
     | 'campaignTemplates{edges{node{marketplace{lastChangeDate}}}}'
@@ -2363,6 +2382,7 @@ export type MediaChannelFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -2637,6 +2657,7 @@ export const MediaChannelFields: MediaChannelFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -2860,6 +2881,7 @@ export type MediaChannelField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'
@@ -3500,6 +3522,7 @@ export type ProductFields = {
                 creationDate: 'marketingCampaigns{edges{node{creationDate}}}';
                 lastChangeDate: 'marketingCampaigns{edges{node{lastChangeDate}}}';
                 resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}';
+                kpi: 'marketingCampaigns{edges{node{kpi}}}';
                 vendor: {
                     id: 'marketingCampaigns{edges{node{vendor{id}}}}';
                     creationDate: 'marketingCampaigns{edges{node{vendor{creationDate}}}}';
@@ -3515,6 +3538,7 @@ export type ProductFields = {
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
+                delivering: 'marketingCampaigns{edges{node{delivering}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
                 };
@@ -3543,6 +3567,7 @@ export type ProductFields = {
                     remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                    kpi: 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}';
                 };
                 mediaChannel: {
                     id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}';
@@ -3842,6 +3867,7 @@ export const ProductFields: ProductFields = {
                 lastChangeDate:
                     'marketingCampaigns{edges{node{lastChangeDate}}}',
                 resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}',
+                kpi: 'marketingCampaigns{edges{node{kpi}}}',
                 vendor: {
                     id: 'marketingCampaigns{edges{node{vendor{id}}}}',
                     creationDate:
@@ -3860,6 +3886,7 @@ export const ProductFields: ProductFields = {
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
+                delivering: 'marketingCampaigns{edges{node{delivering}}}',
                 marketingAds: {
                     totalCount:
                         'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
@@ -3905,6 +3932,8 @@ export const ProductFields: ProductFields = {
                         'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                    kpi:
+                        'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}',
                 },
                 mediaChannel: {
                     id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}',
@@ -4271,6 +4300,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{creationDate}}}'
     | 'marketingCampaigns{edges{node{lastChangeDate}}}'
     | 'marketingCampaigns{edges{node{resultsSource}}}'
+    | 'marketingCampaigns{edges{node{kpi}}}'
     | 'marketingCampaigns{edges{node{vendor{id}}}}'
     | 'marketingCampaigns{edges{node{vendor{creationDate}}}}'
     | 'marketingCampaigns{edges{node{vendor{lastChangeDate}}}}'
@@ -4284,6 +4314,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
     | 'marketingCampaigns{edges{node{locationSpec}}}'
+    | 'marketingCampaigns{edges{node{delivering}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
     | 'marketingCampaigns{edges{node{catalog{id}}}}'
@@ -4305,6 +4336,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{lastChangeDate}}}}'
@@ -4481,6 +4513,7 @@ export type MarketingCampaignFields = {
     creationDate: 'creationDate';
     lastChangeDate: 'lastChangeDate';
     resultsSource: 'resultsSource';
+    kpi: 'kpi';
     vendor: {
         id: 'vendor{id}';
         creationDate: 'vendor{creationDate}';
@@ -4634,6 +4667,7 @@ export type MarketingCampaignFields = {
     creativeSpec: 'creativeSpec';
     runTimeSpec: 'runTimeSpec';
     locationSpec: 'locationSpec';
+    delivering: 'delivering';
     marketingAds: {
         edges: {
             node: {
@@ -4641,6 +4675,7 @@ export type MarketingCampaignFields = {
                 creationDate: 'marketingAds{edges{node{creationDate}}}';
                 lastChangeDate: 'marketingAds{edges{node{lastChangeDate}}}';
                 resultsSource: 'marketingAds{edges{node{resultsSource}}}';
+                kpi: 'marketingAds{edges{node{kpi}}}';
                 vendor: {
                     id: 'marketingAds{edges{node{vendor{id}}}}';
                     creationDate: 'marketingAds{edges{node{vendor{creationDate}}}}';
@@ -4653,6 +4688,11 @@ export type MarketingCampaignFields = {
                 errors: 'marketingAds{edges{node{errors}}}';
                 remoteId: 'marketingAds{edges{node{remoteId}}}';
                 preview: 'marketingAds{edges{node{preview}}}';
+                adPreviews: {
+                    url: 'marketingAds{edges{node{adPreviews{url}}}}';
+                    dimensions: 'marketingAds{edges{node{adPreviews{dimensions}}}}';
+                    placement: 'marketingAds{edges{node{adPreviews{placement}}}}';
+                };
                 results: {
                     totalCount: 'marketingAds{edges{node{results{totalCount}}}}';
                 };
@@ -4661,6 +4701,7 @@ export type MarketingCampaignFields = {
                     creationDate: 'marketingAds{edges{node{marketingCampaign{creationDate}}}}';
                     lastChangeDate: 'marketingAds{edges{node{marketingCampaign{lastChangeDate}}}}';
                     resultsSource: 'marketingAds{edges{node{marketingCampaign{resultsSource}}}}';
+                    kpi: 'marketingAds{edges{node{marketingCampaign{kpi}}}}';
                     systemStatus: 'marketingAds{edges{node{marketingCampaign{systemStatus}}}}';
                     errors: 'marketingAds{edges{node{marketingCampaign{errors}}}}';
                     name: 'marketingAds{edges{node{marketingCampaign{name}}}}';
@@ -4668,6 +4709,7 @@ export type MarketingCampaignFields = {
                     creativeSpec: 'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}';
                     runTimeSpec: 'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}';
                     locationSpec: 'marketingAds{edges{node{marketingCampaign{locationSpec}}}}';
+                    delivering: 'marketingAds{edges{node{marketingCampaign{delivering}}}}';
                 };
             };
             cursor: 'marketingAds{edges{cursor}}';
@@ -4836,6 +4878,7 @@ export type MarketingCampaignFields = {
         remoteId: 'campaignTemplate{remoteId}';
         systemStatus: 'campaignTemplate{systemStatus}';
         errors: 'campaignTemplate{errors}';
+        kpi: 'campaignTemplate{kpi}';
         marketplace: {
             id: 'campaignTemplate{marketplace{id}}';
             creationDate: 'campaignTemplate{marketplace{creationDate}}';
@@ -4938,6 +4981,7 @@ export type MarketingCampaignFields = {
                     creationDate: 'campaignTemplate{marketingCampaigns{edges{node{creationDate}}}}';
                     lastChangeDate: 'campaignTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}';
                     resultsSource: 'campaignTemplate{marketingCampaigns{edges{node{resultsSource}}}}';
+                    kpi: 'campaignTemplate{marketingCampaigns{edges{node{kpi}}}}';
                     systemStatus: 'campaignTemplate{marketingCampaigns{edges{node{systemStatus}}}}';
                     errors: 'campaignTemplate{marketingCampaigns{edges{node{errors}}}}';
                     name: 'campaignTemplate{marketingCampaigns{edges{node{name}}}}';
@@ -4945,6 +4989,7 @@ export type MarketingCampaignFields = {
                     creativeSpec: 'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
                     runTimeSpec: 'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
                     locationSpec: 'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}';
+                    delivering: 'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'campaignTemplate{marketingCampaigns{edges{cursor}}}';
             };
@@ -5113,6 +5158,7 @@ export type MarketingCampaignFields = {
                     creationDate: 'results{edges{node{resource{creationDate}}}}';
                     lastChangeDate: 'results{edges{node{resource{lastChangeDate}}}}';
                     resultsSource: 'results{edges{node{resource{resultsSource}}}}';
+                    kpi: 'results{edges{node{resource{kpi}}}}';
                     systemStatus: 'results{edges{node{resource{systemStatus}}}}';
                     errors: 'results{edges{node{resource{errors}}}}';
                 };
@@ -5146,7 +5192,13 @@ export type MarketingCampaignFields = {
                 status: 'notifications{edges{node{status}}}';
                 severity: 'notifications{edges{node{severity}}}';
                 code: 'notifications{edges{node{code}}}';
-                resource: 'notifications{edges{node{resource}}}';
+                resource: {
+                    id: 'notifications{edges{node{resource{id}}}}';
+                    creationDate: 'notifications{edges{node{resource{creationDate}}}}';
+                    lastChangeDate: 'notifications{edges{node{resource{lastChangeDate}}}}';
+                    systemStatus: 'notifications{edges{node{resource{systemStatus}}}}';
+                    errors: 'notifications{edges{node{resource{errors}}}}';
+                };
             };
             cursor: 'notifications{edges{cursor}}';
         };
@@ -5164,6 +5216,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
     creationDate: 'creationDate',
     lastChangeDate: 'lastChangeDate',
     resultsSource: 'resultsSource',
+    kpi: 'kpi',
     vendor: {
         id: 'vendor{id}',
         creationDate: 'vendor{creationDate}',
@@ -5352,6 +5405,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
     creativeSpec: 'creativeSpec',
     runTimeSpec: 'runTimeSpec',
     locationSpec: 'locationSpec',
+    delivering: 'delivering',
     marketingAds: {
         edges: {
             node: {
@@ -5359,6 +5413,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 creationDate: 'marketingAds{edges{node{creationDate}}}',
                 lastChangeDate: 'marketingAds{edges{node{lastChangeDate}}}',
                 resultsSource: 'marketingAds{edges{node{resultsSource}}}',
+                kpi: 'marketingAds{edges{node{kpi}}}',
                 vendor: {
                     id: 'marketingAds{edges{node{vendor{id}}}}',
                     creationDate:
@@ -5374,6 +5429,13 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 errors: 'marketingAds{edges{node{errors}}}',
                 remoteId: 'marketingAds{edges{node{remoteId}}}',
                 preview: 'marketingAds{edges{node{preview}}}',
+                adPreviews: {
+                    url: 'marketingAds{edges{node{adPreviews{url}}}}',
+                    dimensions:
+                        'marketingAds{edges{node{adPreviews{dimensions}}}}',
+                    placement:
+                        'marketingAds{edges{node{adPreviews{placement}}}}',
+                },
                 results: {
                     totalCount:
                         'marketingAds{edges{node{results{totalCount}}}}',
@@ -5386,6 +5448,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'marketingAds{edges{node{marketingCampaign{lastChangeDate}}}}',
                     resultsSource:
                         'marketingAds{edges{node{marketingCampaign{resultsSource}}}}',
+                    kpi: 'marketingAds{edges{node{marketingCampaign{kpi}}}}',
                     systemStatus:
                         'marketingAds{edges{node{marketingCampaign{systemStatus}}}}',
                     errors:
@@ -5399,6 +5462,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}',
                     locationSpec:
                         'marketingAds{edges{node{marketingCampaign{locationSpec}}}}',
+                    delivering:
+                        'marketingAds{edges{node{marketingCampaign{delivering}}}}',
                 },
             },
             cursor: 'marketingAds{edges{cursor}}',
@@ -5594,6 +5659,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         remoteId: 'campaignTemplate{remoteId}',
         systemStatus: 'campaignTemplate{systemStatus}',
         errors: 'campaignTemplate{errors}',
+        kpi: 'campaignTemplate{kpi}',
         marketplace: {
             id: 'campaignTemplate{marketplace{id}}',
             creationDate: 'campaignTemplate{marketplace{creationDate}}',
@@ -5740,6 +5806,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'campaignTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}',
                     resultsSource:
                         'campaignTemplate{marketingCampaigns{edges{node{resultsSource}}}}',
+                    kpi:
+                        'campaignTemplate{marketingCampaigns{edges{node{kpi}}}}',
                     systemStatus:
                         'campaignTemplate{marketingCampaigns{edges{node{systemStatus}}}}',
                     errors:
@@ -5754,6 +5822,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
                     locationSpec:
                         'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}',
+                    delivering:
+                        'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}',
                 },
                 cursor: 'campaignTemplate{marketingCampaigns{edges{cursor}}}',
             },
@@ -5975,6 +6045,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'results{edges{node{resource{lastChangeDate}}}}',
                     resultsSource:
                         'results{edges{node{resource{resultsSource}}}}',
+                    kpi: 'results{edges{node{resource{kpi}}}}',
                     systemStatus:
                         'results{edges{node{resource{systemStatus}}}}',
                     errors: 'results{edges{node{resource{errors}}}}',
@@ -6010,7 +6081,16 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 status: 'notifications{edges{node{status}}}',
                 severity: 'notifications{edges{node{severity}}}',
                 code: 'notifications{edges{node{code}}}',
-                resource: 'notifications{edges{node{resource}}}',
+                resource: {
+                    id: 'notifications{edges{node{resource{id}}}}',
+                    creationDate:
+                        'notifications{edges{node{resource{creationDate}}}}',
+                    lastChangeDate:
+                        'notifications{edges{node{resource{lastChangeDate}}}}',
+                    systemStatus:
+                        'notifications{edges{node{resource{systemStatus}}}}',
+                    errors: 'notifications{edges{node{resource{errors}}}}',
+                },
             },
             cursor: 'notifications{edges{cursor}}',
         },
@@ -6028,6 +6108,7 @@ export type MarketingCampaignField =
     | 'creationDate'
     | 'lastChangeDate'
     | 'resultsSource'
+    | 'kpi'
     | 'vendor{id}'
     | 'vendor{creationDate}'
     | 'vendor{lastChangeDate}'
@@ -6119,10 +6200,12 @@ export type MarketingCampaignField =
     | 'creativeSpec'
     | 'runTimeSpec'
     | 'locationSpec'
+    | 'delivering'
     | 'marketingAds{edges{node{id}}}'
     | 'marketingAds{edges{node{creationDate}}}'
     | 'marketingAds{edges{node{lastChangeDate}}}'
     | 'marketingAds{edges{node{resultsSource}}}'
+    | 'marketingAds{edges{node{kpi}}}'
     | 'marketingAds{edges{node{vendor{id}}}}'
     | 'marketingAds{edges{node{vendor{creationDate}}}}'
     | 'marketingAds{edges{node{vendor{lastChangeDate}}}}'
@@ -6133,11 +6216,15 @@ export type MarketingCampaignField =
     | 'marketingAds{edges{node{errors}}}'
     | 'marketingAds{edges{node{remoteId}}}'
     | 'marketingAds{edges{node{preview}}}'
+    | 'marketingAds{edges{node{adPreviews{url}}}}'
+    | 'marketingAds{edges{node{adPreviews{dimensions}}}}'
+    | 'marketingAds{edges{node{adPreviews{placement}}}}'
     | 'marketingAds{edges{node{results{totalCount}}}}'
     | 'marketingAds{edges{node{marketingCampaign{id}}}}'
     | 'marketingAds{edges{node{marketingCampaign{creationDate}}}}'
     | 'marketingAds{edges{node{marketingCampaign{lastChangeDate}}}}'
     | 'marketingAds{edges{node{marketingCampaign{resultsSource}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{kpi}}}}'
     | 'marketingAds{edges{node{marketingCampaign{systemStatus}}}}'
     | 'marketingAds{edges{node{marketingCampaign{errors}}}}'
     | 'marketingAds{edges{node{marketingCampaign{name}}}}'
@@ -6145,6 +6232,7 @@ export type MarketingCampaignField =
     | 'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}'
     | 'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}'
     | 'marketingAds{edges{node{marketingCampaign{locationSpec}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{delivering}}}}'
     | 'marketingAds{edges{cursor}}'
     | 'marketingAds{pageInfo{endCursor}}'
     | 'marketingAds{pageInfo{startCursor}}'
@@ -6258,6 +6346,7 @@ export type MarketingCampaignField =
     | 'campaignTemplate{remoteId}'
     | 'campaignTemplate{systemStatus}'
     | 'campaignTemplate{errors}'
+    | 'campaignTemplate{kpi}'
     | 'campaignTemplate{marketplace{id}}'
     | 'campaignTemplate{marketplace{creationDate}}'
     | 'campaignTemplate{marketplace{lastChangeDate}}'
@@ -6313,6 +6402,7 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketingCampaigns{edges{node{creationDate}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{resultsSource}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{kpi}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{systemStatus}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{errors}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{name}}}}'
@@ -6320,6 +6410,7 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{cursor}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}'
@@ -6422,6 +6513,7 @@ export type MarketingCampaignField =
     | 'results{edges{node{resource{creationDate}}}}'
     | 'results{edges{node{resource{lastChangeDate}}}}'
     | 'results{edges{node{resource{resultsSource}}}}'
+    | 'results{edges{node{resource{kpi}}}}'
     | 'results{edges{node{resource{systemStatus}}}}'
     | 'results{edges{node{resource{errors}}}}'
     | 'results{edges{node{vendor{id}}}}'
@@ -6444,7 +6536,11 @@ export type MarketingCampaignField =
     | 'notifications{edges{node{status}}}'
     | 'notifications{edges{node{severity}}}'
     | 'notifications{edges{node{code}}}'
-    | 'notifications{edges{node{resource}}}'
+    | 'notifications{edges{node{resource{id}}}}'
+    | 'notifications{edges{node{resource{creationDate}}}}'
+    | 'notifications{edges{node{resource{lastChangeDate}}}}'
+    | 'notifications{edges{node{resource{systemStatus}}}}'
+    | 'notifications{edges{node{resource{errors}}}}'
     | 'notifications{edges{cursor}}'
     | 'notifications{pageInfo{endCursor}}'
     | 'notifications{pageInfo{startCursor}}'
@@ -6538,6 +6634,7 @@ export type VendorFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -6836,6 +6933,7 @@ export const VendorFields: VendorFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -7113,6 +7211,7 @@ export type VendorField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'
@@ -7459,6 +7558,7 @@ export type VendorTokenFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -7855,6 +7955,7 @@ export const VendorTokenFields: VendorTokenFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -8122,6 +8223,7 @@ export type VendorTokenField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'
@@ -8187,6 +8289,7 @@ export type MarketingAdFields = {
     creationDate: 'creationDate';
     lastChangeDate: 'lastChangeDate';
     resultsSource: 'resultsSource';
+    kpi: 'kpi';
     vendor: {
         id: 'vendor{id}';
         creationDate: 'vendor{creationDate}';
@@ -8337,6 +8440,11 @@ export type MarketingAdFields = {
     errors: 'errors';
     remoteId: 'remoteId';
     preview: 'preview';
+    adPreviews: {
+        url: 'adPreviews{url}';
+        dimensions: 'adPreviews{dimensions}';
+        placement: 'adPreviews{placement}';
+    };
     results: {
         edges: {
             node: {
@@ -8358,6 +8466,7 @@ export type MarketingAdFields = {
                     creationDate: 'results{edges{node{resource{creationDate}}}}';
                     lastChangeDate: 'results{edges{node{resource{lastChangeDate}}}}';
                     resultsSource: 'results{edges{node{resource{resultsSource}}}}';
+                    kpi: 'results{edges{node{resource{kpi}}}}';
                     systemStatus: 'results{edges{node{resource{systemStatus}}}}';
                     errors: 'results{edges{node{resource{errors}}}}';
                 };
@@ -8385,6 +8494,7 @@ export type MarketingAdFields = {
         creationDate: 'marketingCampaign{creationDate}';
         lastChangeDate: 'marketingCampaign{lastChangeDate}';
         resultsSource: 'marketingCampaign{resultsSource}';
+        kpi: 'marketingCampaign{kpi}';
         vendor: {
             id: 'marketingCampaign{vendor{id}}';
             creationDate: 'marketingCampaign{vendor{creationDate}}';
@@ -8459,6 +8569,7 @@ export type MarketingAdFields = {
         creativeSpec: 'marketingCampaign{creativeSpec}';
         runTimeSpec: 'marketingCampaign{runTimeSpec}';
         locationSpec: 'marketingCampaign{locationSpec}';
+        delivering: 'marketingCampaign{delivering}';
         marketingAds: {
             edges: {
                 node: {
@@ -8466,6 +8577,7 @@ export type MarketingAdFields = {
                     creationDate: 'marketingCampaign{marketingAds{edges{node{creationDate}}}}';
                     lastChangeDate: 'marketingCampaign{marketingAds{edges{node{lastChangeDate}}}}';
                     resultsSource: 'marketingCampaign{marketingAds{edges{node{resultsSource}}}}';
+                    kpi: 'marketingCampaign{marketingAds{edges{node{kpi}}}}';
                     systemStatus: 'marketingCampaign{marketingAds{edges{node{systemStatus}}}}';
                     errors: 'marketingCampaign{marketingAds{edges{node{errors}}}}';
                     remoteId: 'marketingCampaign{marketingAds{edges{node{remoteId}}}}';
@@ -8566,6 +8678,7 @@ export type MarketingAdFields = {
             remoteId: 'marketingCampaign{campaignTemplate{remoteId}}';
             systemStatus: 'marketingCampaign{campaignTemplate{systemStatus}}';
             errors: 'marketingCampaign{campaignTemplate{errors}}';
+            kpi: 'marketingCampaign{campaignTemplate{kpi}}';
             marketplace: {
                 id: 'marketingCampaign{campaignTemplate{marketplace{id}}}';
                 creationDate: 'marketingCampaign{campaignTemplate{marketplace{creationDate}}}';
@@ -8707,7 +8820,6 @@ export type MarketingAdFields = {
                     status: 'marketingCampaign{notifications{edges{node{status}}}}';
                     severity: 'marketingCampaign{notifications{edges{node{severity}}}}';
                     code: 'marketingCampaign{notifications{edges{node{code}}}}';
-                    resource: 'marketingCampaign{notifications{edges{node{resource}}}}';
                 };
                 cursor: 'marketingCampaign{notifications{edges{cursor}}}';
             };
@@ -8726,6 +8838,7 @@ export const MarketingAdFields: MarketingAdFields = {
     creationDate: 'creationDate',
     lastChangeDate: 'lastChangeDate',
     resultsSource: 'resultsSource',
+    kpi: 'kpi',
     vendor: {
         id: 'vendor{id}',
         creationDate: 'vendor{creationDate}',
@@ -8911,6 +9024,11 @@ export const MarketingAdFields: MarketingAdFields = {
     errors: 'errors',
     remoteId: 'remoteId',
     preview: 'preview',
+    adPreviews: {
+        url: 'adPreviews{url}',
+        dimensions: 'adPreviews{dimensions}',
+        placement: 'adPreviews{placement}',
+    },
     results: {
         edges: {
             node: {
@@ -8936,6 +9054,7 @@ export const MarketingAdFields: MarketingAdFields = {
                         'results{edges{node{resource{lastChangeDate}}}}',
                     resultsSource:
                         'results{edges{node{resource{resultsSource}}}}',
+                    kpi: 'results{edges{node{resource{kpi}}}}',
                     systemStatus:
                         'results{edges{node{resource{systemStatus}}}}',
                     errors: 'results{edges{node{resource{errors}}}}',
@@ -8965,6 +9084,7 @@ export const MarketingAdFields: MarketingAdFields = {
         creationDate: 'marketingCampaign{creationDate}',
         lastChangeDate: 'marketingCampaign{lastChangeDate}',
         resultsSource: 'marketingCampaign{resultsSource}',
+        kpi: 'marketingCampaign{kpi}',
         vendor: {
             id: 'marketingCampaign{vendor{id}}',
             creationDate: 'marketingCampaign{vendor{creationDate}}',
@@ -9066,6 +9186,7 @@ export const MarketingAdFields: MarketingAdFields = {
         creativeSpec: 'marketingCampaign{creativeSpec}',
         runTimeSpec: 'marketingCampaign{runTimeSpec}',
         locationSpec: 'marketingCampaign{locationSpec}',
+        delivering: 'marketingCampaign{delivering}',
         marketingAds: {
             edges: {
                 node: {
@@ -9076,6 +9197,7 @@ export const MarketingAdFields: MarketingAdFields = {
                         'marketingCampaign{marketingAds{edges{node{lastChangeDate}}}}',
                     resultsSource:
                         'marketingCampaign{marketingAds{edges{node{resultsSource}}}}',
+                    kpi: 'marketingCampaign{marketingAds{edges{node{kpi}}}}',
                     systemStatus:
                         'marketingCampaign{marketingAds{edges{node{systemStatus}}}}',
                     errors:
@@ -9213,6 +9335,7 @@ export const MarketingAdFields: MarketingAdFields = {
             remoteId: 'marketingCampaign{campaignTemplate{remoteId}}',
             systemStatus: 'marketingCampaign{campaignTemplate{systemStatus}}',
             errors: 'marketingCampaign{campaignTemplate{errors}}',
+            kpi: 'marketingCampaign{campaignTemplate{kpi}}',
             marketplace: {
                 id: 'marketingCampaign{campaignTemplate{marketplace{id}}}',
                 creationDate:
@@ -9410,8 +9533,6 @@ export const MarketingAdFields: MarketingAdFields = {
                     severity:
                         'marketingCampaign{notifications{edges{node{severity}}}}',
                     code: 'marketingCampaign{notifications{edges{node{code}}}}',
-                    resource:
-                        'marketingCampaign{notifications{edges{node{resource}}}}',
                 },
                 cursor: 'marketingCampaign{notifications{edges{cursor}}}',
             },
@@ -9434,6 +9555,7 @@ export type MarketingAdField =
     | 'creationDate'
     | 'lastChangeDate'
     | 'resultsSource'
+    | 'kpi'
     | 'vendor{id}'
     | 'vendor{creationDate}'
     | 'vendor{lastChangeDate}'
@@ -9522,6 +9644,9 @@ export type MarketingAdField =
     | 'errors'
     | 'remoteId'
     | 'preview'
+    | 'adPreviews{url}'
+    | 'adPreviews{dimensions}'
+    | 'adPreviews{placement}'
     | 'results{edges{node{id}}}'
     | 'results{edges{node{creationDate}}}'
     | 'results{edges{node{lastChangeDate}}}'
@@ -9537,6 +9662,7 @@ export type MarketingAdField =
     | 'results{edges{node{resource{creationDate}}}}'
     | 'results{edges{node{resource{lastChangeDate}}}}'
     | 'results{edges{node{resource{resultsSource}}}}'
+    | 'results{edges{node{resource{kpi}}}}'
     | 'results{edges{node{resource{systemStatus}}}}'
     | 'results{edges{node{resource{errors}}}}'
     | 'results{edges{node{vendor{id}}}}'
@@ -9555,6 +9681,7 @@ export type MarketingAdField =
     | 'marketingCampaign{creationDate}'
     | 'marketingCampaign{lastChangeDate}'
     | 'marketingCampaign{resultsSource}'
+    | 'marketingCampaign{kpi}'
     | 'marketingCampaign{vendor{id}}'
     | 'marketingCampaign{vendor{creationDate}}'
     | 'marketingCampaign{vendor{lastChangeDate}}'
@@ -9599,10 +9726,12 @@ export type MarketingAdField =
     | 'marketingCampaign{creativeSpec}'
     | 'marketingCampaign{runTimeSpec}'
     | 'marketingCampaign{locationSpec}'
+    | 'marketingCampaign{delivering}'
     | 'marketingCampaign{marketingAds{edges{node{id}}}}'
     | 'marketingCampaign{marketingAds{edges{node{creationDate}}}}'
     | 'marketingCampaign{marketingAds{edges{node{lastChangeDate}}}}'
     | 'marketingCampaign{marketingAds{edges{node{resultsSource}}}}'
+    | 'marketingCampaign{marketingAds{edges{node{kpi}}}}'
     | 'marketingCampaign{marketingAds{edges{node{systemStatus}}}}'
     | 'marketingCampaign{marketingAds{edges{node{errors}}}}'
     | 'marketingCampaign{marketingAds{edges{node{remoteId}}}}'
@@ -9675,6 +9804,7 @@ export type MarketingAdField =
     | 'marketingCampaign{campaignTemplate{remoteId}}'
     | 'marketingCampaign{campaignTemplate{systemStatus}}'
     | 'marketingCampaign{campaignTemplate{errors}}'
+    | 'marketingCampaign{campaignTemplate{kpi}}'
     | 'marketingCampaign{campaignTemplate{marketplace{id}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{creationDate}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{lastChangeDate}}}'
@@ -9758,7 +9888,6 @@ export type MarketingAdField =
     | 'marketingCampaign{notifications{edges{node{status}}}}'
     | 'marketingCampaign{notifications{edges{node{severity}}}}'
     | 'marketingCampaign{notifications{edges{node{code}}}}'
-    | 'marketingCampaign{notifications{edges{node{resource}}}}'
     | 'marketingCampaign{notifications{edges{cursor}}}'
     | 'marketingCampaign{notifications{pageInfo{endCursor}}}'
     | 'marketingCampaign{notifications{pageInfo{startCursor}}}'
@@ -9784,6 +9913,7 @@ export type ResultFields = {
         creationDate: 'resource{creationDate}';
         lastChangeDate: 'resource{lastChangeDate}';
         resultsSource: 'resource{resultsSource}';
+        kpi: 'resource{kpi}';
         vendor: {
             id: 'resource{vendor{id}}';
             creationDate: 'resource{vendor{creationDate}}';
@@ -10020,6 +10150,7 @@ export const ResultFields: ResultFields = {
         creationDate: 'resource{creationDate}',
         lastChangeDate: 'resource{lastChangeDate}',
         resultsSource: 'resource{resultsSource}',
+        kpi: 'resource{kpi}',
         vendor: {
             id: 'resource{vendor{id}}',
             creationDate: 'resource{vendor{creationDate}}',
@@ -10306,6 +10437,7 @@ export type ResultField =
     | 'resource{creationDate}'
     | 'resource{lastChangeDate}'
     | 'resource{resultsSource}'
+    | 'resource{kpi}'
     | 'resource{vendor{id}}'
     | 'resource{vendor{creationDate}}'
     | 'resource{vendor{lastChangeDate}}'
@@ -10438,7 +10570,13 @@ export type NotificationFields = {
     status: 'status';
     severity: 'severity';
     code: 'code';
-    resource: 'resource';
+    resource: {
+        id: 'resource{id}';
+        creationDate: 'resource{creationDate}';
+        lastChangeDate: 'resource{lastChangeDate}';
+        systemStatus: 'resource{systemStatus}';
+        errors: 'resource{errors}';
+    };
 };
 export const NotificationFields: NotificationFields = {
     id: 'id',
@@ -10449,7 +10587,13 @@ export const NotificationFields: NotificationFields = {
     status: 'status',
     severity: 'severity',
     code: 'code',
-    resource: 'resource',
+    resource: {
+        id: 'resource{id}',
+        creationDate: 'resource{creationDate}',
+        lastChangeDate: 'resource{lastChangeDate}',
+        systemStatus: 'resource{systemStatus}',
+        errors: 'resource{errors}',
+    },
 };
 export type NotificationField =
     | 'id'
@@ -10460,7 +10604,11 @@ export type NotificationField =
     | 'status'
     | 'severity'
     | 'code'
-    | 'resource';
+    | 'resource{id}'
+    | 'resource{creationDate}'
+    | 'resource{lastChangeDate}'
+    | 'resource{systemStatus}'
+    | 'resource{errors}';
 export type CreativeTemplateFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -10550,6 +10698,7 @@ export type CreativeTemplateFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -10654,6 +10803,7 @@ export type CreativeTemplateFields = {
                 creationDate: 'marketingCampaigns{edges{node{creationDate}}}';
                 lastChangeDate: 'marketingCampaigns{edges{node{lastChangeDate}}}';
                 resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}';
+                kpi: 'marketingCampaigns{edges{node{kpi}}}';
                 vendor: {
                     id: 'marketingCampaigns{edges{node{vendor{id}}}}';
                     creationDate: 'marketingCampaigns{edges{node{vendor{creationDate}}}}';
@@ -10669,6 +10819,7 @@ export type CreativeTemplateFields = {
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
+                delivering: 'marketingCampaigns{edges{node{delivering}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
                 };
@@ -10697,6 +10848,7 @@ export type CreativeTemplateFields = {
                     remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                    kpi: 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}';
                 };
                 mediaChannel: {
                     id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}';
@@ -10889,6 +11041,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -11019,6 +11172,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                 lastChangeDate:
                     'marketingCampaigns{edges{node{lastChangeDate}}}',
                 resultsSource: 'marketingCampaigns{edges{node{resultsSource}}}',
+                kpi: 'marketingCampaigns{edges{node{kpi}}}',
                 vendor: {
                     id: 'marketingCampaigns{edges{node{vendor{id}}}}',
                     creationDate:
@@ -11037,6 +11191,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
+                delivering: 'marketingCampaigns{edges{node{delivering}}}',
                 marketingAds: {
                     totalCount:
                         'marketingCampaigns{edges{node{marketingAds{totalCount}}}}',
@@ -11082,6 +11237,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                    kpi:
+                        'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}',
                 },
                 mediaChannel: {
                     id: 'marketingCampaigns{edges{node{mediaChannel{id}}}}',
@@ -11237,6 +11394,7 @@ export type CreativeTemplateField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'
@@ -11300,6 +11458,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{creationDate}}}'
     | 'marketingCampaigns{edges{node{lastChangeDate}}}'
     | 'marketingCampaigns{edges{node{resultsSource}}}'
+    | 'marketingCampaigns{edges{node{kpi}}}'
     | 'marketingCampaigns{edges{node{vendor{id}}}}'
     | 'marketingCampaigns{edges{node{vendor{creationDate}}}}'
     | 'marketingCampaigns{edges{node{vendor{lastChangeDate}}}}'
@@ -11313,6 +11472,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
     | 'marketingCampaigns{edges{node{locationSpec}}}'
+    | 'marketingCampaigns{edges{node{delivering}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
     | 'marketingCampaigns{edges{node{catalog{id}}}}'
@@ -11334,6 +11494,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{lastChangeDate}}}}'
@@ -11508,6 +11669,7 @@ export type CreativeLayerFields = {
                     creationDate: 'creativeTemplate{marketingCampaigns{edges{node{creationDate}}}}';
                     lastChangeDate: 'creativeTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}';
                     resultsSource: 'creativeTemplate{marketingCampaigns{edges{node{resultsSource}}}}';
+                    kpi: 'creativeTemplate{marketingCampaigns{edges{node{kpi}}}}';
                     systemStatus: 'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}';
                     errors: 'creativeTemplate{marketingCampaigns{edges{node{errors}}}}';
                     name: 'creativeTemplate{marketingCampaigns{edges{node{name}}}}';
@@ -11515,6 +11677,7 @@ export type CreativeLayerFields = {
                     creativeSpec: 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
                     runTimeSpec: 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
                     locationSpec: 'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}';
+                    delivering: 'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}';
             };
@@ -11724,6 +11887,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}',
                     resultsSource:
                         'creativeTemplate{marketingCampaigns{edges{node{resultsSource}}}}',
+                    kpi:
+                        'creativeTemplate{marketingCampaigns{edges{node{kpi}}}}',
                     systemStatus:
                         'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}',
                     errors:
@@ -11738,6 +11903,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
                     locationSpec:
                         'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}',
+                    delivering:
+                        'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}',
                 },
                 cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}',
             },
@@ -11871,6 +12038,7 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketingCampaigns{edges{node{creationDate}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{lastChangeDate}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{resultsSource}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{kpi}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{errors}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{name}}}}'
@@ -11878,6 +12046,7 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{cursor}}}'
     | 'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}'
     | 'creativeTemplate{marketingCampaigns{pageInfo{startCursor}}}'
@@ -11992,6 +12161,7 @@ export type CreativeFontFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -12210,6 +12380,7 @@ export const CreativeFontFields: CreativeFontFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -12396,6 +12567,7 @@ export type CreativeFontField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'
@@ -12544,6 +12716,7 @@ export type CreativeImageFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
             };
@@ -12762,6 +12935,7 @@ export const CreativeImageFields: CreativeImageFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
             },
@@ -12948,6 +13122,7 @@ export type CreativeImageField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{startCursor}}}'

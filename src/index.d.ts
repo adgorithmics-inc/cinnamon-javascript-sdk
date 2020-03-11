@@ -116,6 +116,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Organization>;
+    updateOrganizations({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: OrganizationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: OrganizationField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").OrganizationConnection>;
+    updateOrganizationsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: OrganizationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: OrganizationField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<Organization[]>;
+    updateOrganizationsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: OrganizationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: OrganizationField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Organization, void, unknown>;
     private defaultMarketplaceFields;
     marketplace({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
@@ -164,6 +195,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Marketplace>;
+    updateMarketplaces({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: MarketplaceUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: MarketplaceField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").MarketplaceConnection>;
+    updateMarketplacesAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: MarketplaceUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketplaceField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<Marketplace[]>;
+    updateMarketplacesEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: MarketplaceUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketplaceField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Marketplace, void, unknown>;
     deleteMarketplace({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -223,6 +285,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MediaChannel>;
+    updateMediaChannels({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: MediaChannelUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: MediaChannelField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").MediaChannelConnection>;
+    updateMediaChannelsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: MediaChannelUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MediaChannelField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<MediaChannel[]>;
+    updateMediaChannelsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: MediaChannelUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MediaChannelField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<MediaChannel, void, unknown>;
     deleteMediaChannel({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -311,6 +404,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Vendor>;
+    updateVendors({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: VendorUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: VendorField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").VendorConnection>;
+    updateVendorsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: VendorUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: VendorField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<Vendor[]>;
+    updateVendorsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: VendorUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: VendorField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Vendor, void, unknown>;
     deleteVendor({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -425,6 +549,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
+    updateCatalogs({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: CatalogUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CatalogField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CatalogConnection>;
+    updateCatalogsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CatalogUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CatalogField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<Catalog[]>;
+    updateCatalogsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CatalogUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CatalogField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Catalog, void, unknown>;
     deleteCatalog({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -478,6 +633,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Product>;
+    updateProducts({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: ProductUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: ProductField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").ProductConnection>;
+    updateProductsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: ProductUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: ProductField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<Product[]>;
+    updateProductsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: ProductUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: ProductField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Product, void, unknown>;
     deleteProduct({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -531,6 +717,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<MarketingCampaign>;
+    updateMarketingCampaigns({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: MarketingCampaignUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: MarketingCampaignField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").MarketingCampaignConnection>;
+    updateMarketingCampaignsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: MarketingCampaignUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketingCampaignField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<MarketingCampaign[]>;
+    updateMarketingCampaignsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: MarketingCampaignUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: MarketingCampaignField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<MarketingCampaign, void, unknown>;
     approveMarketingCampaign({ id, lastChangeDate, fields, headers, token, }: {
         id: Scalars['ObjectId'];
         lastChangeDate: Scalars['DateISO'];
@@ -661,6 +878,34 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Entitlement>;
+    updateEntitlements({ input, filter, sort, first, last, after, before, fields, headers, token, }: {
+        input: EntitlementUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: EntitlementField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").EntitlementConnection>;
+    updateEntitlementsAll({ input, filter, sort, fields, headers, token, }: {
+        input: EntitlementUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: EntitlementField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<Entitlement[]>;
+    updateEntitlementsEach({ input, filter, sort, fields, headers, token, }: {
+        input: EntitlementUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: EntitlementField[];
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Entitlement, void, unknown>;
     deleteEntitlement({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -714,6 +959,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeFont>;
+    updateCreativeFonts({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: CreativeFontUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeFontField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeFontConnection>;
+    updateCreativeFontsAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeFontUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeFontField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeFont[]>;
+    updateCreativeFontsEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeFontUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeFontField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeFont, void, unknown>;
     deleteCreativeFont({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -767,6 +1043,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeImage>;
+    updateCreativeImages({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: CreativeImageUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeImageField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeImageConnection>;
+    updateCreativeImagesAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeImageUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeImageField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeImage[]>;
+    updateCreativeImagesEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeImageUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeImageField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeImage, void, unknown>;
     deleteCreativeImage({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -820,6 +1127,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeLayer>;
+    updateCreativeLayers({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: CreativeLayerUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeLayerField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeLayerConnection>;
+    updateCreativeLayersAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeLayerUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeLayerField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeLayer[]>;
+    updateCreativeLayersEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeLayerUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeLayerField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeLayer, void, unknown>;
     deleteCreativeLayer({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -873,6 +1211,37 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<CreativeTemplate>;
+    updateCreativeTemplates({ input, filter, sort, first, last, after, before, fields, showDeleted, headers, token, }: {
+        input: CreativeTemplateUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CreativeTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CreativeTemplateConnection>;
+    updateCreativeTemplatesAll({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeTemplateUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CreativeTemplate[]>;
+    updateCreativeTemplatesEach({ input, filter, sort, fields, showDeleted, headers, token, }: {
+        input: CreativeTemplateUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CreativeTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CreativeTemplate, void, unknown>;
     deleteCreativeTemplate({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
@@ -917,6 +1286,34 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Notification>;
+    updateNotifications({ input, filter, sort, first, last, after, before, fields, headers, token, }: {
+        input: NotificationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").NotificationConnection>;
+    updateNotificationsAll({ input, filter, sort, fields, headers, token, }: {
+        input: NotificationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): Promise<Notification[]>;
+    updateNotificationsEach({ input, filter, sort, fields, headers, token, }: {
+        input: NotificationUpdateInput;
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: NotificationField[];
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<Notification, void, unknown>;
 }
 export * from './generated/graphql';
 export * from './generated/fields';
