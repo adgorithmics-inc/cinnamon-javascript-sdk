@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import get from 'lodash.get';
-import { codes } from '@adgorithmics/graphql-errors';
+import { codes, isRetryableCode } from '@adgorithmics/graphql-errors';
 import { AdgoError } from '@adgorithmics/adgo-errors';
 
 import {
@@ -114,7 +114,6 @@ import {
     CinnamonError,
     sleep,
     AugmentedRequired,
-    NON_RETRYABLE_ERROR_CODES,
 } from './helpers';
 
 export interface Config {
@@ -147,17 +146,11 @@ export class Cinnamon {
     private refreshTokenRequest: Promise<null> | null = null;
 
     constructor({
-        url,
-        retryHook,
         maxRetry = DEFAULT_MAX_RETRY,
         retrySleepTime = DEFAULT_RETRY_SLEEP_TIME,
+        ...config
     }: Config) {
-        this.config = {
-            url,
-            retryHook,
-            maxRetry,
-            retrySleepTime,
-        };
+        this.config = { maxRetry, retrySleepTime, ...config };
     }
 
     @bind
@@ -241,11 +234,10 @@ export class Cinnamon {
             }
 
             if (
-                error?.raw?.errors?.some((error: APIError) =>
-                    NON_RETRYABLE_ERROR_CODES.includes(
-                        get(error, 'extensions.code'),
-                    ),
-                )
+                error?.raw?.errors?.some((error: APIError) => {
+                    const code = get(error, 'extensions.code');
+                    return code && !isRetryableCode(code);
+                })
             ) {
                 throw error;
             }

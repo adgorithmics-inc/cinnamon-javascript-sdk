@@ -19,7 +19,7 @@ export declare class Cinnamon {
     private refreshToken;
     private token;
     private refreshTokenRequest;
-    constructor({ url, retryHook, maxRetry, retrySleepTime, }: Config);
+    constructor({ maxRetry, retrySleepTime, ...config }: Config);
     private isVendorToken;
     api<T extends APIKey, U extends string = T>({ query, variables, headers, token, }: {
         query: string;

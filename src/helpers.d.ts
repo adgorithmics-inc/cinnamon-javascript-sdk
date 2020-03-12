@@ -21,4 +21,3 @@ export declare class CinnamonError extends AdgoError {
 }
 export declare const sleep: (time: number) => Promise<unknown>;
 export declare type AugmentedRequired<T extends object, K extends keyof T = keyof T> = Omit<T, K> & Required<Pick<T, K>>;
-export declare const NON_RETRYABLE_ERROR_CODES: codes[];
