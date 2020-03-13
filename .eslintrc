@@ -3,6 +3,18 @@
         "@adgorithmics/eslint-config-base",
         "@adgorithmics/eslint-config-base/typescript"
     ],
+    "overrides": [
+        {
+            "files": ["**/*.test.ts"],
+            "rules": {
+                "no-magic-numbers": "off",
+                "no-global-assign": "off",
+                "@typescript-eslint/no-magic-numbers": "off",
+                "@typescript-eslint/no-explicit-any": "off"
+            },
+            "env": { "jest": true, "node": true }
+        }
+    ],
     "env": {
         "node": true
     }

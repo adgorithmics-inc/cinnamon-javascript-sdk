@@ -79,3 +79,11 @@ export class CinnamonError extends AdgoError {
         this.name = 'CinnamonError';
     }
 }
+
+export const sleep = (time: number) =>
+    new Promise(resolve => setTimeout(() => resolve(), time));
+
+export type AugmentedRequired<
+    T extends object,
+    K extends keyof T = keyof T
+> = Omit<T, K> & Required<Pick<T, K>>;

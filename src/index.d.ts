@@ -1,7 +1,11 @@
+import { AdgoError } from '@adgorithmics/adgo-errors';
 import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, SetVendorPasswordInput, LoginVendorInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingCampaignSyncInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput, RequestResetPasswordInput, ResetPasswordInput, Notification, NotificationUpdateInput } from './generated/graphql';
 import { OrganizationField, UserField, RequestResultField, MarketplaceField, MediaChannelField, CampaignTemplateField, VendorField, VendorTokenField, CatalogField, ProductField, MarketingCampaignField, MarketingAdField, ResultField, EntitlementField, CreativeFontField, CreativeImageField, CreativeLayerField, CreativeTemplateField, NotificationField } from './generated/fields';
 export interface Config {
     url: string;
+    retryHook?: (error: AdgoError, retryCount: number) => boolean | Promise<boolean>;
+    maxRetry?: number;
+    retrySleepTime?: number;
 }
 export interface Headers {
     [key: string]: string;
@@ -15,14 +19,14 @@ export declare class Cinnamon {
     private refreshToken;
     private token;
     private refreshTokenRequest;
-    constructor(config: Config);
+    constructor({ maxRetry, retrySleepTime, ...config }: Config);
     private isVendorToken;
     api<T extends APIKey, U extends string = T>({ query, variables, headers, token, }: {
         query: string;
         variables?: object;
         headers?: Headers;
         token?: string;
-    }): Promise<APIResult<T, U>>;
+    }, retryCount?: number): Promise<APIResult<T, U>>;
     allPages<T>(fetchRelayConnection: (after: PageInfo['endCursor']) => Promise<{
         pageInfo: PageInfo;
         edges?: Array<{
