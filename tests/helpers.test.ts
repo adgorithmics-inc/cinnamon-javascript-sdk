@@ -14,6 +14,7 @@ describe('helpers', () => {
             });
 
             expect(error.data).toEqual({
+                originalError: 'foo',
                 raw: {
                     errors: [{ message: 'foo' }],
                 },
