@@ -189,12 +189,18 @@ export declare type CampaignTemplate = {
     systemStatus: SystemStatus;
     /** Validation errors of the campaign template */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the campaign template */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** The custom key performance indicator used to derive results data */
     kpi?: Maybe<Scalars['String']>;
     /** Marketplace the campaign template was created for */
     marketplace: Marketplace;
     /** Marketing campaigns that are using this campaign template */
     marketingCampaigns: MarketingCampaignConnection;
+    /** Historical list of GCPX rates */
+    GCPXHistory: GcpxConnection;
+    /** The currently active GCPX for this template */
+    currentGCPX?: Maybe<Gcpx>;
 };
 /**
  * Campaign templates contain targeting and creative information tailored to your
@@ -208,6 +214,18 @@ export declare type CampaignTemplateMarketingCampaignsArgs = {
     sort?: Maybe<SortInput>;
     filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
+};
+/**
+ * Campaign templates contain targeting and creative information tailored to your
+ * objectives specific to your goals and business needs
+ */
+export declare type CampaignTemplateGcpxHistoryArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
 export declare type CampaignTemplateConnection = {
     /** Collection of this object */
@@ -245,6 +263,8 @@ export declare type Catalog = {
     dataFeedId?: Maybe<Scalars['String']>;
     /** Validation errors of the product catalog */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the product catalog */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Media channel related to the product catalog */
     mediaChannel: MediaChannel;
     /** Products referenced by the catalog */
@@ -330,6 +350,8 @@ export declare type CreativeFont = {
     systemStatus: SystemStatus;
     /** Validation errors of the creative font */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the creative font */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace related to the creative font */
     marketplace: Marketplace;
 };
@@ -389,6 +411,8 @@ export declare type CreativeImage = {
     systemStatus: SystemStatus;
     /** Validation errors of the creative image */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the creative image */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace related to the creative image */
     marketplace: Marketplace;
 };
@@ -458,6 +482,8 @@ export declare type CreativeLayer = {
     systemStatus: SystemStatus;
     /** Validation errors of the creative layer */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the creative layer */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Creative template used by the creative layer */
     creativeTemplate: CreativeTemplate;
 };
@@ -542,6 +568,8 @@ export declare type CreativeTemplate = {
     systemStatus: SystemStatus;
     /** Validation errors of the creative template */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the creative template */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace related to the creative template */
     marketplace: Marketplace;
     /** Marketing campaigns used by the creative template */
@@ -669,6 +697,8 @@ export declare type EntitlementResource = {
     systemStatus: SystemStatus;
     /** Validation errors of the resource */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the resource */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
 };
 /** Resource types that can be granted permissions to */
 export declare enum EntitlementResourceTypeEnum {
@@ -680,6 +710,57 @@ export declare enum EntitlementResourceTypeEnum {
 export declare type EntitlementUpdateInput = {
     /** Set of permissions granted to the related user */
     permissions: Array<AuthPermission>;
+};
+/** Guarantied cost per KPI */
+export declare type Gcpx = {
+    /** Unique identifier */
+    id: Scalars['ObjectId'];
+    /** Date and time of creation */
+    creationDate: Scalars['DateISO'];
+    /** Date and time of last updated */
+    lastChangeDate: Scalars['DateISO'];
+    /** The KPI this GCPX guaranties the cost for */
+    kpi: Scalars['String'];
+    /** The price in the currency of the marketplace divided by the `currencyOffset` of the marketplace */
+    price: Scalars['Int'];
+    /** The date at which this GCPX becomes active */
+    startDate: Scalars['DateISO'];
+    /** The date at which this GCPX expires */
+    endDate: Scalars['DateISO'];
+    /** To use this GCPX, you have to order at least this many conversions */
+    minConversions: Scalars['Int'];
+    /** To use this GCPX, you have to order no more than this many conversions */
+    maxConversions: Scalars['Int'];
+    /** CampaignTemplate this GCPX belongs to */
+    campaignTemplate: CampaignTemplate;
+    /** Marketplace this GCPX belongs to */
+    marketplace: Marketplace;
+    /** Marketing campaigns that use this GCPX */
+    marketingCampaigns: MarketingCampaignConnection;
+};
+/** Guarantied cost per KPI */
+export declare type GcpxMarketingCampaignsArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+export declare type GcpxConnection = {
+    /** Collection of this object */
+    edges: Array<GcpxEdge>;
+    /** Pagination information */
+    pageInfo: PageInfo;
+    /** Total count of this object */
+    totalCount: Scalars['Int'];
+};
+export declare type GcpxEdge = {
+    /** Record or data of this object */
+    node: Gcpx;
+    /** Base64 encoded string to help with pagination */
+    cursor: Scalars['String'];
 };
 /** Vendor login input data */
 export declare type LoginVendorInput = {
@@ -708,6 +789,8 @@ export declare type MarketingAd = ResultResource & {
     systemStatus: SystemStatus;
     /** Validation errors of the marketing ad */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the marketing ad */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Id of the marketing ad on the related marketing campaign platform. */
     remoteId: Scalars['String'];
     /** Preview data of the marketing ad */
@@ -764,6 +847,8 @@ export declare type MarketingCampaign = ResultResource & NotificationResource & 
     systemStatus: SystemStatus;
     /** Validation errors of the marketing campaign */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the marketing campaign */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Name of the marketing campaign */
     name: Scalars['NonEmptyString'];
     /** Delivering status of the marketing campaign */
@@ -771,9 +856,17 @@ export declare type MarketingCampaign = ResultResource & NotificationResource & 
     /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
-    runTimeSpec: Scalars['JSONObject'];
+    runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
     locationSpec: Scalars['JSONObject'];
+    /** Marketing campaign GCPX data. [Conversion Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-conversion-specification-conversionspec) */
+    conversionSpec?: Maybe<Scalars['JSONObject']>;
+    /** Start date of the campaign */
+    startDate: Scalars['DateISO'];
+    /** End date of the campaign */
+    endDate?: Maybe<Scalars['DateISO']>;
+    /** The GCPX used for this campaign */
+    GCPX?: Maybe<Gcpx>;
     /** Set to true if the marketing campaign is delivering any ads */
     delivering: Scalars['Boolean'];
     /** Marketing ads contained by the marketing campaign */
@@ -866,9 +959,11 @@ export declare type MarketingCampaignInput = {
     /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
-    runTimeSpec: Scalars['JSONObject'];
+    runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
     locationSpec?: Maybe<Scalars['JSONObject']>;
+    /** Marketing campaign GCPX data. [Conversion Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-conversion-specification-conversionspec) */
+    conversionSpec?: Maybe<Scalars['JSONObject']>;
     /** Ids of the products advertised in the marketing campaign */
     productIds: Array<Scalars['ObjectId']>;
     /** Delivering status of the marketing campaign */
@@ -894,11 +989,13 @@ export declare type MarketingCampaignSnapshot = {
     /** Marketing campaign creative data. [Creative Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-creative-specification-creativespec) */
     creativeSpec: Scalars['JSONObject'];
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
-    runTimeSpec: Scalars['JSONObject'];
+    runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
     locationSpec: Scalars['JSONObject'];
     /** The key performance indicator used to determine analytics results */
     kpi?: Maybe<Scalars['String']>;
+    /** Product ids */
+    productIds?: Maybe<Array<Scalars['ObjectId']>>;
 };
 export declare type MarketingCampaignSnapshotConnection = {
     /** Collection of this object */
@@ -932,6 +1029,8 @@ export declare type MarketingCampaignUpdateInput = {
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
     locationSpec?: Maybe<Scalars['JSONObject']>;
+    /** Ids of the products advertised in the marketing campaign */
+    productIds?: Maybe<Array<Scalars['ObjectId']>>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -954,6 +1053,14 @@ export declare type Marketplace = EntitlementResource & {
     systemStatus: SystemStatus;
     /** Validation errors of the marketplace */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the marketplace */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Currency code of the marketplace */
+    currencyCode?: Maybe<Scalars['String']>;
+    /** Currency symbol of the marketplace */
+    currencySymbol?: Maybe<Scalars['String']>;
+    /** Currency offset of the marketplace */
+    currencyOffset?: Maybe<Scalars['Int']>;
     /** Organization related to the marketplace */
     organization?: Maybe<Organization>;
     /** Media channels related to the marketplace */
@@ -1094,6 +1201,8 @@ export declare type MediaChannel = EntitlementResource & {
     systemStatus: SystemStatus;
     /** Validation errors of the media channel */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the media channel */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Platform the media channel is available for */
     platform: Platform;
     /** Id of the media channel on the corresponding platform */
@@ -1102,6 +1211,8 @@ export declare type MediaChannel = EntitlementResource & {
     remoteState: Scalars['JSONObject'];
     /** Currency code of the media channel */
     currency?: Maybe<Scalars['NonEmptyString']>;
+    /** Currency code of the media channel */
+    currencyCode?: Maybe<Scalars['String']>;
     /** Currency symbol of the media channel */
     currencySymbol?: Maybe<Scalars['NonEmptyString']>;
     /** Currency offset of the media channel that must be applied to monetary analytics values */
@@ -1662,6 +1773,8 @@ export declare type NotificationResource = {
     systemStatus: SystemStatus;
     /** Validation errors of the resource */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the resource */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
 };
 /** Notification update input data */
 export declare type NotificationUpdateInput = {
@@ -1682,6 +1795,8 @@ export declare type Organization = EntitlementResource & {
     systemStatus: SystemStatus;
     /** Validation errors of the organization */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the organization */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Tier type of the organization */
     tier: OrganizationTierEnum;
     /** Users that are members of this organization */
@@ -1889,7 +2004,7 @@ export declare type Query = {
     products: ProductConnection;
     /** Returns a single result identified by a given id */
     result: Result;
-    /** Returns a collecton of results */
+    /** Returns a collection of results */
     results: ResultConnection;
     /** Returns a single vendor identified by a given id */
     vendor: Vendor;
@@ -2193,6 +2308,8 @@ export declare type ResultResource = {
     systemStatus: SystemStatus;
     /** Validation errors of the resource */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the resource */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
 };
 /** Resource related to a result */
 export declare enum ResultResourceTypeEnum {
@@ -2370,6 +2487,8 @@ export declare type Vendor = Me & {
     systemStatus: SystemStatus;
     /** Validation errors of the vendor */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Warnings of the vendor */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Marketplace referenced by the vendor */
     marketplace: Marketplace;
     /** Vendor tokens associated with the vendor that can be used to access the api */
@@ -2501,9 +2620,9 @@ export declare type ResolversTypes = {
     JSONObject: ResolverTypeWrapper<Scalars['JSONObject']>;
     Marketplace: ResolverTypeWrapper<Marketplace>;
     EntitlementResource: ResolverTypeWrapper<EntitlementResource>;
+    Int: ResolverTypeWrapper<Scalars['Int']>;
     Organization: ResolverTypeWrapper<Organization>;
     OrganizationTierEnum: OrganizationTierEnum;
-    Int: ResolverTypeWrapper<Scalars['Int']>;
     SortInput: SortInput;
     SORT_ORDER: Sort_Order;
     FilterInput: ResolverTypeWrapper<Scalars['FilterInput']>;
@@ -2543,6 +2662,7 @@ export declare type ResolversTypes = {
     VendorToken: ResolverTypeWrapper<VendorToken>;
     NotificationResource: ResolverTypeWrapper<NotificationResource>;
     MarketingCampaignStatus: MarketingCampaignStatus;
+    GCPX: ResolverTypeWrapper<Gcpx>;
     MarketingAdConnection: ResolverTypeWrapper<MarketingAdConnection>;
     MarketingAdEdge: ResolverTypeWrapper<MarketingAdEdge>;
     MarketingAd: ResolverTypeWrapper<MarketingAd>;
@@ -2570,6 +2690,8 @@ export declare type ResolversTypes = {
     CreativeLayerEdge: ResolverTypeWrapper<CreativeLayerEdge>;
     CreativeLayer: ResolverTypeWrapper<CreativeLayer>;
     CreativeLayerTypes: CreativeLayerTypes;
+    GCPXConnection: ResolverTypeWrapper<GcpxConnection>;
+    GCPXEdge: ResolverTypeWrapper<GcpxEdge>;
     CreativeFont: ResolverTypeWrapper<CreativeFont>;
     CreativeFontConnection: ResolverTypeWrapper<CreativeFontConnection>;
     CreativeFontEdge: ResolverTypeWrapper<CreativeFontEdge>;
@@ -2637,9 +2759,9 @@ export declare type ResolversParentTypes = {
     JSONObject: Scalars['JSONObject'];
     Marketplace: Marketplace;
     EntitlementResource: EntitlementResource;
+    Int: Scalars['Int'];
     Organization: Organization;
     OrganizationTierEnum: OrganizationTierEnum;
-    Int: Scalars['Int'];
     SortInput: SortInput;
     SORT_ORDER: Sort_Order;
     FilterInput: Scalars['FilterInput'];
@@ -2679,6 +2801,7 @@ export declare type ResolversParentTypes = {
     VendorToken: VendorToken;
     NotificationResource: NotificationResource;
     MarketingCampaignStatus: MarketingCampaignStatus;
+    GCPX: Gcpx;
     MarketingAdConnection: MarketingAdConnection;
     MarketingAdEdge: MarketingAdEdge;
     MarketingAd: MarketingAd;
@@ -2706,6 +2829,8 @@ export declare type ResolversParentTypes = {
     CreativeLayerEdge: CreativeLayerEdge;
     CreativeLayer: CreativeLayer;
     CreativeLayerTypes: CreativeLayerTypes;
+    GCPXConnection: GcpxConnection;
+    GCPXEdge: GcpxEdge;
     CreativeFont: CreativeFont;
     CreativeFontConnection: CreativeFontConnection;
     CreativeFontEdge: CreativeFontEdge;
@@ -2775,9 +2900,12 @@ export declare type CampaignTemplateResolvers<ContextType = any, ParentType exte
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     kpi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
     marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<CampaignTemplateMarketingCampaignsArgs, 'showDeleted'>>;
+    GCPXHistory?: Resolver<ResolversTypes['GCPXConnection'], ParentType, ContextType, CampaignTemplateGcpxHistoryArgs>;
+    currentGCPX?: Resolver<Maybe<ResolversTypes['GCPX']>, ParentType, ContextType>;
 };
 export declare type CampaignTemplateConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CampaignTemplateConnection'] = ResolversParentTypes['CampaignTemplateConnection']> = {
     edges?: Resolver<Array<ResolversTypes['CampaignTemplateEdge']>, ParentType, ContextType>;
@@ -2799,6 +2927,7 @@ export declare type CatalogResolvers<ContextType = any, ParentType extends Resol
     remoteState?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     dataFeedId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     mediaChannel?: Resolver<ResolversTypes['MediaChannel'], ParentType, ContextType>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<CatalogProductsArgs, 'showDeleted'>>;
 };
@@ -2820,6 +2949,7 @@ export declare type CreativeFontResolvers<ContextType = any, ParentType extends 
     properties?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
 };
 export declare type CreativeFontConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeFontConnection'] = ResolversParentTypes['CreativeFontConnection']> = {
@@ -2840,6 +2970,7 @@ export declare type CreativeImageResolvers<ContextType = any, ParentType extends
     properties?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
 };
 export declare type CreativeImageConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeImageConnection'] = ResolversParentTypes['CreativeImageConnection']> = {
@@ -2865,6 +2996,7 @@ export declare type CreativeLayerResolvers<ContextType = any, ParentType extends
     properties?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     creativeTemplate?: Resolver<ResolversTypes['CreativeTemplate'], ParentType, ContextType>;
 };
 export declare type CreativeLayerConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreativeLayerConnection'] = ResolversParentTypes['CreativeLayerConnection']> = {
@@ -2885,6 +3017,7 @@ export declare type CreativeTemplateResolvers<ContextType = any, ParentType exte
     width?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
     marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<CreativeTemplateMarketingCampaignsArgs, 'showDeleted'>>;
     creativeLayers?: Resolver<ResolversTypes['CreativeLayerConnection'], ParentType, ContextType, RequireFields<CreativeTemplateCreativeLayersArgs, 'showDeleted'>>;
@@ -2930,10 +3063,34 @@ export declare type EntitlementResourceResolvers<ContextType = any, ParentType e
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
 export interface FilterInputScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['FilterInput'], any> {
     name: 'FilterInput';
 }
+export declare type GcpxResolvers<ContextType = any, ParentType extends ResolversParentTypes['GCPX'] = ResolversParentTypes['GCPX']> = {
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
+    creationDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    kpi?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    price?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    startDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    endDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    minConversions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    maxConversions?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+    campaignTemplate?: Resolver<ResolversTypes['CampaignTemplate'], ParentType, ContextType>;
+    marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
+    marketingCampaigns?: Resolver<ResolversTypes['MarketingCampaignConnection'], ParentType, ContextType, RequireFields<GcpxMarketingCampaignsArgs, 'showDeleted'>>;
+};
+export declare type GcpxConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['GCPXConnection'] = ResolversParentTypes['GCPXConnection']> = {
+    edges?: Resolver<Array<ResolversTypes['GCPXEdge']>, ParentType, ContextType>;
+    pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+    totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+};
+export declare type GcpxEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['GCPXEdge'] = ResolversParentTypes['GCPXEdge']> = {
+    node?: Resolver<ResolversTypes['GCPX'], ParentType, ContextType>;
+    cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+};
 export interface JsonObjectScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['JSONObject'], any> {
     name: 'JSONObject';
 }
@@ -2946,6 +3103,7 @@ export declare type MarketingAdResolvers<ContextType = any, ParentType extends R
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     remoteId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     preview?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     adPreviews?: Resolver<Array<ResolversTypes['AdPreview']>, ParentType, ContextType>;
@@ -2970,11 +3128,16 @@ export declare type MarketingCampaignResolvers<ContextType = any, ParentType ext
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     status?: Resolver<ResolversTypes['MarketingCampaignStatus'], ParentType, ContextType>;
     creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    runTimeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    runTimeSpec?: Resolver<Maybe<ResolversTypes['JSONObject']>, ParentType, ContextType>;
     locationSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    conversionSpec?: Resolver<Maybe<ResolversTypes['JSONObject']>, ParentType, ContextType>;
+    startDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
+    endDate?: Resolver<Maybe<ResolversTypes['DateISO']>, ParentType, ContextType>;
+    GCPX?: Resolver<Maybe<ResolversTypes['GCPX']>, ParentType, ContextType>;
     delivering?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
     marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, RequireFields<MarketingCampaignMarketingAdsArgs, 'showDeleted'>>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<MarketingCampaignProductsArgs, 'showDeleted'>>;
@@ -3002,9 +3165,10 @@ export declare type MarketingCampaignSnapshotResolvers<ContextType = any, Parent
     name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     status?: Resolver<ResolversTypes['MarketingCampaignStatus'], ParentType, ContextType>;
     creativeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
-    runTimeSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    runTimeSpec?: Resolver<Maybe<ResolversTypes['JSONObject']>, ParentType, ContextType>;
     locationSpec?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     kpi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+    productIds?: Resolver<Maybe<Array<ResolversTypes['ObjectId']>>, ParentType, ContextType>;
 };
 export declare type MarketingCampaignSnapshotConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['MarketingCampaignSnapshotConnection'] = ResolversParentTypes['MarketingCampaignSnapshotConnection']> = {
     edges?: Resolver<Array<ResolversTypes['MarketingCampaignSnapshotEdge']>, ParentType, ContextType>;
@@ -3022,6 +3186,10 @@ export declare type MarketplaceResolvers<ContextType = any, ParentType extends R
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    currencyCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+    currencySymbol?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+    currencyOffset?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     organization?: Resolver<Maybe<ResolversTypes['Organization']>, ParentType, ContextType>;
     mediaChannels?: Resolver<ResolversTypes['MediaChannelConnection'], ParentType, ContextType, RequireFields<MarketplaceMediaChannelsArgs, 'showDeleted'>>;
     campaignTemplates?: Resolver<ResolversTypes['CampaignTemplateConnection'], ParentType, ContextType, RequireFields<MarketplaceCampaignTemplatesArgs, 'showDeleted'>>;
@@ -3052,10 +3220,12 @@ export declare type MediaChannelResolvers<ContextType = any, ParentType extends 
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     platform?: Resolver<ResolversTypes['Platform'], ParentType, ContextType>;
     remoteId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     remoteState?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
     currency?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
+    currencyCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     currencySymbol?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
     currencyOffset?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
     timezone?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
@@ -3167,6 +3337,7 @@ export declare type NotificationResourceResolvers<ContextType = any, ParentType 
     lastChangeDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
 export interface ObjectIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['ObjectId'], any> {
     name: 'ObjectId';
@@ -3178,6 +3349,7 @@ export declare type OrganizationResolvers<ContextType = any, ParentType extends 
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     tier?: Resolver<ResolversTypes['OrganizationTierEnum'], ParentType, ContextType>;
     users?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, OrganizationUsersArgs>;
     marketplaces?: Resolver<ResolversTypes['MarketplaceConnection'], ParentType, ContextType, RequireFields<OrganizationMarketplacesArgs, 'showDeleted'>>;
@@ -3298,6 +3470,7 @@ export declare type ResultResourceResolvers<ContextType = any, ParentType extend
     vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
 };
 export declare type SingleUseTokenResolvers<ContextType = any, ParentType extends ResolversParentTypes['SingleUseToken'] = ResolversParentTypes['SingleUseToken']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
@@ -3349,6 +3522,7 @@ export declare type VendorResolvers<ContextType = any, ParentType extends Resolv
     name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
     systemStatus?: Resolver<ResolversTypes['SystemStatus'], ParentType, ContextType>;
     errors?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
+    warnings?: Resolver<Maybe<Array<ResolversTypes['JSONObject']>>, ParentType, ContextType>;
     marketplace?: Resolver<ResolversTypes['Marketplace'], ParentType, ContextType>;
     vendorTokens?: Resolver<ResolversTypes['VendorTokenConnection'], ParentType, ContextType, VendorVendorTokensArgs>;
     products?: Resolver<ResolversTypes['ProductConnection'], ParentType, ContextType, RequireFields<VendorProductsArgs, 'showDeleted'>>;
@@ -3407,6 +3581,9 @@ export declare type Resolvers<ContextType = any> = {
     EntitlementEdge?: EntitlementEdgeResolvers<ContextType>;
     EntitlementResource?: EntitlementResourceResolvers;
     FilterInput?: GraphQLScalarType;
+    GCPX?: GcpxResolvers<ContextType>;
+    GCPXConnection?: GcpxConnectionResolvers<ContextType>;
+    GCPXEdge?: GcpxEdgeResolvers<ContextType>;
     JSONObject?: GraphQLScalarType;
     MarketingAd?: MarketingAdResolvers<ContextType>;
     MarketingAdConnection?: MarketingAdConnectionResolvers<ContextType>;

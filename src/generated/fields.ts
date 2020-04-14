@@ -8,6 +8,7 @@ export type CampaignTemplateFields = {
     remoteId: 'remoteId';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     kpi: 'kpi';
     marketplace: {
         id: 'marketplace{id}';
@@ -16,6 +17,10 @@ export type CampaignTemplateFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -23,6 +28,7 @@ export type CampaignTemplateFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -58,10 +64,12 @@ export type CampaignTemplateFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -89,6 +97,7 @@ export type CampaignTemplateFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -110,6 +119,7 @@ export type CampaignTemplateFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -151,6 +161,7 @@ export type CampaignTemplateFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -202,14 +213,30 @@ export type CampaignTemplateFields = {
                     name: 'marketingCampaigns{edges{node{vendor{name}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{vendor{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{vendor{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{vendor{warnings}}}}';
                 };
                 systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}';
                 errors: 'marketingCampaigns{edges{node{errors}}}';
+                warnings: 'marketingCampaigns{edges{node{warnings}}}';
                 name: 'marketingCampaigns{edges{node{name}}}';
                 status: 'marketingCampaigns{edges{node{status}}}';
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
+                conversionSpec: 'marketingCampaigns{edges{node{conversionSpec}}}';
+                startDate: 'marketingCampaigns{edges{node{startDate}}}';
+                endDate: 'marketingCampaigns{edges{node{endDate}}}';
+                GCPX: {
+                    id: 'marketingCampaigns{edges{node{GCPX{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{GCPX{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}';
+                    kpi: 'marketingCampaigns{edges{node{GCPX{kpi}}}}';
+                    price: 'marketingCampaigns{edges{node{GCPX{price}}}}';
+                    startDate: 'marketingCampaigns{edges{node{GCPX{startDate}}}}';
+                    endDate: 'marketingCampaigns{edges{node{GCPX{endDate}}}}';
+                    minConversions: 'marketingCampaigns{edges{node{GCPX{minConversions}}}}';
+                    maxConversions: 'marketingCampaigns{edges{node{GCPX{maxConversions}}}}';
+                };
                 delivering: 'marketingCampaigns{edges{node{delivering}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
@@ -228,6 +255,7 @@ export type CampaignTemplateFields = {
                     remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{catalog{warnings}}}}';
                 };
                 campaignTemplate: {
                     id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}';
@@ -239,6 +267,7 @@ export type CampaignTemplateFields = {
                     remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}';
                     kpi: 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}';
                 };
                 mediaChannel: {
@@ -248,10 +277,12 @@ export type CampaignTemplateFields = {
                     name: 'marketingCampaigns{edges{node{mediaChannel{name}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{mediaChannel{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{mediaChannel{warnings}}}}';
                     platform: 'marketingCampaigns{edges{node{mediaChannel{platform}}}}';
                     remoteId: 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}';
                     remoteState: 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}';
                     currency: 'marketingCampaigns{edges{node{mediaChannel{currency}}}}';
+                    currencyCode: 'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}';
                     currencySymbol: 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}';
                     currencyOffset: 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}';
                     timezone: 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}';
@@ -274,6 +305,315 @@ export type CampaignTemplateFields = {
         };
         totalCount: 'marketingCampaigns{totalCount}';
     };
+    GCPXHistory: {
+        edges: {
+            node: {
+                id: 'GCPXHistory{edges{node{id}}}';
+                creationDate: 'GCPXHistory{edges{node{creationDate}}}';
+                lastChangeDate: 'GCPXHistory{edges{node{lastChangeDate}}}';
+                kpi: 'GCPXHistory{edges{node{kpi}}}';
+                price: 'GCPXHistory{edges{node{price}}}';
+                startDate: 'GCPXHistory{edges{node{startDate}}}';
+                endDate: 'GCPXHistory{edges{node{endDate}}}';
+                minConversions: 'GCPXHistory{edges{node{minConversions}}}';
+                maxConversions: 'GCPXHistory{edges{node{maxConversions}}}';
+                campaignTemplate: {
+                    id: 'GCPXHistory{edges{node{campaignTemplate{id}}}}';
+                    creationDate: 'GCPXHistory{edges{node{campaignTemplate{creationDate}}}}';
+                    lastChangeDate: 'GCPXHistory{edges{node{campaignTemplate{lastChangeDate}}}}';
+                    name: 'GCPXHistory{edges{node{campaignTemplate{name}}}}';
+                    description: 'GCPXHistory{edges{node{campaignTemplate{description}}}}';
+                    platform: 'GCPXHistory{edges{node{campaignTemplate{platform}}}}';
+                    remoteId: 'GCPXHistory{edges{node{campaignTemplate{remoteId}}}}';
+                    systemStatus: 'GCPXHistory{edges{node{campaignTemplate{systemStatus}}}}';
+                    errors: 'GCPXHistory{edges{node{campaignTemplate{errors}}}}';
+                    warnings: 'GCPXHistory{edges{node{campaignTemplate{warnings}}}}';
+                    kpi: 'GCPXHistory{edges{node{campaignTemplate{kpi}}}}';
+                };
+                marketplace: {
+                    id: 'GCPXHistory{edges{node{marketplace{id}}}}';
+                    creationDate: 'GCPXHistory{edges{node{marketplace{creationDate}}}}';
+                    lastChangeDate: 'GCPXHistory{edges{node{marketplace{lastChangeDate}}}}';
+                    name: 'GCPXHistory{edges{node{marketplace{name}}}}';
+                    systemStatus: 'GCPXHistory{edges{node{marketplace{systemStatus}}}}';
+                    errors: 'GCPXHistory{edges{node{marketplace{errors}}}}';
+                    warnings: 'GCPXHistory{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'GCPXHistory{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'GCPXHistory{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'GCPXHistory{edges{node{marketplace{currencyOffset}}}}';
+                };
+                marketingCampaigns: {
+                    totalCount: 'GCPXHistory{edges{node{marketingCampaigns{totalCount}}}}';
+                };
+            };
+            cursor: 'GCPXHistory{edges{cursor}}';
+        };
+        pageInfo: {
+            endCursor: 'GCPXHistory{pageInfo{endCursor}}';
+            startCursor: 'GCPXHistory{pageInfo{startCursor}}';
+            hasNextPage: 'GCPXHistory{pageInfo{hasNextPage}}';
+            hasPreviousPage: 'GCPXHistory{pageInfo{hasPreviousPage}}';
+        };
+        totalCount: 'GCPXHistory{totalCount}';
+    };
+    currentGCPX: {
+        id: 'currentGCPX{id}';
+        creationDate: 'currentGCPX{creationDate}';
+        lastChangeDate: 'currentGCPX{lastChangeDate}';
+        kpi: 'currentGCPX{kpi}';
+        price: 'currentGCPX{price}';
+        startDate: 'currentGCPX{startDate}';
+        endDate: 'currentGCPX{endDate}';
+        minConversions: 'currentGCPX{minConversions}';
+        maxConversions: 'currentGCPX{maxConversions}';
+        campaignTemplate: {
+            id: 'currentGCPX{campaignTemplate{id}}';
+            creationDate: 'currentGCPX{campaignTemplate{creationDate}}';
+            lastChangeDate: 'currentGCPX{campaignTemplate{lastChangeDate}}';
+            name: 'currentGCPX{campaignTemplate{name}}';
+            description: 'currentGCPX{campaignTemplate{description}}';
+            platform: 'currentGCPX{campaignTemplate{platform}}';
+            remoteId: 'currentGCPX{campaignTemplate{remoteId}}';
+            systemStatus: 'currentGCPX{campaignTemplate{systemStatus}}';
+            errors: 'currentGCPX{campaignTemplate{errors}}';
+            warnings: 'currentGCPX{campaignTemplate{warnings}}';
+            kpi: 'currentGCPX{campaignTemplate{kpi}}';
+            marketplace: {
+                id: 'currentGCPX{campaignTemplate{marketplace{id}}}';
+                creationDate: 'currentGCPX{campaignTemplate{marketplace{creationDate}}}';
+                lastChangeDate: 'currentGCPX{campaignTemplate{marketplace{lastChangeDate}}}';
+                name: 'currentGCPX{campaignTemplate{marketplace{name}}}';
+                systemStatus: 'currentGCPX{campaignTemplate{marketplace{systemStatus}}}';
+                errors: 'currentGCPX{campaignTemplate{marketplace{errors}}}';
+                warnings: 'currentGCPX{campaignTemplate{marketplace{warnings}}}';
+                currencyCode: 'currentGCPX{campaignTemplate{marketplace{currencyCode}}}';
+                currencySymbol: 'currentGCPX{campaignTemplate{marketplace{currencySymbol}}}';
+                currencyOffset: 'currentGCPX{campaignTemplate{marketplace{currencyOffset}}}';
+                organization: {
+                    id: 'currentGCPX{campaignTemplate{marketplace{organization{id}}}}';
+                    creationDate: 'currentGCPX{campaignTemplate{marketplace{organization{creationDate}}}}';
+                    lastChangeDate: 'currentGCPX{campaignTemplate{marketplace{organization{lastChangeDate}}}}';
+                    name: 'currentGCPX{campaignTemplate{marketplace{organization{name}}}}';
+                    systemStatus: 'currentGCPX{campaignTemplate{marketplace{organization{systemStatus}}}}';
+                    errors: 'currentGCPX{campaignTemplate{marketplace{organization{errors}}}}';
+                    warnings: 'currentGCPX{campaignTemplate{marketplace{organization{warnings}}}}';
+                    tier: 'currentGCPX{campaignTemplate{marketplace{organization{tier}}}}';
+                };
+                mediaChannels: {
+                    totalCount: 'currentGCPX{campaignTemplate{marketplace{mediaChannels{totalCount}}}}';
+                };
+                campaignTemplates: {
+                    totalCount: 'currentGCPX{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}';
+                };
+                vendors: {
+                    totalCount: 'currentGCPX{campaignTemplate{marketplace{vendors{totalCount}}}}';
+                };
+                vendorTokens: {
+                    totalCount: 'currentGCPX{campaignTemplate{marketplace{vendorTokens{totalCount}}}}';
+                };
+                creativeTemplates: {
+                    totalCount: 'currentGCPX{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'currentGCPX{campaignTemplate{marketplace{products{totalCount}}}}';
+                };
+            };
+            marketingCampaigns: {
+                edges: {
+                    cursor: 'currentGCPX{campaignTemplate{marketingCampaigns{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{campaignTemplate{marketingCampaigns{totalCount}}}';
+            };
+            GCPXHistory: {
+                edges: {
+                    cursor: 'currentGCPX{campaignTemplate{GCPXHistory{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{campaignTemplate{GCPXHistory{totalCount}}}';
+            };
+            currentGCPX: {
+                id: 'currentGCPX{campaignTemplate{currentGCPX{id}}}';
+                creationDate: 'currentGCPX{campaignTemplate{currentGCPX{creationDate}}}';
+                lastChangeDate: 'currentGCPX{campaignTemplate{currentGCPX{lastChangeDate}}}';
+                kpi: 'currentGCPX{campaignTemplate{currentGCPX{kpi}}}';
+                price: 'currentGCPX{campaignTemplate{currentGCPX{price}}}';
+                startDate: 'currentGCPX{campaignTemplate{currentGCPX{startDate}}}';
+                endDate: 'currentGCPX{campaignTemplate{currentGCPX{endDate}}}';
+                minConversions: 'currentGCPX{campaignTemplate{currentGCPX{minConversions}}}';
+                maxConversions: 'currentGCPX{campaignTemplate{currentGCPX{maxConversions}}}';
+                campaignTemplate: {
+                    id: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{id}}}}';
+                    creationDate: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}';
+                    lastChangeDate: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}';
+                    name: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{name}}}}';
+                    description: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{description}}}}';
+                    platform: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}';
+                    remoteId: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}';
+                    systemStatus: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}';
+                    errors: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}';
+                    warnings: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}';
+                    kpi: 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}';
+                };
+                marketplace: {
+                    id: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{id}}}}';
+                    creationDate: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{creationDate}}}}';
+                    lastChangeDate: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}';
+                    name: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{name}}}}';
+                    systemStatus: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}';
+                    errors: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{errors}}}}';
+                    warnings: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{warnings}}}}';
+                    currencyCode: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}';
+                    currencySymbol: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}';
+                };
+                marketingCampaigns: {
+                    totalCount: 'currentGCPX{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}';
+                };
+            };
+        };
+        marketplace: {
+            id: 'currentGCPX{marketplace{id}}';
+            creationDate: 'currentGCPX{marketplace{creationDate}}';
+            lastChangeDate: 'currentGCPX{marketplace{lastChangeDate}}';
+            name: 'currentGCPX{marketplace{name}}';
+            systemStatus: 'currentGCPX{marketplace{systemStatus}}';
+            errors: 'currentGCPX{marketplace{errors}}';
+            warnings: 'currentGCPX{marketplace{warnings}}';
+            currencyCode: 'currentGCPX{marketplace{currencyCode}}';
+            currencySymbol: 'currentGCPX{marketplace{currencySymbol}}';
+            currencyOffset: 'currentGCPX{marketplace{currencyOffset}}';
+            organization: {
+                id: 'currentGCPX{marketplace{organization{id}}}';
+                creationDate: 'currentGCPX{marketplace{organization{creationDate}}}';
+                lastChangeDate: 'currentGCPX{marketplace{organization{lastChangeDate}}}';
+                name: 'currentGCPX{marketplace{organization{name}}}';
+                systemStatus: 'currentGCPX{marketplace{organization{systemStatus}}}';
+                errors: 'currentGCPX{marketplace{organization{errors}}}';
+                warnings: 'currentGCPX{marketplace{organization{warnings}}}';
+                tier: 'currentGCPX{marketplace{organization{tier}}}';
+                users: {
+                    totalCount: 'currentGCPX{marketplace{organization{users{totalCount}}}}';
+                };
+                marketplaces: {
+                    totalCount: 'currentGCPX{marketplace{organization{marketplaces{totalCount}}}}';
+                };
+            };
+            mediaChannels: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{mediaChannels{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{marketplace{mediaChannels{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{marketplace{mediaChannels{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{marketplace{mediaChannels{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{marketplace{mediaChannels{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{marketplace{mediaChannels{totalCount}}}';
+            };
+            campaignTemplates: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{campaignTemplates{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{marketplace{campaignTemplates{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{marketplace{campaignTemplates{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{marketplace{campaignTemplates{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{marketplace{campaignTemplates{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{marketplace{campaignTemplates{totalCount}}}';
+            };
+            vendors: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{vendors{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{marketplace{vendors{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{marketplace{vendors{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{marketplace{vendors{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{marketplace{vendors{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{marketplace{vendors{totalCount}}}';
+            };
+            vendorTokens: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{vendorTokens{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{marketplace{vendorTokens{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{marketplace{vendorTokens{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{marketplace{vendorTokens{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{marketplace{vendorTokens{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{marketplace{vendorTokens{totalCount}}}';
+            };
+            creativeTemplates: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{creativeTemplates{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{marketplace{creativeTemplates{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{marketplace{creativeTemplates{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'currentGCPX{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'currentGCPX{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'currentGCPX{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'currentGCPX{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'currentGCPX{marketplace{products{totalCount}}}';
+            };
+        };
+        marketingCampaigns: {
+            edges: {
+                node: {
+                    id: 'currentGCPX{marketingCampaigns{edges{node{id}}}}';
+                    creationDate: 'currentGCPX{marketingCampaigns{edges{node{creationDate}}}}';
+                    lastChangeDate: 'currentGCPX{marketingCampaigns{edges{node{lastChangeDate}}}}';
+                    resultsSource: 'currentGCPX{marketingCampaigns{edges{node{resultsSource}}}}';
+                    kpi: 'currentGCPX{marketingCampaigns{edges{node{kpi}}}}';
+                    systemStatus: 'currentGCPX{marketingCampaigns{edges{node{systemStatus}}}}';
+                    errors: 'currentGCPX{marketingCampaigns{edges{node{errors}}}}';
+                    warnings: 'currentGCPX{marketingCampaigns{edges{node{warnings}}}}';
+                    name: 'currentGCPX{marketingCampaigns{edges{node{name}}}}';
+                    status: 'currentGCPX{marketingCampaigns{edges{node{status}}}}';
+                    creativeSpec: 'currentGCPX{marketingCampaigns{edges{node{creativeSpec}}}}';
+                    runTimeSpec: 'currentGCPX{marketingCampaigns{edges{node{runTimeSpec}}}}';
+                    locationSpec: 'currentGCPX{marketingCampaigns{edges{node{locationSpec}}}}';
+                    conversionSpec: 'currentGCPX{marketingCampaigns{edges{node{conversionSpec}}}}';
+                    startDate: 'currentGCPX{marketingCampaigns{edges{node{startDate}}}}';
+                    endDate: 'currentGCPX{marketingCampaigns{edges{node{endDate}}}}';
+                    delivering: 'currentGCPX{marketingCampaigns{edges{node{delivering}}}}';
+                };
+                cursor: 'currentGCPX{marketingCampaigns{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'currentGCPX{marketingCampaigns{pageInfo{endCursor}}}';
+                startCursor: 'currentGCPX{marketingCampaigns{pageInfo{startCursor}}}';
+                hasNextPage: 'currentGCPX{marketingCampaigns{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'currentGCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'currentGCPX{marketingCampaigns{totalCount}}';
+        };
+    };
 };
 export const CampaignTemplateFields: CampaignTemplateFields = {
     id: 'id',
@@ -285,6 +625,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
     remoteId: 'remoteId',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     kpi: 'kpi',
     marketplace: {
         id: 'marketplace{id}',
@@ -293,6 +634,10 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -300,6 +645,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -348,6 +694,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -356,6 +704,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -397,6 +747,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -425,6 +777,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -475,6 +828,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -539,14 +894,37 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     systemStatus:
                         'marketingCampaigns{edges{node{vendor{systemStatus}}}}',
                     errors: 'marketingCampaigns{edges{node{vendor{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{vendor{warnings}}}}',
                 },
                 systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}',
                 errors: 'marketingCampaigns{edges{node{errors}}}',
+                warnings: 'marketingCampaigns{edges{node{warnings}}}',
                 name: 'marketingCampaigns{edges{node{name}}}',
                 status: 'marketingCampaigns{edges{node{status}}}',
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
+                conversionSpec:
+                    'marketingCampaigns{edges{node{conversionSpec}}}',
+                startDate: 'marketingCampaigns{edges{node{startDate}}}',
+                endDate: 'marketingCampaigns{edges{node{endDate}}}',
+                GCPX: {
+                    id: 'marketingCampaigns{edges{node{GCPX{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{GCPX{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}',
+                    kpi: 'marketingCampaigns{edges{node{GCPX{kpi}}}}',
+                    price: 'marketingCampaigns{edges{node{GCPX{price}}}}',
+                    startDate:
+                        'marketingCampaigns{edges{node{GCPX{startDate}}}}',
+                    endDate: 'marketingCampaigns{edges{node{GCPX{endDate}}}}',
+                    minConversions:
+                        'marketingCampaigns{edges{node{GCPX{minConversions}}}}',
+                    maxConversions:
+                        'marketingCampaigns{edges{node{GCPX{maxConversions}}}}',
+                },
                 delivering: 'marketingCampaigns{edges{node{delivering}}}',
                 marketingAds: {
                     totalCount:
@@ -574,6 +952,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     dataFeedId:
                         'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{catalog{warnings}}}}',
                 },
                 campaignTemplate: {
                     id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}',
@@ -593,6 +973,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}',
                     kpi:
                         'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}',
                 },
@@ -607,6 +989,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{mediaChannel{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{mediaChannel{warnings}}}}',
                     platform:
                         'marketingCampaigns{edges{node{mediaChannel{platform}}}}',
                     remoteId:
@@ -615,6 +999,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}',
                     currency:
                         'marketingCampaigns{edges{node{mediaChannel{currency}}}}',
+                    currencyCode:
+                        'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}',
                     currencySymbol:
                         'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}',
                     currencyOffset:
@@ -643,6 +1029,445 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
         },
         totalCount: 'marketingCampaigns{totalCount}',
     },
+    GCPXHistory: {
+        edges: {
+            node: {
+                id: 'GCPXHistory{edges{node{id}}}',
+                creationDate: 'GCPXHistory{edges{node{creationDate}}}',
+                lastChangeDate: 'GCPXHistory{edges{node{lastChangeDate}}}',
+                kpi: 'GCPXHistory{edges{node{kpi}}}',
+                price: 'GCPXHistory{edges{node{price}}}',
+                startDate: 'GCPXHistory{edges{node{startDate}}}',
+                endDate: 'GCPXHistory{edges{node{endDate}}}',
+                minConversions: 'GCPXHistory{edges{node{minConversions}}}',
+                maxConversions: 'GCPXHistory{edges{node{maxConversions}}}',
+                campaignTemplate: {
+                    id: 'GCPXHistory{edges{node{campaignTemplate{id}}}}',
+                    creationDate:
+                        'GCPXHistory{edges{node{campaignTemplate{creationDate}}}}',
+                    lastChangeDate:
+                        'GCPXHistory{edges{node{campaignTemplate{lastChangeDate}}}}',
+                    name: 'GCPXHistory{edges{node{campaignTemplate{name}}}}',
+                    description:
+                        'GCPXHistory{edges{node{campaignTemplate{description}}}}',
+                    platform:
+                        'GCPXHistory{edges{node{campaignTemplate{platform}}}}',
+                    remoteId:
+                        'GCPXHistory{edges{node{campaignTemplate{remoteId}}}}',
+                    systemStatus:
+                        'GCPXHistory{edges{node{campaignTemplate{systemStatus}}}}',
+                    errors:
+                        'GCPXHistory{edges{node{campaignTemplate{errors}}}}',
+                    warnings:
+                        'GCPXHistory{edges{node{campaignTemplate{warnings}}}}',
+                    kpi: 'GCPXHistory{edges{node{campaignTemplate{kpi}}}}',
+                },
+                marketplace: {
+                    id: 'GCPXHistory{edges{node{marketplace{id}}}}',
+                    creationDate:
+                        'GCPXHistory{edges{node{marketplace{creationDate}}}}',
+                    lastChangeDate:
+                        'GCPXHistory{edges{node{marketplace{lastChangeDate}}}}',
+                    name: 'GCPXHistory{edges{node{marketplace{name}}}}',
+                    systemStatus:
+                        'GCPXHistory{edges{node{marketplace{systemStatus}}}}',
+                    errors: 'GCPXHistory{edges{node{marketplace{errors}}}}',
+                    warnings: 'GCPXHistory{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'GCPXHistory{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'GCPXHistory{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'GCPXHistory{edges{node{marketplace{currencyOffset}}}}',
+                },
+                marketingCampaigns: {
+                    totalCount:
+                        'GCPXHistory{edges{node{marketingCampaigns{totalCount}}}}',
+                },
+            },
+            cursor: 'GCPXHistory{edges{cursor}}',
+        },
+        pageInfo: {
+            endCursor: 'GCPXHistory{pageInfo{endCursor}}',
+            startCursor: 'GCPXHistory{pageInfo{startCursor}}',
+            hasNextPage: 'GCPXHistory{pageInfo{hasNextPage}}',
+            hasPreviousPage: 'GCPXHistory{pageInfo{hasPreviousPage}}',
+        },
+        totalCount: 'GCPXHistory{totalCount}',
+    },
+    currentGCPX: {
+        id: 'currentGCPX{id}',
+        creationDate: 'currentGCPX{creationDate}',
+        lastChangeDate: 'currentGCPX{lastChangeDate}',
+        kpi: 'currentGCPX{kpi}',
+        price: 'currentGCPX{price}',
+        startDate: 'currentGCPX{startDate}',
+        endDate: 'currentGCPX{endDate}',
+        minConversions: 'currentGCPX{minConversions}',
+        maxConversions: 'currentGCPX{maxConversions}',
+        campaignTemplate: {
+            id: 'currentGCPX{campaignTemplate{id}}',
+            creationDate: 'currentGCPX{campaignTemplate{creationDate}}',
+            lastChangeDate: 'currentGCPX{campaignTemplate{lastChangeDate}}',
+            name: 'currentGCPX{campaignTemplate{name}}',
+            description: 'currentGCPX{campaignTemplate{description}}',
+            platform: 'currentGCPX{campaignTemplate{platform}}',
+            remoteId: 'currentGCPX{campaignTemplate{remoteId}}',
+            systemStatus: 'currentGCPX{campaignTemplate{systemStatus}}',
+            errors: 'currentGCPX{campaignTemplate{errors}}',
+            warnings: 'currentGCPX{campaignTemplate{warnings}}',
+            kpi: 'currentGCPX{campaignTemplate{kpi}}',
+            marketplace: {
+                id: 'currentGCPX{campaignTemplate{marketplace{id}}}',
+                creationDate:
+                    'currentGCPX{campaignTemplate{marketplace{creationDate}}}',
+                lastChangeDate:
+                    'currentGCPX{campaignTemplate{marketplace{lastChangeDate}}}',
+                name: 'currentGCPX{campaignTemplate{marketplace{name}}}',
+                systemStatus:
+                    'currentGCPX{campaignTemplate{marketplace{systemStatus}}}',
+                errors: 'currentGCPX{campaignTemplate{marketplace{errors}}}',
+                warnings:
+                    'currentGCPX{campaignTemplate{marketplace{warnings}}}',
+                currencyCode:
+                    'currentGCPX{campaignTemplate{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'currentGCPX{campaignTemplate{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'currentGCPX{campaignTemplate{marketplace{currencyOffset}}}',
+                organization: {
+                    id:
+                        'currentGCPX{campaignTemplate{marketplace{organization{id}}}}',
+                    creationDate:
+                        'currentGCPX{campaignTemplate{marketplace{organization{creationDate}}}}',
+                    lastChangeDate:
+                        'currentGCPX{campaignTemplate{marketplace{organization{lastChangeDate}}}}',
+                    name:
+                        'currentGCPX{campaignTemplate{marketplace{organization{name}}}}',
+                    systemStatus:
+                        'currentGCPX{campaignTemplate{marketplace{organization{systemStatus}}}}',
+                    errors:
+                        'currentGCPX{campaignTemplate{marketplace{organization{errors}}}}',
+                    warnings:
+                        'currentGCPX{campaignTemplate{marketplace{organization{warnings}}}}',
+                    tier:
+                        'currentGCPX{campaignTemplate{marketplace{organization{tier}}}}',
+                },
+                mediaChannels: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{marketplace{mediaChannels{totalCount}}}}',
+                },
+                campaignTemplates: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}',
+                },
+                vendors: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{marketplace{vendors{totalCount}}}}',
+                },
+                vendorTokens: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{marketplace{vendorTokens{totalCount}}}}',
+                },
+                creativeTemplates: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{marketplace{products{totalCount}}}}',
+                },
+            },
+            marketingCampaigns: {
+                edges: {
+                    cursor:
+                        'currentGCPX{campaignTemplate{marketingCampaigns{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'currentGCPX{campaignTemplate{marketingCampaigns{totalCount}}}',
+            },
+            GCPXHistory: {
+                edges: {
+                    cursor:
+                        'currentGCPX{campaignTemplate{GCPXHistory{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'currentGCPX{campaignTemplate{GCPXHistory{totalCount}}}',
+            },
+            currentGCPX: {
+                id: 'currentGCPX{campaignTemplate{currentGCPX{id}}}',
+                creationDate:
+                    'currentGCPX{campaignTemplate{currentGCPX{creationDate}}}',
+                lastChangeDate:
+                    'currentGCPX{campaignTemplate{currentGCPX{lastChangeDate}}}',
+                kpi: 'currentGCPX{campaignTemplate{currentGCPX{kpi}}}',
+                price: 'currentGCPX{campaignTemplate{currentGCPX{price}}}',
+                startDate:
+                    'currentGCPX{campaignTemplate{currentGCPX{startDate}}}',
+                endDate: 'currentGCPX{campaignTemplate{currentGCPX{endDate}}}',
+                minConversions:
+                    'currentGCPX{campaignTemplate{currentGCPX{minConversions}}}',
+                maxConversions:
+                    'currentGCPX{campaignTemplate{currentGCPX{maxConversions}}}',
+                campaignTemplate: {
+                    id:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{id}}}}',
+                    creationDate:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}',
+                    lastChangeDate:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}',
+                    name:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{name}}}}',
+                    description:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{description}}}}',
+                    platform:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}',
+                    remoteId:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}',
+                    systemStatus:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}',
+                    errors:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}',
+                    warnings:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}',
+                    kpi:
+                        'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}',
+                },
+                marketplace: {
+                    id:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{id}}}}',
+                    creationDate:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{creationDate}}}}',
+                    lastChangeDate:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}',
+                    name:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{name}}}}',
+                    systemStatus:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}',
+                    errors:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{errors}}}}',
+                    warnings:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{warnings}}}}',
+                    currencyCode:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}',
+                },
+                marketingCampaigns: {
+                    totalCount:
+                        'currentGCPX{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}',
+                },
+            },
+        },
+        marketplace: {
+            id: 'currentGCPX{marketplace{id}}',
+            creationDate: 'currentGCPX{marketplace{creationDate}}',
+            lastChangeDate: 'currentGCPX{marketplace{lastChangeDate}}',
+            name: 'currentGCPX{marketplace{name}}',
+            systemStatus: 'currentGCPX{marketplace{systemStatus}}',
+            errors: 'currentGCPX{marketplace{errors}}',
+            warnings: 'currentGCPX{marketplace{warnings}}',
+            currencyCode: 'currentGCPX{marketplace{currencyCode}}',
+            currencySymbol: 'currentGCPX{marketplace{currencySymbol}}',
+            currencyOffset: 'currentGCPX{marketplace{currencyOffset}}',
+            organization: {
+                id: 'currentGCPX{marketplace{organization{id}}}',
+                creationDate:
+                    'currentGCPX{marketplace{organization{creationDate}}}',
+                lastChangeDate:
+                    'currentGCPX{marketplace{organization{lastChangeDate}}}',
+                name: 'currentGCPX{marketplace{organization{name}}}',
+                systemStatus:
+                    'currentGCPX{marketplace{organization{systemStatus}}}',
+                errors: 'currentGCPX{marketplace{organization{errors}}}',
+                warnings: 'currentGCPX{marketplace{organization{warnings}}}',
+                tier: 'currentGCPX{marketplace{organization{tier}}}',
+                users: {
+                    totalCount:
+                        'currentGCPX{marketplace{organization{users{totalCount}}}}',
+                },
+                marketplaces: {
+                    totalCount:
+                        'currentGCPX{marketplace{organization{marketplaces{totalCount}}}}',
+                },
+            },
+            mediaChannels: {
+                edges: {
+                    cursor:
+                        'currentGCPX{marketplace{mediaChannels{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{marketplace{mediaChannels{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{marketplace{mediaChannels{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{marketplace{mediaChannels{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{marketplace{mediaChannels{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'currentGCPX{marketplace{mediaChannels{totalCount}}}',
+            },
+            campaignTemplates: {
+                edges: {
+                    cursor:
+                        'currentGCPX{marketplace{campaignTemplates{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{marketplace{campaignTemplates{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{marketplace{campaignTemplates{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{marketplace{campaignTemplates{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{marketplace{campaignTemplates{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'currentGCPX{marketplace{campaignTemplates{totalCount}}}',
+            },
+            vendors: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{vendors{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{marketplace{vendors{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{marketplace{vendors{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{marketplace{vendors{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{marketplace{vendors{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'currentGCPX{marketplace{vendors{totalCount}}}',
+            },
+            vendorTokens: {
+                edges: {
+                    cursor:
+                        'currentGCPX{marketplace{vendorTokens{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{marketplace{vendorTokens{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{marketplace{vendorTokens{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{marketplace{vendorTokens{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{marketplace{vendorTokens{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'currentGCPX{marketplace{vendorTokens{totalCount}}}',
+            },
+            creativeTemplates: {
+                edges: {
+                    cursor:
+                        'currentGCPX{marketplace{creativeTemplates{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{marketplace{creativeTemplates{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{marketplace{creativeTemplates{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'currentGCPX{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor: 'currentGCPX{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'currentGCPX{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'currentGCPX{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'currentGCPX{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'currentGCPX{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'currentGCPX{marketplace{products{totalCount}}}',
+            },
+        },
+        marketingCampaigns: {
+            edges: {
+                node: {
+                    id: 'currentGCPX{marketingCampaigns{edges{node{id}}}}',
+                    creationDate:
+                        'currentGCPX{marketingCampaigns{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'currentGCPX{marketingCampaigns{edges{node{lastChangeDate}}}}',
+                    resultsSource:
+                        'currentGCPX{marketingCampaigns{edges{node{resultsSource}}}}',
+                    kpi: 'currentGCPX{marketingCampaigns{edges{node{kpi}}}}',
+                    systemStatus:
+                        'currentGCPX{marketingCampaigns{edges{node{systemStatus}}}}',
+                    errors:
+                        'currentGCPX{marketingCampaigns{edges{node{errors}}}}',
+                    warnings:
+                        'currentGCPX{marketingCampaigns{edges{node{warnings}}}}',
+                    name: 'currentGCPX{marketingCampaigns{edges{node{name}}}}',
+                    status:
+                        'currentGCPX{marketingCampaigns{edges{node{status}}}}',
+                    creativeSpec:
+                        'currentGCPX{marketingCampaigns{edges{node{creativeSpec}}}}',
+                    runTimeSpec:
+                        'currentGCPX{marketingCampaigns{edges{node{runTimeSpec}}}}',
+                    locationSpec:
+                        'currentGCPX{marketingCampaigns{edges{node{locationSpec}}}}',
+                    conversionSpec:
+                        'currentGCPX{marketingCampaigns{edges{node{conversionSpec}}}}',
+                    startDate:
+                        'currentGCPX{marketingCampaigns{edges{node{startDate}}}}',
+                    endDate:
+                        'currentGCPX{marketingCampaigns{edges{node{endDate}}}}',
+                    delivering:
+                        'currentGCPX{marketingCampaigns{edges{node{delivering}}}}',
+                },
+                cursor: 'currentGCPX{marketingCampaigns{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor:
+                    'currentGCPX{marketingCampaigns{pageInfo{endCursor}}}',
+                startCursor:
+                    'currentGCPX{marketingCampaigns{pageInfo{startCursor}}}',
+                hasNextPage:
+                    'currentGCPX{marketingCampaigns{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'currentGCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'currentGCPX{marketingCampaigns{totalCount}}',
+        },
+    },
 };
 export type CampaignTemplateField =
     | 'id'
@@ -654,6 +1479,7 @@ export type CampaignTemplateField =
     | 'remoteId'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'kpi'
     | 'marketplace{id}'
     | 'marketplace{creationDate}'
@@ -661,12 +1487,17 @@ export type CampaignTemplateField =
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -686,10 +1517,12 @@ export type CampaignTemplateField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -709,6 +1542,7 @@ export type CampaignTemplateField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -722,6 +1556,7 @@ export type CampaignTemplateField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -747,6 +1582,7 @@ export type CampaignTemplateField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -780,13 +1616,27 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{vendor{name}}}}'
     | 'marketingCampaigns{edges{node{vendor{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{vendor{errors}}}}'
+    | 'marketingCampaigns{edges{node{vendor{warnings}}}}'
     | 'marketingCampaigns{edges{node{systemStatus}}}'
     | 'marketingCampaigns{edges{node{errors}}}'
+    | 'marketingCampaigns{edges{node{warnings}}}'
     | 'marketingCampaigns{edges{node{name}}}'
     | 'marketingCampaigns{edges{node{status}}}'
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
     | 'marketingCampaigns{edges{node{locationSpec}}}'
+    | 'marketingCampaigns{edges{node{conversionSpec}}}'
+    | 'marketingCampaigns{edges{node{startDate}}}'
+    | 'marketingCampaigns{edges{node{endDate}}}'
+    | 'marketingCampaigns{edges{node{GCPX{id}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{kpi}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{price}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{startDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{endDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{minConversions}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{maxConversions}}}}'
     | 'marketingCampaigns{edges{node{delivering}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
@@ -800,6 +1650,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
     | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
     | 'marketingCampaigns{edges{node{catalog{errors}}}}'
+    | 'marketingCampaigns{edges{node{catalog{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{creationDate}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{lastChangeDate}}}}'
@@ -809,6 +1660,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
@@ -816,10 +1668,12 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{mediaChannel{name}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{errors}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{warnings}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{platform}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currency}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
@@ -831,7 +1685,210 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{pageInfo{startCursor}}'
     | 'marketingCampaigns{pageInfo{hasNextPage}}'
     | 'marketingCampaigns{pageInfo{hasPreviousPage}}'
-    | 'marketingCampaigns{totalCount}';
+    | 'marketingCampaigns{totalCount}'
+    | 'GCPXHistory{edges{node{id}}}'
+    | 'GCPXHistory{edges{node{creationDate}}}'
+    | 'GCPXHistory{edges{node{lastChangeDate}}}'
+    | 'GCPXHistory{edges{node{kpi}}}'
+    | 'GCPXHistory{edges{node{price}}}'
+    | 'GCPXHistory{edges{node{startDate}}}'
+    | 'GCPXHistory{edges{node{endDate}}}'
+    | 'GCPXHistory{edges{node{minConversions}}}'
+    | 'GCPXHistory{edges{node{maxConversions}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{id}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{creationDate}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{lastChangeDate}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{name}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{description}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{platform}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{remoteId}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{systemStatus}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{errors}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{warnings}}}}'
+    | 'GCPXHistory{edges{node{campaignTemplate{kpi}}}}'
+    | 'GCPXHistory{edges{node{marketplace{id}}}}'
+    | 'GCPXHistory{edges{node{marketplace{creationDate}}}}'
+    | 'GCPXHistory{edges{node{marketplace{lastChangeDate}}}}'
+    | 'GCPXHistory{edges{node{marketplace{name}}}}'
+    | 'GCPXHistory{edges{node{marketplace{systemStatus}}}}'
+    | 'GCPXHistory{edges{node{marketplace{errors}}}}'
+    | 'GCPXHistory{edges{node{marketplace{warnings}}}}'
+    | 'GCPXHistory{edges{node{marketplace{currencyCode}}}}'
+    | 'GCPXHistory{edges{node{marketplace{currencySymbol}}}}'
+    | 'GCPXHistory{edges{node{marketplace{currencyOffset}}}}'
+    | 'GCPXHistory{edges{node{marketingCampaigns{totalCount}}}}'
+    | 'GCPXHistory{edges{cursor}}'
+    | 'GCPXHistory{pageInfo{endCursor}}'
+    | 'GCPXHistory{pageInfo{startCursor}}'
+    | 'GCPXHistory{pageInfo{hasNextPage}}'
+    | 'GCPXHistory{pageInfo{hasPreviousPage}}'
+    | 'GCPXHistory{totalCount}'
+    | 'currentGCPX{id}'
+    | 'currentGCPX{creationDate}'
+    | 'currentGCPX{lastChangeDate}'
+    | 'currentGCPX{kpi}'
+    | 'currentGCPX{price}'
+    | 'currentGCPX{startDate}'
+    | 'currentGCPX{endDate}'
+    | 'currentGCPX{minConversions}'
+    | 'currentGCPX{maxConversions}'
+    | 'currentGCPX{campaignTemplate{id}}'
+    | 'currentGCPX{campaignTemplate{creationDate}}'
+    | 'currentGCPX{campaignTemplate{lastChangeDate}}'
+    | 'currentGCPX{campaignTemplate{name}}'
+    | 'currentGCPX{campaignTemplate{description}}'
+    | 'currentGCPX{campaignTemplate{platform}}'
+    | 'currentGCPX{campaignTemplate{remoteId}}'
+    | 'currentGCPX{campaignTemplate{systemStatus}}'
+    | 'currentGCPX{campaignTemplate{errors}}'
+    | 'currentGCPX{campaignTemplate{warnings}}'
+    | 'currentGCPX{campaignTemplate{kpi}}'
+    | 'currentGCPX{campaignTemplate{marketplace{id}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{creationDate}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{lastChangeDate}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{name}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{systemStatus}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{errors}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{warnings}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{currencyCode}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{currencySymbol}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{currencyOffset}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{id}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{creationDate}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{lastChangeDate}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{name}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{systemStatus}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{errors}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{warnings}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{organization{tier}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{mediaChannels{totalCount}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{vendors{totalCount}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{vendorTokens{totalCount}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}'
+    | 'currentGCPX{campaignTemplate{marketplace{products{totalCount}}}}'
+    | 'currentGCPX{campaignTemplate{marketingCampaigns{edges{cursor}}}}'
+    | 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}'
+    | 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}'
+    | 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{campaignTemplate{marketingCampaigns{totalCount}}}'
+    | 'currentGCPX{campaignTemplate{GCPXHistory{edges{cursor}}}}'
+    | 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}'
+    | 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}'
+    | 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{campaignTemplate{GCPXHistory{totalCount}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{id}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{creationDate}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{lastChangeDate}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{kpi}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{price}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{startDate}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{endDate}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{minConversions}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{maxConversions}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{id}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{name}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{description}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{id}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{creationDate}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{name}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{errors}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{warnings}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}'
+    | 'currentGCPX{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}'
+    | 'currentGCPX{marketplace{id}}'
+    | 'currentGCPX{marketplace{creationDate}}'
+    | 'currentGCPX{marketplace{lastChangeDate}}'
+    | 'currentGCPX{marketplace{name}}'
+    | 'currentGCPX{marketplace{systemStatus}}'
+    | 'currentGCPX{marketplace{errors}}'
+    | 'currentGCPX{marketplace{warnings}}'
+    | 'currentGCPX{marketplace{currencyCode}}'
+    | 'currentGCPX{marketplace{currencySymbol}}'
+    | 'currentGCPX{marketplace{currencyOffset}}'
+    | 'currentGCPX{marketplace{organization{id}}}'
+    | 'currentGCPX{marketplace{organization{creationDate}}}'
+    | 'currentGCPX{marketplace{organization{lastChangeDate}}}'
+    | 'currentGCPX{marketplace{organization{name}}}'
+    | 'currentGCPX{marketplace{organization{systemStatus}}}'
+    | 'currentGCPX{marketplace{organization{errors}}}'
+    | 'currentGCPX{marketplace{organization{warnings}}}'
+    | 'currentGCPX{marketplace{organization{tier}}}'
+    | 'currentGCPX{marketplace{organization{users{totalCount}}}}'
+    | 'currentGCPX{marketplace{organization{marketplaces{totalCount}}}}'
+    | 'currentGCPX{marketplace{mediaChannels{edges{cursor}}}}'
+    | 'currentGCPX{marketplace{mediaChannels{pageInfo{endCursor}}}}'
+    | 'currentGCPX{marketplace{mediaChannels{pageInfo{startCursor}}}}'
+    | 'currentGCPX{marketplace{mediaChannels{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{marketplace{mediaChannels{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{marketplace{mediaChannels{totalCount}}}'
+    | 'currentGCPX{marketplace{campaignTemplates{edges{cursor}}}}'
+    | 'currentGCPX{marketplace{campaignTemplates{pageInfo{endCursor}}}}'
+    | 'currentGCPX{marketplace{campaignTemplates{pageInfo{startCursor}}}}'
+    | 'currentGCPX{marketplace{campaignTemplates{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{marketplace{campaignTemplates{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{marketplace{campaignTemplates{totalCount}}}'
+    | 'currentGCPX{marketplace{vendors{edges{cursor}}}}'
+    | 'currentGCPX{marketplace{vendors{pageInfo{endCursor}}}}'
+    | 'currentGCPX{marketplace{vendors{pageInfo{startCursor}}}}'
+    | 'currentGCPX{marketplace{vendors{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{marketplace{vendors{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{marketplace{vendors{totalCount}}}'
+    | 'currentGCPX{marketplace{vendorTokens{edges{cursor}}}}'
+    | 'currentGCPX{marketplace{vendorTokens{pageInfo{endCursor}}}}'
+    | 'currentGCPX{marketplace{vendorTokens{pageInfo{startCursor}}}}'
+    | 'currentGCPX{marketplace{vendorTokens{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{marketplace{vendorTokens{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{marketplace{vendorTokens{totalCount}}}'
+    | 'currentGCPX{marketplace{creativeTemplates{edges{cursor}}}}'
+    | 'currentGCPX{marketplace{creativeTemplates{pageInfo{endCursor}}}}'
+    | 'currentGCPX{marketplace{creativeTemplates{pageInfo{startCursor}}}}'
+    | 'currentGCPX{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{marketplace{creativeTemplates{totalCount}}}'
+    | 'currentGCPX{marketplace{products{edges{cursor}}}}'
+    | 'currentGCPX{marketplace{products{pageInfo{endCursor}}}}'
+    | 'currentGCPX{marketplace{products{pageInfo{startCursor}}}}'
+    | 'currentGCPX{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'currentGCPX{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'currentGCPX{marketplace{products{totalCount}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{id}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{creationDate}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{lastChangeDate}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{resultsSource}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{kpi}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{systemStatus}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{errors}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{warnings}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{name}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{status}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{creativeSpec}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{runTimeSpec}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{locationSpec}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{conversionSpec}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{startDate}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{endDate}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{delivering}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{cursor}}}'
+    | 'currentGCPX{marketingCampaigns{pageInfo{endCursor}}}'
+    | 'currentGCPX{marketingCampaigns{pageInfo{startCursor}}}'
+    | 'currentGCPX{marketingCampaigns{pageInfo{hasNextPage}}}'
+    | 'currentGCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}'
+    | 'currentGCPX{marketingCampaigns{totalCount}}';
 export type MarketplaceFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -839,6 +1896,10 @@ export type MarketplaceFields = {
     name: 'name';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
+    currencyCode: 'currencyCode';
+    currencySymbol: 'currencySymbol';
+    currencyOffset: 'currencyOffset';
     organization: {
         id: 'organization{id}';
         creationDate: 'organization{creationDate}';
@@ -846,6 +1907,7 @@ export type MarketplaceFields = {
         name: 'organization{name}';
         systemStatus: 'organization{systemStatus}';
         errors: 'organization{errors}';
+        warnings: 'organization{warnings}';
         tier: 'organization{tier}';
         users: {
             edges: {
@@ -878,6 +1940,10 @@ export type MarketplaceFields = {
                     name: 'organization{marketplaces{edges{node{name}}}}';
                     systemStatus: 'organization{marketplaces{edges{node{systemStatus}}}}';
                     errors: 'organization{marketplaces{edges{node{errors}}}}';
+                    warnings: 'organization{marketplaces{edges{node{warnings}}}}';
+                    currencyCode: 'organization{marketplaces{edges{node{currencyCode}}}}';
+                    currencySymbol: 'organization{marketplaces{edges{node{currencySymbol}}}}';
+                    currencyOffset: 'organization{marketplaces{edges{node{currencyOffset}}}}';
                 };
                 cursor: 'organization{marketplaces{edges{cursor}}}';
             };
@@ -899,10 +1965,12 @@ export type MarketplaceFields = {
                 name: 'mediaChannels{edges{node{name}}}';
                 systemStatus: 'mediaChannels{edges{node{systemStatus}}}';
                 errors: 'mediaChannels{edges{node{errors}}}';
+                warnings: 'mediaChannels{edges{node{warnings}}}';
                 platform: 'mediaChannels{edges{node{platform}}}';
                 remoteId: 'mediaChannels{edges{node{remoteId}}}';
                 remoteState: 'mediaChannels{edges{node{remoteState}}}';
                 currency: 'mediaChannels{edges{node{currency}}}';
+                currencyCode: 'mediaChannels{edges{node{currencyCode}}}';
                 currencySymbol: 'mediaChannels{edges{node{currencySymbol}}}';
                 currencyOffset: 'mediaChannels{edges{node{currencyOffset}}}';
                 timezone: 'mediaChannels{edges{node{timezone}}}';
@@ -917,6 +1985,10 @@ export type MarketplaceFields = {
                     name: 'mediaChannels{edges{node{marketplace{name}}}}';
                     systemStatus: 'mediaChannels{edges{node{marketplace{systemStatus}}}}';
                     errors: 'mediaChannels{edges{node{marketplace{errors}}}}';
+                    warnings: 'mediaChannels{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'mediaChannels{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'mediaChannels{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'mediaChannels{edges{node{marketplace{currencyOffset}}}}';
                 };
             };
             cursor: 'mediaChannels{edges{cursor}}';
@@ -941,6 +2013,7 @@ export type MarketplaceFields = {
                 remoteId: 'campaignTemplates{edges{node{remoteId}}}';
                 systemStatus: 'campaignTemplates{edges{node{systemStatus}}}';
                 errors: 'campaignTemplates{edges{node{errors}}}';
+                warnings: 'campaignTemplates{edges{node{warnings}}}';
                 kpi: 'campaignTemplates{edges{node{kpi}}}';
                 marketplace: {
                     id: 'campaignTemplates{edges{node{marketplace{id}}}}';
@@ -949,9 +2022,27 @@ export type MarketplaceFields = {
                     name: 'campaignTemplates{edges{node{marketplace{name}}}}';
                     systemStatus: 'campaignTemplates{edges{node{marketplace{systemStatus}}}}';
                     errors: 'campaignTemplates{edges{node{marketplace{errors}}}}';
+                    warnings: 'campaignTemplates{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'campaignTemplates{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'campaignTemplates{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'campaignTemplates{edges{node{marketplace{currencyOffset}}}}';
                 };
                 marketingCampaigns: {
                     totalCount: 'campaignTemplates{edges{node{marketingCampaigns{totalCount}}}}';
+                };
+                GCPXHistory: {
+                    totalCount: 'campaignTemplates{edges{node{GCPXHistory{totalCount}}}}';
+                };
+                currentGCPX: {
+                    id: 'campaignTemplates{edges{node{currentGCPX{id}}}}';
+                    creationDate: 'campaignTemplates{edges{node{currentGCPX{creationDate}}}}';
+                    lastChangeDate: 'campaignTemplates{edges{node{currentGCPX{lastChangeDate}}}}';
+                    kpi: 'campaignTemplates{edges{node{currentGCPX{kpi}}}}';
+                    price: 'campaignTemplates{edges{node{currentGCPX{price}}}}';
+                    startDate: 'campaignTemplates{edges{node{currentGCPX{startDate}}}}';
+                    endDate: 'campaignTemplates{edges{node{currentGCPX{endDate}}}}';
+                    minConversions: 'campaignTemplates{edges{node{currentGCPX{minConversions}}}}';
+                    maxConversions: 'campaignTemplates{edges{node{currentGCPX{maxConversions}}}}';
                 };
             };
             cursor: 'campaignTemplates{edges{cursor}}';
@@ -973,6 +2064,7 @@ export type MarketplaceFields = {
                 name: 'vendors{edges{node{name}}}';
                 systemStatus: 'vendors{edges{node{systemStatus}}}';
                 errors: 'vendors{edges{node{errors}}}';
+                warnings: 'vendors{edges{node{warnings}}}';
                 marketplace: {
                     id: 'vendors{edges{node{marketplace{id}}}}';
                     creationDate: 'vendors{edges{node{marketplace{creationDate}}}}';
@@ -980,6 +2072,10 @@ export type MarketplaceFields = {
                     name: 'vendors{edges{node{marketplace{name}}}}';
                     systemStatus: 'vendors{edges{node{marketplace{systemStatus}}}}';
                     errors: 'vendors{edges{node{marketplace{errors}}}}';
+                    warnings: 'vendors{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'vendors{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'vendors{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'vendors{edges{node{marketplace{currencyOffset}}}}';
                 };
                 vendorTokens: {
                     totalCount: 'vendors{edges{node{vendorTokens{totalCount}}}}';
@@ -1012,6 +2108,7 @@ export type MarketplaceFields = {
                     name: 'vendorTokens{edges{node{vendor{name}}}}';
                     systemStatus: 'vendorTokens{edges{node{vendor{systemStatus}}}}';
                     errors: 'vendorTokens{edges{node{vendor{errors}}}}';
+                    warnings: 'vendorTokens{edges{node{vendor{warnings}}}}';
                 };
                 marketplace: {
                     id: 'vendorTokens{edges{node{marketplace{id}}}}';
@@ -1020,6 +2117,10 @@ export type MarketplaceFields = {
                     name: 'vendorTokens{edges{node{marketplace{name}}}}';
                     systemStatus: 'vendorTokens{edges{node{marketplace{systemStatus}}}}';
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}';
+                    warnings: 'vendorTokens{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'vendorTokens{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'vendorTokens{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'vendorTokens{edges{node{marketplace{currencyOffset}}}}';
                 };
                 email: 'vendorTokens{edges{node{email}}}';
             };
@@ -1044,6 +2145,7 @@ export type MarketplaceFields = {
                 width: 'creativeTemplates{edges{node{width}}}';
                 systemStatus: 'creativeTemplates{edges{node{systemStatus}}}';
                 errors: 'creativeTemplates{edges{node{errors}}}';
+                warnings: 'creativeTemplates{edges{node{warnings}}}';
                 marketplace: {
                     id: 'creativeTemplates{edges{node{marketplace{id}}}}';
                     creationDate: 'creativeTemplates{edges{node{marketplace{creationDate}}}}';
@@ -1051,6 +2153,10 @@ export type MarketplaceFields = {
                     name: 'creativeTemplates{edges{node{marketplace{name}}}}';
                     systemStatus: 'creativeTemplates{edges{node{marketplace{systemStatus}}}}';
                     errors: 'creativeTemplates{edges{node{marketplace{errors}}}}';
+                    warnings: 'creativeTemplates{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'creativeTemplates{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'creativeTemplates{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'creativeTemplates{edges{node{marketplace{currencyOffset}}}}';
                 };
                 marketingCampaigns: {
                     totalCount: 'creativeTemplates{edges{node{marketingCampaigns{totalCount}}}}';
@@ -1096,6 +2202,7 @@ export type MarketplaceFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
+                    warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}';
@@ -1104,6 +2211,7 @@ export type MarketplaceFields = {
                     name: 'products{edges{node{vendor{name}}}}';
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}';
                     errors: 'products{edges{node{vendor{errors}}}}';
+                    warnings: 'products{edges{node{vendor{warnings}}}}';
                 };
             };
             cursor: 'products{edges{cursor}}';
@@ -1124,6 +2232,10 @@ export const MarketplaceFields: MarketplaceFields = {
     name: 'name',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
+    currencyCode: 'currencyCode',
+    currencySymbol: 'currencySymbol',
+    currencyOffset: 'currencyOffset',
     organization: {
         id: 'organization{id}',
         creationDate: 'organization{creationDate}',
@@ -1131,6 +2243,7 @@ export const MarketplaceFields: MarketplaceFields = {
         name: 'organization{name}',
         systemStatus: 'organization{systemStatus}',
         errors: 'organization{errors}',
+        warnings: 'organization{warnings}',
         tier: 'organization{tier}',
         users: {
             edges: {
@@ -1171,6 +2284,14 @@ export const MarketplaceFields: MarketplaceFields = {
                     systemStatus:
                         'organization{marketplaces{edges{node{systemStatus}}}}',
                     errors: 'organization{marketplaces{edges{node{errors}}}}',
+                    warnings:
+                        'organization{marketplaces{edges{node{warnings}}}}',
+                    currencyCode:
+                        'organization{marketplaces{edges{node{currencyCode}}}}',
+                    currencySymbol:
+                        'organization{marketplaces{edges{node{currencySymbol}}}}',
+                    currencyOffset:
+                        'organization{marketplaces{edges{node{currencyOffset}}}}',
                 },
                 cursor: 'organization{marketplaces{edges{cursor}}}',
             },
@@ -1195,10 +2316,12 @@ export const MarketplaceFields: MarketplaceFields = {
                 name: 'mediaChannels{edges{node{name}}}',
                 systemStatus: 'mediaChannels{edges{node{systemStatus}}}',
                 errors: 'mediaChannels{edges{node{errors}}}',
+                warnings: 'mediaChannels{edges{node{warnings}}}',
                 platform: 'mediaChannels{edges{node{platform}}}',
                 remoteId: 'mediaChannels{edges{node{remoteId}}}',
                 remoteState: 'mediaChannels{edges{node{remoteState}}}',
                 currency: 'mediaChannels{edges{node{currency}}}',
+                currencyCode: 'mediaChannels{edges{node{currencyCode}}}',
                 currencySymbol: 'mediaChannels{edges{node{currencySymbol}}}',
                 currencyOffset: 'mediaChannels{edges{node{currencyOffset}}}',
                 timezone: 'mediaChannels{edges{node{timezone}}}',
@@ -1217,6 +2340,14 @@ export const MarketplaceFields: MarketplaceFields = {
                     systemStatus:
                         'mediaChannels{edges{node{marketplace{systemStatus}}}}',
                     errors: 'mediaChannels{edges{node{marketplace{errors}}}}',
+                    warnings:
+                        'mediaChannels{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'mediaChannels{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'mediaChannels{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'mediaChannels{edges{node{marketplace{currencyOffset}}}}',
                 },
             },
             cursor: 'mediaChannels{edges{cursor}}',
@@ -1242,6 +2373,7 @@ export const MarketplaceFields: MarketplaceFields = {
                 remoteId: 'campaignTemplates{edges{node{remoteId}}}',
                 systemStatus: 'campaignTemplates{edges{node{systemStatus}}}',
                 errors: 'campaignTemplates{edges{node{errors}}}',
+                warnings: 'campaignTemplates{edges{node{warnings}}}',
                 kpi: 'campaignTemplates{edges{node{kpi}}}',
                 marketplace: {
                     id: 'campaignTemplates{edges{node{marketplace{id}}}}',
@@ -1254,10 +2386,39 @@ export const MarketplaceFields: MarketplaceFields = {
                         'campaignTemplates{edges{node{marketplace{systemStatus}}}}',
                     errors:
                         'campaignTemplates{edges{node{marketplace{errors}}}}',
+                    warnings:
+                        'campaignTemplates{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'campaignTemplates{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'campaignTemplates{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'campaignTemplates{edges{node{marketplace{currencyOffset}}}}',
                 },
                 marketingCampaigns: {
                     totalCount:
                         'campaignTemplates{edges{node{marketingCampaigns{totalCount}}}}',
+                },
+                GCPXHistory: {
+                    totalCount:
+                        'campaignTemplates{edges{node{GCPXHistory{totalCount}}}}',
+                },
+                currentGCPX: {
+                    id: 'campaignTemplates{edges{node{currentGCPX{id}}}}',
+                    creationDate:
+                        'campaignTemplates{edges{node{currentGCPX{creationDate}}}}',
+                    lastChangeDate:
+                        'campaignTemplates{edges{node{currentGCPX{lastChangeDate}}}}',
+                    kpi: 'campaignTemplates{edges{node{currentGCPX{kpi}}}}',
+                    price: 'campaignTemplates{edges{node{currentGCPX{price}}}}',
+                    startDate:
+                        'campaignTemplates{edges{node{currentGCPX{startDate}}}}',
+                    endDate:
+                        'campaignTemplates{edges{node{currentGCPX{endDate}}}}',
+                    minConversions:
+                        'campaignTemplates{edges{node{currentGCPX{minConversions}}}}',
+                    maxConversions:
+                        'campaignTemplates{edges{node{currentGCPX{maxConversions}}}}',
                 },
             },
             cursor: 'campaignTemplates{edges{cursor}}',
@@ -1279,6 +2440,7 @@ export const MarketplaceFields: MarketplaceFields = {
                 name: 'vendors{edges{node{name}}}',
                 systemStatus: 'vendors{edges{node{systemStatus}}}',
                 errors: 'vendors{edges{node{errors}}}',
+                warnings: 'vendors{edges{node{warnings}}}',
                 marketplace: {
                     id: 'vendors{edges{node{marketplace{id}}}}',
                     creationDate:
@@ -1289,6 +2451,13 @@ export const MarketplaceFields: MarketplaceFields = {
                     systemStatus:
                         'vendors{edges{node{marketplace{systemStatus}}}}',
                     errors: 'vendors{edges{node{marketplace{errors}}}}',
+                    warnings: 'vendors{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'vendors{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'vendors{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'vendors{edges{node{marketplace{currencyOffset}}}}',
                 },
                 vendorTokens: {
                     totalCount:
@@ -1325,6 +2494,7 @@ export const MarketplaceFields: MarketplaceFields = {
                     systemStatus:
                         'vendorTokens{edges{node{vendor{systemStatus}}}}',
                     errors: 'vendorTokens{edges{node{vendor{errors}}}}',
+                    warnings: 'vendorTokens{edges{node{vendor{warnings}}}}',
                 },
                 marketplace: {
                     id: 'vendorTokens{edges{node{marketplace{id}}}}',
@@ -1336,6 +2506,14 @@ export const MarketplaceFields: MarketplaceFields = {
                     systemStatus:
                         'vendorTokens{edges{node{marketplace{systemStatus}}}}',
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}',
+                    warnings:
+                        'vendorTokens{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'vendorTokens{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'vendorTokens{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'vendorTokens{edges{node{marketplace{currencyOffset}}}}',
                 },
                 email: 'vendorTokens{edges{node{email}}}',
             },
@@ -1361,6 +2539,7 @@ export const MarketplaceFields: MarketplaceFields = {
                 width: 'creativeTemplates{edges{node{width}}}',
                 systemStatus: 'creativeTemplates{edges{node{systemStatus}}}',
                 errors: 'creativeTemplates{edges{node{errors}}}',
+                warnings: 'creativeTemplates{edges{node{warnings}}}',
                 marketplace: {
                     id: 'creativeTemplates{edges{node{marketplace{id}}}}',
                     creationDate:
@@ -1372,6 +2551,14 @@ export const MarketplaceFields: MarketplaceFields = {
                         'creativeTemplates{edges{node{marketplace{systemStatus}}}}',
                     errors:
                         'creativeTemplates{edges{node{marketplace{errors}}}}',
+                    warnings:
+                        'creativeTemplates{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'creativeTemplates{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'creativeTemplates{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'creativeTemplates{edges{node{marketplace{currencyOffset}}}}',
                 },
                 marketingCampaigns: {
                     totalCount:
@@ -1423,6 +2610,7 @@ export const MarketplaceFields: MarketplaceFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
+                    warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}',
@@ -1432,6 +2620,7 @@ export const MarketplaceFields: MarketplaceFields = {
                     name: 'products{edges{node{vendor{name}}}}',
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}',
                     errors: 'products{edges{node{vendor{errors}}}}',
+                    warnings: 'products{edges{node{vendor{warnings}}}}',
                 },
             },
             cursor: 'products{edges{cursor}}',
@@ -1452,12 +2641,17 @@ export type MarketplaceField =
     | 'name'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
+    | 'currencyCode'
+    | 'currencySymbol'
+    | 'currencyOffset'
     | 'organization{id}'
     | 'organization{creationDate}'
     | 'organization{lastChangeDate}'
     | 'organization{name}'
     | 'organization{systemStatus}'
     | 'organization{errors}'
+    | 'organization{warnings}'
     | 'organization{tier}'
     | 'organization{users{edges{node{id}}}}'
     | 'organization{users{edges{node{creationDate}}}}'
@@ -1479,6 +2673,10 @@ export type MarketplaceField =
     | 'organization{marketplaces{edges{node{name}}}}'
     | 'organization{marketplaces{edges{node{systemStatus}}}}'
     | 'organization{marketplaces{edges{node{errors}}}}'
+    | 'organization{marketplaces{edges{node{warnings}}}}'
+    | 'organization{marketplaces{edges{node{currencyCode}}}}'
+    | 'organization{marketplaces{edges{node{currencySymbol}}}}'
+    | 'organization{marketplaces{edges{node{currencyOffset}}}}'
     | 'organization{marketplaces{edges{cursor}}}'
     | 'organization{marketplaces{pageInfo{endCursor}}}'
     | 'organization{marketplaces{pageInfo{startCursor}}}'
@@ -1491,10 +2689,12 @@ export type MarketplaceField =
     | 'mediaChannels{edges{node{name}}}'
     | 'mediaChannels{edges{node{systemStatus}}}'
     | 'mediaChannels{edges{node{errors}}}'
+    | 'mediaChannels{edges{node{warnings}}}'
     | 'mediaChannels{edges{node{platform}}}'
     | 'mediaChannels{edges{node{remoteId}}}'
     | 'mediaChannels{edges{node{remoteState}}}'
     | 'mediaChannels{edges{node{currency}}}'
+    | 'mediaChannels{edges{node{currencyCode}}}'
     | 'mediaChannels{edges{node{currencySymbol}}}'
     | 'mediaChannels{edges{node{currencyOffset}}}'
     | 'mediaChannels{edges{node{timezone}}}'
@@ -1506,6 +2706,10 @@ export type MarketplaceField =
     | 'mediaChannels{edges{node{marketplace{name}}}}'
     | 'mediaChannels{edges{node{marketplace{systemStatus}}}}'
     | 'mediaChannels{edges{node{marketplace{errors}}}}'
+    | 'mediaChannels{edges{node{marketplace{warnings}}}}'
+    | 'mediaChannels{edges{node{marketplace{currencyCode}}}}'
+    | 'mediaChannels{edges{node{marketplace{currencySymbol}}}}'
+    | 'mediaChannels{edges{node{marketplace{currencyOffset}}}}'
     | 'mediaChannels{edges{cursor}}'
     | 'mediaChannels{pageInfo{endCursor}}'
     | 'mediaChannels{pageInfo{startCursor}}'
@@ -1521,6 +2725,7 @@ export type MarketplaceField =
     | 'campaignTemplates{edges{node{remoteId}}}'
     | 'campaignTemplates{edges{node{systemStatus}}}'
     | 'campaignTemplates{edges{node{errors}}}'
+    | 'campaignTemplates{edges{node{warnings}}}'
     | 'campaignTemplates{edges{node{kpi}}}'
     | 'campaignTemplates{edges{node{marketplace{id}}}}'
     | 'campaignTemplates{edges{node{marketplace{creationDate}}}}'
@@ -1528,7 +2733,21 @@ export type MarketplaceField =
     | 'campaignTemplates{edges{node{marketplace{name}}}}'
     | 'campaignTemplates{edges{node{marketplace{systemStatus}}}}'
     | 'campaignTemplates{edges{node{marketplace{errors}}}}'
+    | 'campaignTemplates{edges{node{marketplace{warnings}}}}'
+    | 'campaignTemplates{edges{node{marketplace{currencyCode}}}}'
+    | 'campaignTemplates{edges{node{marketplace{currencySymbol}}}}'
+    | 'campaignTemplates{edges{node{marketplace{currencyOffset}}}}'
     | 'campaignTemplates{edges{node{marketingCampaigns{totalCount}}}}'
+    | 'campaignTemplates{edges{node{GCPXHistory{totalCount}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{id}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{creationDate}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{lastChangeDate}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{kpi}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{price}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{startDate}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{endDate}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{minConversions}}}}'
+    | 'campaignTemplates{edges{node{currentGCPX{maxConversions}}}}'
     | 'campaignTemplates{edges{cursor}}'
     | 'campaignTemplates{pageInfo{endCursor}}'
     | 'campaignTemplates{pageInfo{startCursor}}'
@@ -1541,12 +2760,17 @@ export type MarketplaceField =
     | 'vendors{edges{node{name}}}'
     | 'vendors{edges{node{systemStatus}}}'
     | 'vendors{edges{node{errors}}}'
+    | 'vendors{edges{node{warnings}}}'
     | 'vendors{edges{node{marketplace{id}}}}'
     | 'vendors{edges{node{marketplace{creationDate}}}}'
     | 'vendors{edges{node{marketplace{lastChangeDate}}}}'
     | 'vendors{edges{node{marketplace{name}}}}'
     | 'vendors{edges{node{marketplace{systemStatus}}}}'
     | 'vendors{edges{node{marketplace{errors}}}}'
+    | 'vendors{edges{node{marketplace{warnings}}}}'
+    | 'vendors{edges{node{marketplace{currencyCode}}}}'
+    | 'vendors{edges{node{marketplace{currencySymbol}}}}'
+    | 'vendors{edges{node{marketplace{currencyOffset}}}}'
     | 'vendors{edges{node{vendorTokens{totalCount}}}}'
     | 'vendors{edges{node{products{totalCount}}}}'
     | 'vendors{edges{cursor}}'
@@ -1565,12 +2789,17 @@ export type MarketplaceField =
     | 'vendorTokens{edges{node{vendor{name}}}}'
     | 'vendorTokens{edges{node{vendor{systemStatus}}}}'
     | 'vendorTokens{edges{node{vendor{errors}}}}'
+    | 'vendorTokens{edges{node{vendor{warnings}}}}'
     | 'vendorTokens{edges{node{marketplace{id}}}}'
     | 'vendorTokens{edges{node{marketplace{creationDate}}}}'
     | 'vendorTokens{edges{node{marketplace{lastChangeDate}}}}'
     | 'vendorTokens{edges{node{marketplace{name}}}}'
     | 'vendorTokens{edges{node{marketplace{systemStatus}}}}'
     | 'vendorTokens{edges{node{marketplace{errors}}}}'
+    | 'vendorTokens{edges{node{marketplace{warnings}}}}'
+    | 'vendorTokens{edges{node{marketplace{currencyCode}}}}'
+    | 'vendorTokens{edges{node{marketplace{currencySymbol}}}}'
+    | 'vendorTokens{edges{node{marketplace{currencyOffset}}}}'
     | 'vendorTokens{edges{node{email}}}'
     | 'vendorTokens{edges{cursor}}'
     | 'vendorTokens{pageInfo{endCursor}}'
@@ -1586,12 +2815,17 @@ export type MarketplaceField =
     | 'creativeTemplates{edges{node{width}}}'
     | 'creativeTemplates{edges{node{systemStatus}}}'
     | 'creativeTemplates{edges{node{errors}}}'
+    | 'creativeTemplates{edges{node{warnings}}}'
     | 'creativeTemplates{edges{node{marketplace{id}}}}'
     | 'creativeTemplates{edges{node{marketplace{creationDate}}}}'
     | 'creativeTemplates{edges{node{marketplace{lastChangeDate}}}}'
     | 'creativeTemplates{edges{node{marketplace{name}}}}'
     | 'creativeTemplates{edges{node{marketplace{systemStatus}}}}'
     | 'creativeTemplates{edges{node{marketplace{errors}}}}'
+    | 'creativeTemplates{edges{node{marketplace{warnings}}}}'
+    | 'creativeTemplates{edges{node{marketplace{currencyCode}}}}'
+    | 'creativeTemplates{edges{node{marketplace{currencySymbol}}}}'
+    | 'creativeTemplates{edges{node{marketplace{currencyOffset}}}}'
     | 'creativeTemplates{edges{node{marketingCampaigns{totalCount}}}}'
     | 'creativeTemplates{edges{node{creativeLayers{totalCount}}}}'
     | 'creativeTemplates{edges{cursor}}'
@@ -1621,12 +2855,14 @@ export type MarketplaceField =
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
     | 'products{edges{node{catalog{errors}}}}'
+    | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
     | 'products{edges{node{vendor{creationDate}}}}'
     | 'products{edges{node{vendor{lastChangeDate}}}}'
     | 'products{edges{node{vendor{name}}}}'
     | 'products{edges{node{vendor{systemStatus}}}}'
     | 'products{edges{node{vendor{errors}}}}'
+    | 'products{edges{node{vendor{warnings}}}}'
     | 'products{edges{cursor}}'
     | 'products{pageInfo{endCursor}}'
     | 'products{pageInfo{startCursor}}'
@@ -1640,6 +2876,7 @@ export type OrganizationFields = {
     name: 'name';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     tier: 'tier';
     users: {
         edges: {
@@ -1678,6 +2915,10 @@ export type OrganizationFields = {
                 name: 'marketplaces{edges{node{name}}}';
                 systemStatus: 'marketplaces{edges{node{systemStatus}}}';
                 errors: 'marketplaces{edges{node{errors}}}';
+                warnings: 'marketplaces{edges{node{warnings}}}';
+                currencyCode: 'marketplaces{edges{node{currencyCode}}}';
+                currencySymbol: 'marketplaces{edges{node{currencySymbol}}}';
+                currencyOffset: 'marketplaces{edges{node{currencyOffset}}}';
                 organization: {
                     id: 'marketplaces{edges{node{organization{id}}}}';
                     creationDate: 'marketplaces{edges{node{organization{creationDate}}}}';
@@ -1685,6 +2926,7 @@ export type OrganizationFields = {
                     name: 'marketplaces{edges{node{organization{name}}}}';
                     systemStatus: 'marketplaces{edges{node{organization{systemStatus}}}}';
                     errors: 'marketplaces{edges{node{organization{errors}}}}';
+                    warnings: 'marketplaces{edges{node{organization{warnings}}}}';
                     tier: 'marketplaces{edges{node{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -1724,6 +2966,7 @@ export const OrganizationFields: OrganizationFields = {
     name: 'name',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     tier: 'tier',
     users: {
         edges: {
@@ -1762,6 +3005,10 @@ export const OrganizationFields: OrganizationFields = {
                 name: 'marketplaces{edges{node{name}}}',
                 systemStatus: 'marketplaces{edges{node{systemStatus}}}',
                 errors: 'marketplaces{edges{node{errors}}}',
+                warnings: 'marketplaces{edges{node{warnings}}}',
+                currencyCode: 'marketplaces{edges{node{currencyCode}}}',
+                currencySymbol: 'marketplaces{edges{node{currencySymbol}}}',
+                currencyOffset: 'marketplaces{edges{node{currencyOffset}}}',
                 organization: {
                     id: 'marketplaces{edges{node{organization{id}}}}',
                     creationDate:
@@ -1772,6 +3019,8 @@ export const OrganizationFields: OrganizationFields = {
                     systemStatus:
                         'marketplaces{edges{node{organization{systemStatus}}}}',
                     errors: 'marketplaces{edges{node{organization{errors}}}}',
+                    warnings:
+                        'marketplaces{edges{node{organization{warnings}}}}',
                     tier: 'marketplaces{edges{node{organization{tier}}}}',
                 },
                 mediaChannels: {
@@ -1817,6 +3066,7 @@ export type OrganizationField =
     | 'name'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'tier'
     | 'users{edges{node{id}}}'
     | 'users{edges{node{creationDate}}}'
@@ -1840,12 +3090,17 @@ export type OrganizationField =
     | 'marketplaces{edges{node{name}}}'
     | 'marketplaces{edges{node{systemStatus}}}'
     | 'marketplaces{edges{node{errors}}}'
+    | 'marketplaces{edges{node{warnings}}}'
+    | 'marketplaces{edges{node{currencyCode}}}'
+    | 'marketplaces{edges{node{currencySymbol}}}'
+    | 'marketplaces{edges{node{currencyOffset}}}'
     | 'marketplaces{edges{node{organization{id}}}}'
     | 'marketplaces{edges{node{organization{creationDate}}}}'
     | 'marketplaces{edges{node{organization{lastChangeDate}}}}'
     | 'marketplaces{edges{node{organization{name}}}}'
     | 'marketplaces{edges{node{organization{systemStatus}}}}'
     | 'marketplaces{edges{node{organization{errors}}}}'
+    | 'marketplaces{edges{node{organization{warnings}}}}'
     | 'marketplaces{edges{node{organization{tier}}}}'
     | 'marketplaces{edges{node{mediaChannels{totalCount}}}}'
     | 'marketplaces{edges{node{campaignTemplates{totalCount}}}}'
@@ -1875,6 +3130,7 @@ export type UserFields = {
                 name: 'organizations{edges{node{name}}}';
                 systemStatus: 'organizations{edges{node{systemStatus}}}';
                 errors: 'organizations{edges{node{errors}}}';
+                warnings: 'organizations{edges{node{warnings}}}';
                 tier: 'organizations{edges{node{tier}}}';
                 users: {
                     totalCount: 'organizations{edges{node{users{totalCount}}}}';
@@ -1918,6 +3174,7 @@ export type UserFields = {
                     name: 'entitlements{edges{node{resource{name}}}}';
                     systemStatus: 'entitlements{edges{node{resource{systemStatus}}}}';
                     errors: 'entitlements{edges{node{resource{errors}}}}';
+                    warnings: 'entitlements{edges{node{resource{warnings}}}}';
                 };
             };
             cursor: 'entitlements{edges{cursor}}';
@@ -1949,6 +3206,7 @@ export const UserFields: UserFields = {
                 name: 'organizations{edges{node{name}}}',
                 systemStatus: 'organizations{edges{node{systemStatus}}}',
                 errors: 'organizations{edges{node{errors}}}',
+                warnings: 'organizations{edges{node{warnings}}}',
                 tier: 'organizations{edges{node{tier}}}',
                 users: {
                     totalCount: 'organizations{edges{node{users{totalCount}}}}',
@@ -1999,6 +3257,7 @@ export const UserFields: UserFields = {
                     systemStatus:
                         'entitlements{edges{node{resource{systemStatus}}}}',
                     errors: 'entitlements{edges{node{resource{errors}}}}',
+                    warnings: 'entitlements{edges{node{resource{warnings}}}}',
                 },
             },
             cursor: 'entitlements{edges{cursor}}',
@@ -2027,6 +3286,7 @@ export type UserField =
     | 'organizations{edges{node{name}}}'
     | 'organizations{edges{node{systemStatus}}}'
     | 'organizations{edges{node{errors}}}'
+    | 'organizations{edges{node{warnings}}}'
     | 'organizations{edges{node{tier}}}'
     | 'organizations{edges{node{users{totalCount}}}}'
     | 'organizations{edges{node{marketplaces{totalCount}}}}'
@@ -2055,6 +3315,7 @@ export type UserField =
     | 'entitlements{edges{node{resource{name}}}}'
     | 'entitlements{edges{node{resource{systemStatus}}}}'
     | 'entitlements{edges{node{resource{errors}}}}'
+    | 'entitlements{edges{node{resource{warnings}}}}'
     | 'entitlements{edges{cursor}}'
     | 'entitlements{pageInfo{endCursor}}'
     | 'entitlements{pageInfo{startCursor}}'
@@ -2085,6 +3346,7 @@ export type EntitlementFields = {
                     name: 'user{organizations{edges{node{name}}}}';
                     systemStatus: 'user{organizations{edges{node{systemStatus}}}}';
                     errors: 'user{organizations{edges{node{errors}}}}';
+                    warnings: 'user{organizations{edges{node{warnings}}}}';
                     tier: 'user{organizations{edges{node{tier}}}}';
                 };
                 cursor: 'user{organizations{edges{cursor}}}';
@@ -2126,6 +3388,7 @@ export type EntitlementFields = {
         name: 'resource{name}';
         systemStatus: 'resource{systemStatus}';
         errors: 'resource{errors}';
+        warnings: 'resource{warnings}';
     };
 };
 export const EntitlementFields: EntitlementFields = {
@@ -2153,6 +3416,7 @@ export const EntitlementFields: EntitlementFields = {
                     systemStatus:
                         'user{organizations{edges{node{systemStatus}}}}',
                     errors: 'user{organizations{edges{node{errors}}}}',
+                    warnings: 'user{organizations{edges{node{warnings}}}}',
                     tier: 'user{organizations{edges{node{tier}}}}',
                 },
                 cursor: 'user{organizations{edges{cursor}}}',
@@ -2198,6 +3462,7 @@ export const EntitlementFields: EntitlementFields = {
         name: 'resource{name}',
         systemStatus: 'resource{systemStatus}',
         errors: 'resource{errors}',
+        warnings: 'resource{warnings}',
     },
 };
 export type EntitlementField =
@@ -2218,6 +3483,7 @@ export type EntitlementField =
     | 'user{organizations{edges{node{name}}}}'
     | 'user{organizations{edges{node{systemStatus}}}}'
     | 'user{organizations{edges{node{errors}}}}'
+    | 'user{organizations{edges{node{warnings}}}}'
     | 'user{organizations{edges{node{tier}}}}'
     | 'user{organizations{edges{cursor}}}'
     | 'user{organizations{pageInfo{endCursor}}}'
@@ -2243,7 +3509,8 @@ export type EntitlementField =
     | 'resource{lastChangeDate}'
     | 'resource{name}'
     | 'resource{systemStatus}'
-    | 'resource{errors}';
+    | 'resource{errors}'
+    | 'resource{warnings}';
 export type MediaChannelFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -2251,10 +3518,12 @@ export type MediaChannelFields = {
     name: 'name';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     platform: 'platform';
     remoteId: 'remoteId';
     remoteState: 'remoteState';
     currency: 'currency';
+    currencyCode: 'currencyCode';
     currencySymbol: 'currencySymbol';
     currencyOffset: 'currencyOffset';
     timezone: 'timezone';
@@ -2272,6 +3541,7 @@ export type MediaChannelFields = {
                 remoteState: 'catalogs{edges{node{remoteState}}}';
                 dataFeedId: 'catalogs{edges{node{dataFeedId}}}';
                 errors: 'catalogs{edges{node{errors}}}';
+                warnings: 'catalogs{edges{node{warnings}}}';
                 mediaChannel: {
                     id: 'catalogs{edges{node{mediaChannel{id}}}}';
                     creationDate: 'catalogs{edges{node{mediaChannel{creationDate}}}}';
@@ -2279,10 +3549,12 @@ export type MediaChannelFields = {
                     name: 'catalogs{edges{node{mediaChannel{name}}}}';
                     systemStatus: 'catalogs{edges{node{mediaChannel{systemStatus}}}}';
                     errors: 'catalogs{edges{node{mediaChannel{errors}}}}';
+                    warnings: 'catalogs{edges{node{mediaChannel{warnings}}}}';
                     platform: 'catalogs{edges{node{mediaChannel{platform}}}}';
                     remoteId: 'catalogs{edges{node{mediaChannel{remoteId}}}}';
                     remoteState: 'catalogs{edges{node{mediaChannel{remoteState}}}}';
                     currency: 'catalogs{edges{node{mediaChannel{currency}}}}';
+                    currencyCode: 'catalogs{edges{node{mediaChannel{currencyCode}}}}';
                     currencySymbol: 'catalogs{edges{node{mediaChannel{currencySymbol}}}}';
                     currencyOffset: 'catalogs{edges{node{mediaChannel{currencyOffset}}}}';
                     timezone: 'catalogs{edges{node{mediaChannel{timezone}}}}';
@@ -2309,6 +3581,10 @@ export type MediaChannelFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -2316,6 +3592,7 @@ export type MediaChannelFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -2351,10 +3628,12 @@ export type MediaChannelFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -2382,6 +3661,7 @@ export type MediaChannelFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -2403,6 +3683,7 @@ export type MediaChannelFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -2444,6 +3725,7 @@ export type MediaChannelFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -2488,10 +3770,12 @@ export const MediaChannelFields: MediaChannelFields = {
     name: 'name',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     platform: 'platform',
     remoteId: 'remoteId',
     remoteState: 'remoteState',
     currency: 'currency',
+    currencyCode: 'currencyCode',
     currencySymbol: 'currencySymbol',
     currencyOffset: 'currencyOffset',
     timezone: 'timezone',
@@ -2509,6 +3793,7 @@ export const MediaChannelFields: MediaChannelFields = {
                 remoteState: 'catalogs{edges{node{remoteState}}}',
                 dataFeedId: 'catalogs{edges{node{dataFeedId}}}',
                 errors: 'catalogs{edges{node{errors}}}',
+                warnings: 'catalogs{edges{node{warnings}}}',
                 mediaChannel: {
                     id: 'catalogs{edges{node{mediaChannel{id}}}}',
                     creationDate:
@@ -2519,11 +3804,14 @@ export const MediaChannelFields: MediaChannelFields = {
                     systemStatus:
                         'catalogs{edges{node{mediaChannel{systemStatus}}}}',
                     errors: 'catalogs{edges{node{mediaChannel{errors}}}}',
+                    warnings: 'catalogs{edges{node{mediaChannel{warnings}}}}',
                     platform: 'catalogs{edges{node{mediaChannel{platform}}}}',
                     remoteId: 'catalogs{edges{node{mediaChannel{remoteId}}}}',
                     remoteState:
                         'catalogs{edges{node{mediaChannel{remoteState}}}}',
                     currency: 'catalogs{edges{node{mediaChannel{currency}}}}',
+                    currencyCode:
+                        'catalogs{edges{node{mediaChannel{currencyCode}}}}',
                     currencySymbol:
                         'catalogs{edges{node{mediaChannel{currencySymbol}}}}',
                     currencyOffset:
@@ -2553,6 +3841,10 @@ export const MediaChannelFields: MediaChannelFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -2560,6 +3852,7 @@ export const MediaChannelFields: MediaChannelFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -2608,6 +3901,8 @@ export const MediaChannelFields: MediaChannelFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -2616,6 +3911,8 @@ export const MediaChannelFields: MediaChannelFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -2657,6 +3954,8 @@ export const MediaChannelFields: MediaChannelFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -2685,6 +3984,7 @@ export const MediaChannelFields: MediaChannelFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -2735,6 +4035,8 @@ export const MediaChannelFields: MediaChannelFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -2788,10 +4090,12 @@ export type MediaChannelField =
     | 'name'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'platform'
     | 'remoteId'
     | 'remoteState'
     | 'currency'
+    | 'currencyCode'
     | 'currencySymbol'
     | 'currencyOffset'
     | 'timezone'
@@ -2806,16 +4110,19 @@ export type MediaChannelField =
     | 'catalogs{edges{node{remoteState}}}'
     | 'catalogs{edges{node{dataFeedId}}}'
     | 'catalogs{edges{node{errors}}}'
+    | 'catalogs{edges{node{warnings}}}'
     | 'catalogs{edges{node{mediaChannel{id}}}}'
     | 'catalogs{edges{node{mediaChannel{creationDate}}}}'
     | 'catalogs{edges{node{mediaChannel{lastChangeDate}}}}'
     | 'catalogs{edges{node{mediaChannel{name}}}}'
     | 'catalogs{edges{node{mediaChannel{systemStatus}}}}'
     | 'catalogs{edges{node{mediaChannel{errors}}}}'
+    | 'catalogs{edges{node{mediaChannel{warnings}}}}'
     | 'catalogs{edges{node{mediaChannel{platform}}}}'
     | 'catalogs{edges{node{mediaChannel{remoteId}}}}'
     | 'catalogs{edges{node{mediaChannel{remoteState}}}}'
     | 'catalogs{edges{node{mediaChannel{currency}}}}'
+    | 'catalogs{edges{node{mediaChannel{currencyCode}}}}'
     | 'catalogs{edges{node{mediaChannel{currencySymbol}}}}'
     | 'catalogs{edges{node{mediaChannel{currencyOffset}}}}'
     | 'catalogs{edges{node{mediaChannel{timezone}}}}'
@@ -2833,12 +4140,17 @@ export type MediaChannelField =
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -2858,10 +4170,12 @@ export type MediaChannelField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -2881,6 +4195,7 @@ export type MediaChannelField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -2894,6 +4209,7 @@ export type MediaChannelField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -2919,6 +4235,7 @@ export type MediaChannelField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -2952,6 +4269,7 @@ export type CatalogFields = {
     remoteState: 'remoteState';
     dataFeedId: 'dataFeedId';
     errors: 'errors';
+    warnings: 'warnings';
     mediaChannel: {
         id: 'mediaChannel{id}';
         creationDate: 'mediaChannel{creationDate}';
@@ -2959,10 +4277,12 @@ export type CatalogFields = {
         name: 'mediaChannel{name}';
         systemStatus: 'mediaChannel{systemStatus}';
         errors: 'mediaChannel{errors}';
+        warnings: 'mediaChannel{warnings}';
         platform: 'mediaChannel{platform}';
         remoteId: 'mediaChannel{remoteId}';
         remoteState: 'mediaChannel{remoteState}';
         currency: 'mediaChannel{currency}';
+        currencyCode: 'mediaChannel{currencyCode}';
         currencySymbol: 'mediaChannel{currencySymbol}';
         currencyOffset: 'mediaChannel{currencyOffset}';
         timezone: 'mediaChannel{timezone}';
@@ -2980,6 +4300,7 @@ export type CatalogFields = {
                     remoteState: 'mediaChannel{catalogs{edges{node{remoteState}}}}';
                     dataFeedId: 'mediaChannel{catalogs{edges{node{dataFeedId}}}}';
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}';
+                    warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}';
                 };
                 cursor: 'mediaChannel{catalogs{edges{cursor}}}';
             };
@@ -2998,6 +4319,10 @@ export type CatalogFields = {
             name: 'mediaChannel{marketplace{name}}';
             systemStatus: 'mediaChannel{marketplace{systemStatus}}';
             errors: 'mediaChannel{marketplace{errors}}';
+            warnings: 'mediaChannel{marketplace{warnings}}';
+            currencyCode: 'mediaChannel{marketplace{currencyCode}}';
+            currencySymbol: 'mediaChannel{marketplace{currencySymbol}}';
+            currencyOffset: 'mediaChannel{marketplace{currencyOffset}}';
             organization: {
                 id: 'mediaChannel{marketplace{organization{id}}}';
                 creationDate: 'mediaChannel{marketplace{organization{creationDate}}}';
@@ -3005,6 +4330,7 @@ export type CatalogFields = {
                 name: 'mediaChannel{marketplace{organization{name}}}';
                 systemStatus: 'mediaChannel{marketplace{organization{systemStatus}}}';
                 errors: 'mediaChannel{marketplace{organization{errors}}}';
+                warnings: 'mediaChannel{marketplace{organization{warnings}}}';
                 tier: 'mediaChannel{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'mediaChannel{marketplace{organization{users{totalCount}}}}';
@@ -3114,6 +4440,7 @@ export type CatalogFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
+                    warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}';
@@ -3122,6 +4449,7 @@ export type CatalogFields = {
                     name: 'products{edges{node{vendor{name}}}}';
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}';
                     errors: 'products{edges{node{vendor{errors}}}}';
+                    warnings: 'products{edges{node{vendor{warnings}}}}';
                 };
             };
             cursor: 'products{edges{cursor}}';
@@ -3146,6 +4474,7 @@ export const CatalogFields: CatalogFields = {
     remoteState: 'remoteState',
     dataFeedId: 'dataFeedId',
     errors: 'errors',
+    warnings: 'warnings',
     mediaChannel: {
         id: 'mediaChannel{id}',
         creationDate: 'mediaChannel{creationDate}',
@@ -3153,10 +4482,12 @@ export const CatalogFields: CatalogFields = {
         name: 'mediaChannel{name}',
         systemStatus: 'mediaChannel{systemStatus}',
         errors: 'mediaChannel{errors}',
+        warnings: 'mediaChannel{warnings}',
         platform: 'mediaChannel{platform}',
         remoteId: 'mediaChannel{remoteId}',
         remoteState: 'mediaChannel{remoteState}',
         currency: 'mediaChannel{currency}',
+        currencyCode: 'mediaChannel{currencyCode}',
         currencySymbol: 'mediaChannel{currencySymbol}',
         currencyOffset: 'mediaChannel{currencyOffset}',
         timezone: 'mediaChannel{timezone}',
@@ -3180,6 +4511,7 @@ export const CatalogFields: CatalogFields = {
                     dataFeedId:
                         'mediaChannel{catalogs{edges{node{dataFeedId}}}}',
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}',
+                    warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}',
                 },
                 cursor: 'mediaChannel{catalogs{edges{cursor}}}',
             },
@@ -3199,6 +4531,10 @@ export const CatalogFields: CatalogFields = {
             name: 'mediaChannel{marketplace{name}}',
             systemStatus: 'mediaChannel{marketplace{systemStatus}}',
             errors: 'mediaChannel{marketplace{errors}}',
+            warnings: 'mediaChannel{marketplace{warnings}}',
+            currencyCode: 'mediaChannel{marketplace{currencyCode}}',
+            currencySymbol: 'mediaChannel{marketplace{currencySymbol}}',
+            currencyOffset: 'mediaChannel{marketplace{currencyOffset}}',
             organization: {
                 id: 'mediaChannel{marketplace{organization{id}}}',
                 creationDate:
@@ -3209,6 +4545,7 @@ export const CatalogFields: CatalogFields = {
                 systemStatus:
                     'mediaChannel{marketplace{organization{systemStatus}}}',
                 errors: 'mediaChannel{marketplace{organization{errors}}}',
+                warnings: 'mediaChannel{marketplace{organization{warnings}}}',
                 tier: 'mediaChannel{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -3357,6 +4694,7 @@ export const CatalogFields: CatalogFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
+                    warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}',
@@ -3366,6 +4704,7 @@ export const CatalogFields: CatalogFields = {
                     name: 'products{edges{node{vendor{name}}}}',
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}',
                     errors: 'products{edges{node{vendor{errors}}}}',
+                    warnings: 'products{edges{node{vendor{warnings}}}}',
                 },
             },
             cursor: 'products{edges{cursor}}',
@@ -3390,16 +4729,19 @@ export type CatalogField =
     | 'remoteState'
     | 'dataFeedId'
     | 'errors'
+    | 'warnings'
     | 'mediaChannel{id}'
     | 'mediaChannel{creationDate}'
     | 'mediaChannel{lastChangeDate}'
     | 'mediaChannel{name}'
     | 'mediaChannel{systemStatus}'
     | 'mediaChannel{errors}'
+    | 'mediaChannel{warnings}'
     | 'mediaChannel{platform}'
     | 'mediaChannel{remoteId}'
     | 'mediaChannel{remoteState}'
     | 'mediaChannel{currency}'
+    | 'mediaChannel{currencyCode}'
     | 'mediaChannel{currencySymbol}'
     | 'mediaChannel{currencyOffset}'
     | 'mediaChannel{timezone}'
@@ -3414,6 +4756,7 @@ export type CatalogField =
     | 'mediaChannel{catalogs{edges{node{remoteState}}}}'
     | 'mediaChannel{catalogs{edges{node{dataFeedId}}}}'
     | 'mediaChannel{catalogs{edges{node{errors}}}}'
+    | 'mediaChannel{catalogs{edges{node{warnings}}}}'
     | 'mediaChannel{catalogs{edges{cursor}}}'
     | 'mediaChannel{catalogs{pageInfo{endCursor}}}'
     | 'mediaChannel{catalogs{pageInfo{startCursor}}}'
@@ -3426,12 +4769,17 @@ export type CatalogField =
     | 'mediaChannel{marketplace{name}}'
     | 'mediaChannel{marketplace{systemStatus}}'
     | 'mediaChannel{marketplace{errors}}'
+    | 'mediaChannel{marketplace{warnings}}'
+    | 'mediaChannel{marketplace{currencyCode}}'
+    | 'mediaChannel{marketplace{currencySymbol}}'
+    | 'mediaChannel{marketplace{currencyOffset}}'
     | 'mediaChannel{marketplace{organization{id}}}'
     | 'mediaChannel{marketplace{organization{creationDate}}}'
     | 'mediaChannel{marketplace{organization{lastChangeDate}}}'
     | 'mediaChannel{marketplace{organization{name}}}'
     | 'mediaChannel{marketplace{organization{systemStatus}}}'
     | 'mediaChannel{marketplace{organization{errors}}}'
+    | 'mediaChannel{marketplace{organization{warnings}}}'
     | 'mediaChannel{marketplace{organization{tier}}}'
     | 'mediaChannel{marketplace{organization{users{totalCount}}}}'
     | 'mediaChannel{marketplace{organization{marketplaces{totalCount}}}}'
@@ -3492,12 +4840,14 @@ export type CatalogField =
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
     | 'products{edges{node{catalog{errors}}}}'
+    | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
     | 'products{edges{node{vendor{creationDate}}}}'
     | 'products{edges{node{vendor{lastChangeDate}}}}'
     | 'products{edges{node{vendor{name}}}}'
     | 'products{edges{node{vendor{systemStatus}}}}'
     | 'products{edges{node{vendor{errors}}}}'
+    | 'products{edges{node{vendor{warnings}}}}'
     | 'products{edges{cursor}}'
     | 'products{pageInfo{endCursor}}'
     | 'products{pageInfo{startCursor}}'
@@ -3530,14 +4880,30 @@ export type ProductFields = {
                     name: 'marketingCampaigns{edges{node{vendor{name}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{vendor{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{vendor{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{vendor{warnings}}}}';
                 };
                 systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}';
                 errors: 'marketingCampaigns{edges{node{errors}}}';
+                warnings: 'marketingCampaigns{edges{node{warnings}}}';
                 name: 'marketingCampaigns{edges{node{name}}}';
                 status: 'marketingCampaigns{edges{node{status}}}';
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
+                conversionSpec: 'marketingCampaigns{edges{node{conversionSpec}}}';
+                startDate: 'marketingCampaigns{edges{node{startDate}}}';
+                endDate: 'marketingCampaigns{edges{node{endDate}}}';
+                GCPX: {
+                    id: 'marketingCampaigns{edges{node{GCPX{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{GCPX{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}';
+                    kpi: 'marketingCampaigns{edges{node{GCPX{kpi}}}}';
+                    price: 'marketingCampaigns{edges{node{GCPX{price}}}}';
+                    startDate: 'marketingCampaigns{edges{node{GCPX{startDate}}}}';
+                    endDate: 'marketingCampaigns{edges{node{GCPX{endDate}}}}';
+                    minConversions: 'marketingCampaigns{edges{node{GCPX{minConversions}}}}';
+                    maxConversions: 'marketingCampaigns{edges{node{GCPX{maxConversions}}}}';
+                };
                 delivering: 'marketingCampaigns{edges{node{delivering}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
@@ -3556,6 +4922,7 @@ export type ProductFields = {
                     remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{catalog{warnings}}}}';
                 };
                 campaignTemplate: {
                     id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}';
@@ -3567,6 +4934,7 @@ export type ProductFields = {
                     remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}';
                     kpi: 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}';
                 };
                 mediaChannel: {
@@ -3576,10 +4944,12 @@ export type ProductFields = {
                     name: 'marketingCampaigns{edges{node{mediaChannel{name}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{mediaChannel{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{mediaChannel{warnings}}}}';
                     platform: 'marketingCampaigns{edges{node{mediaChannel{platform}}}}';
                     remoteId: 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}';
                     remoteState: 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}';
                     currency: 'marketingCampaigns{edges{node{mediaChannel{currency}}}}';
+                    currencyCode: 'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}';
                     currencySymbol: 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}';
                     currencyOffset: 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}';
                     timezone: 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}';
@@ -3613,6 +4983,7 @@ export type ProductFields = {
         remoteState: 'catalog{remoteState}';
         dataFeedId: 'catalog{dataFeedId}';
         errors: 'catalog{errors}';
+        warnings: 'catalog{warnings}';
         mediaChannel: {
             id: 'catalog{mediaChannel{id}}';
             creationDate: 'catalog{mediaChannel{creationDate}}';
@@ -3620,10 +4991,12 @@ export type ProductFields = {
             name: 'catalog{mediaChannel{name}}';
             systemStatus: 'catalog{mediaChannel{systemStatus}}';
             errors: 'catalog{mediaChannel{errors}}';
+            warnings: 'catalog{mediaChannel{warnings}}';
             platform: 'catalog{mediaChannel{platform}}';
             remoteId: 'catalog{mediaChannel{remoteId}}';
             remoteState: 'catalog{mediaChannel{remoteState}}';
             currency: 'catalog{mediaChannel{currency}}';
+            currencyCode: 'catalog{mediaChannel{currencyCode}}';
             currencySymbol: 'catalog{mediaChannel{currencySymbol}}';
             currencyOffset: 'catalog{mediaChannel{currencyOffset}}';
             timezone: 'catalog{mediaChannel{timezone}}';
@@ -3647,6 +5020,10 @@ export type ProductFields = {
                 name: 'catalog{mediaChannel{marketplace{name}}}';
                 systemStatus: 'catalog{mediaChannel{marketplace{systemStatus}}}';
                 errors: 'catalog{mediaChannel{marketplace{errors}}}';
+                warnings: 'catalog{mediaChannel{marketplace{warnings}}}';
+                currencyCode: 'catalog{mediaChannel{marketplace{currencyCode}}}';
+                currencySymbol: 'catalog{mediaChannel{marketplace{currencySymbol}}}';
+                currencyOffset: 'catalog{mediaChannel{marketplace{currencyOffset}}}';
                 organization: {
                     id: 'catalog{mediaChannel{marketplace{organization{id}}}}';
                     creationDate: 'catalog{mediaChannel{marketplace{organization{creationDate}}}}';
@@ -3654,6 +5031,7 @@ export type ProductFields = {
                     name: 'catalog{mediaChannel{marketplace{organization{name}}}}';
                     systemStatus: 'catalog{mediaChannel{marketplace{organization{systemStatus}}}}';
                     errors: 'catalog{mediaChannel{marketplace{organization{errors}}}}';
+                    warnings: 'catalog{mediaChannel{marketplace{organization{warnings}}}}';
                     tier: 'catalog{mediaChannel{marketplace{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -3708,6 +5086,7 @@ export type ProductFields = {
         name: 'vendor{name}';
         systemStatus: 'vendor{systemStatus}';
         errors: 'vendor{errors}';
+        warnings: 'vendor{warnings}';
         marketplace: {
             id: 'vendor{marketplace{id}}';
             creationDate: 'vendor{marketplace{creationDate}}';
@@ -3715,6 +5094,10 @@ export type ProductFields = {
             name: 'vendor{marketplace{name}}';
             systemStatus: 'vendor{marketplace{systemStatus}}';
             errors: 'vendor{marketplace{errors}}';
+            warnings: 'vendor{marketplace{warnings}}';
+            currencyCode: 'vendor{marketplace{currencyCode}}';
+            currencySymbol: 'vendor{marketplace{currencySymbol}}';
+            currencyOffset: 'vendor{marketplace{currencyOffset}}';
             organization: {
                 id: 'vendor{marketplace{organization{id}}}';
                 creationDate: 'vendor{marketplace{organization{creationDate}}}';
@@ -3722,6 +5105,7 @@ export type ProductFields = {
                 name: 'vendor{marketplace{organization{name}}}';
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}';
                 errors: 'vendor{marketplace{organization{errors}}}';
+                warnings: 'vendor{marketplace{organization{warnings}}}';
                 tier: 'vendor{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'vendor{marketplace{organization{users{totalCount}}}}';
@@ -3878,14 +5262,37 @@ export const ProductFields: ProductFields = {
                     systemStatus:
                         'marketingCampaigns{edges{node{vendor{systemStatus}}}}',
                     errors: 'marketingCampaigns{edges{node{vendor{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{vendor{warnings}}}}',
                 },
                 systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}',
                 errors: 'marketingCampaigns{edges{node{errors}}}',
+                warnings: 'marketingCampaigns{edges{node{warnings}}}',
                 name: 'marketingCampaigns{edges{node{name}}}',
                 status: 'marketingCampaigns{edges{node{status}}}',
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
+                conversionSpec:
+                    'marketingCampaigns{edges{node{conversionSpec}}}',
+                startDate: 'marketingCampaigns{edges{node{startDate}}}',
+                endDate: 'marketingCampaigns{edges{node{endDate}}}',
+                GCPX: {
+                    id: 'marketingCampaigns{edges{node{GCPX{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{GCPX{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}',
+                    kpi: 'marketingCampaigns{edges{node{GCPX{kpi}}}}',
+                    price: 'marketingCampaigns{edges{node{GCPX{price}}}}',
+                    startDate:
+                        'marketingCampaigns{edges{node{GCPX{startDate}}}}',
+                    endDate: 'marketingCampaigns{edges{node{GCPX{endDate}}}}',
+                    minConversions:
+                        'marketingCampaigns{edges{node{GCPX{minConversions}}}}',
+                    maxConversions:
+                        'marketingCampaigns{edges{node{GCPX{maxConversions}}}}',
+                },
                 delivering: 'marketingCampaigns{edges{node{delivering}}}',
                 marketingAds: {
                     totalCount:
@@ -3913,6 +5320,8 @@ export const ProductFields: ProductFields = {
                     dataFeedId:
                         'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{catalog{warnings}}}}',
                 },
                 campaignTemplate: {
                     id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}',
@@ -3932,6 +5341,8 @@ export const ProductFields: ProductFields = {
                         'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}',
                     kpi:
                         'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}',
                 },
@@ -3946,6 +5357,8 @@ export const ProductFields: ProductFields = {
                         'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{mediaChannel{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{mediaChannel{warnings}}}}',
                     platform:
                         'marketingCampaigns{edges{node{mediaChannel{platform}}}}',
                     remoteId:
@@ -3954,6 +5367,8 @@ export const ProductFields: ProductFields = {
                         'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}',
                     currency:
                         'marketingCampaigns{edges{node{mediaChannel{currency}}}}',
+                    currencyCode:
+                        'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}',
                     currencySymbol:
                         'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}',
                     currencyOffset:
@@ -3993,6 +5408,7 @@ export const ProductFields: ProductFields = {
         remoteState: 'catalog{remoteState}',
         dataFeedId: 'catalog{dataFeedId}',
         errors: 'catalog{errors}',
+        warnings: 'catalog{warnings}',
         mediaChannel: {
             id: 'catalog{mediaChannel{id}}',
             creationDate: 'catalog{mediaChannel{creationDate}}',
@@ -4000,10 +5416,12 @@ export const ProductFields: ProductFields = {
             name: 'catalog{mediaChannel{name}}',
             systemStatus: 'catalog{mediaChannel{systemStatus}}',
             errors: 'catalog{mediaChannel{errors}}',
+            warnings: 'catalog{mediaChannel{warnings}}',
             platform: 'catalog{mediaChannel{platform}}',
             remoteId: 'catalog{mediaChannel{remoteId}}',
             remoteState: 'catalog{mediaChannel{remoteState}}',
             currency: 'catalog{mediaChannel{currency}}',
+            currencyCode: 'catalog{mediaChannel{currencyCode}}',
             currencySymbol: 'catalog{mediaChannel{currencySymbol}}',
             currencyOffset: 'catalog{mediaChannel{currencyOffset}}',
             timezone: 'catalog{mediaChannel{timezone}}',
@@ -4034,6 +5452,13 @@ export const ProductFields: ProductFields = {
                 systemStatus:
                     'catalog{mediaChannel{marketplace{systemStatus}}}',
                 errors: 'catalog{mediaChannel{marketplace{errors}}}',
+                warnings: 'catalog{mediaChannel{marketplace{warnings}}}',
+                currencyCode:
+                    'catalog{mediaChannel{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'catalog{mediaChannel{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'catalog{mediaChannel{marketplace{currencyOffset}}}',
                 organization: {
                     id: 'catalog{mediaChannel{marketplace{organization{id}}}}',
                     creationDate:
@@ -4046,6 +5471,8 @@ export const ProductFields: ProductFields = {
                         'catalog{mediaChannel{marketplace{organization{systemStatus}}}}',
                     errors:
                         'catalog{mediaChannel{marketplace{organization{errors}}}}',
+                    warnings:
+                        'catalog{mediaChannel{marketplace{organization{warnings}}}}',
                     tier:
                         'catalog{mediaChannel{marketplace{organization{tier}}}}',
                 },
@@ -4110,6 +5537,7 @@ export const ProductFields: ProductFields = {
         name: 'vendor{name}',
         systemStatus: 'vendor{systemStatus}',
         errors: 'vendor{errors}',
+        warnings: 'vendor{warnings}',
         marketplace: {
             id: 'vendor{marketplace{id}}',
             creationDate: 'vendor{marketplace{creationDate}}',
@@ -4117,6 +5545,10 @@ export const ProductFields: ProductFields = {
             name: 'vendor{marketplace{name}}',
             systemStatus: 'vendor{marketplace{systemStatus}}',
             errors: 'vendor{marketplace{errors}}',
+            warnings: 'vendor{marketplace{warnings}}',
+            currencyCode: 'vendor{marketplace{currencyCode}}',
+            currencySymbol: 'vendor{marketplace{currencySymbol}}',
+            currencyOffset: 'vendor{marketplace{currencyOffset}}',
             organization: {
                 id: 'vendor{marketplace{organization{id}}}',
                 creationDate: 'vendor{marketplace{organization{creationDate}}}',
@@ -4125,6 +5557,7 @@ export const ProductFields: ProductFields = {
                 name: 'vendor{marketplace{organization{name}}}',
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}',
                 errors: 'vendor{marketplace{organization{errors}}}',
+                warnings: 'vendor{marketplace{organization{warnings}}}',
                 tier: 'vendor{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -4307,13 +5740,27 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{vendor{name}}}}'
     | 'marketingCampaigns{edges{node{vendor{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{vendor{errors}}}}'
+    | 'marketingCampaigns{edges{node{vendor{warnings}}}}'
     | 'marketingCampaigns{edges{node{systemStatus}}}'
     | 'marketingCampaigns{edges{node{errors}}}'
+    | 'marketingCampaigns{edges{node{warnings}}}'
     | 'marketingCampaigns{edges{node{name}}}'
     | 'marketingCampaigns{edges{node{status}}}'
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
     | 'marketingCampaigns{edges{node{locationSpec}}}'
+    | 'marketingCampaigns{edges{node{conversionSpec}}}'
+    | 'marketingCampaigns{edges{node{startDate}}}'
+    | 'marketingCampaigns{edges{node{endDate}}}'
+    | 'marketingCampaigns{edges{node{GCPX{id}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{kpi}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{price}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{startDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{endDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{minConversions}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{maxConversions}}}}'
     | 'marketingCampaigns{edges{node{delivering}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
@@ -4327,6 +5774,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
     | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
     | 'marketingCampaigns{edges{node{catalog{errors}}}}'
+    | 'marketingCampaigns{edges{node{catalog{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{creationDate}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{lastChangeDate}}}}'
@@ -4336,6 +5784,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
@@ -4343,10 +5792,12 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{mediaChannel{name}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{errors}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{warnings}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{platform}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currency}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
@@ -4369,16 +5820,19 @@ export type ProductField =
     | 'catalog{remoteState}'
     | 'catalog{dataFeedId}'
     | 'catalog{errors}'
+    | 'catalog{warnings}'
     | 'catalog{mediaChannel{id}}'
     | 'catalog{mediaChannel{creationDate}}'
     | 'catalog{mediaChannel{lastChangeDate}}'
     | 'catalog{mediaChannel{name}}'
     | 'catalog{mediaChannel{systemStatus}}'
     | 'catalog{mediaChannel{errors}}'
+    | 'catalog{mediaChannel{warnings}}'
     | 'catalog{mediaChannel{platform}}'
     | 'catalog{mediaChannel{remoteId}}'
     | 'catalog{mediaChannel{remoteState}}'
     | 'catalog{mediaChannel{currency}}'
+    | 'catalog{mediaChannel{currencyCode}}'
     | 'catalog{mediaChannel{currencySymbol}}'
     | 'catalog{mediaChannel{currencyOffset}}'
     | 'catalog{mediaChannel{timezone}}'
@@ -4395,12 +5849,17 @@ export type ProductField =
     | 'catalog{mediaChannel{marketplace{name}}}'
     | 'catalog{mediaChannel{marketplace{systemStatus}}}'
     | 'catalog{mediaChannel{marketplace{errors}}}'
+    | 'catalog{mediaChannel{marketplace{warnings}}}'
+    | 'catalog{mediaChannel{marketplace{currencyCode}}}'
+    | 'catalog{mediaChannel{marketplace{currencySymbol}}}'
+    | 'catalog{mediaChannel{marketplace{currencyOffset}}}'
     | 'catalog{mediaChannel{marketplace{organization{id}}}}'
     | 'catalog{mediaChannel{marketplace{organization{creationDate}}}}'
     | 'catalog{mediaChannel{marketplace{organization{lastChangeDate}}}}'
     | 'catalog{mediaChannel{marketplace{organization{name}}}}'
     | 'catalog{mediaChannel{marketplace{organization{systemStatus}}}}'
     | 'catalog{mediaChannel{marketplace{organization{errors}}}}'
+    | 'catalog{mediaChannel{marketplace{organization{warnings}}}}'
     | 'catalog{mediaChannel{marketplace{organization{tier}}}}'
     | 'catalog{mediaChannel{marketplace{mediaChannels{totalCount}}}}'
     | 'catalog{mediaChannel{marketplace{campaignTemplates{totalCount}}}}'
@@ -4430,18 +5889,24 @@ export type ProductField =
     | 'vendor{name}'
     | 'vendor{systemStatus}'
     | 'vendor{errors}'
+    | 'vendor{warnings}'
     | 'vendor{marketplace{id}}'
     | 'vendor{marketplace{creationDate}}'
     | 'vendor{marketplace{lastChangeDate}}'
     | 'vendor{marketplace{name}}'
     | 'vendor{marketplace{systemStatus}}'
     | 'vendor{marketplace{errors}}'
+    | 'vendor{marketplace{warnings}}'
+    | 'vendor{marketplace{currencyCode}}'
+    | 'vendor{marketplace{currencySymbol}}'
+    | 'vendor{marketplace{currencyOffset}}'
     | 'vendor{marketplace{organization{id}}}'
     | 'vendor{marketplace{organization{creationDate}}}'
     | 'vendor{marketplace{organization{lastChangeDate}}}'
     | 'vendor{marketplace{organization{name}}}'
     | 'vendor{marketplace{organization{systemStatus}}}'
     | 'vendor{marketplace{organization{errors}}}'
+    | 'vendor{marketplace{organization{warnings}}}'
     | 'vendor{marketplace{organization{tier}}}'
     | 'vendor{marketplace{organization{users{totalCount}}}}'
     | 'vendor{marketplace{organization{marketplaces{totalCount}}}}'
@@ -4521,6 +5986,7 @@ export type MarketingCampaignFields = {
         name: 'vendor{name}';
         systemStatus: 'vendor{systemStatus}';
         errors: 'vendor{errors}';
+        warnings: 'vendor{warnings}';
         marketplace: {
             id: 'vendor{marketplace{id}}';
             creationDate: 'vendor{marketplace{creationDate}}';
@@ -4528,6 +5994,10 @@ export type MarketingCampaignFields = {
             name: 'vendor{marketplace{name}}';
             systemStatus: 'vendor{marketplace{systemStatus}}';
             errors: 'vendor{marketplace{errors}}';
+            warnings: 'vendor{marketplace{warnings}}';
+            currencyCode: 'vendor{marketplace{currencyCode}}';
+            currencySymbol: 'vendor{marketplace{currencySymbol}}';
+            currencyOffset: 'vendor{marketplace{currencyOffset}}';
             organization: {
                 id: 'vendor{marketplace{organization{id}}}';
                 creationDate: 'vendor{marketplace{organization{creationDate}}}';
@@ -4535,6 +6005,7 @@ export type MarketingCampaignFields = {
                 name: 'vendor{marketplace{organization{name}}}';
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}';
                 errors: 'vendor{marketplace{organization{errors}}}';
+                warnings: 'vendor{marketplace{organization{warnings}}}';
                 tier: 'vendor{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'vendor{marketplace{organization{users{totalCount}}}}';
@@ -4662,11 +6133,273 @@ export type MarketingCampaignFields = {
     };
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     name: 'name';
     status: 'status';
     creativeSpec: 'creativeSpec';
     runTimeSpec: 'runTimeSpec';
     locationSpec: 'locationSpec';
+    conversionSpec: 'conversionSpec';
+    startDate: 'startDate';
+    endDate: 'endDate';
+    GCPX: {
+        id: 'GCPX{id}';
+        creationDate: 'GCPX{creationDate}';
+        lastChangeDate: 'GCPX{lastChangeDate}';
+        kpi: 'GCPX{kpi}';
+        price: 'GCPX{price}';
+        startDate: 'GCPX{startDate}';
+        endDate: 'GCPX{endDate}';
+        minConversions: 'GCPX{minConversions}';
+        maxConversions: 'GCPX{maxConversions}';
+        campaignTemplate: {
+            id: 'GCPX{campaignTemplate{id}}';
+            creationDate: 'GCPX{campaignTemplate{creationDate}}';
+            lastChangeDate: 'GCPX{campaignTemplate{lastChangeDate}}';
+            name: 'GCPX{campaignTemplate{name}}';
+            description: 'GCPX{campaignTemplate{description}}';
+            platform: 'GCPX{campaignTemplate{platform}}';
+            remoteId: 'GCPX{campaignTemplate{remoteId}}';
+            systemStatus: 'GCPX{campaignTemplate{systemStatus}}';
+            errors: 'GCPX{campaignTemplate{errors}}';
+            warnings: 'GCPX{campaignTemplate{warnings}}';
+            kpi: 'GCPX{campaignTemplate{kpi}}';
+            marketplace: {
+                id: 'GCPX{campaignTemplate{marketplace{id}}}';
+                creationDate: 'GCPX{campaignTemplate{marketplace{creationDate}}}';
+                lastChangeDate: 'GCPX{campaignTemplate{marketplace{lastChangeDate}}}';
+                name: 'GCPX{campaignTemplate{marketplace{name}}}';
+                systemStatus: 'GCPX{campaignTemplate{marketplace{systemStatus}}}';
+                errors: 'GCPX{campaignTemplate{marketplace{errors}}}';
+                warnings: 'GCPX{campaignTemplate{marketplace{warnings}}}';
+                currencyCode: 'GCPX{campaignTemplate{marketplace{currencyCode}}}';
+                currencySymbol: 'GCPX{campaignTemplate{marketplace{currencySymbol}}}';
+                currencyOffset: 'GCPX{campaignTemplate{marketplace{currencyOffset}}}';
+                organization: {
+                    id: 'GCPX{campaignTemplate{marketplace{organization{id}}}}';
+                    creationDate: 'GCPX{campaignTemplate{marketplace{organization{creationDate}}}}';
+                    lastChangeDate: 'GCPX{campaignTemplate{marketplace{organization{lastChangeDate}}}}';
+                    name: 'GCPX{campaignTemplate{marketplace{organization{name}}}}';
+                    systemStatus: 'GCPX{campaignTemplate{marketplace{organization{systemStatus}}}}';
+                    errors: 'GCPX{campaignTemplate{marketplace{organization{errors}}}}';
+                    warnings: 'GCPX{campaignTemplate{marketplace{organization{warnings}}}}';
+                    tier: 'GCPX{campaignTemplate{marketplace{organization{tier}}}}';
+                };
+                mediaChannels: {
+                    totalCount: 'GCPX{campaignTemplate{marketplace{mediaChannels{totalCount}}}}';
+                };
+                campaignTemplates: {
+                    totalCount: 'GCPX{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}';
+                };
+                vendors: {
+                    totalCount: 'GCPX{campaignTemplate{marketplace{vendors{totalCount}}}}';
+                };
+                vendorTokens: {
+                    totalCount: 'GCPX{campaignTemplate{marketplace{vendorTokens{totalCount}}}}';
+                };
+                creativeTemplates: {
+                    totalCount: 'GCPX{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'GCPX{campaignTemplate{marketplace{products{totalCount}}}}';
+                };
+            };
+            marketingCampaigns: {
+                edges: {
+                    cursor: 'GCPX{campaignTemplate{marketingCampaigns{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{campaignTemplate{marketingCampaigns{totalCount}}}';
+            };
+            GCPXHistory: {
+                edges: {
+                    cursor: 'GCPX{campaignTemplate{GCPXHistory{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{campaignTemplate{GCPXHistory{totalCount}}}';
+            };
+            currentGCPX: {
+                id: 'GCPX{campaignTemplate{currentGCPX{id}}}';
+                creationDate: 'GCPX{campaignTemplate{currentGCPX{creationDate}}}';
+                lastChangeDate: 'GCPX{campaignTemplate{currentGCPX{lastChangeDate}}}';
+                kpi: 'GCPX{campaignTemplate{currentGCPX{kpi}}}';
+                price: 'GCPX{campaignTemplate{currentGCPX{price}}}';
+                startDate: 'GCPX{campaignTemplate{currentGCPX{startDate}}}';
+                endDate: 'GCPX{campaignTemplate{currentGCPX{endDate}}}';
+                minConversions: 'GCPX{campaignTemplate{currentGCPX{minConversions}}}';
+                maxConversions: 'GCPX{campaignTemplate{currentGCPX{maxConversions}}}';
+                campaignTemplate: {
+                    id: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{id}}}}';
+                    creationDate: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}';
+                    lastChangeDate: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}';
+                    name: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{name}}}}';
+                    description: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{description}}}}';
+                    platform: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}';
+                    remoteId: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}';
+                    systemStatus: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}';
+                    errors: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}';
+                    warnings: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}';
+                    kpi: 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}';
+                };
+                marketplace: {
+                    id: 'GCPX{campaignTemplate{currentGCPX{marketplace{id}}}}';
+                    creationDate: 'GCPX{campaignTemplate{currentGCPX{marketplace{creationDate}}}}';
+                    lastChangeDate: 'GCPX{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}';
+                    name: 'GCPX{campaignTemplate{currentGCPX{marketplace{name}}}}';
+                    systemStatus: 'GCPX{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}';
+                    errors: 'GCPX{campaignTemplate{currentGCPX{marketplace{errors}}}}';
+                    warnings: 'GCPX{campaignTemplate{currentGCPX{marketplace{warnings}}}}';
+                    currencyCode: 'GCPX{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}';
+                    currencySymbol: 'GCPX{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'GCPX{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}';
+                };
+                marketingCampaigns: {
+                    totalCount: 'GCPX{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}';
+                };
+            };
+        };
+        marketplace: {
+            id: 'GCPX{marketplace{id}}';
+            creationDate: 'GCPX{marketplace{creationDate}}';
+            lastChangeDate: 'GCPX{marketplace{lastChangeDate}}';
+            name: 'GCPX{marketplace{name}}';
+            systemStatus: 'GCPX{marketplace{systemStatus}}';
+            errors: 'GCPX{marketplace{errors}}';
+            warnings: 'GCPX{marketplace{warnings}}';
+            currencyCode: 'GCPX{marketplace{currencyCode}}';
+            currencySymbol: 'GCPX{marketplace{currencySymbol}}';
+            currencyOffset: 'GCPX{marketplace{currencyOffset}}';
+            organization: {
+                id: 'GCPX{marketplace{organization{id}}}';
+                creationDate: 'GCPX{marketplace{organization{creationDate}}}';
+                lastChangeDate: 'GCPX{marketplace{organization{lastChangeDate}}}';
+                name: 'GCPX{marketplace{organization{name}}}';
+                systemStatus: 'GCPX{marketplace{organization{systemStatus}}}';
+                errors: 'GCPX{marketplace{organization{errors}}}';
+                warnings: 'GCPX{marketplace{organization{warnings}}}';
+                tier: 'GCPX{marketplace{organization{tier}}}';
+                users: {
+                    totalCount: 'GCPX{marketplace{organization{users{totalCount}}}}';
+                };
+                marketplaces: {
+                    totalCount: 'GCPX{marketplace{organization{marketplaces{totalCount}}}}';
+                };
+            };
+            mediaChannels: {
+                edges: {
+                    cursor: 'GCPX{marketplace{mediaChannels{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{marketplace{mediaChannels{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{marketplace{mediaChannels{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{marketplace{mediaChannels{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{marketplace{mediaChannels{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{marketplace{mediaChannels{totalCount}}}';
+            };
+            campaignTemplates: {
+                edges: {
+                    cursor: 'GCPX{marketplace{campaignTemplates{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{marketplace{campaignTemplates{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{marketplace{campaignTemplates{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{marketplace{campaignTemplates{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{marketplace{campaignTemplates{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{marketplace{campaignTemplates{totalCount}}}';
+            };
+            vendors: {
+                edges: {
+                    cursor: 'GCPX{marketplace{vendors{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{marketplace{vendors{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{marketplace{vendors{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{marketplace{vendors{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{marketplace{vendors{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{marketplace{vendors{totalCount}}}';
+            };
+            vendorTokens: {
+                edges: {
+                    cursor: 'GCPX{marketplace{vendorTokens{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{marketplace{vendorTokens{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{marketplace{vendorTokens{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{marketplace{vendorTokens{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{marketplace{vendorTokens{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{marketplace{vendorTokens{totalCount}}}';
+            };
+            creativeTemplates: {
+                edges: {
+                    cursor: 'GCPX{marketplace{creativeTemplates{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{marketplace{creativeTemplates{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{marketplace{creativeTemplates{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{marketplace{creativeTemplates{totalCount}}}';
+            };
+            products: {
+                edges: {
+                    cursor: 'GCPX{marketplace{products{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'GCPX{marketplace{products{pageInfo{endCursor}}}}';
+                    startCursor: 'GCPX{marketplace{products{pageInfo{startCursor}}}}';
+                    hasNextPage: 'GCPX{marketplace{products{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'GCPX{marketplace{products{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'GCPX{marketplace{products{totalCount}}}';
+            };
+        };
+        marketingCampaigns: {
+            edges: {
+                node: {
+                    id: 'GCPX{marketingCampaigns{edges{node{id}}}}';
+                    creationDate: 'GCPX{marketingCampaigns{edges{node{creationDate}}}}';
+                    lastChangeDate: 'GCPX{marketingCampaigns{edges{node{lastChangeDate}}}}';
+                    resultsSource: 'GCPX{marketingCampaigns{edges{node{resultsSource}}}}';
+                    kpi: 'GCPX{marketingCampaigns{edges{node{kpi}}}}';
+                    systemStatus: 'GCPX{marketingCampaigns{edges{node{systemStatus}}}}';
+                    errors: 'GCPX{marketingCampaigns{edges{node{errors}}}}';
+                    warnings: 'GCPX{marketingCampaigns{edges{node{warnings}}}}';
+                    name: 'GCPX{marketingCampaigns{edges{node{name}}}}';
+                    status: 'GCPX{marketingCampaigns{edges{node{status}}}}';
+                    creativeSpec: 'GCPX{marketingCampaigns{edges{node{creativeSpec}}}}';
+                    runTimeSpec: 'GCPX{marketingCampaigns{edges{node{runTimeSpec}}}}';
+                    locationSpec: 'GCPX{marketingCampaigns{edges{node{locationSpec}}}}';
+                    conversionSpec: 'GCPX{marketingCampaigns{edges{node{conversionSpec}}}}';
+                    startDate: 'GCPX{marketingCampaigns{edges{node{startDate}}}}';
+                    endDate: 'GCPX{marketingCampaigns{edges{node{endDate}}}}';
+                    delivering: 'GCPX{marketingCampaigns{edges{node{delivering}}}}';
+                };
+                cursor: 'GCPX{marketingCampaigns{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'GCPX{marketingCampaigns{pageInfo{endCursor}}}';
+                startCursor: 'GCPX{marketingCampaigns{pageInfo{startCursor}}}';
+                hasNextPage: 'GCPX{marketingCampaigns{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'GCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'GCPX{marketingCampaigns{totalCount}}';
+        };
+    };
     delivering: 'delivering';
     marketingAds: {
         edges: {
@@ -4683,9 +6416,11 @@ export type MarketingCampaignFields = {
                     name: 'marketingAds{edges{node{vendor{name}}}}';
                     systemStatus: 'marketingAds{edges{node{vendor{systemStatus}}}}';
                     errors: 'marketingAds{edges{node{vendor{errors}}}}';
+                    warnings: 'marketingAds{edges{node{vendor{warnings}}}}';
                 };
                 systemStatus: 'marketingAds{edges{node{systemStatus}}}';
                 errors: 'marketingAds{edges{node{errors}}}';
+                warnings: 'marketingAds{edges{node{warnings}}}';
                 remoteId: 'marketingAds{edges{node{remoteId}}}';
                 preview: 'marketingAds{edges{node{preview}}}';
                 adPreviews: {
@@ -4704,11 +6439,15 @@ export type MarketingCampaignFields = {
                     kpi: 'marketingAds{edges{node{marketingCampaign{kpi}}}}';
                     systemStatus: 'marketingAds{edges{node{marketingCampaign{systemStatus}}}}';
                     errors: 'marketingAds{edges{node{marketingCampaign{errors}}}}';
+                    warnings: 'marketingAds{edges{node{marketingCampaign{warnings}}}}';
                     name: 'marketingAds{edges{node{marketingCampaign{name}}}}';
                     status: 'marketingAds{edges{node{marketingCampaign{status}}}}';
                     creativeSpec: 'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}';
                     runTimeSpec: 'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}';
                     locationSpec: 'marketingAds{edges{node{marketingCampaign{locationSpec}}}}';
+                    conversionSpec: 'marketingAds{edges{node{marketingCampaign{conversionSpec}}}}';
+                    startDate: 'marketingAds{edges{node{marketingCampaign{startDate}}}}';
+                    endDate: 'marketingAds{edges{node{marketingCampaign{endDate}}}}';
                     delivering: 'marketingAds{edges{node{marketingCampaign{delivering}}}}';
                 };
             };
@@ -4749,6 +6488,7 @@ export type MarketingCampaignFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
+                    warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}';
@@ -4757,6 +6497,7 @@ export type MarketingCampaignFields = {
                     name: 'products{edges{node{vendor{name}}}}';
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}';
                     errors: 'products{edges{node{vendor{errors}}}}';
+                    warnings: 'products{edges{node{vendor{warnings}}}}';
                 };
             };
             cursor: 'products{edges{cursor}}';
@@ -4780,6 +6521,7 @@ export type MarketingCampaignFields = {
         remoteState: 'catalog{remoteState}';
         dataFeedId: 'catalog{dataFeedId}';
         errors: 'catalog{errors}';
+        warnings: 'catalog{warnings}';
         mediaChannel: {
             id: 'catalog{mediaChannel{id}}';
             creationDate: 'catalog{mediaChannel{creationDate}}';
@@ -4787,10 +6529,12 @@ export type MarketingCampaignFields = {
             name: 'catalog{mediaChannel{name}}';
             systemStatus: 'catalog{mediaChannel{systemStatus}}';
             errors: 'catalog{mediaChannel{errors}}';
+            warnings: 'catalog{mediaChannel{warnings}}';
             platform: 'catalog{mediaChannel{platform}}';
             remoteId: 'catalog{mediaChannel{remoteId}}';
             remoteState: 'catalog{mediaChannel{remoteState}}';
             currency: 'catalog{mediaChannel{currency}}';
+            currencyCode: 'catalog{mediaChannel{currencyCode}}';
             currencySymbol: 'catalog{mediaChannel{currencySymbol}}';
             currencyOffset: 'catalog{mediaChannel{currencyOffset}}';
             timezone: 'catalog{mediaChannel{timezone}}';
@@ -4814,6 +6558,10 @@ export type MarketingCampaignFields = {
                 name: 'catalog{mediaChannel{marketplace{name}}}';
                 systemStatus: 'catalog{mediaChannel{marketplace{systemStatus}}}';
                 errors: 'catalog{mediaChannel{marketplace{errors}}}';
+                warnings: 'catalog{mediaChannel{marketplace{warnings}}}';
+                currencyCode: 'catalog{mediaChannel{marketplace{currencyCode}}}';
+                currencySymbol: 'catalog{mediaChannel{marketplace{currencySymbol}}}';
+                currencyOffset: 'catalog{mediaChannel{marketplace{currencyOffset}}}';
                 organization: {
                     id: 'catalog{mediaChannel{marketplace{organization{id}}}}';
                     creationDate: 'catalog{mediaChannel{marketplace{organization{creationDate}}}}';
@@ -4821,6 +6569,7 @@ export type MarketingCampaignFields = {
                     name: 'catalog{mediaChannel{marketplace{organization{name}}}}';
                     systemStatus: 'catalog{mediaChannel{marketplace{organization{systemStatus}}}}';
                     errors: 'catalog{mediaChannel{marketplace{organization{errors}}}}';
+                    warnings: 'catalog{mediaChannel{marketplace{organization{warnings}}}}';
                     tier: 'catalog{mediaChannel{marketplace{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -4878,6 +6627,7 @@ export type MarketingCampaignFields = {
         remoteId: 'campaignTemplate{remoteId}';
         systemStatus: 'campaignTemplate{systemStatus}';
         errors: 'campaignTemplate{errors}';
+        warnings: 'campaignTemplate{warnings}';
         kpi: 'campaignTemplate{kpi}';
         marketplace: {
             id: 'campaignTemplate{marketplace{id}}';
@@ -4886,6 +6636,10 @@ export type MarketingCampaignFields = {
             name: 'campaignTemplate{marketplace{name}}';
             systemStatus: 'campaignTemplate{marketplace{systemStatus}}';
             errors: 'campaignTemplate{marketplace{errors}}';
+            warnings: 'campaignTemplate{marketplace{warnings}}';
+            currencyCode: 'campaignTemplate{marketplace{currencyCode}}';
+            currencySymbol: 'campaignTemplate{marketplace{currencySymbol}}';
+            currencyOffset: 'campaignTemplate{marketplace{currencyOffset}}';
             organization: {
                 id: 'campaignTemplate{marketplace{organization{id}}}';
                 creationDate: 'campaignTemplate{marketplace{organization{creationDate}}}';
@@ -4893,6 +6647,7 @@ export type MarketingCampaignFields = {
                 name: 'campaignTemplate{marketplace{organization{name}}}';
                 systemStatus: 'campaignTemplate{marketplace{organization{systemStatus}}}';
                 errors: 'campaignTemplate{marketplace{organization{errors}}}';
+                warnings: 'campaignTemplate{marketplace{organization{warnings}}}';
                 tier: 'campaignTemplate{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'campaignTemplate{marketplace{organization{users{totalCount}}}}';
@@ -4984,11 +6739,15 @@ export type MarketingCampaignFields = {
                     kpi: 'campaignTemplate{marketingCampaigns{edges{node{kpi}}}}';
                     systemStatus: 'campaignTemplate{marketingCampaigns{edges{node{systemStatus}}}}';
                     errors: 'campaignTemplate{marketingCampaigns{edges{node{errors}}}}';
+                    warnings: 'campaignTemplate{marketingCampaigns{edges{node{warnings}}}}';
                     name: 'campaignTemplate{marketingCampaigns{edges{node{name}}}}';
                     status: 'campaignTemplate{marketingCampaigns{edges{node{status}}}}';
                     creativeSpec: 'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
                     runTimeSpec: 'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
                     locationSpec: 'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}';
+                    conversionSpec: 'campaignTemplate{marketingCampaigns{edges{node{conversionSpec}}}}';
+                    startDate: 'campaignTemplate{marketingCampaigns{edges{node{startDate}}}}';
+                    endDate: 'campaignTemplate{marketingCampaigns{edges{node{endDate}}}}';
                     delivering: 'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'campaignTemplate{marketingCampaigns{edges{cursor}}}';
@@ -5001,6 +6760,134 @@ export type MarketingCampaignFields = {
             };
             totalCount: 'campaignTemplate{marketingCampaigns{totalCount}}';
         };
+        GCPXHistory: {
+            edges: {
+                node: {
+                    id: 'campaignTemplate{GCPXHistory{edges{node{id}}}}';
+                    creationDate: 'campaignTemplate{GCPXHistory{edges{node{creationDate}}}}';
+                    lastChangeDate: 'campaignTemplate{GCPXHistory{edges{node{lastChangeDate}}}}';
+                    kpi: 'campaignTemplate{GCPXHistory{edges{node{kpi}}}}';
+                    price: 'campaignTemplate{GCPXHistory{edges{node{price}}}}';
+                    startDate: 'campaignTemplate{GCPXHistory{edges{node{startDate}}}}';
+                    endDate: 'campaignTemplate{GCPXHistory{edges{node{endDate}}}}';
+                    minConversions: 'campaignTemplate{GCPXHistory{edges{node{minConversions}}}}';
+                    maxConversions: 'campaignTemplate{GCPXHistory{edges{node{maxConversions}}}}';
+                };
+                cursor: 'campaignTemplate{GCPXHistory{edges{cursor}}}';
+            };
+            pageInfo: {
+                endCursor: 'campaignTemplate{GCPXHistory{pageInfo{endCursor}}}';
+                startCursor: 'campaignTemplate{GCPXHistory{pageInfo{startCursor}}}';
+                hasNextPage: 'campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}';
+                hasPreviousPage: 'campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}';
+            };
+            totalCount: 'campaignTemplate{GCPXHistory{totalCount}}';
+        };
+        currentGCPX: {
+            id: 'campaignTemplate{currentGCPX{id}}';
+            creationDate: 'campaignTemplate{currentGCPX{creationDate}}';
+            lastChangeDate: 'campaignTemplate{currentGCPX{lastChangeDate}}';
+            kpi: 'campaignTemplate{currentGCPX{kpi}}';
+            price: 'campaignTemplate{currentGCPX{price}}';
+            startDate: 'campaignTemplate{currentGCPX{startDate}}';
+            endDate: 'campaignTemplate{currentGCPX{endDate}}';
+            minConversions: 'campaignTemplate{currentGCPX{minConversions}}';
+            maxConversions: 'campaignTemplate{currentGCPX{maxConversions}}';
+            campaignTemplate: {
+                id: 'campaignTemplate{currentGCPX{campaignTemplate{id}}}';
+                creationDate: 'campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}';
+                lastChangeDate: 'campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}';
+                name: 'campaignTemplate{currentGCPX{campaignTemplate{name}}}';
+                description: 'campaignTemplate{currentGCPX{campaignTemplate{description}}}';
+                platform: 'campaignTemplate{currentGCPX{campaignTemplate{platform}}}';
+                remoteId: 'campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}';
+                systemStatus: 'campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}';
+                errors: 'campaignTemplate{currentGCPX{campaignTemplate{errors}}}';
+                warnings: 'campaignTemplate{currentGCPX{campaignTemplate{warnings}}}';
+                kpi: 'campaignTemplate{currentGCPX{campaignTemplate{kpi}}}';
+                marketplace: {
+                    id: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{id}}}}';
+                    creationDate: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{creationDate}}}}';
+                    lastChangeDate: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{lastChangeDate}}}}';
+                    name: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{name}}}}';
+                    systemStatus: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{systemStatus}}}}';
+                    errors: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{errors}}}}';
+                    warnings: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{warnings}}}}';
+                    currencyCode: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencyCode}}}}';
+                    currencySymbol: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencyOffset}}}}';
+                };
+                marketingCampaigns: {
+                    totalCount: 'campaignTemplate{currentGCPX{campaignTemplate{marketingCampaigns{totalCount}}}}';
+                };
+                GCPXHistory: {
+                    totalCount: 'campaignTemplate{currentGCPX{campaignTemplate{GCPXHistory{totalCount}}}}';
+                };
+                currentGCPX: {
+                    id: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{id}}}}';
+                    creationDate: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{creationDate}}}}';
+                    lastChangeDate: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{lastChangeDate}}}}';
+                    kpi: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{kpi}}}}';
+                    price: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{price}}}}';
+                    startDate: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{startDate}}}}';
+                    endDate: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{endDate}}}}';
+                    minConversions: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{minConversions}}}}';
+                    maxConversions: 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{maxConversions}}}}';
+                };
+            };
+            marketplace: {
+                id: 'campaignTemplate{currentGCPX{marketplace{id}}}';
+                creationDate: 'campaignTemplate{currentGCPX{marketplace{creationDate}}}';
+                lastChangeDate: 'campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}';
+                name: 'campaignTemplate{currentGCPX{marketplace{name}}}';
+                systemStatus: 'campaignTemplate{currentGCPX{marketplace{systemStatus}}}';
+                errors: 'campaignTemplate{currentGCPX{marketplace{errors}}}';
+                warnings: 'campaignTemplate{currentGCPX{marketplace{warnings}}}';
+                currencyCode: 'campaignTemplate{currentGCPX{marketplace{currencyCode}}}';
+                currencySymbol: 'campaignTemplate{currentGCPX{marketplace{currencySymbol}}}';
+                currencyOffset: 'campaignTemplate{currentGCPX{marketplace{currencyOffset}}}';
+                organization: {
+                    id: 'campaignTemplate{currentGCPX{marketplace{organization{id}}}}';
+                    creationDate: 'campaignTemplate{currentGCPX{marketplace{organization{creationDate}}}}';
+                    lastChangeDate: 'campaignTemplate{currentGCPX{marketplace{organization{lastChangeDate}}}}';
+                    name: 'campaignTemplate{currentGCPX{marketplace{organization{name}}}}';
+                    systemStatus: 'campaignTemplate{currentGCPX{marketplace{organization{systemStatus}}}}';
+                    errors: 'campaignTemplate{currentGCPX{marketplace{organization{errors}}}}';
+                    warnings: 'campaignTemplate{currentGCPX{marketplace{organization{warnings}}}}';
+                    tier: 'campaignTemplate{currentGCPX{marketplace{organization{tier}}}}';
+                };
+                mediaChannels: {
+                    totalCount: 'campaignTemplate{currentGCPX{marketplace{mediaChannels{totalCount}}}}';
+                };
+                campaignTemplates: {
+                    totalCount: 'campaignTemplate{currentGCPX{marketplace{campaignTemplates{totalCount}}}}';
+                };
+                vendors: {
+                    totalCount: 'campaignTemplate{currentGCPX{marketplace{vendors{totalCount}}}}';
+                };
+                vendorTokens: {
+                    totalCount: 'campaignTemplate{currentGCPX{marketplace{vendorTokens{totalCount}}}}';
+                };
+                creativeTemplates: {
+                    totalCount: 'campaignTemplate{currentGCPX{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'campaignTemplate{currentGCPX{marketplace{products{totalCount}}}}';
+                };
+            };
+            marketingCampaigns: {
+                edges: {
+                    cursor: 'campaignTemplate{currentGCPX{marketingCampaigns{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{endCursor}}}}';
+                    startCursor: 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{startCursor}}}}';
+                    hasNextPage: 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}';
+            };
+        };
     };
     mediaChannel: {
         id: 'mediaChannel{id}';
@@ -5009,10 +6896,12 @@ export type MarketingCampaignFields = {
         name: 'mediaChannel{name}';
         systemStatus: 'mediaChannel{systemStatus}';
         errors: 'mediaChannel{errors}';
+        warnings: 'mediaChannel{warnings}';
         platform: 'mediaChannel{platform}';
         remoteId: 'mediaChannel{remoteId}';
         remoteState: 'mediaChannel{remoteState}';
         currency: 'mediaChannel{currency}';
+        currencyCode: 'mediaChannel{currencyCode}';
         currencySymbol: 'mediaChannel{currencySymbol}';
         currencyOffset: 'mediaChannel{currencyOffset}';
         timezone: 'mediaChannel{timezone}';
@@ -5030,6 +6919,7 @@ export type MarketingCampaignFields = {
                     remoteState: 'mediaChannel{catalogs{edges{node{remoteState}}}}';
                     dataFeedId: 'mediaChannel{catalogs{edges{node{dataFeedId}}}}';
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}';
+                    warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}';
                 };
                 cursor: 'mediaChannel{catalogs{edges{cursor}}}';
             };
@@ -5048,6 +6938,10 @@ export type MarketingCampaignFields = {
             name: 'mediaChannel{marketplace{name}}';
             systemStatus: 'mediaChannel{marketplace{systemStatus}}';
             errors: 'mediaChannel{marketplace{errors}}';
+            warnings: 'mediaChannel{marketplace{warnings}}';
+            currencyCode: 'mediaChannel{marketplace{currencyCode}}';
+            currencySymbol: 'mediaChannel{marketplace{currencySymbol}}';
+            currencyOffset: 'mediaChannel{marketplace{currencyOffset}}';
             organization: {
                 id: 'mediaChannel{marketplace{organization{id}}}';
                 creationDate: 'mediaChannel{marketplace{organization{creationDate}}}';
@@ -5055,6 +6949,7 @@ export type MarketingCampaignFields = {
                 name: 'mediaChannel{marketplace{organization{name}}}';
                 systemStatus: 'mediaChannel{marketplace{organization{systemStatus}}}';
                 errors: 'mediaChannel{marketplace{organization{errors}}}';
+                warnings: 'mediaChannel{marketplace{organization{warnings}}}';
                 tier: 'mediaChannel{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'mediaChannel{marketplace{organization{users{totalCount}}}}';
@@ -5161,6 +7056,7 @@ export type MarketingCampaignFields = {
                     kpi: 'results{edges{node{resource{kpi}}}}';
                     systemStatus: 'results{edges{node{resource{systemStatus}}}}';
                     errors: 'results{edges{node{resource{errors}}}}';
+                    warnings: 'results{edges{node{resource{warnings}}}}';
                 };
                 vendor: {
                     id: 'results{edges{node{vendor{id}}}}';
@@ -5169,6 +7065,7 @@ export type MarketingCampaignFields = {
                     name: 'results{edges{node{vendor{name}}}}';
                     systemStatus: 'results{edges{node{vendor{systemStatus}}}}';
                     errors: 'results{edges{node{vendor{errors}}}}';
+                    warnings: 'results{edges{node{vendor{warnings}}}}';
                 };
             };
             cursor: 'results{edges{cursor}}';
@@ -5198,6 +7095,7 @@ export type MarketingCampaignFields = {
                     lastChangeDate: 'notifications{edges{node{resource{lastChangeDate}}}}';
                     systemStatus: 'notifications{edges{node{resource{systemStatus}}}}';
                     errors: 'notifications{edges{node{resource{errors}}}}';
+                    warnings: 'notifications{edges{node{resource{warnings}}}}';
                 };
             };
             cursor: 'notifications{edges{cursor}}';
@@ -5224,6 +7122,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         name: 'vendor{name}',
         systemStatus: 'vendor{systemStatus}',
         errors: 'vendor{errors}',
+        warnings: 'vendor{warnings}',
         marketplace: {
             id: 'vendor{marketplace{id}}',
             creationDate: 'vendor{marketplace{creationDate}}',
@@ -5231,6 +7130,10 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
             name: 'vendor{marketplace{name}}',
             systemStatus: 'vendor{marketplace{systemStatus}}',
             errors: 'vendor{marketplace{errors}}',
+            warnings: 'vendor{marketplace{warnings}}',
+            currencyCode: 'vendor{marketplace{currencyCode}}',
+            currencySymbol: 'vendor{marketplace{currencySymbol}}',
+            currencyOffset: 'vendor{marketplace{currencyOffset}}',
             organization: {
                 id: 'vendor{marketplace{organization{id}}}',
                 creationDate: 'vendor{marketplace{organization{creationDate}}}',
@@ -5239,6 +7142,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 name: 'vendor{marketplace{organization{name}}}',
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}',
                 errors: 'vendor{marketplace{organization{errors}}}',
+                warnings: 'vendor{marketplace{organization{warnings}}}',
                 tier: 'vendor{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -5400,11 +7304,368 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
     },
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     name: 'name',
     status: 'status',
     creativeSpec: 'creativeSpec',
     runTimeSpec: 'runTimeSpec',
     locationSpec: 'locationSpec',
+    conversionSpec: 'conversionSpec',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    GCPX: {
+        id: 'GCPX{id}',
+        creationDate: 'GCPX{creationDate}',
+        lastChangeDate: 'GCPX{lastChangeDate}',
+        kpi: 'GCPX{kpi}',
+        price: 'GCPX{price}',
+        startDate: 'GCPX{startDate}',
+        endDate: 'GCPX{endDate}',
+        minConversions: 'GCPX{minConversions}',
+        maxConversions: 'GCPX{maxConversions}',
+        campaignTemplate: {
+            id: 'GCPX{campaignTemplate{id}}',
+            creationDate: 'GCPX{campaignTemplate{creationDate}}',
+            lastChangeDate: 'GCPX{campaignTemplate{lastChangeDate}}',
+            name: 'GCPX{campaignTemplate{name}}',
+            description: 'GCPX{campaignTemplate{description}}',
+            platform: 'GCPX{campaignTemplate{platform}}',
+            remoteId: 'GCPX{campaignTemplate{remoteId}}',
+            systemStatus: 'GCPX{campaignTemplate{systemStatus}}',
+            errors: 'GCPX{campaignTemplate{errors}}',
+            warnings: 'GCPX{campaignTemplate{warnings}}',
+            kpi: 'GCPX{campaignTemplate{kpi}}',
+            marketplace: {
+                id: 'GCPX{campaignTemplate{marketplace{id}}}',
+                creationDate:
+                    'GCPX{campaignTemplate{marketplace{creationDate}}}',
+                lastChangeDate:
+                    'GCPX{campaignTemplate{marketplace{lastChangeDate}}}',
+                name: 'GCPX{campaignTemplate{marketplace{name}}}',
+                systemStatus:
+                    'GCPX{campaignTemplate{marketplace{systemStatus}}}',
+                errors: 'GCPX{campaignTemplate{marketplace{errors}}}',
+                warnings: 'GCPX{campaignTemplate{marketplace{warnings}}}',
+                currencyCode:
+                    'GCPX{campaignTemplate{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'GCPX{campaignTemplate{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'GCPX{campaignTemplate{marketplace{currencyOffset}}}',
+                organization: {
+                    id: 'GCPX{campaignTemplate{marketplace{organization{id}}}}',
+                    creationDate:
+                        'GCPX{campaignTemplate{marketplace{organization{creationDate}}}}',
+                    lastChangeDate:
+                        'GCPX{campaignTemplate{marketplace{organization{lastChangeDate}}}}',
+                    name:
+                        'GCPX{campaignTemplate{marketplace{organization{name}}}}',
+                    systemStatus:
+                        'GCPX{campaignTemplate{marketplace{organization{systemStatus}}}}',
+                    errors:
+                        'GCPX{campaignTemplate{marketplace{organization{errors}}}}',
+                    warnings:
+                        'GCPX{campaignTemplate{marketplace{organization{warnings}}}}',
+                    tier:
+                        'GCPX{campaignTemplate{marketplace{organization{tier}}}}',
+                },
+                mediaChannels: {
+                    totalCount:
+                        'GCPX{campaignTemplate{marketplace{mediaChannels{totalCount}}}}',
+                },
+                campaignTemplates: {
+                    totalCount:
+                        'GCPX{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}',
+                },
+                vendors: {
+                    totalCount:
+                        'GCPX{campaignTemplate{marketplace{vendors{totalCount}}}}',
+                },
+                vendorTokens: {
+                    totalCount:
+                        'GCPX{campaignTemplate{marketplace{vendorTokens{totalCount}}}}',
+                },
+                creativeTemplates: {
+                    totalCount:
+                        'GCPX{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'GCPX{campaignTemplate{marketplace{products{totalCount}}}}',
+                },
+            },
+            marketingCampaigns: {
+                edges: {
+                    cursor:
+                        'GCPX{campaignTemplate{marketingCampaigns{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'GCPX{campaignTemplate{marketingCampaigns{totalCount}}}',
+            },
+            GCPXHistory: {
+                edges: {
+                    cursor:
+                        'GCPX{campaignTemplate{GCPXHistory{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{campaignTemplate{GCPXHistory{totalCount}}}',
+            },
+            currentGCPX: {
+                id: 'GCPX{campaignTemplate{currentGCPX{id}}}',
+                creationDate:
+                    'GCPX{campaignTemplate{currentGCPX{creationDate}}}',
+                lastChangeDate:
+                    'GCPX{campaignTemplate{currentGCPX{lastChangeDate}}}',
+                kpi: 'GCPX{campaignTemplate{currentGCPX{kpi}}}',
+                price: 'GCPX{campaignTemplate{currentGCPX{price}}}',
+                startDate: 'GCPX{campaignTemplate{currentGCPX{startDate}}}',
+                endDate: 'GCPX{campaignTemplate{currentGCPX{endDate}}}',
+                minConversions:
+                    'GCPX{campaignTemplate{currentGCPX{minConversions}}}',
+                maxConversions:
+                    'GCPX{campaignTemplate{currentGCPX{maxConversions}}}',
+                campaignTemplate: {
+                    id:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{id}}}}',
+                    creationDate:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}',
+                    lastChangeDate:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}',
+                    name:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{name}}}}',
+                    description:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{description}}}}',
+                    platform:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}',
+                    remoteId:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}',
+                    systemStatus:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}',
+                    errors:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}',
+                    warnings:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}',
+                    kpi:
+                        'GCPX{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}',
+                },
+                marketplace: {
+                    id: 'GCPX{campaignTemplate{currentGCPX{marketplace{id}}}}',
+                    creationDate:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{creationDate}}}}',
+                    lastChangeDate:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}',
+                    name:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{name}}}}',
+                    systemStatus:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}',
+                    errors:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{errors}}}}',
+                    warnings:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{warnings}}}}',
+                    currencyCode:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'GCPX{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}',
+                },
+                marketingCampaigns: {
+                    totalCount:
+                        'GCPX{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}',
+                },
+            },
+        },
+        marketplace: {
+            id: 'GCPX{marketplace{id}}',
+            creationDate: 'GCPX{marketplace{creationDate}}',
+            lastChangeDate: 'GCPX{marketplace{lastChangeDate}}',
+            name: 'GCPX{marketplace{name}}',
+            systemStatus: 'GCPX{marketplace{systemStatus}}',
+            errors: 'GCPX{marketplace{errors}}',
+            warnings: 'GCPX{marketplace{warnings}}',
+            currencyCode: 'GCPX{marketplace{currencyCode}}',
+            currencySymbol: 'GCPX{marketplace{currencySymbol}}',
+            currencyOffset: 'GCPX{marketplace{currencyOffset}}',
+            organization: {
+                id: 'GCPX{marketplace{organization{id}}}',
+                creationDate: 'GCPX{marketplace{organization{creationDate}}}',
+                lastChangeDate:
+                    'GCPX{marketplace{organization{lastChangeDate}}}',
+                name: 'GCPX{marketplace{organization{name}}}',
+                systemStatus: 'GCPX{marketplace{organization{systemStatus}}}',
+                errors: 'GCPX{marketplace{organization{errors}}}',
+                warnings: 'GCPX{marketplace{organization{warnings}}}',
+                tier: 'GCPX{marketplace{organization{tier}}}',
+                users: {
+                    totalCount:
+                        'GCPX{marketplace{organization{users{totalCount}}}}',
+                },
+                marketplaces: {
+                    totalCount:
+                        'GCPX{marketplace{organization{marketplaces{totalCount}}}}',
+                },
+            },
+            mediaChannels: {
+                edges: {
+                    cursor: 'GCPX{marketplace{mediaChannels{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{marketplace{mediaChannels{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{marketplace{mediaChannels{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{marketplace{mediaChannels{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{marketplace{mediaChannels{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{marketplace{mediaChannels{totalCount}}}',
+            },
+            campaignTemplates: {
+                edges: {
+                    cursor:
+                        'GCPX{marketplace{campaignTemplates{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{marketplace{campaignTemplates{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{marketplace{campaignTemplates{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{marketplace{campaignTemplates{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{marketplace{campaignTemplates{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{marketplace{campaignTemplates{totalCount}}}',
+            },
+            vendors: {
+                edges: {
+                    cursor: 'GCPX{marketplace{vendors{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{marketplace{vendors{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{marketplace{vendors{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{marketplace{vendors{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{marketplace{vendors{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{marketplace{vendors{totalCount}}}',
+            },
+            vendorTokens: {
+                edges: {
+                    cursor: 'GCPX{marketplace{vendorTokens{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{marketplace{vendorTokens{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{marketplace{vendorTokens{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{marketplace{vendorTokens{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{marketplace{vendorTokens{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{marketplace{vendorTokens{totalCount}}}',
+            },
+            creativeTemplates: {
+                edges: {
+                    cursor:
+                        'GCPX{marketplace{creativeTemplates{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{marketplace{creativeTemplates{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{marketplace{creativeTemplates{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{marketplace{creativeTemplates{totalCount}}}',
+            },
+            products: {
+                edges: {
+                    cursor: 'GCPX{marketplace{products{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'GCPX{marketplace{products{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'GCPX{marketplace{products{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'GCPX{marketplace{products{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'GCPX{marketplace{products{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount: 'GCPX{marketplace{products{totalCount}}}',
+            },
+        },
+        marketingCampaigns: {
+            edges: {
+                node: {
+                    id: 'GCPX{marketingCampaigns{edges{node{id}}}}',
+                    creationDate:
+                        'GCPX{marketingCampaigns{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'GCPX{marketingCampaigns{edges{node{lastChangeDate}}}}',
+                    resultsSource:
+                        'GCPX{marketingCampaigns{edges{node{resultsSource}}}}',
+                    kpi: 'GCPX{marketingCampaigns{edges{node{kpi}}}}',
+                    systemStatus:
+                        'GCPX{marketingCampaigns{edges{node{systemStatus}}}}',
+                    errors: 'GCPX{marketingCampaigns{edges{node{errors}}}}',
+                    warnings: 'GCPX{marketingCampaigns{edges{node{warnings}}}}',
+                    name: 'GCPX{marketingCampaigns{edges{node{name}}}}',
+                    status: 'GCPX{marketingCampaigns{edges{node{status}}}}',
+                    creativeSpec:
+                        'GCPX{marketingCampaigns{edges{node{creativeSpec}}}}',
+                    runTimeSpec:
+                        'GCPX{marketingCampaigns{edges{node{runTimeSpec}}}}',
+                    locationSpec:
+                        'GCPX{marketingCampaigns{edges{node{locationSpec}}}}',
+                    conversionSpec:
+                        'GCPX{marketingCampaigns{edges{node{conversionSpec}}}}',
+                    startDate:
+                        'GCPX{marketingCampaigns{edges{node{startDate}}}}',
+                    endDate: 'GCPX{marketingCampaigns{edges{node{endDate}}}}',
+                    delivering:
+                        'GCPX{marketingCampaigns{edges{node{delivering}}}}',
+                },
+                cursor: 'GCPX{marketingCampaigns{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'GCPX{marketingCampaigns{pageInfo{endCursor}}}',
+                startCursor: 'GCPX{marketingCampaigns{pageInfo{startCursor}}}',
+                hasNextPage: 'GCPX{marketingCampaigns{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'GCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'GCPX{marketingCampaigns{totalCount}}',
+        },
+    },
     delivering: 'delivering',
     marketingAds: {
         edges: {
@@ -5424,9 +7685,11 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     systemStatus:
                         'marketingAds{edges{node{vendor{systemStatus}}}}',
                     errors: 'marketingAds{edges{node{vendor{errors}}}}',
+                    warnings: 'marketingAds{edges{node{vendor{warnings}}}}',
                 },
                 systemStatus: 'marketingAds{edges{node{systemStatus}}}',
                 errors: 'marketingAds{edges{node{errors}}}',
+                warnings: 'marketingAds{edges{node{warnings}}}',
                 remoteId: 'marketingAds{edges{node{remoteId}}}',
                 preview: 'marketingAds{edges{node{preview}}}',
                 adPreviews: {
@@ -5453,6 +7716,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'marketingAds{edges{node{marketingCampaign{systemStatus}}}}',
                     errors:
                         'marketingAds{edges{node{marketingCampaign{errors}}}}',
+                    warnings:
+                        'marketingAds{edges{node{marketingCampaign{warnings}}}}',
                     name: 'marketingAds{edges{node{marketingCampaign{name}}}}',
                     status:
                         'marketingAds{edges{node{marketingCampaign{status}}}}',
@@ -5462,6 +7727,12 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}',
                     locationSpec:
                         'marketingAds{edges{node{marketingCampaign{locationSpec}}}}',
+                    conversionSpec:
+                        'marketingAds{edges{node{marketingCampaign{conversionSpec}}}}',
+                    startDate:
+                        'marketingAds{edges{node{marketingCampaign{startDate}}}}',
+                    endDate:
+                        'marketingAds{edges{node{marketingCampaign{endDate}}}}',
                     delivering:
                         'marketingAds{edges{node{marketingCampaign{delivering}}}}',
                 },
@@ -5507,6 +7778,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
+                    warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}',
@@ -5516,6 +7788,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     name: 'products{edges{node{vendor{name}}}}',
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}',
                     errors: 'products{edges{node{vendor{errors}}}}',
+                    warnings: 'products{edges{node{vendor{warnings}}}}',
                 },
             },
             cursor: 'products{edges{cursor}}',
@@ -5539,6 +7812,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         remoteState: 'catalog{remoteState}',
         dataFeedId: 'catalog{dataFeedId}',
         errors: 'catalog{errors}',
+        warnings: 'catalog{warnings}',
         mediaChannel: {
             id: 'catalog{mediaChannel{id}}',
             creationDate: 'catalog{mediaChannel{creationDate}}',
@@ -5546,10 +7820,12 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
             name: 'catalog{mediaChannel{name}}',
             systemStatus: 'catalog{mediaChannel{systemStatus}}',
             errors: 'catalog{mediaChannel{errors}}',
+            warnings: 'catalog{mediaChannel{warnings}}',
             platform: 'catalog{mediaChannel{platform}}',
             remoteId: 'catalog{mediaChannel{remoteId}}',
             remoteState: 'catalog{mediaChannel{remoteState}}',
             currency: 'catalog{mediaChannel{currency}}',
+            currencyCode: 'catalog{mediaChannel{currencyCode}}',
             currencySymbol: 'catalog{mediaChannel{currencySymbol}}',
             currencyOffset: 'catalog{mediaChannel{currencyOffset}}',
             timezone: 'catalog{mediaChannel{timezone}}',
@@ -5580,6 +7856,13 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 systemStatus:
                     'catalog{mediaChannel{marketplace{systemStatus}}}',
                 errors: 'catalog{mediaChannel{marketplace{errors}}}',
+                warnings: 'catalog{mediaChannel{marketplace{warnings}}}',
+                currencyCode:
+                    'catalog{mediaChannel{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'catalog{mediaChannel{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'catalog{mediaChannel{marketplace{currencyOffset}}}',
                 organization: {
                     id: 'catalog{mediaChannel{marketplace{organization{id}}}}',
                     creationDate:
@@ -5592,6 +7875,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'catalog{mediaChannel{marketplace{organization{systemStatus}}}}',
                     errors:
                         'catalog{mediaChannel{marketplace{organization{errors}}}}',
+                    warnings:
+                        'catalog{mediaChannel{marketplace{organization{warnings}}}}',
                     tier:
                         'catalog{mediaChannel{marketplace{organization{tier}}}}',
                 },
@@ -5659,6 +7944,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         remoteId: 'campaignTemplate{remoteId}',
         systemStatus: 'campaignTemplate{systemStatus}',
         errors: 'campaignTemplate{errors}',
+        warnings: 'campaignTemplate{warnings}',
         kpi: 'campaignTemplate{kpi}',
         marketplace: {
             id: 'campaignTemplate{marketplace{id}}',
@@ -5667,6 +7953,10 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
             name: 'campaignTemplate{marketplace{name}}',
             systemStatus: 'campaignTemplate{marketplace{systemStatus}}',
             errors: 'campaignTemplate{marketplace{errors}}',
+            warnings: 'campaignTemplate{marketplace{warnings}}',
+            currencyCode: 'campaignTemplate{marketplace{currencyCode}}',
+            currencySymbol: 'campaignTemplate{marketplace{currencySymbol}}',
+            currencyOffset: 'campaignTemplate{marketplace{currencyOffset}}',
             organization: {
                 id: 'campaignTemplate{marketplace{organization{id}}}',
                 creationDate:
@@ -5677,6 +7967,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 systemStatus:
                     'campaignTemplate{marketplace{organization{systemStatus}}}',
                 errors: 'campaignTemplate{marketplace{organization{errors}}}',
+                warnings:
+                    'campaignTemplate{marketplace{organization{warnings}}}',
                 tier: 'campaignTemplate{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -5812,6 +8104,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'campaignTemplate{marketingCampaigns{edges{node{systemStatus}}}}',
                     errors:
                         'campaignTemplate{marketingCampaigns{edges{node{errors}}}}',
+                    warnings:
+                        'campaignTemplate{marketingCampaigns{edges{node{warnings}}}}',
                     name:
                         'campaignTemplate{marketingCampaigns{edges{node{name}}}}',
                     status:
@@ -5822,6 +8116,12 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
                     locationSpec:
                         'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}',
+                    conversionSpec:
+                        'campaignTemplate{marketingCampaigns{edges{node{conversionSpec}}}}',
+                    startDate:
+                        'campaignTemplate{marketingCampaigns{edges{node{startDate}}}}',
+                    endDate:
+                        'campaignTemplate{marketingCampaigns{edges{node{endDate}}}}',
                     delivering:
                         'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}',
                 },
@@ -5839,6 +8139,199 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
             },
             totalCount: 'campaignTemplate{marketingCampaigns{totalCount}}',
         },
+        GCPXHistory: {
+            edges: {
+                node: {
+                    id: 'campaignTemplate{GCPXHistory{edges{node{id}}}}',
+                    creationDate:
+                        'campaignTemplate{GCPXHistory{edges{node{creationDate}}}}',
+                    lastChangeDate:
+                        'campaignTemplate{GCPXHistory{edges{node{lastChangeDate}}}}',
+                    kpi: 'campaignTemplate{GCPXHistory{edges{node{kpi}}}}',
+                    price: 'campaignTemplate{GCPXHistory{edges{node{price}}}}',
+                    startDate:
+                        'campaignTemplate{GCPXHistory{edges{node{startDate}}}}',
+                    endDate:
+                        'campaignTemplate{GCPXHistory{edges{node{endDate}}}}',
+                    minConversions:
+                        'campaignTemplate{GCPXHistory{edges{node{minConversions}}}}',
+                    maxConversions:
+                        'campaignTemplate{GCPXHistory{edges{node{maxConversions}}}}',
+                },
+                cursor: 'campaignTemplate{GCPXHistory{edges{cursor}}}',
+            },
+            pageInfo: {
+                endCursor: 'campaignTemplate{GCPXHistory{pageInfo{endCursor}}}',
+                startCursor:
+                    'campaignTemplate{GCPXHistory{pageInfo{startCursor}}}',
+                hasNextPage:
+                    'campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}',
+                hasPreviousPage:
+                    'campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}',
+            },
+            totalCount: 'campaignTemplate{GCPXHistory{totalCount}}',
+        },
+        currentGCPX: {
+            id: 'campaignTemplate{currentGCPX{id}}',
+            creationDate: 'campaignTemplate{currentGCPX{creationDate}}',
+            lastChangeDate: 'campaignTemplate{currentGCPX{lastChangeDate}}',
+            kpi: 'campaignTemplate{currentGCPX{kpi}}',
+            price: 'campaignTemplate{currentGCPX{price}}',
+            startDate: 'campaignTemplate{currentGCPX{startDate}}',
+            endDate: 'campaignTemplate{currentGCPX{endDate}}',
+            minConversions: 'campaignTemplate{currentGCPX{minConversions}}',
+            maxConversions: 'campaignTemplate{currentGCPX{maxConversions}}',
+            campaignTemplate: {
+                id: 'campaignTemplate{currentGCPX{campaignTemplate{id}}}',
+                creationDate:
+                    'campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}',
+                lastChangeDate:
+                    'campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}',
+                name: 'campaignTemplate{currentGCPX{campaignTemplate{name}}}',
+                description:
+                    'campaignTemplate{currentGCPX{campaignTemplate{description}}}',
+                platform:
+                    'campaignTemplate{currentGCPX{campaignTemplate{platform}}}',
+                remoteId:
+                    'campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}',
+                systemStatus:
+                    'campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}',
+                errors:
+                    'campaignTemplate{currentGCPX{campaignTemplate{errors}}}',
+                warnings:
+                    'campaignTemplate{currentGCPX{campaignTemplate{warnings}}}',
+                kpi: 'campaignTemplate{currentGCPX{campaignTemplate{kpi}}}',
+                marketplace: {
+                    id:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{id}}}}',
+                    creationDate:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{creationDate}}}}',
+                    lastChangeDate:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{lastChangeDate}}}}',
+                    name:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{name}}}}',
+                    systemStatus:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{systemStatus}}}}',
+                    errors:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{errors}}}}',
+                    warnings:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{warnings}}}}',
+                    currencyCode:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencyOffset}}}}',
+                },
+                marketingCampaigns: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{campaignTemplate{marketingCampaigns{totalCount}}}}',
+                },
+                GCPXHistory: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{campaignTemplate{GCPXHistory{totalCount}}}}',
+                },
+                currentGCPX: {
+                    id:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{id}}}}',
+                    creationDate:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{creationDate}}}}',
+                    lastChangeDate:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{lastChangeDate}}}}',
+                    kpi:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{kpi}}}}',
+                    price:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{price}}}}',
+                    startDate:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{startDate}}}}',
+                    endDate:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{endDate}}}}',
+                    minConversions:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{minConversions}}}}',
+                    maxConversions:
+                        'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{maxConversions}}}}',
+                },
+            },
+            marketplace: {
+                id: 'campaignTemplate{currentGCPX{marketplace{id}}}',
+                creationDate:
+                    'campaignTemplate{currentGCPX{marketplace{creationDate}}}',
+                lastChangeDate:
+                    'campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}',
+                name: 'campaignTemplate{currentGCPX{marketplace{name}}}',
+                systemStatus:
+                    'campaignTemplate{currentGCPX{marketplace{systemStatus}}}',
+                errors: 'campaignTemplate{currentGCPX{marketplace{errors}}}',
+                warnings:
+                    'campaignTemplate{currentGCPX{marketplace{warnings}}}',
+                currencyCode:
+                    'campaignTemplate{currentGCPX{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'campaignTemplate{currentGCPX{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'campaignTemplate{currentGCPX{marketplace{currencyOffset}}}',
+                organization: {
+                    id:
+                        'campaignTemplate{currentGCPX{marketplace{organization{id}}}}',
+                    creationDate:
+                        'campaignTemplate{currentGCPX{marketplace{organization{creationDate}}}}',
+                    lastChangeDate:
+                        'campaignTemplate{currentGCPX{marketplace{organization{lastChangeDate}}}}',
+                    name:
+                        'campaignTemplate{currentGCPX{marketplace{organization{name}}}}',
+                    systemStatus:
+                        'campaignTemplate{currentGCPX{marketplace{organization{systemStatus}}}}',
+                    errors:
+                        'campaignTemplate{currentGCPX{marketplace{organization{errors}}}}',
+                    warnings:
+                        'campaignTemplate{currentGCPX{marketplace{organization{warnings}}}}',
+                    tier:
+                        'campaignTemplate{currentGCPX{marketplace{organization{tier}}}}',
+                },
+                mediaChannels: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{marketplace{mediaChannels{totalCount}}}}',
+                },
+                campaignTemplates: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{marketplace{campaignTemplates{totalCount}}}}',
+                },
+                vendors: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{marketplace{vendors{totalCount}}}}',
+                },
+                vendorTokens: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{marketplace{vendorTokens{totalCount}}}}',
+                },
+                creativeTemplates: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{marketplace{creativeTemplates{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'campaignTemplate{currentGCPX{marketplace{products{totalCount}}}}',
+                },
+            },
+            marketingCampaigns: {
+                edges: {
+                    cursor:
+                        'campaignTemplate{currentGCPX{marketingCampaigns{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}',
+            },
+        },
     },
     mediaChannel: {
         id: 'mediaChannel{id}',
@@ -5847,10 +8340,12 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         name: 'mediaChannel{name}',
         systemStatus: 'mediaChannel{systemStatus}',
         errors: 'mediaChannel{errors}',
+        warnings: 'mediaChannel{warnings}',
         platform: 'mediaChannel{platform}',
         remoteId: 'mediaChannel{remoteId}',
         remoteState: 'mediaChannel{remoteState}',
         currency: 'mediaChannel{currency}',
+        currencyCode: 'mediaChannel{currencyCode}',
         currencySymbol: 'mediaChannel{currencySymbol}',
         currencyOffset: 'mediaChannel{currencyOffset}',
         timezone: 'mediaChannel{timezone}',
@@ -5874,6 +8369,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     dataFeedId:
                         'mediaChannel{catalogs{edges{node{dataFeedId}}}}',
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}',
+                    warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}',
                 },
                 cursor: 'mediaChannel{catalogs{edges{cursor}}}',
             },
@@ -5893,6 +8389,10 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
             name: 'mediaChannel{marketplace{name}}',
             systemStatus: 'mediaChannel{marketplace{systemStatus}}',
             errors: 'mediaChannel{marketplace{errors}}',
+            warnings: 'mediaChannel{marketplace{warnings}}',
+            currencyCode: 'mediaChannel{marketplace{currencyCode}}',
+            currencySymbol: 'mediaChannel{marketplace{currencySymbol}}',
+            currencyOffset: 'mediaChannel{marketplace{currencyOffset}}',
             organization: {
                 id: 'mediaChannel{marketplace{organization{id}}}',
                 creationDate:
@@ -5903,6 +8403,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 systemStatus:
                     'mediaChannel{marketplace{organization{systemStatus}}}',
                 errors: 'mediaChannel{marketplace{organization{errors}}}',
+                warnings: 'mediaChannel{marketplace{organization{warnings}}}',
                 tier: 'mediaChannel{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -6049,6 +8550,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     systemStatus:
                         'results{edges{node{resource{systemStatus}}}}',
                     errors: 'results{edges{node{resource{errors}}}}',
+                    warnings: 'results{edges{node{resource{warnings}}}}',
                 },
                 vendor: {
                     id: 'results{edges{node{vendor{id}}}}',
@@ -6058,6 +8560,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     name: 'results{edges{node{vendor{name}}}}',
                     systemStatus: 'results{edges{node{vendor{systemStatus}}}}',
                     errors: 'results{edges{node{vendor{errors}}}}',
+                    warnings: 'results{edges{node{vendor{warnings}}}}',
                 },
             },
             cursor: 'results{edges{cursor}}',
@@ -6090,6 +8593,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     systemStatus:
                         'notifications{edges{node{resource{systemStatus}}}}',
                     errors: 'notifications{edges{node{resource{errors}}}}',
+                    warnings: 'notifications{edges{node{resource{warnings}}}}',
                 },
             },
             cursor: 'notifications{edges{cursor}}',
@@ -6115,18 +8619,24 @@ export type MarketingCampaignField =
     | 'vendor{name}'
     | 'vendor{systemStatus}'
     | 'vendor{errors}'
+    | 'vendor{warnings}'
     | 'vendor{marketplace{id}}'
     | 'vendor{marketplace{creationDate}}'
     | 'vendor{marketplace{lastChangeDate}}'
     | 'vendor{marketplace{name}}'
     | 'vendor{marketplace{systemStatus}}'
     | 'vendor{marketplace{errors}}'
+    | 'vendor{marketplace{warnings}}'
+    | 'vendor{marketplace{currencyCode}}'
+    | 'vendor{marketplace{currencySymbol}}'
+    | 'vendor{marketplace{currencyOffset}}'
     | 'vendor{marketplace{organization{id}}}'
     | 'vendor{marketplace{organization{creationDate}}}'
     | 'vendor{marketplace{organization{lastChangeDate}}}'
     | 'vendor{marketplace{organization{name}}}'
     | 'vendor{marketplace{organization{systemStatus}}}'
     | 'vendor{marketplace{organization{errors}}}'
+    | 'vendor{marketplace{organization{warnings}}}'
     | 'vendor{marketplace{organization{tier}}}'
     | 'vendor{marketplace{organization{users{totalCount}}}}'
     | 'vendor{marketplace{organization{marketplaces{totalCount}}}}'
@@ -6195,11 +8705,181 @@ export type MarketingCampaignField =
     | 'vendor{products{totalCount}}'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'name'
     | 'status'
     | 'creativeSpec'
     | 'runTimeSpec'
     | 'locationSpec'
+    | 'conversionSpec'
+    | 'startDate'
+    | 'endDate'
+    | 'GCPX{id}'
+    | 'GCPX{creationDate}'
+    | 'GCPX{lastChangeDate}'
+    | 'GCPX{kpi}'
+    | 'GCPX{price}'
+    | 'GCPX{startDate}'
+    | 'GCPX{endDate}'
+    | 'GCPX{minConversions}'
+    | 'GCPX{maxConversions}'
+    | 'GCPX{campaignTemplate{id}}'
+    | 'GCPX{campaignTemplate{creationDate}}'
+    | 'GCPX{campaignTemplate{lastChangeDate}}'
+    | 'GCPX{campaignTemplate{name}}'
+    | 'GCPX{campaignTemplate{description}}'
+    | 'GCPX{campaignTemplate{platform}}'
+    | 'GCPX{campaignTemplate{remoteId}}'
+    | 'GCPX{campaignTemplate{systemStatus}}'
+    | 'GCPX{campaignTemplate{errors}}'
+    | 'GCPX{campaignTemplate{warnings}}'
+    | 'GCPX{campaignTemplate{kpi}}'
+    | 'GCPX{campaignTemplate{marketplace{id}}}'
+    | 'GCPX{campaignTemplate{marketplace{creationDate}}}'
+    | 'GCPX{campaignTemplate{marketplace{lastChangeDate}}}'
+    | 'GCPX{campaignTemplate{marketplace{name}}}'
+    | 'GCPX{campaignTemplate{marketplace{systemStatus}}}'
+    | 'GCPX{campaignTemplate{marketplace{errors}}}'
+    | 'GCPX{campaignTemplate{marketplace{warnings}}}'
+    | 'GCPX{campaignTemplate{marketplace{currencyCode}}}'
+    | 'GCPX{campaignTemplate{marketplace{currencySymbol}}}'
+    | 'GCPX{campaignTemplate{marketplace{currencyOffset}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{id}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{creationDate}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{lastChangeDate}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{name}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{systemStatus}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{errors}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{warnings}}}}'
+    | 'GCPX{campaignTemplate{marketplace{organization{tier}}}}'
+    | 'GCPX{campaignTemplate{marketplace{mediaChannels{totalCount}}}}'
+    | 'GCPX{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}'
+    | 'GCPX{campaignTemplate{marketplace{vendors{totalCount}}}}'
+    | 'GCPX{campaignTemplate{marketplace{vendorTokens{totalCount}}}}'
+    | 'GCPX{campaignTemplate{marketplace{creativeTemplates{totalCount}}}}'
+    | 'GCPX{campaignTemplate{marketplace{products{totalCount}}}}'
+    | 'GCPX{campaignTemplate{marketingCampaigns{edges{cursor}}}}'
+    | 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}}'
+    | 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{startCursor}}}}'
+    | 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}'
+    | 'GCPX{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{campaignTemplate{marketingCampaigns{totalCount}}}'
+    | 'GCPX{campaignTemplate{GCPXHistory{edges{cursor}}}}'
+    | 'GCPX{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}'
+    | 'GCPX{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}'
+    | 'GCPX{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}'
+    | 'GCPX{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{campaignTemplate{GCPXHistory{totalCount}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{id}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{creationDate}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{lastChangeDate}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{kpi}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{price}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{startDate}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{endDate}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{minConversions}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{maxConversions}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{id}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{name}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{description}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{id}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{creationDate}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{name}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{errors}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{warnings}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}'
+    | 'GCPX{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}'
+    | 'GCPX{marketplace{id}}'
+    | 'GCPX{marketplace{creationDate}}'
+    | 'GCPX{marketplace{lastChangeDate}}'
+    | 'GCPX{marketplace{name}}'
+    | 'GCPX{marketplace{systemStatus}}'
+    | 'GCPX{marketplace{errors}}'
+    | 'GCPX{marketplace{warnings}}'
+    | 'GCPX{marketplace{currencyCode}}'
+    | 'GCPX{marketplace{currencySymbol}}'
+    | 'GCPX{marketplace{currencyOffset}}'
+    | 'GCPX{marketplace{organization{id}}}'
+    | 'GCPX{marketplace{organization{creationDate}}}'
+    | 'GCPX{marketplace{organization{lastChangeDate}}}'
+    | 'GCPX{marketplace{organization{name}}}'
+    | 'GCPX{marketplace{organization{systemStatus}}}'
+    | 'GCPX{marketplace{organization{errors}}}'
+    | 'GCPX{marketplace{organization{warnings}}}'
+    | 'GCPX{marketplace{organization{tier}}}'
+    | 'GCPX{marketplace{organization{users{totalCount}}}}'
+    | 'GCPX{marketplace{organization{marketplaces{totalCount}}}}'
+    | 'GCPX{marketplace{mediaChannels{edges{cursor}}}}'
+    | 'GCPX{marketplace{mediaChannels{pageInfo{endCursor}}}}'
+    | 'GCPX{marketplace{mediaChannels{pageInfo{startCursor}}}}'
+    | 'GCPX{marketplace{mediaChannels{pageInfo{hasNextPage}}}}'
+    | 'GCPX{marketplace{mediaChannels{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{marketplace{mediaChannels{totalCount}}}'
+    | 'GCPX{marketplace{campaignTemplates{edges{cursor}}}}'
+    | 'GCPX{marketplace{campaignTemplates{pageInfo{endCursor}}}}'
+    | 'GCPX{marketplace{campaignTemplates{pageInfo{startCursor}}}}'
+    | 'GCPX{marketplace{campaignTemplates{pageInfo{hasNextPage}}}}'
+    | 'GCPX{marketplace{campaignTemplates{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{marketplace{campaignTemplates{totalCount}}}'
+    | 'GCPX{marketplace{vendors{edges{cursor}}}}'
+    | 'GCPX{marketplace{vendors{pageInfo{endCursor}}}}'
+    | 'GCPX{marketplace{vendors{pageInfo{startCursor}}}}'
+    | 'GCPX{marketplace{vendors{pageInfo{hasNextPage}}}}'
+    | 'GCPX{marketplace{vendors{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{marketplace{vendors{totalCount}}}'
+    | 'GCPX{marketplace{vendorTokens{edges{cursor}}}}'
+    | 'GCPX{marketplace{vendorTokens{pageInfo{endCursor}}}}'
+    | 'GCPX{marketplace{vendorTokens{pageInfo{startCursor}}}}'
+    | 'GCPX{marketplace{vendorTokens{pageInfo{hasNextPage}}}}'
+    | 'GCPX{marketplace{vendorTokens{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{marketplace{vendorTokens{totalCount}}}'
+    | 'GCPX{marketplace{creativeTemplates{edges{cursor}}}}'
+    | 'GCPX{marketplace{creativeTemplates{pageInfo{endCursor}}}}'
+    | 'GCPX{marketplace{creativeTemplates{pageInfo{startCursor}}}}'
+    | 'GCPX{marketplace{creativeTemplates{pageInfo{hasNextPage}}}}'
+    | 'GCPX{marketplace{creativeTemplates{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{marketplace{creativeTemplates{totalCount}}}'
+    | 'GCPX{marketplace{products{edges{cursor}}}}'
+    | 'GCPX{marketplace{products{pageInfo{endCursor}}}}'
+    | 'GCPX{marketplace{products{pageInfo{startCursor}}}}'
+    | 'GCPX{marketplace{products{pageInfo{hasNextPage}}}}'
+    | 'GCPX{marketplace{products{pageInfo{hasPreviousPage}}}}'
+    | 'GCPX{marketplace{products{totalCount}}}'
+    | 'GCPX{marketingCampaigns{edges{node{id}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{creationDate}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{lastChangeDate}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{resultsSource}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{kpi}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{systemStatus}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{errors}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{warnings}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{name}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{status}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{creativeSpec}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{runTimeSpec}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{locationSpec}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{conversionSpec}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{startDate}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{endDate}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{delivering}}}}'
+    | 'GCPX{marketingCampaigns{edges{cursor}}}'
+    | 'GCPX{marketingCampaigns{pageInfo{endCursor}}}'
+    | 'GCPX{marketingCampaigns{pageInfo{startCursor}}}'
+    | 'GCPX{marketingCampaigns{pageInfo{hasNextPage}}}'
+    | 'GCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}'
+    | 'GCPX{marketingCampaigns{totalCount}}'
     | 'delivering'
     | 'marketingAds{edges{node{id}}}'
     | 'marketingAds{edges{node{creationDate}}}'
@@ -6212,8 +8892,10 @@ export type MarketingCampaignField =
     | 'marketingAds{edges{node{vendor{name}}}}'
     | 'marketingAds{edges{node{vendor{systemStatus}}}}'
     | 'marketingAds{edges{node{vendor{errors}}}}'
+    | 'marketingAds{edges{node{vendor{warnings}}}}'
     | 'marketingAds{edges{node{systemStatus}}}'
     | 'marketingAds{edges{node{errors}}}'
+    | 'marketingAds{edges{node{warnings}}}'
     | 'marketingAds{edges{node{remoteId}}}'
     | 'marketingAds{edges{node{preview}}}'
     | 'marketingAds{edges{node{adPreviews{url}}}}'
@@ -6227,11 +8909,15 @@ export type MarketingCampaignField =
     | 'marketingAds{edges{node{marketingCampaign{kpi}}}}'
     | 'marketingAds{edges{node{marketingCampaign{systemStatus}}}}'
     | 'marketingAds{edges{node{marketingCampaign{errors}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{warnings}}}}'
     | 'marketingAds{edges{node{marketingCampaign{name}}}}'
     | 'marketingAds{edges{node{marketingCampaign{status}}}}'
     | 'marketingAds{edges{node{marketingCampaign{creativeSpec}}}}'
     | 'marketingAds{edges{node{marketingCampaign{runTimeSpec}}}}'
     | 'marketingAds{edges{node{marketingCampaign{locationSpec}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{conversionSpec}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{startDate}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{endDate}}}}'
     | 'marketingAds{edges{node{marketingCampaign{delivering}}}}'
     | 'marketingAds{edges{cursor}}'
     | 'marketingAds{pageInfo{endCursor}}'
@@ -6260,12 +8946,14 @@ export type MarketingCampaignField =
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
     | 'products{edges{node{catalog{errors}}}}'
+    | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
     | 'products{edges{node{vendor{creationDate}}}}'
     | 'products{edges{node{vendor{lastChangeDate}}}}'
     | 'products{edges{node{vendor{name}}}}'
     | 'products{edges{node{vendor{systemStatus}}}}'
     | 'products{edges{node{vendor{errors}}}}'
+    | 'products{edges{node{vendor{warnings}}}}'
     | 'products{edges{cursor}}'
     | 'products{pageInfo{endCursor}}'
     | 'products{pageInfo{startCursor}}'
@@ -6282,16 +8970,19 @@ export type MarketingCampaignField =
     | 'catalog{remoteState}'
     | 'catalog{dataFeedId}'
     | 'catalog{errors}'
+    | 'catalog{warnings}'
     | 'catalog{mediaChannel{id}}'
     | 'catalog{mediaChannel{creationDate}}'
     | 'catalog{mediaChannel{lastChangeDate}}'
     | 'catalog{mediaChannel{name}}'
     | 'catalog{mediaChannel{systemStatus}}'
     | 'catalog{mediaChannel{errors}}'
+    | 'catalog{mediaChannel{warnings}}'
     | 'catalog{mediaChannel{platform}}'
     | 'catalog{mediaChannel{remoteId}}'
     | 'catalog{mediaChannel{remoteState}}'
     | 'catalog{mediaChannel{currency}}'
+    | 'catalog{mediaChannel{currencyCode}}'
     | 'catalog{mediaChannel{currencySymbol}}'
     | 'catalog{mediaChannel{currencyOffset}}'
     | 'catalog{mediaChannel{timezone}}'
@@ -6308,12 +8999,17 @@ export type MarketingCampaignField =
     | 'catalog{mediaChannel{marketplace{name}}}'
     | 'catalog{mediaChannel{marketplace{systemStatus}}}'
     | 'catalog{mediaChannel{marketplace{errors}}}'
+    | 'catalog{mediaChannel{marketplace{warnings}}}'
+    | 'catalog{mediaChannel{marketplace{currencyCode}}}'
+    | 'catalog{mediaChannel{marketplace{currencySymbol}}}'
+    | 'catalog{mediaChannel{marketplace{currencyOffset}}}'
     | 'catalog{mediaChannel{marketplace{organization{id}}}}'
     | 'catalog{mediaChannel{marketplace{organization{creationDate}}}}'
     | 'catalog{mediaChannel{marketplace{organization{lastChangeDate}}}}'
     | 'catalog{mediaChannel{marketplace{organization{name}}}}'
     | 'catalog{mediaChannel{marketplace{organization{systemStatus}}}}'
     | 'catalog{mediaChannel{marketplace{organization{errors}}}}'
+    | 'catalog{mediaChannel{marketplace{organization{warnings}}}}'
     | 'catalog{mediaChannel{marketplace{organization{tier}}}}'
     | 'catalog{mediaChannel{marketplace{mediaChannels{totalCount}}}}'
     | 'catalog{mediaChannel{marketplace{campaignTemplates{totalCount}}}}'
@@ -6346,6 +9042,7 @@ export type MarketingCampaignField =
     | 'campaignTemplate{remoteId}'
     | 'campaignTemplate{systemStatus}'
     | 'campaignTemplate{errors}'
+    | 'campaignTemplate{warnings}'
     | 'campaignTemplate{kpi}'
     | 'campaignTemplate{marketplace{id}}'
     | 'campaignTemplate{marketplace{creationDate}}'
@@ -6353,12 +9050,17 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketplace{name}}'
     | 'campaignTemplate{marketplace{systemStatus}}'
     | 'campaignTemplate{marketplace{errors}}'
+    | 'campaignTemplate{marketplace{warnings}}'
+    | 'campaignTemplate{marketplace{currencyCode}}'
+    | 'campaignTemplate{marketplace{currencySymbol}}'
+    | 'campaignTemplate{marketplace{currencyOffset}}'
     | 'campaignTemplate{marketplace{organization{id}}}'
     | 'campaignTemplate{marketplace{organization{creationDate}}}'
     | 'campaignTemplate{marketplace{organization{lastChangeDate}}}'
     | 'campaignTemplate{marketplace{organization{name}}}'
     | 'campaignTemplate{marketplace{organization{systemStatus}}}'
     | 'campaignTemplate{marketplace{organization{errors}}}'
+    | 'campaignTemplate{marketplace{organization{warnings}}}'
     | 'campaignTemplate{marketplace{organization{tier}}}'
     | 'campaignTemplate{marketplace{organization{users{totalCount}}}}'
     | 'campaignTemplate{marketplace{organization{marketplaces{totalCount}}}}'
@@ -6405,11 +9107,15 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketingCampaigns{edges{node{kpi}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{systemStatus}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{errors}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{warnings}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{name}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{status}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{locationSpec}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{conversionSpec}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{startDate}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{endDate}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{cursor}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}'
@@ -6417,16 +9123,104 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}'
     | 'campaignTemplate{marketingCampaigns{totalCount}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{id}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{creationDate}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{lastChangeDate}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{kpi}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{price}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{startDate}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{endDate}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{minConversions}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{node{maxConversions}}}}'
+    | 'campaignTemplate{GCPXHistory{edges{cursor}}}'
+    | 'campaignTemplate{GCPXHistory{pageInfo{endCursor}}}'
+    | 'campaignTemplate{GCPXHistory{pageInfo{startCursor}}}'
+    | 'campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}'
+    | 'campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}'
+    | 'campaignTemplate{GCPXHistory{totalCount}}'
+    | 'campaignTemplate{currentGCPX{id}}'
+    | 'campaignTemplate{currentGCPX{creationDate}}'
+    | 'campaignTemplate{currentGCPX{lastChangeDate}}'
+    | 'campaignTemplate{currentGCPX{kpi}}'
+    | 'campaignTemplate{currentGCPX{price}}'
+    | 'campaignTemplate{currentGCPX{startDate}}'
+    | 'campaignTemplate{currentGCPX{endDate}}'
+    | 'campaignTemplate{currentGCPX{minConversions}}'
+    | 'campaignTemplate{currentGCPX{maxConversions}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{id}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{name}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{description}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{platform}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{errors}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{warnings}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{kpi}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{id}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{creationDate}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{lastChangeDate}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{name}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{systemStatus}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{errors}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{warnings}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencyCode}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencySymbol}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketplace{currencyOffset}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{marketingCampaigns{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{GCPXHistory{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{id}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{creationDate}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{lastChangeDate}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{kpi}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{price}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{startDate}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{endDate}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{minConversions}}}}'
+    | 'campaignTemplate{currentGCPX{campaignTemplate{currentGCPX{maxConversions}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{id}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{creationDate}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{name}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{systemStatus}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{errors}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{warnings}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{currencyCode}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{currencySymbol}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{currencyOffset}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{id}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{creationDate}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{lastChangeDate}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{name}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{systemStatus}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{errors}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{warnings}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{organization{tier}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{mediaChannels{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{campaignTemplates{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{vendors{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{vendorTokens{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{creativeTemplates{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{marketplace{products{totalCount}}}}'
+    | 'campaignTemplate{currentGCPX{marketingCampaigns{edges{cursor}}}}'
+    | 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{endCursor}}}}'
+    | 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{startCursor}}}}'
+    | 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{hasNextPage}}}}'
+    | 'campaignTemplate{currentGCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}}'
+    | 'campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}'
     | 'mediaChannel{id}'
     | 'mediaChannel{creationDate}'
     | 'mediaChannel{lastChangeDate}'
     | 'mediaChannel{name}'
     | 'mediaChannel{systemStatus}'
     | 'mediaChannel{errors}'
+    | 'mediaChannel{warnings}'
     | 'mediaChannel{platform}'
     | 'mediaChannel{remoteId}'
     | 'mediaChannel{remoteState}'
     | 'mediaChannel{currency}'
+    | 'mediaChannel{currencyCode}'
     | 'mediaChannel{currencySymbol}'
     | 'mediaChannel{currencyOffset}'
     | 'mediaChannel{timezone}'
@@ -6441,6 +9235,7 @@ export type MarketingCampaignField =
     | 'mediaChannel{catalogs{edges{node{remoteState}}}}'
     | 'mediaChannel{catalogs{edges{node{dataFeedId}}}}'
     | 'mediaChannel{catalogs{edges{node{errors}}}}'
+    | 'mediaChannel{catalogs{edges{node{warnings}}}}'
     | 'mediaChannel{catalogs{edges{cursor}}}'
     | 'mediaChannel{catalogs{pageInfo{endCursor}}}'
     | 'mediaChannel{catalogs{pageInfo{startCursor}}}'
@@ -6453,12 +9248,17 @@ export type MarketingCampaignField =
     | 'mediaChannel{marketplace{name}}'
     | 'mediaChannel{marketplace{systemStatus}}'
     | 'mediaChannel{marketplace{errors}}'
+    | 'mediaChannel{marketplace{warnings}}'
+    | 'mediaChannel{marketplace{currencyCode}}'
+    | 'mediaChannel{marketplace{currencySymbol}}'
+    | 'mediaChannel{marketplace{currencyOffset}}'
     | 'mediaChannel{marketplace{organization{id}}}'
     | 'mediaChannel{marketplace{organization{creationDate}}}'
     | 'mediaChannel{marketplace{organization{lastChangeDate}}}'
     | 'mediaChannel{marketplace{organization{name}}}'
     | 'mediaChannel{marketplace{organization{systemStatus}}}'
     | 'mediaChannel{marketplace{organization{errors}}}'
+    | 'mediaChannel{marketplace{organization{warnings}}}'
     | 'mediaChannel{marketplace{organization{tier}}}'
     | 'mediaChannel{marketplace{organization{users{totalCount}}}}'
     | 'mediaChannel{marketplace{organization{marketplaces{totalCount}}}}'
@@ -6516,12 +9316,14 @@ export type MarketingCampaignField =
     | 'results{edges{node{resource{kpi}}}}'
     | 'results{edges{node{resource{systemStatus}}}}'
     | 'results{edges{node{resource{errors}}}}'
+    | 'results{edges{node{resource{warnings}}}}'
     | 'results{edges{node{vendor{id}}}}'
     | 'results{edges{node{vendor{creationDate}}}}'
     | 'results{edges{node{vendor{lastChangeDate}}}}'
     | 'results{edges{node{vendor{name}}}}'
     | 'results{edges{node{vendor{systemStatus}}}}'
     | 'results{edges{node{vendor{errors}}}}'
+    | 'results{edges{node{vendor{warnings}}}}'
     | 'results{edges{cursor}}'
     | 'results{pageInfo{endCursor}}'
     | 'results{pageInfo{startCursor}}'
@@ -6541,6 +9343,7 @@ export type MarketingCampaignField =
     | 'notifications{edges{node{resource{lastChangeDate}}}}'
     | 'notifications{edges{node{resource{systemStatus}}}}'
     | 'notifications{edges{node{resource{errors}}}}'
+    | 'notifications{edges{node{resource{warnings}}}}'
     | 'notifications{edges{cursor}}'
     | 'notifications{pageInfo{endCursor}}'
     | 'notifications{pageInfo{startCursor}}'
@@ -6554,6 +9357,7 @@ export type VendorFields = {
     name: 'name';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     marketplace: {
         id: 'marketplace{id}';
         creationDate: 'marketplace{creationDate}';
@@ -6561,6 +9365,10 @@ export type VendorFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -6568,6 +9376,7 @@ export type VendorFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -6603,10 +9412,12 @@ export type VendorFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -6634,6 +9445,7 @@ export type VendorFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -6655,6 +9467,7 @@ export type VendorFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -6696,6 +9509,7 @@ export type VendorFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -6746,6 +9560,7 @@ export type VendorFields = {
                     name: 'vendorTokens{edges{node{vendor{name}}}}';
                     systemStatus: 'vendorTokens{edges{node{vendor{systemStatus}}}}';
                     errors: 'vendorTokens{edges{node{vendor{errors}}}}';
+                    warnings: 'vendorTokens{edges{node{vendor{warnings}}}}';
                 };
                 marketplace: {
                     id: 'vendorTokens{edges{node{marketplace{id}}}}';
@@ -6754,6 +9569,10 @@ export type VendorFields = {
                     name: 'vendorTokens{edges{node{marketplace{name}}}}';
                     systemStatus: 'vendorTokens{edges{node{marketplace{systemStatus}}}}';
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}';
+                    warnings: 'vendorTokens{edges{node{marketplace{warnings}}}}';
+                    currencyCode: 'vendorTokens{edges{node{marketplace{currencyCode}}}}';
+                    currencySymbol: 'vendorTokens{edges{node{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'vendorTokens{edges{node{marketplace{currencyOffset}}}}';
                 };
                 email: 'vendorTokens{edges{node{email}}}';
             };
@@ -6794,6 +9613,7 @@ export type VendorFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
+                    warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}';
@@ -6802,6 +9622,7 @@ export type VendorFields = {
                     name: 'products{edges{node{vendor{name}}}}';
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}';
                     errors: 'products{edges{node{vendor{errors}}}}';
+                    warnings: 'products{edges{node{vendor{warnings}}}}';
                 };
             };
             cursor: 'products{edges{cursor}}';
@@ -6822,6 +9643,7 @@ export const VendorFields: VendorFields = {
     name: 'name',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     marketplace: {
         id: 'marketplace{id}',
         creationDate: 'marketplace{creationDate}',
@@ -6829,6 +9651,10 @@ export const VendorFields: VendorFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -6836,6 +9662,7 @@ export const VendorFields: VendorFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -6884,6 +9711,8 @@ export const VendorFields: VendorFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -6892,6 +9721,8 @@ export const VendorFields: VendorFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -6933,6 +9764,8 @@ export const VendorFields: VendorFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -6961,6 +9794,7 @@ export const VendorFields: VendorFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -7011,6 +9845,8 @@ export const VendorFields: VendorFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -7073,6 +9909,7 @@ export const VendorFields: VendorFields = {
                     systemStatus:
                         'vendorTokens{edges{node{vendor{systemStatus}}}}',
                     errors: 'vendorTokens{edges{node{vendor{errors}}}}',
+                    warnings: 'vendorTokens{edges{node{vendor{warnings}}}}',
                 },
                 marketplace: {
                     id: 'vendorTokens{edges{node{marketplace{id}}}}',
@@ -7084,6 +9921,14 @@ export const VendorFields: VendorFields = {
                     systemStatus:
                         'vendorTokens{edges{node{marketplace{systemStatus}}}}',
                     errors: 'vendorTokens{edges{node{marketplace{errors}}}}',
+                    warnings:
+                        'vendorTokens{edges{node{marketplace{warnings}}}}',
+                    currencyCode:
+                        'vendorTokens{edges{node{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'vendorTokens{edges{node{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'vendorTokens{edges{node{marketplace{currencyOffset}}}}',
                 },
                 email: 'vendorTokens{edges{node{email}}}',
             },
@@ -7128,6 +9973,7 @@ export const VendorFields: VendorFields = {
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
+                    warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
                 vendor: {
                     id: 'products{edges{node{vendor{id}}}}',
@@ -7137,6 +9983,7 @@ export const VendorFields: VendorFields = {
                     name: 'products{edges{node{vendor{name}}}}',
                     systemStatus: 'products{edges{node{vendor{systemStatus}}}}',
                     errors: 'products{edges{node{vendor{errors}}}}',
+                    warnings: 'products{edges{node{vendor{warnings}}}}',
                 },
             },
             cursor: 'products{edges{cursor}}',
@@ -7157,18 +10004,24 @@ export type VendorField =
     | 'name'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'marketplace{id}'
     | 'marketplace{creationDate}'
     | 'marketplace{lastChangeDate}'
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -7188,10 +10041,12 @@ export type VendorField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -7211,6 +10066,7 @@ export type VendorField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -7224,6 +10080,7 @@ export type VendorField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -7249,6 +10106,7 @@ export type VendorField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -7281,12 +10139,17 @@ export type VendorField =
     | 'vendorTokens{edges{node{vendor{name}}}}'
     | 'vendorTokens{edges{node{vendor{systemStatus}}}}'
     | 'vendorTokens{edges{node{vendor{errors}}}}'
+    | 'vendorTokens{edges{node{vendor{warnings}}}}'
     | 'vendorTokens{edges{node{marketplace{id}}}}'
     | 'vendorTokens{edges{node{marketplace{creationDate}}}}'
     | 'vendorTokens{edges{node{marketplace{lastChangeDate}}}}'
     | 'vendorTokens{edges{node{marketplace{name}}}}'
     | 'vendorTokens{edges{node{marketplace{systemStatus}}}}'
     | 'vendorTokens{edges{node{marketplace{errors}}}}'
+    | 'vendorTokens{edges{node{marketplace{warnings}}}}'
+    | 'vendorTokens{edges{node{marketplace{currencyCode}}}}'
+    | 'vendorTokens{edges{node{marketplace{currencySymbol}}}}'
+    | 'vendorTokens{edges{node{marketplace{currencyOffset}}}}'
     | 'vendorTokens{edges{node{email}}}'
     | 'vendorTokens{edges{cursor}}'
     | 'vendorTokens{pageInfo{endCursor}}'
@@ -7315,12 +10178,14 @@ export type VendorField =
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
     | 'products{edges{node{catalog{errors}}}}'
+    | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
     | 'products{edges{node{vendor{creationDate}}}}'
     | 'products{edges{node{vendor{lastChangeDate}}}}'
     | 'products{edges{node{vendor{name}}}}'
     | 'products{edges{node{vendor{systemStatus}}}}'
     | 'products{edges{node{vendor{errors}}}}'
+    | 'products{edges{node{vendor{warnings}}}}'
     | 'products{edges{cursor}}'
     | 'products{pageInfo{endCursor}}'
     | 'products{pageInfo{startCursor}}'
@@ -7339,6 +10204,7 @@ export type VendorTokenFields = {
         name: 'vendor{name}';
         systemStatus: 'vendor{systemStatus}';
         errors: 'vendor{errors}';
+        warnings: 'vendor{warnings}';
         marketplace: {
             id: 'vendor{marketplace{id}}';
             creationDate: 'vendor{marketplace{creationDate}}';
@@ -7346,6 +10212,10 @@ export type VendorTokenFields = {
             name: 'vendor{marketplace{name}}';
             systemStatus: 'vendor{marketplace{systemStatus}}';
             errors: 'vendor{marketplace{errors}}';
+            warnings: 'vendor{marketplace{warnings}}';
+            currencyCode: 'vendor{marketplace{currencyCode}}';
+            currencySymbol: 'vendor{marketplace{currencySymbol}}';
+            currencyOffset: 'vendor{marketplace{currencyOffset}}';
             organization: {
                 id: 'vendor{marketplace{organization{id}}}';
                 creationDate: 'vendor{marketplace{organization{creationDate}}}';
@@ -7353,6 +10223,7 @@ export type VendorTokenFields = {
                 name: 'vendor{marketplace{organization{name}}}';
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}';
                 errors: 'vendor{marketplace{organization{errors}}}';
+                warnings: 'vendor{marketplace{organization{warnings}}}';
                 tier: 'vendor{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'vendor{marketplace{organization{users{totalCount}}}}';
@@ -7485,6 +10356,10 @@ export type VendorTokenFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -7492,6 +10367,7 @@ export type VendorTokenFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -7527,10 +10403,12 @@ export type VendorTokenFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -7558,6 +10436,7 @@ export type VendorTokenFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -7579,6 +10458,7 @@ export type VendorTokenFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -7620,6 +10500,7 @@ export type VendorTokenFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -7670,6 +10551,7 @@ export const VendorTokenFields: VendorTokenFields = {
         name: 'vendor{name}',
         systemStatus: 'vendor{systemStatus}',
         errors: 'vendor{errors}',
+        warnings: 'vendor{warnings}',
         marketplace: {
             id: 'vendor{marketplace{id}}',
             creationDate: 'vendor{marketplace{creationDate}}',
@@ -7677,6 +10559,10 @@ export const VendorTokenFields: VendorTokenFields = {
             name: 'vendor{marketplace{name}}',
             systemStatus: 'vendor{marketplace{systemStatus}}',
             errors: 'vendor{marketplace{errors}}',
+            warnings: 'vendor{marketplace{warnings}}',
+            currencyCode: 'vendor{marketplace{currencyCode}}',
+            currencySymbol: 'vendor{marketplace{currencySymbol}}',
+            currencyOffset: 'vendor{marketplace{currencyOffset}}',
             organization: {
                 id: 'vendor{marketplace{organization{id}}}',
                 creationDate: 'vendor{marketplace{organization{creationDate}}}',
@@ -7685,6 +10571,7 @@ export const VendorTokenFields: VendorTokenFields = {
                 name: 'vendor{marketplace{organization{name}}}',
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}',
                 errors: 'vendor{marketplace{organization{errors}}}',
+                warnings: 'vendor{marketplace{organization{warnings}}}',
                 tier: 'vendor{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -7851,6 +10738,10 @@ export const VendorTokenFields: VendorTokenFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -7858,6 +10749,7 @@ export const VendorTokenFields: VendorTokenFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -7906,6 +10798,8 @@ export const VendorTokenFields: VendorTokenFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -7914,6 +10808,8 @@ export const VendorTokenFields: VendorTokenFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -7955,6 +10851,8 @@ export const VendorTokenFields: VendorTokenFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -7983,6 +10881,7 @@ export const VendorTokenFields: VendorTokenFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -8033,6 +10932,8 @@ export const VendorTokenFields: VendorTokenFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -8091,18 +10992,24 @@ export type VendorTokenField =
     | 'vendor{name}'
     | 'vendor{systemStatus}'
     | 'vendor{errors}'
+    | 'vendor{warnings}'
     | 'vendor{marketplace{id}}'
     | 'vendor{marketplace{creationDate}}'
     | 'vendor{marketplace{lastChangeDate}}'
     | 'vendor{marketplace{name}}'
     | 'vendor{marketplace{systemStatus}}'
     | 'vendor{marketplace{errors}}'
+    | 'vendor{marketplace{warnings}}'
+    | 'vendor{marketplace{currencyCode}}'
+    | 'vendor{marketplace{currencySymbol}}'
+    | 'vendor{marketplace{currencyOffset}}'
     | 'vendor{marketplace{organization{id}}}'
     | 'vendor{marketplace{organization{creationDate}}}'
     | 'vendor{marketplace{organization{lastChangeDate}}}'
     | 'vendor{marketplace{organization{name}}}'
     | 'vendor{marketplace{organization{systemStatus}}}'
     | 'vendor{marketplace{organization{errors}}}'
+    | 'vendor{marketplace{organization{warnings}}}'
     | 'vendor{marketplace{organization{tier}}}'
     | 'vendor{marketplace{organization{users{totalCount}}}}'
     | 'vendor{marketplace{organization{marketplaces{totalCount}}}}'
@@ -8175,12 +11082,17 @@ export type VendorTokenField =
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -8200,10 +11112,12 @@ export type VendorTokenField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -8223,6 +11137,7 @@ export type VendorTokenField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -8236,6 +11151,7 @@ export type VendorTokenField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -8261,6 +11177,7 @@ export type VendorTokenField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -8297,6 +11214,7 @@ export type MarketingAdFields = {
         name: 'vendor{name}';
         systemStatus: 'vendor{systemStatus}';
         errors: 'vendor{errors}';
+        warnings: 'vendor{warnings}';
         marketplace: {
             id: 'vendor{marketplace{id}}';
             creationDate: 'vendor{marketplace{creationDate}}';
@@ -8304,6 +11222,10 @@ export type MarketingAdFields = {
             name: 'vendor{marketplace{name}}';
             systemStatus: 'vendor{marketplace{systemStatus}}';
             errors: 'vendor{marketplace{errors}}';
+            warnings: 'vendor{marketplace{warnings}}';
+            currencyCode: 'vendor{marketplace{currencyCode}}';
+            currencySymbol: 'vendor{marketplace{currencySymbol}}';
+            currencyOffset: 'vendor{marketplace{currencyOffset}}';
             organization: {
                 id: 'vendor{marketplace{organization{id}}}';
                 creationDate: 'vendor{marketplace{organization{creationDate}}}';
@@ -8311,6 +11233,7 @@ export type MarketingAdFields = {
                 name: 'vendor{marketplace{organization{name}}}';
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}';
                 errors: 'vendor{marketplace{organization{errors}}}';
+                warnings: 'vendor{marketplace{organization{warnings}}}';
                 tier: 'vendor{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'vendor{marketplace{organization{users{totalCount}}}}';
@@ -8438,6 +11361,7 @@ export type MarketingAdFields = {
     };
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     remoteId: 'remoteId';
     preview: 'preview';
     adPreviews: {
@@ -8469,6 +11393,7 @@ export type MarketingAdFields = {
                     kpi: 'results{edges{node{resource{kpi}}}}';
                     systemStatus: 'results{edges{node{resource{systemStatus}}}}';
                     errors: 'results{edges{node{resource{errors}}}}';
+                    warnings: 'results{edges{node{resource{warnings}}}}';
                 };
                 vendor: {
                     id: 'results{edges{node{vendor{id}}}}';
@@ -8477,6 +11402,7 @@ export type MarketingAdFields = {
                     name: 'results{edges{node{vendor{name}}}}';
                     systemStatus: 'results{edges{node{vendor{systemStatus}}}}';
                     errors: 'results{edges{node{vendor{errors}}}}';
+                    warnings: 'results{edges{node{vendor{warnings}}}}';
                 };
             };
             cursor: 'results{edges{cursor}}';
@@ -8502,6 +11428,7 @@ export type MarketingAdFields = {
             name: 'marketingCampaign{vendor{name}}';
             systemStatus: 'marketingCampaign{vendor{systemStatus}}';
             errors: 'marketingCampaign{vendor{errors}}';
+            warnings: 'marketingCampaign{vendor{warnings}}';
             marketplace: {
                 id: 'marketingCampaign{vendor{marketplace{id}}}';
                 creationDate: 'marketingCampaign{vendor{marketplace{creationDate}}}';
@@ -8509,6 +11436,10 @@ export type MarketingAdFields = {
                 name: 'marketingCampaign{vendor{marketplace{name}}}';
                 systemStatus: 'marketingCampaign{vendor{marketplace{systemStatus}}}';
                 errors: 'marketingCampaign{vendor{marketplace{errors}}}';
+                warnings: 'marketingCampaign{vendor{marketplace{warnings}}}';
+                currencyCode: 'marketingCampaign{vendor{marketplace{currencyCode}}}';
+                currencySymbol: 'marketingCampaign{vendor{marketplace{currencySymbol}}}';
+                currencyOffset: 'marketingCampaign{vendor{marketplace{currencyOffset}}}';
                 organization: {
                     id: 'marketingCampaign{vendor{marketplace{organization{id}}}}';
                     creationDate: 'marketingCampaign{vendor{marketplace{organization{creationDate}}}}';
@@ -8516,6 +11447,7 @@ export type MarketingAdFields = {
                     name: 'marketingCampaign{vendor{marketplace{organization{name}}}}';
                     systemStatus: 'marketingCampaign{vendor{marketplace{organization{systemStatus}}}}';
                     errors: 'marketingCampaign{vendor{marketplace{organization{errors}}}}';
+                    warnings: 'marketingCampaign{vendor{marketplace{organization{warnings}}}}';
                     tier: 'marketingCampaign{vendor{marketplace{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -8564,11 +11496,120 @@ export type MarketingAdFields = {
         };
         systemStatus: 'marketingCampaign{systemStatus}';
         errors: 'marketingCampaign{errors}';
+        warnings: 'marketingCampaign{warnings}';
         name: 'marketingCampaign{name}';
         status: 'marketingCampaign{status}';
         creativeSpec: 'marketingCampaign{creativeSpec}';
         runTimeSpec: 'marketingCampaign{runTimeSpec}';
         locationSpec: 'marketingCampaign{locationSpec}';
+        conversionSpec: 'marketingCampaign{conversionSpec}';
+        startDate: 'marketingCampaign{startDate}';
+        endDate: 'marketingCampaign{endDate}';
+        GCPX: {
+            id: 'marketingCampaign{GCPX{id}}';
+            creationDate: 'marketingCampaign{GCPX{creationDate}}';
+            lastChangeDate: 'marketingCampaign{GCPX{lastChangeDate}}';
+            kpi: 'marketingCampaign{GCPX{kpi}}';
+            price: 'marketingCampaign{GCPX{price}}';
+            startDate: 'marketingCampaign{GCPX{startDate}}';
+            endDate: 'marketingCampaign{GCPX{endDate}}';
+            minConversions: 'marketingCampaign{GCPX{minConversions}}';
+            maxConversions: 'marketingCampaign{GCPX{maxConversions}}';
+            campaignTemplate: {
+                id: 'marketingCampaign{GCPX{campaignTemplate{id}}}';
+                creationDate: 'marketingCampaign{GCPX{campaignTemplate{creationDate}}}';
+                lastChangeDate: 'marketingCampaign{GCPX{campaignTemplate{lastChangeDate}}}';
+                name: 'marketingCampaign{GCPX{campaignTemplate{name}}}';
+                description: 'marketingCampaign{GCPX{campaignTemplate{description}}}';
+                platform: 'marketingCampaign{GCPX{campaignTemplate{platform}}}';
+                remoteId: 'marketingCampaign{GCPX{campaignTemplate{remoteId}}}';
+                systemStatus: 'marketingCampaign{GCPX{campaignTemplate{systemStatus}}}';
+                errors: 'marketingCampaign{GCPX{campaignTemplate{errors}}}';
+                warnings: 'marketingCampaign{GCPX{campaignTemplate{warnings}}}';
+                kpi: 'marketingCampaign{GCPX{campaignTemplate{kpi}}}';
+                marketplace: {
+                    id: 'marketingCampaign{GCPX{campaignTemplate{marketplace{id}}}}';
+                    creationDate: 'marketingCampaign{GCPX{campaignTemplate{marketplace{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaign{GCPX{campaignTemplate{marketplace{lastChangeDate}}}}';
+                    name: 'marketingCampaign{GCPX{campaignTemplate{marketplace{name}}}}';
+                    systemStatus: 'marketingCampaign{GCPX{campaignTemplate{marketplace{systemStatus}}}}';
+                    errors: 'marketingCampaign{GCPX{campaignTemplate{marketplace{errors}}}}';
+                    warnings: 'marketingCampaign{GCPX{campaignTemplate{marketplace{warnings}}}}';
+                    currencyCode: 'marketingCampaign{GCPX{campaignTemplate{marketplace{currencyCode}}}}';
+                    currencySymbol: 'marketingCampaign{GCPX{campaignTemplate{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'marketingCampaign{GCPX{campaignTemplate{marketplace{currencyOffset}}}}';
+                };
+                marketingCampaigns: {
+                    totalCount: 'marketingCampaign{GCPX{campaignTemplate{marketingCampaigns{totalCount}}}}';
+                };
+                GCPXHistory: {
+                    totalCount: 'marketingCampaign{GCPX{campaignTemplate{GCPXHistory{totalCount}}}}';
+                };
+                currentGCPX: {
+                    id: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{id}}}}';
+                    creationDate: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{lastChangeDate}}}}';
+                    kpi: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{kpi}}}}';
+                    price: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{price}}}}';
+                    startDate: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{startDate}}}}';
+                    endDate: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{endDate}}}}';
+                    minConversions: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{minConversions}}}}';
+                    maxConversions: 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{maxConversions}}}}';
+                };
+            };
+            marketplace: {
+                id: 'marketingCampaign{GCPX{marketplace{id}}}';
+                creationDate: 'marketingCampaign{GCPX{marketplace{creationDate}}}';
+                lastChangeDate: 'marketingCampaign{GCPX{marketplace{lastChangeDate}}}';
+                name: 'marketingCampaign{GCPX{marketplace{name}}}';
+                systemStatus: 'marketingCampaign{GCPX{marketplace{systemStatus}}}';
+                errors: 'marketingCampaign{GCPX{marketplace{errors}}}';
+                warnings: 'marketingCampaign{GCPX{marketplace{warnings}}}';
+                currencyCode: 'marketingCampaign{GCPX{marketplace{currencyCode}}}';
+                currencySymbol: 'marketingCampaign{GCPX{marketplace{currencySymbol}}}';
+                currencyOffset: 'marketingCampaign{GCPX{marketplace{currencyOffset}}}';
+                organization: {
+                    id: 'marketingCampaign{GCPX{marketplace{organization{id}}}}';
+                    creationDate: 'marketingCampaign{GCPX{marketplace{organization{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaign{GCPX{marketplace{organization{lastChangeDate}}}}';
+                    name: 'marketingCampaign{GCPX{marketplace{organization{name}}}}';
+                    systemStatus: 'marketingCampaign{GCPX{marketplace{organization{systemStatus}}}}';
+                    errors: 'marketingCampaign{GCPX{marketplace{organization{errors}}}}';
+                    warnings: 'marketingCampaign{GCPX{marketplace{organization{warnings}}}}';
+                    tier: 'marketingCampaign{GCPX{marketplace{organization{tier}}}}';
+                };
+                mediaChannels: {
+                    totalCount: 'marketingCampaign{GCPX{marketplace{mediaChannels{totalCount}}}}';
+                };
+                campaignTemplates: {
+                    totalCount: 'marketingCampaign{GCPX{marketplace{campaignTemplates{totalCount}}}}';
+                };
+                vendors: {
+                    totalCount: 'marketingCampaign{GCPX{marketplace{vendors{totalCount}}}}';
+                };
+                vendorTokens: {
+                    totalCount: 'marketingCampaign{GCPX{marketplace{vendorTokens{totalCount}}}}';
+                };
+                creativeTemplates: {
+                    totalCount: 'marketingCampaign{GCPX{marketplace{creativeTemplates{totalCount}}}}';
+                };
+                products: {
+                    totalCount: 'marketingCampaign{GCPX{marketplace{products{totalCount}}}}';
+                };
+            };
+            marketingCampaigns: {
+                edges: {
+                    cursor: 'marketingCampaign{GCPX{marketingCampaigns{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{endCursor}}}}';
+                    startCursor: 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{startCursor}}}}';
+                    hasNextPage: 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'marketingCampaign{GCPX{marketingCampaigns{totalCount}}}';
+            };
+        };
         delivering: 'marketingCampaign{delivering}';
         marketingAds: {
             edges: {
@@ -8580,6 +11621,7 @@ export type MarketingAdFields = {
                     kpi: 'marketingCampaign{marketingAds{edges{node{kpi}}}}';
                     systemStatus: 'marketingCampaign{marketingAds{edges{node{systemStatus}}}}';
                     errors: 'marketingCampaign{marketingAds{edges{node{errors}}}}';
+                    warnings: 'marketingCampaign{marketingAds{edges{node{warnings}}}}';
                     remoteId: 'marketingCampaign{marketingAds{edges{node{remoteId}}}}';
                     preview: 'marketingCampaign{marketingAds{edges{node{preview}}}}';
                 };
@@ -8628,6 +11670,7 @@ export type MarketingAdFields = {
             remoteState: 'marketingCampaign{catalog{remoteState}}';
             dataFeedId: 'marketingCampaign{catalog{dataFeedId}}';
             errors: 'marketingCampaign{catalog{errors}}';
+            warnings: 'marketingCampaign{catalog{warnings}}';
             mediaChannel: {
                 id: 'marketingCampaign{catalog{mediaChannel{id}}}';
                 creationDate: 'marketingCampaign{catalog{mediaChannel{creationDate}}}';
@@ -8635,10 +11678,12 @@ export type MarketingAdFields = {
                 name: 'marketingCampaign{catalog{mediaChannel{name}}}';
                 systemStatus: 'marketingCampaign{catalog{mediaChannel{systemStatus}}}';
                 errors: 'marketingCampaign{catalog{mediaChannel{errors}}}';
+                warnings: 'marketingCampaign{catalog{mediaChannel{warnings}}}';
                 platform: 'marketingCampaign{catalog{mediaChannel{platform}}}';
                 remoteId: 'marketingCampaign{catalog{mediaChannel{remoteId}}}';
                 remoteState: 'marketingCampaign{catalog{mediaChannel{remoteState}}}';
                 currency: 'marketingCampaign{catalog{mediaChannel{currency}}}';
+                currencyCode: 'marketingCampaign{catalog{mediaChannel{currencyCode}}}';
                 currencySymbol: 'marketingCampaign{catalog{mediaChannel{currencySymbol}}}';
                 currencyOffset: 'marketingCampaign{catalog{mediaChannel{currencyOffset}}}';
                 timezone: 'marketingCampaign{catalog{mediaChannel{timezone}}}';
@@ -8653,6 +11698,10 @@ export type MarketingAdFields = {
                     name: 'marketingCampaign{catalog{mediaChannel{marketplace{name}}}}';
                     systemStatus: 'marketingCampaign{catalog{mediaChannel{marketplace{systemStatus}}}}';
                     errors: 'marketingCampaign{catalog{mediaChannel{marketplace{errors}}}}';
+                    warnings: 'marketingCampaign{catalog{mediaChannel{marketplace{warnings}}}}';
+                    currencyCode: 'marketingCampaign{catalog{mediaChannel{marketplace{currencyCode}}}}';
+                    currencySymbol: 'marketingCampaign{catalog{mediaChannel{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'marketingCampaign{catalog{mediaChannel{marketplace{currencyOffset}}}}';
                 };
             };
             products: {
@@ -8678,6 +11727,7 @@ export type MarketingAdFields = {
             remoteId: 'marketingCampaign{campaignTemplate{remoteId}}';
             systemStatus: 'marketingCampaign{campaignTemplate{systemStatus}}';
             errors: 'marketingCampaign{campaignTemplate{errors}}';
+            warnings: 'marketingCampaign{campaignTemplate{warnings}}';
             kpi: 'marketingCampaign{campaignTemplate{kpi}}';
             marketplace: {
                 id: 'marketingCampaign{campaignTemplate{marketplace{id}}}';
@@ -8686,6 +11736,10 @@ export type MarketingAdFields = {
                 name: 'marketingCampaign{campaignTemplate{marketplace{name}}}';
                 systemStatus: 'marketingCampaign{campaignTemplate{marketplace{systemStatus}}}';
                 errors: 'marketingCampaign{campaignTemplate{marketplace{errors}}}';
+                warnings: 'marketingCampaign{campaignTemplate{marketplace{warnings}}}';
+                currencyCode: 'marketingCampaign{campaignTemplate{marketplace{currencyCode}}}';
+                currencySymbol: 'marketingCampaign{campaignTemplate{marketplace{currencySymbol}}}';
+                currencyOffset: 'marketingCampaign{campaignTemplate{marketplace{currencyOffset}}}';
                 organization: {
                     id: 'marketingCampaign{campaignTemplate{marketplace{organization{id}}}}';
                     creationDate: 'marketingCampaign{campaignTemplate{marketplace{organization{creationDate}}}}';
@@ -8693,6 +11747,7 @@ export type MarketingAdFields = {
                     name: 'marketingCampaign{campaignTemplate{marketplace{organization{name}}}}';
                     systemStatus: 'marketingCampaign{campaignTemplate{marketplace{organization{systemStatus}}}}';
                     errors: 'marketingCampaign{campaignTemplate{marketplace{organization{errors}}}}';
+                    warnings: 'marketingCampaign{campaignTemplate{marketplace{organization{warnings}}}}';
                     tier: 'marketingCampaign{campaignTemplate{marketplace{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -8726,6 +11781,57 @@ export type MarketingAdFields = {
                 };
                 totalCount: 'marketingCampaign{campaignTemplate{marketingCampaigns{totalCount}}}';
             };
+            GCPXHistory: {
+                edges: {
+                    cursor: 'marketingCampaign{campaignTemplate{GCPXHistory{edges{cursor}}}}';
+                };
+                pageInfo: {
+                    endCursor: 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}';
+                    startCursor: 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}';
+                    hasNextPage: 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}';
+                    hasPreviousPage: 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}';
+                };
+                totalCount: 'marketingCampaign{campaignTemplate{GCPXHistory{totalCount}}}';
+            };
+            currentGCPX: {
+                id: 'marketingCampaign{campaignTemplate{currentGCPX{id}}}';
+                creationDate: 'marketingCampaign{campaignTemplate{currentGCPX{creationDate}}}';
+                lastChangeDate: 'marketingCampaign{campaignTemplate{currentGCPX{lastChangeDate}}}';
+                kpi: 'marketingCampaign{campaignTemplate{currentGCPX{kpi}}}';
+                price: 'marketingCampaign{campaignTemplate{currentGCPX{price}}}';
+                startDate: 'marketingCampaign{campaignTemplate{currentGCPX{startDate}}}';
+                endDate: 'marketingCampaign{campaignTemplate{currentGCPX{endDate}}}';
+                minConversions: 'marketingCampaign{campaignTemplate{currentGCPX{minConversions}}}';
+                maxConversions: 'marketingCampaign{campaignTemplate{currentGCPX{maxConversions}}}';
+                campaignTemplate: {
+                    id: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{id}}}}';
+                    creationDate: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}';
+                    name: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{name}}}}';
+                    description: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{description}}}}';
+                    platform: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}';
+                    remoteId: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}';
+                    systemStatus: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}';
+                    errors: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}';
+                    warnings: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}';
+                    kpi: 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}';
+                };
+                marketplace: {
+                    id: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{id}}}}';
+                    creationDate: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}';
+                    name: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{name}}}}';
+                    systemStatus: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}';
+                    errors: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{errors}}}}';
+                    warnings: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{warnings}}}}';
+                    currencyCode: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}';
+                    currencySymbol: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}';
+                    currencyOffset: 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}';
+                };
+                marketingCampaigns: {
+                    totalCount: 'marketingCampaign{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}';
+                };
+            };
         };
         mediaChannel: {
             id: 'marketingCampaign{mediaChannel{id}}';
@@ -8734,10 +11840,12 @@ export type MarketingAdFields = {
             name: 'marketingCampaign{mediaChannel{name}}';
             systemStatus: 'marketingCampaign{mediaChannel{systemStatus}}';
             errors: 'marketingCampaign{mediaChannel{errors}}';
+            warnings: 'marketingCampaign{mediaChannel{warnings}}';
             platform: 'marketingCampaign{mediaChannel{platform}}';
             remoteId: 'marketingCampaign{mediaChannel{remoteId}}';
             remoteState: 'marketingCampaign{mediaChannel{remoteState}}';
             currency: 'marketingCampaign{mediaChannel{currency}}';
+            currencyCode: 'marketingCampaign{mediaChannel{currencyCode}}';
             currencySymbol: 'marketingCampaign{mediaChannel{currencySymbol}}';
             currencyOffset: 'marketingCampaign{mediaChannel{currencyOffset}}';
             timezone: 'marketingCampaign{mediaChannel{timezone}}';
@@ -8761,6 +11869,10 @@ export type MarketingAdFields = {
                 name: 'marketingCampaign{mediaChannel{marketplace{name}}}';
                 systemStatus: 'marketingCampaign{mediaChannel{marketplace{systemStatus}}}';
                 errors: 'marketingCampaign{mediaChannel{marketplace{errors}}}';
+                warnings: 'marketingCampaign{mediaChannel{marketplace{warnings}}}';
+                currencyCode: 'marketingCampaign{mediaChannel{marketplace{currencyCode}}}';
+                currencySymbol: 'marketingCampaign{mediaChannel{marketplace{currencySymbol}}}';
+                currencyOffset: 'marketingCampaign{mediaChannel{marketplace{currencyOffset}}}';
                 organization: {
                     id: 'marketingCampaign{mediaChannel{marketplace{organization{id}}}}';
                     creationDate: 'marketingCampaign{mediaChannel{marketplace{organization{creationDate}}}}';
@@ -8768,6 +11880,7 @@ export type MarketingAdFields = {
                     name: 'marketingCampaign{mediaChannel{marketplace{organization{name}}}}';
                     systemStatus: 'marketingCampaign{mediaChannel{marketplace{organization{systemStatus}}}}';
                     errors: 'marketingCampaign{mediaChannel{marketplace{organization{errors}}}}';
+                    warnings: 'marketingCampaign{mediaChannel{marketplace{organization{warnings}}}}';
                     tier: 'marketingCampaign{mediaChannel{marketplace{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -8846,6 +11959,7 @@ export const MarketingAdFields: MarketingAdFields = {
         name: 'vendor{name}',
         systemStatus: 'vendor{systemStatus}',
         errors: 'vendor{errors}',
+        warnings: 'vendor{warnings}',
         marketplace: {
             id: 'vendor{marketplace{id}}',
             creationDate: 'vendor{marketplace{creationDate}}',
@@ -8853,6 +11967,10 @@ export const MarketingAdFields: MarketingAdFields = {
             name: 'vendor{marketplace{name}}',
             systemStatus: 'vendor{marketplace{systemStatus}}',
             errors: 'vendor{marketplace{errors}}',
+            warnings: 'vendor{marketplace{warnings}}',
+            currencyCode: 'vendor{marketplace{currencyCode}}',
+            currencySymbol: 'vendor{marketplace{currencySymbol}}',
+            currencyOffset: 'vendor{marketplace{currencyOffset}}',
             organization: {
                 id: 'vendor{marketplace{organization{id}}}',
                 creationDate: 'vendor{marketplace{organization{creationDate}}}',
@@ -8861,6 +11979,7 @@ export const MarketingAdFields: MarketingAdFields = {
                 name: 'vendor{marketplace{organization{name}}}',
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}',
                 errors: 'vendor{marketplace{organization{errors}}}',
+                warnings: 'vendor{marketplace{organization{warnings}}}',
                 tier: 'vendor{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -9022,6 +12141,7 @@ export const MarketingAdFields: MarketingAdFields = {
     },
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     remoteId: 'remoteId',
     preview: 'preview',
     adPreviews: {
@@ -9058,6 +12178,7 @@ export const MarketingAdFields: MarketingAdFields = {
                     systemStatus:
                         'results{edges{node{resource{systemStatus}}}}',
                     errors: 'results{edges{node{resource{errors}}}}',
+                    warnings: 'results{edges{node{resource{warnings}}}}',
                 },
                 vendor: {
                     id: 'results{edges{node{vendor{id}}}}',
@@ -9067,6 +12188,7 @@ export const MarketingAdFields: MarketingAdFields = {
                     name: 'results{edges{node{vendor{name}}}}',
                     systemStatus: 'results{edges{node{vendor{systemStatus}}}}',
                     errors: 'results{edges{node{vendor{errors}}}}',
+                    warnings: 'results{edges{node{vendor{warnings}}}}',
                 },
             },
             cursor: 'results{edges{cursor}}',
@@ -9092,6 +12214,7 @@ export const MarketingAdFields: MarketingAdFields = {
             name: 'marketingCampaign{vendor{name}}',
             systemStatus: 'marketingCampaign{vendor{systemStatus}}',
             errors: 'marketingCampaign{vendor{errors}}',
+            warnings: 'marketingCampaign{vendor{warnings}}',
             marketplace: {
                 id: 'marketingCampaign{vendor{marketplace{id}}}',
                 creationDate:
@@ -9102,6 +12225,13 @@ export const MarketingAdFields: MarketingAdFields = {
                 systemStatus:
                     'marketingCampaign{vendor{marketplace{systemStatus}}}',
                 errors: 'marketingCampaign{vendor{marketplace{errors}}}',
+                warnings: 'marketingCampaign{vendor{marketplace{warnings}}}',
+                currencyCode:
+                    'marketingCampaign{vendor{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'marketingCampaign{vendor{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'marketingCampaign{vendor{marketplace{currencyOffset}}}',
                 organization: {
                     id:
                         'marketingCampaign{vendor{marketplace{organization{id}}}}',
@@ -9115,6 +12245,8 @@ export const MarketingAdFields: MarketingAdFields = {
                         'marketingCampaign{vendor{marketplace{organization{systemStatus}}}}',
                     errors:
                         'marketingCampaign{vendor{marketplace{organization{errors}}}}',
+                    warnings:
+                        'marketingCampaign{vendor{marketplace{organization{warnings}}}}',
                     tier:
                         'marketingCampaign{vendor{marketplace{organization{tier}}}}',
                 },
@@ -9181,11 +12313,171 @@ export const MarketingAdFields: MarketingAdFields = {
         },
         systemStatus: 'marketingCampaign{systemStatus}',
         errors: 'marketingCampaign{errors}',
+        warnings: 'marketingCampaign{warnings}',
         name: 'marketingCampaign{name}',
         status: 'marketingCampaign{status}',
         creativeSpec: 'marketingCampaign{creativeSpec}',
         runTimeSpec: 'marketingCampaign{runTimeSpec}',
         locationSpec: 'marketingCampaign{locationSpec}',
+        conversionSpec: 'marketingCampaign{conversionSpec}',
+        startDate: 'marketingCampaign{startDate}',
+        endDate: 'marketingCampaign{endDate}',
+        GCPX: {
+            id: 'marketingCampaign{GCPX{id}}',
+            creationDate: 'marketingCampaign{GCPX{creationDate}}',
+            lastChangeDate: 'marketingCampaign{GCPX{lastChangeDate}}',
+            kpi: 'marketingCampaign{GCPX{kpi}}',
+            price: 'marketingCampaign{GCPX{price}}',
+            startDate: 'marketingCampaign{GCPX{startDate}}',
+            endDate: 'marketingCampaign{GCPX{endDate}}',
+            minConversions: 'marketingCampaign{GCPX{minConversions}}',
+            maxConversions: 'marketingCampaign{GCPX{maxConversions}}',
+            campaignTemplate: {
+                id: 'marketingCampaign{GCPX{campaignTemplate{id}}}',
+                creationDate:
+                    'marketingCampaign{GCPX{campaignTemplate{creationDate}}}',
+                lastChangeDate:
+                    'marketingCampaign{GCPX{campaignTemplate{lastChangeDate}}}',
+                name: 'marketingCampaign{GCPX{campaignTemplate{name}}}',
+                description:
+                    'marketingCampaign{GCPX{campaignTemplate{description}}}',
+                platform: 'marketingCampaign{GCPX{campaignTemplate{platform}}}',
+                remoteId: 'marketingCampaign{GCPX{campaignTemplate{remoteId}}}',
+                systemStatus:
+                    'marketingCampaign{GCPX{campaignTemplate{systemStatus}}}',
+                errors: 'marketingCampaign{GCPX{campaignTemplate{errors}}}',
+                warnings: 'marketingCampaign{GCPX{campaignTemplate{warnings}}}',
+                kpi: 'marketingCampaign{GCPX{campaignTemplate{kpi}}}',
+                marketplace: {
+                    id:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{id}}}}',
+                    creationDate:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{lastChangeDate}}}}',
+                    name:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{name}}}}',
+                    systemStatus:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{systemStatus}}}}',
+                    errors:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{errors}}}}',
+                    warnings:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{warnings}}}}',
+                    currencyCode:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'marketingCampaign{GCPX{campaignTemplate{marketplace{currencyOffset}}}}',
+                },
+                marketingCampaigns: {
+                    totalCount:
+                        'marketingCampaign{GCPX{campaignTemplate{marketingCampaigns{totalCount}}}}',
+                },
+                GCPXHistory: {
+                    totalCount:
+                        'marketingCampaign{GCPX{campaignTemplate{GCPXHistory{totalCount}}}}',
+                },
+                currentGCPX: {
+                    id:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{id}}}}',
+                    creationDate:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{lastChangeDate}}}}',
+                    kpi:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{kpi}}}}',
+                    price:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{price}}}}',
+                    startDate:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{startDate}}}}',
+                    endDate:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{endDate}}}}',
+                    minConversions:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{minConversions}}}}',
+                    maxConversions:
+                        'marketingCampaign{GCPX{campaignTemplate{currentGCPX{maxConversions}}}}',
+                },
+            },
+            marketplace: {
+                id: 'marketingCampaign{GCPX{marketplace{id}}}',
+                creationDate:
+                    'marketingCampaign{GCPX{marketplace{creationDate}}}',
+                lastChangeDate:
+                    'marketingCampaign{GCPX{marketplace{lastChangeDate}}}',
+                name: 'marketingCampaign{GCPX{marketplace{name}}}',
+                systemStatus:
+                    'marketingCampaign{GCPX{marketplace{systemStatus}}}',
+                errors: 'marketingCampaign{GCPX{marketplace{errors}}}',
+                warnings: 'marketingCampaign{GCPX{marketplace{warnings}}}',
+                currencyCode:
+                    'marketingCampaign{GCPX{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'marketingCampaign{GCPX{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'marketingCampaign{GCPX{marketplace{currencyOffset}}}',
+                organization: {
+                    id:
+                        'marketingCampaign{GCPX{marketplace{organization{id}}}}',
+                    creationDate:
+                        'marketingCampaign{GCPX{marketplace{organization{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaign{GCPX{marketplace{organization{lastChangeDate}}}}',
+                    name:
+                        'marketingCampaign{GCPX{marketplace{organization{name}}}}',
+                    systemStatus:
+                        'marketingCampaign{GCPX{marketplace{organization{systemStatus}}}}',
+                    errors:
+                        'marketingCampaign{GCPX{marketplace{organization{errors}}}}',
+                    warnings:
+                        'marketingCampaign{GCPX{marketplace{organization{warnings}}}}',
+                    tier:
+                        'marketingCampaign{GCPX{marketplace{organization{tier}}}}',
+                },
+                mediaChannels: {
+                    totalCount:
+                        'marketingCampaign{GCPX{marketplace{mediaChannels{totalCount}}}}',
+                },
+                campaignTemplates: {
+                    totalCount:
+                        'marketingCampaign{GCPX{marketplace{campaignTemplates{totalCount}}}}',
+                },
+                vendors: {
+                    totalCount:
+                        'marketingCampaign{GCPX{marketplace{vendors{totalCount}}}}',
+                },
+                vendorTokens: {
+                    totalCount:
+                        'marketingCampaign{GCPX{marketplace{vendorTokens{totalCount}}}}',
+                },
+                creativeTemplates: {
+                    totalCount:
+                        'marketingCampaign{GCPX{marketplace{creativeTemplates{totalCount}}}}',
+                },
+                products: {
+                    totalCount:
+                        'marketingCampaign{GCPX{marketplace{products{totalCount}}}}',
+                },
+            },
+            marketingCampaigns: {
+                edges: {
+                    cursor:
+                        'marketingCampaign{GCPX{marketingCampaigns{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'marketingCampaign{GCPX{marketingCampaigns{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'marketingCampaign{GCPX{marketingCampaigns{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'marketingCampaign{GCPX{marketingCampaigns{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'marketingCampaign{GCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'marketingCampaign{GCPX{marketingCampaigns{totalCount}}}',
+            },
+        },
         delivering: 'marketingCampaign{delivering}',
         marketingAds: {
             edges: {
@@ -9202,6 +12494,8 @@ export const MarketingAdFields: MarketingAdFields = {
                         'marketingCampaign{marketingAds{edges{node{systemStatus}}}}',
                     errors:
                         'marketingCampaign{marketingAds{edges{node{errors}}}}',
+                    warnings:
+                        'marketingCampaign{marketingAds{edges{node{warnings}}}}',
                     remoteId:
                         'marketingCampaign{marketingAds{edges{node{remoteId}}}}',
                     preview:
@@ -9265,6 +12559,7 @@ export const MarketingAdFields: MarketingAdFields = {
             remoteState: 'marketingCampaign{catalog{remoteState}}',
             dataFeedId: 'marketingCampaign{catalog{dataFeedId}}',
             errors: 'marketingCampaign{catalog{errors}}',
+            warnings: 'marketingCampaign{catalog{warnings}}',
             mediaChannel: {
                 id: 'marketingCampaign{catalog{mediaChannel{id}}}',
                 creationDate:
@@ -9275,11 +12570,14 @@ export const MarketingAdFields: MarketingAdFields = {
                 systemStatus:
                     'marketingCampaign{catalog{mediaChannel{systemStatus}}}',
                 errors: 'marketingCampaign{catalog{mediaChannel{errors}}}',
+                warnings: 'marketingCampaign{catalog{mediaChannel{warnings}}}',
                 platform: 'marketingCampaign{catalog{mediaChannel{platform}}}',
                 remoteId: 'marketingCampaign{catalog{mediaChannel{remoteId}}}',
                 remoteState:
                     'marketingCampaign{catalog{mediaChannel{remoteState}}}',
                 currency: 'marketingCampaign{catalog{mediaChannel{currency}}}',
+                currencyCode:
+                    'marketingCampaign{catalog{mediaChannel{currencyCode}}}',
                 currencySymbol:
                     'marketingCampaign{catalog{mediaChannel{currencySymbol}}}',
                 currencyOffset:
@@ -9304,6 +12602,14 @@ export const MarketingAdFields: MarketingAdFields = {
                         'marketingCampaign{catalog{mediaChannel{marketplace{systemStatus}}}}',
                     errors:
                         'marketingCampaign{catalog{mediaChannel{marketplace{errors}}}}',
+                    warnings:
+                        'marketingCampaign{catalog{mediaChannel{marketplace{warnings}}}}',
+                    currencyCode:
+                        'marketingCampaign{catalog{mediaChannel{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'marketingCampaign{catalog{mediaChannel{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'marketingCampaign{catalog{mediaChannel{marketplace{currencyOffset}}}}',
                 },
             },
             products: {
@@ -9335,6 +12641,7 @@ export const MarketingAdFields: MarketingAdFields = {
             remoteId: 'marketingCampaign{campaignTemplate{remoteId}}',
             systemStatus: 'marketingCampaign{campaignTemplate{systemStatus}}',
             errors: 'marketingCampaign{campaignTemplate{errors}}',
+            warnings: 'marketingCampaign{campaignTemplate{warnings}}',
             kpi: 'marketingCampaign{campaignTemplate{kpi}}',
             marketplace: {
                 id: 'marketingCampaign{campaignTemplate{marketplace{id}}}',
@@ -9347,6 +12654,14 @@ export const MarketingAdFields: MarketingAdFields = {
                     'marketingCampaign{campaignTemplate{marketplace{systemStatus}}}',
                 errors:
                     'marketingCampaign{campaignTemplate{marketplace{errors}}}',
+                warnings:
+                    'marketingCampaign{campaignTemplate{marketplace{warnings}}}',
+                currencyCode:
+                    'marketingCampaign{campaignTemplate{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'marketingCampaign{campaignTemplate{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'marketingCampaign{campaignTemplate{marketplace{currencyOffset}}}',
                 organization: {
                     id:
                         'marketingCampaign{campaignTemplate{marketplace{organization{id}}}}',
@@ -9360,6 +12675,8 @@ export const MarketingAdFields: MarketingAdFields = {
                         'marketingCampaign{campaignTemplate{marketplace{organization{systemStatus}}}}',
                     errors:
                         'marketingCampaign{campaignTemplate{marketplace{organization{errors}}}}',
+                    warnings:
+                        'marketingCampaign{campaignTemplate{marketplace{organization{warnings}}}}',
                     tier:
                         'marketingCampaign{campaignTemplate{marketplace{organization{tier}}}}',
                 },
@@ -9406,6 +12723,92 @@ export const MarketingAdFields: MarketingAdFields = {
                 totalCount:
                     'marketingCampaign{campaignTemplate{marketingCampaigns{totalCount}}}',
             },
+            GCPXHistory: {
+                edges: {
+                    cursor:
+                        'marketingCampaign{campaignTemplate{GCPXHistory{edges{cursor}}}}',
+                },
+                pageInfo: {
+                    endCursor:
+                        'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}',
+                    startCursor:
+                        'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}',
+                    hasNextPage:
+                        'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}',
+                    hasPreviousPage:
+                        'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}',
+                },
+                totalCount:
+                    'marketingCampaign{campaignTemplate{GCPXHistory{totalCount}}}',
+            },
+            currentGCPX: {
+                id: 'marketingCampaign{campaignTemplate{currentGCPX{id}}}',
+                creationDate:
+                    'marketingCampaign{campaignTemplate{currentGCPX{creationDate}}}',
+                lastChangeDate:
+                    'marketingCampaign{campaignTemplate{currentGCPX{lastChangeDate}}}',
+                kpi: 'marketingCampaign{campaignTemplate{currentGCPX{kpi}}}',
+                price:
+                    'marketingCampaign{campaignTemplate{currentGCPX{price}}}',
+                startDate:
+                    'marketingCampaign{campaignTemplate{currentGCPX{startDate}}}',
+                endDate:
+                    'marketingCampaign{campaignTemplate{currentGCPX{endDate}}}',
+                minConversions:
+                    'marketingCampaign{campaignTemplate{currentGCPX{minConversions}}}',
+                maxConversions:
+                    'marketingCampaign{campaignTemplate{currentGCPX{maxConversions}}}',
+                campaignTemplate: {
+                    id:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{id}}}}',
+                    creationDate:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}',
+                    name:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{name}}}}',
+                    description:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{description}}}}',
+                    platform:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}',
+                    remoteId:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}',
+                    systemStatus:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}',
+                    errors:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}',
+                    warnings:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}',
+                    kpi:
+                        'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}',
+                },
+                marketplace: {
+                    id:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{id}}}}',
+                    creationDate:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}',
+                    name:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{name}}}}',
+                    systemStatus:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}',
+                    errors:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{errors}}}}',
+                    warnings:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{warnings}}}}',
+                    currencyCode:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}',
+                    currencySymbol:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}',
+                    currencyOffset:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}',
+                },
+                marketingCampaigns: {
+                    totalCount:
+                        'marketingCampaign{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}',
+                },
+            },
         },
         mediaChannel: {
             id: 'marketingCampaign{mediaChannel{id}}',
@@ -9414,10 +12817,12 @@ export const MarketingAdFields: MarketingAdFields = {
             name: 'marketingCampaign{mediaChannel{name}}',
             systemStatus: 'marketingCampaign{mediaChannel{systemStatus}}',
             errors: 'marketingCampaign{mediaChannel{errors}}',
+            warnings: 'marketingCampaign{mediaChannel{warnings}}',
             platform: 'marketingCampaign{mediaChannel{platform}}',
             remoteId: 'marketingCampaign{mediaChannel{remoteId}}',
             remoteState: 'marketingCampaign{mediaChannel{remoteState}}',
             currency: 'marketingCampaign{mediaChannel{currency}}',
+            currencyCode: 'marketingCampaign{mediaChannel{currencyCode}}',
             currencySymbol: 'marketingCampaign{mediaChannel{currencySymbol}}',
             currencyOffset: 'marketingCampaign{mediaChannel{currencyOffset}}',
             timezone: 'marketingCampaign{mediaChannel{timezone}}',
@@ -9450,6 +12855,14 @@ export const MarketingAdFields: MarketingAdFields = {
                 systemStatus:
                     'marketingCampaign{mediaChannel{marketplace{systemStatus}}}',
                 errors: 'marketingCampaign{mediaChannel{marketplace{errors}}}',
+                warnings:
+                    'marketingCampaign{mediaChannel{marketplace{warnings}}}',
+                currencyCode:
+                    'marketingCampaign{mediaChannel{marketplace{currencyCode}}}',
+                currencySymbol:
+                    'marketingCampaign{mediaChannel{marketplace{currencySymbol}}}',
+                currencyOffset:
+                    'marketingCampaign{mediaChannel{marketplace{currencyOffset}}}',
                 organization: {
                     id:
                         'marketingCampaign{mediaChannel{marketplace{organization{id}}}}',
@@ -9463,6 +12876,8 @@ export const MarketingAdFields: MarketingAdFields = {
                         'marketingCampaign{mediaChannel{marketplace{organization{systemStatus}}}}',
                     errors:
                         'marketingCampaign{mediaChannel{marketplace{organization{errors}}}}',
+                    warnings:
+                        'marketingCampaign{mediaChannel{marketplace{organization{warnings}}}}',
                     tier:
                         'marketingCampaign{mediaChannel{marketplace{organization{tier}}}}',
                 },
@@ -9562,18 +12977,24 @@ export type MarketingAdField =
     | 'vendor{name}'
     | 'vendor{systemStatus}'
     | 'vendor{errors}'
+    | 'vendor{warnings}'
     | 'vendor{marketplace{id}}'
     | 'vendor{marketplace{creationDate}}'
     | 'vendor{marketplace{lastChangeDate}}'
     | 'vendor{marketplace{name}}'
     | 'vendor{marketplace{systemStatus}}'
     | 'vendor{marketplace{errors}}'
+    | 'vendor{marketplace{warnings}}'
+    | 'vendor{marketplace{currencyCode}}'
+    | 'vendor{marketplace{currencySymbol}}'
+    | 'vendor{marketplace{currencyOffset}}'
     | 'vendor{marketplace{organization{id}}}'
     | 'vendor{marketplace{organization{creationDate}}}'
     | 'vendor{marketplace{organization{lastChangeDate}}}'
     | 'vendor{marketplace{organization{name}}}'
     | 'vendor{marketplace{organization{systemStatus}}}'
     | 'vendor{marketplace{organization{errors}}}'
+    | 'vendor{marketplace{organization{warnings}}}'
     | 'vendor{marketplace{organization{tier}}}'
     | 'vendor{marketplace{organization{users{totalCount}}}}'
     | 'vendor{marketplace{organization{marketplaces{totalCount}}}}'
@@ -9642,6 +13063,7 @@ export type MarketingAdField =
     | 'vendor{products{totalCount}}'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'remoteId'
     | 'preview'
     | 'adPreviews{url}'
@@ -9665,12 +13087,14 @@ export type MarketingAdField =
     | 'results{edges{node{resource{kpi}}}}'
     | 'results{edges{node{resource{systemStatus}}}}'
     | 'results{edges{node{resource{errors}}}}'
+    | 'results{edges{node{resource{warnings}}}}'
     | 'results{edges{node{vendor{id}}}}'
     | 'results{edges{node{vendor{creationDate}}}}'
     | 'results{edges{node{vendor{lastChangeDate}}}}'
     | 'results{edges{node{vendor{name}}}}'
     | 'results{edges{node{vendor{systemStatus}}}}'
     | 'results{edges{node{vendor{errors}}}}'
+    | 'results{edges{node{vendor{warnings}}}}'
     | 'results{edges{cursor}}'
     | 'results{pageInfo{endCursor}}'
     | 'results{pageInfo{startCursor}}'
@@ -9688,18 +13112,24 @@ export type MarketingAdField =
     | 'marketingCampaign{vendor{name}}'
     | 'marketingCampaign{vendor{systemStatus}}'
     | 'marketingCampaign{vendor{errors}}'
+    | 'marketingCampaign{vendor{warnings}}'
     | 'marketingCampaign{vendor{marketplace{id}}}'
     | 'marketingCampaign{vendor{marketplace{creationDate}}}'
     | 'marketingCampaign{vendor{marketplace{lastChangeDate}}}'
     | 'marketingCampaign{vendor{marketplace{name}}}'
     | 'marketingCampaign{vendor{marketplace{systemStatus}}}'
     | 'marketingCampaign{vendor{marketplace{errors}}}'
+    | 'marketingCampaign{vendor{marketplace{warnings}}}'
+    | 'marketingCampaign{vendor{marketplace{currencyCode}}}'
+    | 'marketingCampaign{vendor{marketplace{currencySymbol}}}'
+    | 'marketingCampaign{vendor{marketplace{currencyOffset}}}'
     | 'marketingCampaign{vendor{marketplace{organization{id}}}}'
     | 'marketingCampaign{vendor{marketplace{organization{creationDate}}}}'
     | 'marketingCampaign{vendor{marketplace{organization{lastChangeDate}}}}'
     | 'marketingCampaign{vendor{marketplace{organization{name}}}}'
     | 'marketingCampaign{vendor{marketplace{organization{systemStatus}}}}'
     | 'marketingCampaign{vendor{marketplace{organization{errors}}}}'
+    | 'marketingCampaign{vendor{marketplace{organization{warnings}}}}'
     | 'marketingCampaign{vendor{marketplace{organization{tier}}}}'
     | 'marketingCampaign{vendor{marketplace{mediaChannels{totalCount}}}}'
     | 'marketingCampaign{vendor{marketplace{campaignTemplates{totalCount}}}}'
@@ -9721,11 +13151,86 @@ export type MarketingAdField =
     | 'marketingCampaign{vendor{products{totalCount}}}'
     | 'marketingCampaign{systemStatus}'
     | 'marketingCampaign{errors}'
+    | 'marketingCampaign{warnings}'
     | 'marketingCampaign{name}'
     | 'marketingCampaign{status}'
     | 'marketingCampaign{creativeSpec}'
     | 'marketingCampaign{runTimeSpec}'
     | 'marketingCampaign{locationSpec}'
+    | 'marketingCampaign{conversionSpec}'
+    | 'marketingCampaign{startDate}'
+    | 'marketingCampaign{endDate}'
+    | 'marketingCampaign{GCPX{id}}'
+    | 'marketingCampaign{GCPX{creationDate}}'
+    | 'marketingCampaign{GCPX{lastChangeDate}}'
+    | 'marketingCampaign{GCPX{kpi}}'
+    | 'marketingCampaign{GCPX{price}}'
+    | 'marketingCampaign{GCPX{startDate}}'
+    | 'marketingCampaign{GCPX{endDate}}'
+    | 'marketingCampaign{GCPX{minConversions}}'
+    | 'marketingCampaign{GCPX{maxConversions}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{id}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{creationDate}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{lastChangeDate}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{name}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{description}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{platform}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{remoteId}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{systemStatus}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{errors}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{warnings}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{kpi}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{id}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{creationDate}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{lastChangeDate}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{name}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{systemStatus}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{errors}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{warnings}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{currencyCode}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{currencySymbol}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketplace{currencyOffset}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{marketingCampaigns{totalCount}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{GCPXHistory{totalCount}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{id}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{creationDate}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{lastChangeDate}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{kpi}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{price}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{startDate}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{endDate}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{minConversions}}}}'
+    | 'marketingCampaign{GCPX{campaignTemplate{currentGCPX{maxConversions}}}}'
+    | 'marketingCampaign{GCPX{marketplace{id}}}'
+    | 'marketingCampaign{GCPX{marketplace{creationDate}}}'
+    | 'marketingCampaign{GCPX{marketplace{lastChangeDate}}}'
+    | 'marketingCampaign{GCPX{marketplace{name}}}'
+    | 'marketingCampaign{GCPX{marketplace{systemStatus}}}'
+    | 'marketingCampaign{GCPX{marketplace{errors}}}'
+    | 'marketingCampaign{GCPX{marketplace{warnings}}}'
+    | 'marketingCampaign{GCPX{marketplace{currencyCode}}}'
+    | 'marketingCampaign{GCPX{marketplace{currencySymbol}}}'
+    | 'marketingCampaign{GCPX{marketplace{currencyOffset}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{id}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{creationDate}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{lastChangeDate}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{name}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{systemStatus}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{errors}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{warnings}}}}'
+    | 'marketingCampaign{GCPX{marketplace{organization{tier}}}}'
+    | 'marketingCampaign{GCPX{marketplace{mediaChannels{totalCount}}}}'
+    | 'marketingCampaign{GCPX{marketplace{campaignTemplates{totalCount}}}}'
+    | 'marketingCampaign{GCPX{marketplace{vendors{totalCount}}}}'
+    | 'marketingCampaign{GCPX{marketplace{vendorTokens{totalCount}}}}'
+    | 'marketingCampaign{GCPX{marketplace{creativeTemplates{totalCount}}}}'
+    | 'marketingCampaign{GCPX{marketplace{products{totalCount}}}}'
+    | 'marketingCampaign{GCPX{marketingCampaigns{edges{cursor}}}}'
+    | 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{endCursor}}}}'
+    | 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{startCursor}}}}'
+    | 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{hasNextPage}}}}'
+    | 'marketingCampaign{GCPX{marketingCampaigns{pageInfo{hasPreviousPage}}}}'
+    | 'marketingCampaign{GCPX{marketingCampaigns{totalCount}}}'
     | 'marketingCampaign{delivering}'
     | 'marketingCampaign{marketingAds{edges{node{id}}}}'
     | 'marketingCampaign{marketingAds{edges{node{creationDate}}}}'
@@ -9734,6 +13239,7 @@ export type MarketingAdField =
     | 'marketingCampaign{marketingAds{edges{node{kpi}}}}'
     | 'marketingCampaign{marketingAds{edges{node{systemStatus}}}}'
     | 'marketingCampaign{marketingAds{edges{node{errors}}}}'
+    | 'marketingCampaign{marketingAds{edges{node{warnings}}}}'
     | 'marketingCampaign{marketingAds{edges{node{remoteId}}}}'
     | 'marketingCampaign{marketingAds{edges{node{preview}}}}'
     | 'marketingCampaign{marketingAds{edges{cursor}}}'
@@ -9768,16 +13274,19 @@ export type MarketingAdField =
     | 'marketingCampaign{catalog{remoteState}}'
     | 'marketingCampaign{catalog{dataFeedId}}'
     | 'marketingCampaign{catalog{errors}}'
+    | 'marketingCampaign{catalog{warnings}}'
     | 'marketingCampaign{catalog{mediaChannel{id}}}'
     | 'marketingCampaign{catalog{mediaChannel{creationDate}}}'
     | 'marketingCampaign{catalog{mediaChannel{lastChangeDate}}}'
     | 'marketingCampaign{catalog{mediaChannel{name}}}'
     | 'marketingCampaign{catalog{mediaChannel{systemStatus}}}'
     | 'marketingCampaign{catalog{mediaChannel{errors}}}'
+    | 'marketingCampaign{catalog{mediaChannel{warnings}}}'
     | 'marketingCampaign{catalog{mediaChannel{platform}}}'
     | 'marketingCampaign{catalog{mediaChannel{remoteId}}}'
     | 'marketingCampaign{catalog{mediaChannel{remoteState}}}'
     | 'marketingCampaign{catalog{mediaChannel{currency}}}'
+    | 'marketingCampaign{catalog{mediaChannel{currencyCode}}}'
     | 'marketingCampaign{catalog{mediaChannel{currencySymbol}}}'
     | 'marketingCampaign{catalog{mediaChannel{currencyOffset}}}'
     | 'marketingCampaign{catalog{mediaChannel{timezone}}}'
@@ -9789,6 +13298,10 @@ export type MarketingAdField =
     | 'marketingCampaign{catalog{mediaChannel{marketplace{name}}}}'
     | 'marketingCampaign{catalog{mediaChannel{marketplace{systemStatus}}}}'
     | 'marketingCampaign{catalog{mediaChannel{marketplace{errors}}}}'
+    | 'marketingCampaign{catalog{mediaChannel{marketplace{warnings}}}}'
+    | 'marketingCampaign{catalog{mediaChannel{marketplace{currencyCode}}}}'
+    | 'marketingCampaign{catalog{mediaChannel{marketplace{currencySymbol}}}}'
+    | 'marketingCampaign{catalog{mediaChannel{marketplace{currencyOffset}}}}'
     | 'marketingCampaign{catalog{products{edges{cursor}}}}'
     | 'marketingCampaign{catalog{products{pageInfo{endCursor}}}}'
     | 'marketingCampaign{catalog{products{pageInfo{startCursor}}}}'
@@ -9804,6 +13317,7 @@ export type MarketingAdField =
     | 'marketingCampaign{campaignTemplate{remoteId}}'
     | 'marketingCampaign{campaignTemplate{systemStatus}}'
     | 'marketingCampaign{campaignTemplate{errors}}'
+    | 'marketingCampaign{campaignTemplate{warnings}}'
     | 'marketingCampaign{campaignTemplate{kpi}}'
     | 'marketingCampaign{campaignTemplate{marketplace{id}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{creationDate}}}'
@@ -9811,12 +13325,17 @@ export type MarketingAdField =
     | 'marketingCampaign{campaignTemplate{marketplace{name}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{systemStatus}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{errors}}}'
+    | 'marketingCampaign{campaignTemplate{marketplace{warnings}}}'
+    | 'marketingCampaign{campaignTemplate{marketplace{currencyCode}}}'
+    | 'marketingCampaign{campaignTemplate{marketplace{currencySymbol}}}'
+    | 'marketingCampaign{campaignTemplate{marketplace{currencyOffset}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{id}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{creationDate}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{lastChangeDate}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{name}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{systemStatus}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{errors}}}}'
+    | 'marketingCampaign{campaignTemplate{marketplace{organization{warnings}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{organization{tier}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{mediaChannels{totalCount}}}}'
     | 'marketingCampaign{campaignTemplate{marketplace{campaignTemplates{totalCount}}}}'
@@ -9830,16 +13349,55 @@ export type MarketingAdField =
     | 'marketingCampaign{campaignTemplate{marketingCampaigns{pageInfo{hasNextPage}}}}'
     | 'marketingCampaign{campaignTemplate{marketingCampaigns{pageInfo{hasPreviousPage}}}}'
     | 'marketingCampaign{campaignTemplate{marketingCampaigns{totalCount}}}'
+    | 'marketingCampaign{campaignTemplate{GCPXHistory{edges{cursor}}}}'
+    | 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{endCursor}}}}'
+    | 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{startCursor}}}}'
+    | 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{hasNextPage}}}}'
+    | 'marketingCampaign{campaignTemplate{GCPXHistory{pageInfo{hasPreviousPage}}}}'
+    | 'marketingCampaign{campaignTemplate{GCPXHistory{totalCount}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{id}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{creationDate}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{lastChangeDate}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{kpi}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{price}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{startDate}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{endDate}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{minConversions}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{maxConversions}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{id}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{creationDate}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{lastChangeDate}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{name}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{description}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{platform}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{remoteId}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{systemStatus}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{errors}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{warnings}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{campaignTemplate{kpi}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{id}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{creationDate}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{lastChangeDate}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{name}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{systemStatus}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{errors}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{warnings}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencyCode}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencySymbol}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketplace{currencyOffset}}}}'
+    | 'marketingCampaign{campaignTemplate{currentGCPX{marketingCampaigns{totalCount}}}}'
     | 'marketingCampaign{mediaChannel{id}}'
     | 'marketingCampaign{mediaChannel{creationDate}}'
     | 'marketingCampaign{mediaChannel{lastChangeDate}}'
     | 'marketingCampaign{mediaChannel{name}}'
     | 'marketingCampaign{mediaChannel{systemStatus}}'
     | 'marketingCampaign{mediaChannel{errors}}'
+    | 'marketingCampaign{mediaChannel{warnings}}'
     | 'marketingCampaign{mediaChannel{platform}}'
     | 'marketingCampaign{mediaChannel{remoteId}}'
     | 'marketingCampaign{mediaChannel{remoteState}}'
     | 'marketingCampaign{mediaChannel{currency}}'
+    | 'marketingCampaign{mediaChannel{currencyCode}}'
     | 'marketingCampaign{mediaChannel{currencySymbol}}'
     | 'marketingCampaign{mediaChannel{currencyOffset}}'
     | 'marketingCampaign{mediaChannel{timezone}}'
@@ -9856,12 +13414,17 @@ export type MarketingAdField =
     | 'marketingCampaign{mediaChannel{marketplace{name}}}'
     | 'marketingCampaign{mediaChannel{marketplace{systemStatus}}}'
     | 'marketingCampaign{mediaChannel{marketplace{errors}}}'
+    | 'marketingCampaign{mediaChannel{marketplace{warnings}}}'
+    | 'marketingCampaign{mediaChannel{marketplace{currencyCode}}}'
+    | 'marketingCampaign{mediaChannel{marketplace{currencySymbol}}}'
+    | 'marketingCampaign{mediaChannel{marketplace{currencyOffset}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{id}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{creationDate}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{lastChangeDate}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{name}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{systemStatus}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{errors}}}}'
+    | 'marketingCampaign{mediaChannel{marketplace{organization{warnings}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{organization{tier}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{mediaChannels{totalCount}}}}'
     | 'marketingCampaign{mediaChannel{marketplace{campaignTemplates{totalCount}}}}'
@@ -9921,6 +13484,7 @@ export type ResultFields = {
             name: 'resource{vendor{name}}';
             systemStatus: 'resource{vendor{systemStatus}}';
             errors: 'resource{vendor{errors}}';
+            warnings: 'resource{vendor{warnings}}';
             marketplace: {
                 id: 'resource{vendor{marketplace{id}}}';
                 creationDate: 'resource{vendor{marketplace{creationDate}}}';
@@ -9928,6 +13492,10 @@ export type ResultFields = {
                 name: 'resource{vendor{marketplace{name}}}';
                 systemStatus: 'resource{vendor{marketplace{systemStatus}}}';
                 errors: 'resource{vendor{marketplace{errors}}}';
+                warnings: 'resource{vendor{marketplace{warnings}}}';
+                currencyCode: 'resource{vendor{marketplace{currencyCode}}}';
+                currencySymbol: 'resource{vendor{marketplace{currencySymbol}}}';
+                currencyOffset: 'resource{vendor{marketplace{currencyOffset}}}';
                 organization: {
                     id: 'resource{vendor{marketplace{organization{id}}}}';
                     creationDate: 'resource{vendor{marketplace{organization{creationDate}}}}';
@@ -9935,6 +13503,7 @@ export type ResultFields = {
                     name: 'resource{vendor{marketplace{organization{name}}}}';
                     systemStatus: 'resource{vendor{marketplace{organization{systemStatus}}}}';
                     errors: 'resource{vendor{marketplace{organization{errors}}}}';
+                    warnings: 'resource{vendor{marketplace{organization{warnings}}}}';
                     tier: 'resource{vendor{marketplace{organization{tier}}}}';
                 };
                 mediaChannels: {
@@ -9983,6 +13552,7 @@ export type ResultFields = {
         };
         systemStatus: 'resource{systemStatus}';
         errors: 'resource{errors}';
+        warnings: 'resource{warnings}';
     };
     vendor: {
         id: 'vendor{id}';
@@ -9991,6 +13561,7 @@ export type ResultFields = {
         name: 'vendor{name}';
         systemStatus: 'vendor{systemStatus}';
         errors: 'vendor{errors}';
+        warnings: 'vendor{warnings}';
         marketplace: {
             id: 'vendor{marketplace{id}}';
             creationDate: 'vendor{marketplace{creationDate}}';
@@ -9998,6 +13569,10 @@ export type ResultFields = {
             name: 'vendor{marketplace{name}}';
             systemStatus: 'vendor{marketplace{systemStatus}}';
             errors: 'vendor{marketplace{errors}}';
+            warnings: 'vendor{marketplace{warnings}}';
+            currencyCode: 'vendor{marketplace{currencyCode}}';
+            currencySymbol: 'vendor{marketplace{currencySymbol}}';
+            currencyOffset: 'vendor{marketplace{currencyOffset}}';
             organization: {
                 id: 'vendor{marketplace{organization{id}}}';
                 creationDate: 'vendor{marketplace{organization{creationDate}}}';
@@ -10005,6 +13580,7 @@ export type ResultFields = {
                 name: 'vendor{marketplace{organization{name}}}';
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}';
                 errors: 'vendor{marketplace{organization{errors}}}';
+                warnings: 'vendor{marketplace{organization{warnings}}}';
                 tier: 'vendor{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'vendor{marketplace{organization{users{totalCount}}}}';
@@ -10158,6 +13734,7 @@ export const ResultFields: ResultFields = {
             name: 'resource{vendor{name}}',
             systemStatus: 'resource{vendor{systemStatus}}',
             errors: 'resource{vendor{errors}}',
+            warnings: 'resource{vendor{warnings}}',
             marketplace: {
                 id: 'resource{vendor{marketplace{id}}}',
                 creationDate: 'resource{vendor{marketplace{creationDate}}}',
@@ -10165,6 +13742,10 @@ export const ResultFields: ResultFields = {
                 name: 'resource{vendor{marketplace{name}}}',
                 systemStatus: 'resource{vendor{marketplace{systemStatus}}}',
                 errors: 'resource{vendor{marketplace{errors}}}',
+                warnings: 'resource{vendor{marketplace{warnings}}}',
+                currencyCode: 'resource{vendor{marketplace{currencyCode}}}',
+                currencySymbol: 'resource{vendor{marketplace{currencySymbol}}}',
+                currencyOffset: 'resource{vendor{marketplace{currencyOffset}}}',
                 organization: {
                     id: 'resource{vendor{marketplace{organization{id}}}}',
                     creationDate:
@@ -10176,6 +13757,8 @@ export const ResultFields: ResultFields = {
                         'resource{vendor{marketplace{organization{systemStatus}}}}',
                     errors:
                         'resource{vendor{marketplace{organization{errors}}}}',
+                    warnings:
+                        'resource{vendor{marketplace{organization{warnings}}}}',
                     tier: 'resource{vendor{marketplace{organization{tier}}}}',
                 },
                 mediaChannels: {
@@ -10238,6 +13821,7 @@ export const ResultFields: ResultFields = {
         },
         systemStatus: 'resource{systemStatus}',
         errors: 'resource{errors}',
+        warnings: 'resource{warnings}',
     },
     vendor: {
         id: 'vendor{id}',
@@ -10246,6 +13830,7 @@ export const ResultFields: ResultFields = {
         name: 'vendor{name}',
         systemStatus: 'vendor{systemStatus}',
         errors: 'vendor{errors}',
+        warnings: 'vendor{warnings}',
         marketplace: {
             id: 'vendor{marketplace{id}}',
             creationDate: 'vendor{marketplace{creationDate}}',
@@ -10253,6 +13838,10 @@ export const ResultFields: ResultFields = {
             name: 'vendor{marketplace{name}}',
             systemStatus: 'vendor{marketplace{systemStatus}}',
             errors: 'vendor{marketplace{errors}}',
+            warnings: 'vendor{marketplace{warnings}}',
+            currencyCode: 'vendor{marketplace{currencyCode}}',
+            currencySymbol: 'vendor{marketplace{currencySymbol}}',
+            currencyOffset: 'vendor{marketplace{currencyOffset}}',
             organization: {
                 id: 'vendor{marketplace{organization{id}}}',
                 creationDate: 'vendor{marketplace{organization{creationDate}}}',
@@ -10261,6 +13850,7 @@ export const ResultFields: ResultFields = {
                 name: 'vendor{marketplace{organization{name}}}',
                 systemStatus: 'vendor{marketplace{organization{systemStatus}}}',
                 errors: 'vendor{marketplace{organization{errors}}}',
+                warnings: 'vendor{marketplace{organization{warnings}}}',
                 tier: 'vendor{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -10444,18 +14034,24 @@ export type ResultField =
     | 'resource{vendor{name}}'
     | 'resource{vendor{systemStatus}}'
     | 'resource{vendor{errors}}'
+    | 'resource{vendor{warnings}}'
     | 'resource{vendor{marketplace{id}}}'
     | 'resource{vendor{marketplace{creationDate}}}'
     | 'resource{vendor{marketplace{lastChangeDate}}}'
     | 'resource{vendor{marketplace{name}}}'
     | 'resource{vendor{marketplace{systemStatus}}}'
     | 'resource{vendor{marketplace{errors}}}'
+    | 'resource{vendor{marketplace{warnings}}}'
+    | 'resource{vendor{marketplace{currencyCode}}}'
+    | 'resource{vendor{marketplace{currencySymbol}}}'
+    | 'resource{vendor{marketplace{currencyOffset}}}'
     | 'resource{vendor{marketplace{organization{id}}}}'
     | 'resource{vendor{marketplace{organization{creationDate}}}}'
     | 'resource{vendor{marketplace{organization{lastChangeDate}}}}'
     | 'resource{vendor{marketplace{organization{name}}}}'
     | 'resource{vendor{marketplace{organization{systemStatus}}}}'
     | 'resource{vendor{marketplace{organization{errors}}}}'
+    | 'resource{vendor{marketplace{organization{warnings}}}}'
     | 'resource{vendor{marketplace{organization{tier}}}}'
     | 'resource{vendor{marketplace{mediaChannels{totalCount}}}}'
     | 'resource{vendor{marketplace{campaignTemplates{totalCount}}}}'
@@ -10477,24 +14073,31 @@ export type ResultField =
     | 'resource{vendor{products{totalCount}}}'
     | 'resource{systemStatus}'
     | 'resource{errors}'
+    | 'resource{warnings}'
     | 'vendor{id}'
     | 'vendor{creationDate}'
     | 'vendor{lastChangeDate}'
     | 'vendor{name}'
     | 'vendor{systemStatus}'
     | 'vendor{errors}'
+    | 'vendor{warnings}'
     | 'vendor{marketplace{id}}'
     | 'vendor{marketplace{creationDate}}'
     | 'vendor{marketplace{lastChangeDate}}'
     | 'vendor{marketplace{name}}'
     | 'vendor{marketplace{systemStatus}}'
     | 'vendor{marketplace{errors}}'
+    | 'vendor{marketplace{warnings}}'
+    | 'vendor{marketplace{currencyCode}}'
+    | 'vendor{marketplace{currencySymbol}}'
+    | 'vendor{marketplace{currencyOffset}}'
     | 'vendor{marketplace{organization{id}}}'
     | 'vendor{marketplace{organization{creationDate}}}'
     | 'vendor{marketplace{organization{lastChangeDate}}}'
     | 'vendor{marketplace{organization{name}}}'
     | 'vendor{marketplace{organization{systemStatus}}}'
     | 'vendor{marketplace{organization{errors}}}'
+    | 'vendor{marketplace{organization{warnings}}}'
     | 'vendor{marketplace{organization{tier}}}'
     | 'vendor{marketplace{organization{users{totalCount}}}}'
     | 'vendor{marketplace{organization{marketplaces{totalCount}}}}'
@@ -10576,6 +14179,7 @@ export type NotificationFields = {
         lastChangeDate: 'resource{lastChangeDate}';
         systemStatus: 'resource{systemStatus}';
         errors: 'resource{errors}';
+        warnings: 'resource{warnings}';
     };
 };
 export const NotificationFields: NotificationFields = {
@@ -10593,6 +14197,7 @@ export const NotificationFields: NotificationFields = {
         lastChangeDate: 'resource{lastChangeDate}',
         systemStatus: 'resource{systemStatus}',
         errors: 'resource{errors}',
+        warnings: 'resource{warnings}',
     },
 };
 export type NotificationField =
@@ -10608,7 +14213,8 @@ export type NotificationField =
     | 'resource{creationDate}'
     | 'resource{lastChangeDate}'
     | 'resource{systemStatus}'
-    | 'resource{errors}';
+    | 'resource{errors}'
+    | 'resource{warnings}';
 export type CreativeTemplateFields = {
     id: 'id';
     creationDate: 'creationDate';
@@ -10618,6 +14224,7 @@ export type CreativeTemplateFields = {
     width: 'width';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     marketplace: {
         id: 'marketplace{id}';
         creationDate: 'marketplace{creationDate}';
@@ -10625,6 +14232,10 @@ export type CreativeTemplateFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -10632,6 +14243,7 @@ export type CreativeTemplateFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -10667,10 +14279,12 @@ export type CreativeTemplateFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -10698,6 +14312,7 @@ export type CreativeTemplateFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -10719,6 +14334,7 @@ export type CreativeTemplateFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -10760,6 +14376,7 @@ export type CreativeTemplateFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -10811,14 +14428,30 @@ export type CreativeTemplateFields = {
                     name: 'marketingCampaigns{edges{node{vendor{name}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{vendor{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{vendor{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{vendor{warnings}}}}';
                 };
                 systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}';
                 errors: 'marketingCampaigns{edges{node{errors}}}';
+                warnings: 'marketingCampaigns{edges{node{warnings}}}';
                 name: 'marketingCampaigns{edges{node{name}}}';
                 status: 'marketingCampaigns{edges{node{status}}}';
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}';
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}';
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}';
+                conversionSpec: 'marketingCampaigns{edges{node{conversionSpec}}}';
+                startDate: 'marketingCampaigns{edges{node{startDate}}}';
+                endDate: 'marketingCampaigns{edges{node{endDate}}}';
+                GCPX: {
+                    id: 'marketingCampaigns{edges{node{GCPX{id}}}}';
+                    creationDate: 'marketingCampaigns{edges{node{GCPX{creationDate}}}}';
+                    lastChangeDate: 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}';
+                    kpi: 'marketingCampaigns{edges{node{GCPX{kpi}}}}';
+                    price: 'marketingCampaigns{edges{node{GCPX{price}}}}';
+                    startDate: 'marketingCampaigns{edges{node{GCPX{startDate}}}}';
+                    endDate: 'marketingCampaigns{edges{node{GCPX{endDate}}}}';
+                    minConversions: 'marketingCampaigns{edges{node{GCPX{minConversions}}}}';
+                    maxConversions: 'marketingCampaigns{edges{node{GCPX{maxConversions}}}}';
+                };
                 delivering: 'marketingCampaigns{edges{node{delivering}}}';
                 marketingAds: {
                     totalCount: 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}';
@@ -10837,6 +14470,7 @@ export type CreativeTemplateFields = {
                     remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{catalog{warnings}}}}';
                 };
                 campaignTemplate: {
                     id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}';
@@ -10848,6 +14482,7 @@ export type CreativeTemplateFields = {
                     remoteId: 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}';
                     kpi: 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}';
                 };
                 mediaChannel: {
@@ -10857,10 +14492,12 @@ export type CreativeTemplateFields = {
                     name: 'marketingCampaigns{edges{node{mediaChannel{name}}}}';
                     systemStatus: 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}';
                     errors: 'marketingCampaigns{edges{node{mediaChannel{errors}}}}';
+                    warnings: 'marketingCampaigns{edges{node{mediaChannel{warnings}}}}';
                     platform: 'marketingCampaigns{edges{node{mediaChannel{platform}}}}';
                     remoteId: 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}';
                     remoteState: 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}';
                     currency: 'marketingCampaigns{edges{node{mediaChannel{currency}}}}';
+                    currencyCode: 'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}';
                     currencySymbol: 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}';
                     currencyOffset: 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}';
                     timezone: 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}';
@@ -10899,6 +14536,7 @@ export type CreativeTemplateFields = {
                 properties: 'creativeLayers{edges{node{properties}}}';
                 systemStatus: 'creativeLayers{edges{node{systemStatus}}}';
                 errors: 'creativeLayers{edges{node{errors}}}';
+                warnings: 'creativeLayers{edges{node{warnings}}}';
                 creativeTemplate: {
                     id: 'creativeLayers{edges{node{creativeTemplate{id}}}}';
                     creationDate: 'creativeLayers{edges{node{creativeTemplate{creationDate}}}}';
@@ -10908,6 +14546,7 @@ export type CreativeTemplateFields = {
                     width: 'creativeLayers{edges{node{creativeTemplate{width}}}}';
                     systemStatus: 'creativeLayers{edges{node{creativeTemplate{systemStatus}}}}';
                     errors: 'creativeLayers{edges{node{creativeTemplate{errors}}}}';
+                    warnings: 'creativeLayers{edges{node{creativeTemplate{warnings}}}}';
                 };
             };
             cursor: 'creativeLayers{edges{cursor}}';
@@ -10930,6 +14569,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
     width: 'width',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     marketplace: {
         id: 'marketplace{id}',
         creationDate: 'marketplace{creationDate}',
@@ -10937,6 +14577,10 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -10944,6 +14588,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -10992,6 +14637,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -11000,6 +14647,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -11041,6 +14690,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -11069,6 +14720,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -11119,6 +14771,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -11183,14 +14837,37 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     systemStatus:
                         'marketingCampaigns{edges{node{vendor{systemStatus}}}}',
                     errors: 'marketingCampaigns{edges{node{vendor{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{vendor{warnings}}}}',
                 },
                 systemStatus: 'marketingCampaigns{edges{node{systemStatus}}}',
                 errors: 'marketingCampaigns{edges{node{errors}}}',
+                warnings: 'marketingCampaigns{edges{node{warnings}}}',
                 name: 'marketingCampaigns{edges{node{name}}}',
                 status: 'marketingCampaigns{edges{node{status}}}',
                 creativeSpec: 'marketingCampaigns{edges{node{creativeSpec}}}',
                 runTimeSpec: 'marketingCampaigns{edges{node{runTimeSpec}}}',
                 locationSpec: 'marketingCampaigns{edges{node{locationSpec}}}',
+                conversionSpec:
+                    'marketingCampaigns{edges{node{conversionSpec}}}',
+                startDate: 'marketingCampaigns{edges{node{startDate}}}',
+                endDate: 'marketingCampaigns{edges{node{endDate}}}',
+                GCPX: {
+                    id: 'marketingCampaigns{edges{node{GCPX{id}}}}',
+                    creationDate:
+                        'marketingCampaigns{edges{node{GCPX{creationDate}}}}',
+                    lastChangeDate:
+                        'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}',
+                    kpi: 'marketingCampaigns{edges{node{GCPX{kpi}}}}',
+                    price: 'marketingCampaigns{edges{node{GCPX{price}}}}',
+                    startDate:
+                        'marketingCampaigns{edges{node{GCPX{startDate}}}}',
+                    endDate: 'marketingCampaigns{edges{node{GCPX{endDate}}}}',
+                    minConversions:
+                        'marketingCampaigns{edges{node{GCPX{minConversions}}}}',
+                    maxConversions:
+                        'marketingCampaigns{edges{node{GCPX{maxConversions}}}}',
+                },
                 delivering: 'marketingCampaigns{edges{node{delivering}}}',
                 marketingAds: {
                     totalCount:
@@ -11218,6 +14895,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     dataFeedId:
                         'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{catalog{warnings}}}}',
                 },
                 campaignTemplate: {
                     id: 'marketingCampaigns{edges{node{campaignTemplate{id}}}}',
@@ -11237,6 +14916,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{campaignTemplate{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}',
                     kpi:
                         'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}',
                 },
@@ -11251,6 +14932,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}',
                     errors:
                         'marketingCampaigns{edges{node{mediaChannel{errors}}}}',
+                    warnings:
+                        'marketingCampaigns{edges{node{mediaChannel{warnings}}}}',
                     platform:
                         'marketingCampaigns{edges{node{mediaChannel{platform}}}}',
                     remoteId:
@@ -11259,6 +14942,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}',
                     currency:
                         'marketingCampaigns{edges{node{mediaChannel{currency}}}}',
+                    currencyCode:
+                        'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}',
                     currencySymbol:
                         'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}',
                     currencyOffset:
@@ -11303,6 +14988,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                 properties: 'creativeLayers{edges{node{properties}}}',
                 systemStatus: 'creativeLayers{edges{node{systemStatus}}}',
                 errors: 'creativeLayers{edges{node{errors}}}',
+                warnings: 'creativeLayers{edges{node{warnings}}}',
                 creativeTemplate: {
                     id: 'creativeLayers{edges{node{creativeTemplate{id}}}}',
                     creationDate:
@@ -11318,6 +15004,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'creativeLayers{edges{node{creativeTemplate{systemStatus}}}}',
                     errors:
                         'creativeLayers{edges{node{creativeTemplate{errors}}}}',
+                    warnings:
+                        'creativeLayers{edges{node{creativeTemplate{warnings}}}}',
                 },
             },
             cursor: 'creativeLayers{edges{cursor}}',
@@ -11340,18 +15028,24 @@ export type CreativeTemplateField =
     | 'width'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'marketplace{id}'
     | 'marketplace{creationDate}'
     | 'marketplace{lastChangeDate}'
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -11371,10 +15065,12 @@ export type CreativeTemplateField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -11394,6 +15090,7 @@ export type CreativeTemplateField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -11407,6 +15104,7 @@ export type CreativeTemplateField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -11432,6 +15130,7 @@ export type CreativeTemplateField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -11465,13 +15164,27 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{vendor{name}}}}'
     | 'marketingCampaigns{edges{node{vendor{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{vendor{errors}}}}'
+    | 'marketingCampaigns{edges{node{vendor{warnings}}}}'
     | 'marketingCampaigns{edges{node{systemStatus}}}'
     | 'marketingCampaigns{edges{node{errors}}}'
+    | 'marketingCampaigns{edges{node{warnings}}}'
     | 'marketingCampaigns{edges{node{name}}}'
     | 'marketingCampaigns{edges{node{status}}}'
     | 'marketingCampaigns{edges{node{creativeSpec}}}'
     | 'marketingCampaigns{edges{node{runTimeSpec}}}'
     | 'marketingCampaigns{edges{node{locationSpec}}}'
+    | 'marketingCampaigns{edges{node{conversionSpec}}}'
+    | 'marketingCampaigns{edges{node{startDate}}}'
+    | 'marketingCampaigns{edges{node{endDate}}}'
+    | 'marketingCampaigns{edges{node{GCPX{id}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{creationDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{kpi}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{price}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{startDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{endDate}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{minConversions}}}}'
+    | 'marketingCampaigns{edges{node{GCPX{maxConversions}}}}'
     | 'marketingCampaigns{edges{node{delivering}}}'
     | 'marketingCampaigns{edges{node{marketingAds{totalCount}}}}'
     | 'marketingCampaigns{edges{node{products{totalCount}}}}'
@@ -11485,6 +15198,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
     | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
     | 'marketingCampaigns{edges{node{catalog{errors}}}}'
+    | 'marketingCampaigns{edges{node{catalog{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{creationDate}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{lastChangeDate}}}}'
@@ -11494,6 +15208,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{campaignTemplate{remoteId}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{errors}}}}'
+    | 'marketingCampaigns{edges{node{campaignTemplate{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{kpi}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{id}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{creationDate}}}}'
@@ -11501,10 +15216,12 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{mediaChannel{name}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{errors}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{warnings}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{platform}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{remoteId}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{remoteState}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currency}}}}'
+    | 'marketingCampaigns{edges{node{mediaChannel{currencyCode}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currencySymbol}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{currencyOffset}}}}'
     | 'marketingCampaigns{edges{node{mediaChannel{timezone}}}}'
@@ -11530,6 +15247,7 @@ export type CreativeTemplateField =
     | 'creativeLayers{edges{node{properties}}}'
     | 'creativeLayers{edges{node{systemStatus}}}'
     | 'creativeLayers{edges{node{errors}}}'
+    | 'creativeLayers{edges{node{warnings}}}'
     | 'creativeLayers{edges{node{creativeTemplate{id}}}}'
     | 'creativeLayers{edges{node{creativeTemplate{creationDate}}}}'
     | 'creativeLayers{edges{node{creativeTemplate{lastChangeDate}}}}'
@@ -11538,6 +15256,7 @@ export type CreativeTemplateField =
     | 'creativeLayers{edges{node{creativeTemplate{width}}}}'
     | 'creativeLayers{edges{node{creativeTemplate{systemStatus}}}}'
     | 'creativeLayers{edges{node{creativeTemplate{errors}}}}'
+    | 'creativeLayers{edges{node{creativeTemplate{warnings}}}}'
     | 'creativeLayers{edges{cursor}}'
     | 'creativeLayers{pageInfo{endCursor}}'
     | 'creativeLayers{pageInfo{startCursor}}'
@@ -11558,6 +15277,7 @@ export type CreativeLayerFields = {
     properties: 'properties';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     creativeTemplate: {
         id: 'creativeTemplate{id}';
         creationDate: 'creativeTemplate{creationDate}';
@@ -11567,6 +15287,7 @@ export type CreativeLayerFields = {
         width: 'creativeTemplate{width}';
         systemStatus: 'creativeTemplate{systemStatus}';
         errors: 'creativeTemplate{errors}';
+        warnings: 'creativeTemplate{warnings}';
         marketplace: {
             id: 'creativeTemplate{marketplace{id}}';
             creationDate: 'creativeTemplate{marketplace{creationDate}}';
@@ -11574,6 +15295,10 @@ export type CreativeLayerFields = {
             name: 'creativeTemplate{marketplace{name}}';
             systemStatus: 'creativeTemplate{marketplace{systemStatus}}';
             errors: 'creativeTemplate{marketplace{errors}}';
+            warnings: 'creativeTemplate{marketplace{warnings}}';
+            currencyCode: 'creativeTemplate{marketplace{currencyCode}}';
+            currencySymbol: 'creativeTemplate{marketplace{currencySymbol}}';
+            currencyOffset: 'creativeTemplate{marketplace{currencyOffset}}';
             organization: {
                 id: 'creativeTemplate{marketplace{organization{id}}}';
                 creationDate: 'creativeTemplate{marketplace{organization{creationDate}}}';
@@ -11581,6 +15306,7 @@ export type CreativeLayerFields = {
                 name: 'creativeTemplate{marketplace{organization{name}}}';
                 systemStatus: 'creativeTemplate{marketplace{organization{systemStatus}}}';
                 errors: 'creativeTemplate{marketplace{organization{errors}}}';
+                warnings: 'creativeTemplate{marketplace{organization{warnings}}}';
                 tier: 'creativeTemplate{marketplace{organization{tier}}}';
                 users: {
                     totalCount: 'creativeTemplate{marketplace{organization{users{totalCount}}}}';
@@ -11672,11 +15398,15 @@ export type CreativeLayerFields = {
                     kpi: 'creativeTemplate{marketingCampaigns{edges{node{kpi}}}}';
                     systemStatus: 'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}';
                     errors: 'creativeTemplate{marketingCampaigns{edges{node{errors}}}}';
+                    warnings: 'creativeTemplate{marketingCampaigns{edges{node{warnings}}}}';
                     name: 'creativeTemplate{marketingCampaigns{edges{node{name}}}}';
                     status: 'creativeTemplate{marketingCampaigns{edges{node{status}}}}';
                     creativeSpec: 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}';
                     runTimeSpec: 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}';
                     locationSpec: 'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}';
+                    conversionSpec: 'creativeTemplate{marketingCampaigns{edges{node{conversionSpec}}}}';
+                    startDate: 'creativeTemplate{marketingCampaigns{edges{node{startDate}}}}';
+                    endDate: 'creativeTemplate{marketingCampaigns{edges{node{endDate}}}}';
                     delivering: 'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}';
@@ -11705,6 +15435,7 @@ export type CreativeLayerFields = {
                     properties: 'creativeTemplate{creativeLayers{edges{node{properties}}}}';
                     systemStatus: 'creativeTemplate{creativeLayers{edges{node{systemStatus}}}}';
                     errors: 'creativeTemplate{creativeLayers{edges{node{errors}}}}';
+                    warnings: 'creativeTemplate{creativeLayers{edges{node{warnings}}}}';
                 };
                 cursor: 'creativeTemplate{creativeLayers{edges{cursor}}}';
             };
@@ -11732,6 +15463,7 @@ export const CreativeLayerFields: CreativeLayerFields = {
     properties: 'properties',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     creativeTemplate: {
         id: 'creativeTemplate{id}',
         creationDate: 'creativeTemplate{creationDate}',
@@ -11741,6 +15473,7 @@ export const CreativeLayerFields: CreativeLayerFields = {
         width: 'creativeTemplate{width}',
         systemStatus: 'creativeTemplate{systemStatus}',
         errors: 'creativeTemplate{errors}',
+        warnings: 'creativeTemplate{warnings}',
         marketplace: {
             id: 'creativeTemplate{marketplace{id}}',
             creationDate: 'creativeTemplate{marketplace{creationDate}}',
@@ -11748,6 +15481,10 @@ export const CreativeLayerFields: CreativeLayerFields = {
             name: 'creativeTemplate{marketplace{name}}',
             systemStatus: 'creativeTemplate{marketplace{systemStatus}}',
             errors: 'creativeTemplate{marketplace{errors}}',
+            warnings: 'creativeTemplate{marketplace{warnings}}',
+            currencyCode: 'creativeTemplate{marketplace{currencyCode}}',
+            currencySymbol: 'creativeTemplate{marketplace{currencySymbol}}',
+            currencyOffset: 'creativeTemplate{marketplace{currencyOffset}}',
             organization: {
                 id: 'creativeTemplate{marketplace{organization{id}}}',
                 creationDate:
@@ -11758,6 +15495,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                 systemStatus:
                     'creativeTemplate{marketplace{organization{systemStatus}}}',
                 errors: 'creativeTemplate{marketplace{organization{errors}}}',
+                warnings:
+                    'creativeTemplate{marketplace{organization{warnings}}}',
                 tier: 'creativeTemplate{marketplace{organization{tier}}}',
                 users: {
                     totalCount:
@@ -11893,6 +15632,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}',
                     errors:
                         'creativeTemplate{marketingCampaigns{edges{node{errors}}}}',
+                    warnings:
+                        'creativeTemplate{marketingCampaigns{edges{node{warnings}}}}',
                     name:
                         'creativeTemplate{marketingCampaigns{edges{node{name}}}}',
                     status:
@@ -11903,6 +15644,12 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}',
                     locationSpec:
                         'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}',
+                    conversionSpec:
+                        'creativeTemplate{marketingCampaigns{edges{node{conversionSpec}}}}',
+                    startDate:
+                        'creativeTemplate{marketingCampaigns{edges{node{startDate}}}}',
+                    endDate:
+                        'creativeTemplate{marketingCampaigns{edges{node{endDate}}}}',
                     delivering:
                         'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}',
                 },
@@ -11944,6 +15691,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{creativeLayers{edges{node{systemStatus}}}}',
                     errors:
                         'creativeTemplate{creativeLayers{edges{node{errors}}}}',
+                    warnings:
+                        'creativeTemplate{creativeLayers{edges{node{warnings}}}}',
                 },
                 cursor: 'creativeTemplate{creativeLayers{edges{cursor}}}',
             },
@@ -11975,6 +15724,7 @@ export type CreativeLayerField =
     | 'properties'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'creativeTemplate{id}'
     | 'creativeTemplate{creationDate}'
     | 'creativeTemplate{lastChangeDate}'
@@ -11983,18 +15733,24 @@ export type CreativeLayerField =
     | 'creativeTemplate{width}'
     | 'creativeTemplate{systemStatus}'
     | 'creativeTemplate{errors}'
+    | 'creativeTemplate{warnings}'
     | 'creativeTemplate{marketplace{id}}'
     | 'creativeTemplate{marketplace{creationDate}}'
     | 'creativeTemplate{marketplace{lastChangeDate}}'
     | 'creativeTemplate{marketplace{name}}'
     | 'creativeTemplate{marketplace{systemStatus}}'
     | 'creativeTemplate{marketplace{errors}}'
+    | 'creativeTemplate{marketplace{warnings}}'
+    | 'creativeTemplate{marketplace{currencyCode}}'
+    | 'creativeTemplate{marketplace{currencySymbol}}'
+    | 'creativeTemplate{marketplace{currencyOffset}}'
     | 'creativeTemplate{marketplace{organization{id}}}'
     | 'creativeTemplate{marketplace{organization{creationDate}}}'
     | 'creativeTemplate{marketplace{organization{lastChangeDate}}}'
     | 'creativeTemplate{marketplace{organization{name}}}'
     | 'creativeTemplate{marketplace{organization{systemStatus}}}'
     | 'creativeTemplate{marketplace{organization{errors}}}'
+    | 'creativeTemplate{marketplace{organization{warnings}}}'
     | 'creativeTemplate{marketplace{organization{tier}}}'
     | 'creativeTemplate{marketplace{organization{users{totalCount}}}}'
     | 'creativeTemplate{marketplace{organization{marketplaces{totalCount}}}}'
@@ -12041,11 +15797,15 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketingCampaigns{edges{node{kpi}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{systemStatus}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{errors}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{warnings}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{name}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{status}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{creativeSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{runTimeSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{locationSpec}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{conversionSpec}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{startDate}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{endDate}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{cursor}}}'
     | 'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}'
@@ -12066,6 +15826,7 @@ export type CreativeLayerField =
     | 'creativeTemplate{creativeLayers{edges{node{properties}}}}'
     | 'creativeTemplate{creativeLayers{edges{node{systemStatus}}}}'
     | 'creativeTemplate{creativeLayers{edges{node{errors}}}}'
+    | 'creativeTemplate{creativeLayers{edges{node{warnings}}}}'
     | 'creativeTemplate{creativeLayers{edges{cursor}}}'
     | 'creativeTemplate{creativeLayers{pageInfo{endCursor}}}'
     | 'creativeTemplate{creativeLayers{pageInfo{startCursor}}}'
@@ -12081,6 +15842,7 @@ export type CreativeFontFields = {
     properties: 'properties';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     marketplace: {
         id: 'marketplace{id}';
         creationDate: 'marketplace{creationDate}';
@@ -12088,6 +15850,10 @@ export type CreativeFontFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -12095,6 +15861,7 @@ export type CreativeFontFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -12130,10 +15897,12 @@ export type CreativeFontFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -12161,6 +15930,7 @@ export type CreativeFontFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -12182,6 +15952,7 @@ export type CreativeFontFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -12223,6 +15994,7 @@ export type CreativeFontFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -12269,6 +16041,7 @@ export const CreativeFontFields: CreativeFontFields = {
     properties: 'properties',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     marketplace: {
         id: 'marketplace{id}',
         creationDate: 'marketplace{creationDate}',
@@ -12276,6 +16049,10 @@ export const CreativeFontFields: CreativeFontFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -12283,6 +16060,7 @@ export const CreativeFontFields: CreativeFontFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -12331,6 +16109,8 @@ export const CreativeFontFields: CreativeFontFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -12339,6 +16119,8 @@ export const CreativeFontFields: CreativeFontFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -12380,6 +16162,8 @@ export const CreativeFontFields: CreativeFontFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -12408,6 +16192,7 @@ export const CreativeFontFields: CreativeFontFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -12458,6 +16243,8 @@ export const CreativeFontFields: CreativeFontFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -12513,18 +16300,24 @@ export type CreativeFontField =
     | 'properties'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'marketplace{id}'
     | 'marketplace{creationDate}'
     | 'marketplace{lastChangeDate}'
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -12544,10 +16337,12 @@ export type CreativeFontField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -12567,6 +16362,7 @@ export type CreativeFontField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -12580,6 +16376,7 @@ export type CreativeFontField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -12605,6 +16402,7 @@ export type CreativeFontField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -12636,6 +16434,7 @@ export type CreativeImageFields = {
     properties: 'properties';
     systemStatus: 'systemStatus';
     errors: 'errors';
+    warnings: 'warnings';
     marketplace: {
         id: 'marketplace{id}';
         creationDate: 'marketplace{creationDate}';
@@ -12643,6 +16442,10 @@ export type CreativeImageFields = {
         name: 'marketplace{name}';
         systemStatus: 'marketplace{systemStatus}';
         errors: 'marketplace{errors}';
+        warnings: 'marketplace{warnings}';
+        currencyCode: 'marketplace{currencyCode}';
+        currencySymbol: 'marketplace{currencySymbol}';
+        currencyOffset: 'marketplace{currencyOffset}';
         organization: {
             id: 'marketplace{organization{id}}';
             creationDate: 'marketplace{organization{creationDate}}';
@@ -12650,6 +16453,7 @@ export type CreativeImageFields = {
             name: 'marketplace{organization{name}}';
             systemStatus: 'marketplace{organization{systemStatus}}';
             errors: 'marketplace{organization{errors}}';
+            warnings: 'marketplace{organization{warnings}}';
             tier: 'marketplace{organization{tier}}';
             users: {
                 edges: {
@@ -12685,10 +16489,12 @@ export type CreativeImageFields = {
                     name: 'marketplace{mediaChannels{edges{node{name}}}}';
                     systemStatus: 'marketplace{mediaChannels{edges{node{systemStatus}}}}';
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}';
+                    warnings: 'marketplace{mediaChannels{edges{node{warnings}}}}';
                     platform: 'marketplace{mediaChannels{edges{node{platform}}}}';
                     remoteId: 'marketplace{mediaChannels{edges{node{remoteId}}}}';
                     remoteState: 'marketplace{mediaChannels{edges{node{remoteState}}}}';
                     currency: 'marketplace{mediaChannels{edges{node{currency}}}}';
+                    currencyCode: 'marketplace{mediaChannels{edges{node{currencyCode}}}}';
                     currencySymbol: 'marketplace{mediaChannels{edges{node{currencySymbol}}}}';
                     currencyOffset: 'marketplace{mediaChannels{edges{node{currencyOffset}}}}';
                     timezone: 'marketplace{mediaChannels{edges{node{timezone}}}}';
@@ -12716,6 +16522,7 @@ export type CreativeImageFields = {
                     remoteId: 'marketplace{campaignTemplates{edges{node{remoteId}}}}';
                     systemStatus: 'marketplace{campaignTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{campaignTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{campaignTemplates{edges{node{warnings}}}}';
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}';
                 };
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}';
@@ -12737,6 +16544,7 @@ export type CreativeImageFields = {
                     name: 'marketplace{vendors{edges{node{name}}}}';
                     systemStatus: 'marketplace{vendors{edges{node{systemStatus}}}}';
                     errors: 'marketplace{vendors{edges{node{errors}}}}';
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{vendors{edges{cursor}}}';
             };
@@ -12778,6 +16586,7 @@ export type CreativeImageFields = {
                     width: 'marketplace{creativeTemplates{edges{node{width}}}}';
                     systemStatus: 'marketplace{creativeTemplates{edges{node{systemStatus}}}}';
                     errors: 'marketplace{creativeTemplates{edges{node{errors}}}}';
+                    warnings: 'marketplace{creativeTemplates{edges{node{warnings}}}}';
                 };
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}';
             };
@@ -12824,6 +16633,7 @@ export const CreativeImageFields: CreativeImageFields = {
     properties: 'properties',
     systemStatus: 'systemStatus',
     errors: 'errors',
+    warnings: 'warnings',
     marketplace: {
         id: 'marketplace{id}',
         creationDate: 'marketplace{creationDate}',
@@ -12831,6 +16641,10 @@ export const CreativeImageFields: CreativeImageFields = {
         name: 'marketplace{name}',
         systemStatus: 'marketplace{systemStatus}',
         errors: 'marketplace{errors}',
+        warnings: 'marketplace{warnings}',
+        currencyCode: 'marketplace{currencyCode}',
+        currencySymbol: 'marketplace{currencySymbol}',
+        currencyOffset: 'marketplace{currencyOffset}',
         organization: {
             id: 'marketplace{organization{id}}',
             creationDate: 'marketplace{organization{creationDate}}',
@@ -12838,6 +16652,7 @@ export const CreativeImageFields: CreativeImageFields = {
             name: 'marketplace{organization{name}}',
             systemStatus: 'marketplace{organization{systemStatus}}',
             errors: 'marketplace{organization{errors}}',
+            warnings: 'marketplace{organization{warnings}}',
             tier: 'marketplace{organization{tier}}',
             users: {
                 edges: {
@@ -12886,6 +16701,8 @@ export const CreativeImageFields: CreativeImageFields = {
                     systemStatus:
                         'marketplace{mediaChannels{edges{node{systemStatus}}}}',
                     errors: 'marketplace{mediaChannels{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{mediaChannels{edges{node{warnings}}}}',
                     platform:
                         'marketplace{mediaChannels{edges{node{platform}}}}',
                     remoteId:
@@ -12894,6 +16711,8 @@ export const CreativeImageFields: CreativeImageFields = {
                         'marketplace{mediaChannels{edges{node{remoteState}}}}',
                     currency:
                         'marketplace{mediaChannels{edges{node{currency}}}}',
+                    currencyCode:
+                        'marketplace{mediaChannels{edges{node{currencyCode}}}}',
                     currencySymbol:
                         'marketplace{mediaChannels{edges{node{currencySymbol}}}}',
                     currencyOffset:
@@ -12935,6 +16754,8 @@ export const CreativeImageFields: CreativeImageFields = {
                         'marketplace{campaignTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{campaignTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{campaignTemplates{edges{node{warnings}}}}',
                     kpi: 'marketplace{campaignTemplates{edges{node{kpi}}}}',
                 },
                 cursor: 'marketplace{campaignTemplates{edges{cursor}}}',
@@ -12963,6 +16784,7 @@ export const CreativeImageFields: CreativeImageFields = {
                     systemStatus:
                         'marketplace{vendors{edges{node{systemStatus}}}}',
                     errors: 'marketplace{vendors{edges{node{errors}}}}',
+                    warnings: 'marketplace{vendors{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{vendors{edges{cursor}}}',
             },
@@ -13013,6 +16835,8 @@ export const CreativeImageFields: CreativeImageFields = {
                         'marketplace{creativeTemplates{edges{node{systemStatus}}}}',
                     errors:
                         'marketplace{creativeTemplates{edges{node{errors}}}}',
+                    warnings:
+                        'marketplace{creativeTemplates{edges{node{warnings}}}}',
                 },
                 cursor: 'marketplace{creativeTemplates{edges{cursor}}}',
             },
@@ -13068,18 +16892,24 @@ export type CreativeImageField =
     | 'properties'
     | 'systemStatus'
     | 'errors'
+    | 'warnings'
     | 'marketplace{id}'
     | 'marketplace{creationDate}'
     | 'marketplace{lastChangeDate}'
     | 'marketplace{name}'
     | 'marketplace{systemStatus}'
     | 'marketplace{errors}'
+    | 'marketplace{warnings}'
+    | 'marketplace{currencyCode}'
+    | 'marketplace{currencySymbol}'
+    | 'marketplace{currencyOffset}'
     | 'marketplace{organization{id}}'
     | 'marketplace{organization{creationDate}}'
     | 'marketplace{organization{lastChangeDate}}'
     | 'marketplace{organization{name}}'
     | 'marketplace{organization{systemStatus}}'
     | 'marketplace{organization{errors}}'
+    | 'marketplace{organization{warnings}}'
     | 'marketplace{organization{tier}}'
     | 'marketplace{organization{users{edges{cursor}}}}'
     | 'marketplace{organization{users{pageInfo{endCursor}}}}'
@@ -13099,10 +16929,12 @@ export type CreativeImageField =
     | 'marketplace{mediaChannels{edges{node{name}}}}'
     | 'marketplace{mediaChannels{edges{node{systemStatus}}}}'
     | 'marketplace{mediaChannels{edges{node{errors}}}}'
+    | 'marketplace{mediaChannels{edges{node{warnings}}}}'
     | 'marketplace{mediaChannels{edges{node{platform}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteId}}}}'
     | 'marketplace{mediaChannels{edges{node{remoteState}}}}'
     | 'marketplace{mediaChannels{edges{node{currency}}}}'
+    | 'marketplace{mediaChannels{edges{node{currencyCode}}}}'
     | 'marketplace{mediaChannels{edges{node{currencySymbol}}}}'
     | 'marketplace{mediaChannels{edges{node{currencyOffset}}}}'
     | 'marketplace{mediaChannels{edges{node{timezone}}}}'
@@ -13122,6 +16954,7 @@ export type CreativeImageField =
     | 'marketplace{campaignTemplates{edges{node{remoteId}}}}'
     | 'marketplace{campaignTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{campaignTemplates{edges{node{errors}}}}'
+    | 'marketplace{campaignTemplates{edges{node{warnings}}}}'
     | 'marketplace{campaignTemplates{edges{node{kpi}}}}'
     | 'marketplace{campaignTemplates{edges{cursor}}}'
     | 'marketplace{campaignTemplates{pageInfo{endCursor}}}'
@@ -13135,6 +16968,7 @@ export type CreativeImageField =
     | 'marketplace{vendors{edges{node{name}}}}'
     | 'marketplace{vendors{edges{node{systemStatus}}}}'
     | 'marketplace{vendors{edges{node{errors}}}}'
+    | 'marketplace{vendors{edges{node{warnings}}}}'
     | 'marketplace{vendors{edges{cursor}}}'
     | 'marketplace{vendors{pageInfo{endCursor}}}'
     | 'marketplace{vendors{pageInfo{startCursor}}}'
@@ -13160,6 +16994,7 @@ export type CreativeImageField =
     | 'marketplace{creativeTemplates{edges{node{width}}}}'
     | 'marketplace{creativeTemplates{edges{node{systemStatus}}}}'
     | 'marketplace{creativeTemplates{edges{node{errors}}}}'
+    | 'marketplace{creativeTemplates{edges{node{warnings}}}}'
     | 'marketplace{creativeTemplates{edges{cursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{endCursor}}}'
     | 'marketplace{creativeTemplates{pageInfo{startCursor}}}'
@@ -13202,6 +17037,7 @@ export type TokenFields = {
                     name: 'user{organizations{edges{node{name}}}}';
                     systemStatus: 'user{organizations{edges{node{systemStatus}}}}';
                     errors: 'user{organizations{edges{node{errors}}}}';
+                    warnings: 'user{organizations{edges{node{warnings}}}}';
                     tier: 'user{organizations{edges{node{tier}}}}';
                 };
                 cursor: 'user{organizations{edges{cursor}}}';
@@ -13260,6 +17096,7 @@ export const TokenFields: TokenFields = {
                     systemStatus:
                         'user{organizations{edges{node{systemStatus}}}}',
                     errors: 'user{organizations{edges{node{errors}}}}',
+                    warnings: 'user{organizations{edges{node{warnings}}}}',
                     tier: 'user{organizations{edges{node{tier}}}}',
                 },
                 cursor: 'user{organizations{edges{cursor}}}',
@@ -13315,6 +17152,7 @@ export type TokenField =
     | 'user{organizations{edges{node{name}}}}'
     | 'user{organizations{edges{node{systemStatus}}}}'
     | 'user{organizations{edges{node{errors}}}}'
+    | 'user{organizations{edges{node{warnings}}}}'
     | 'user{organizations{edges{node{tier}}}}'
     | 'user{organizations{edges{cursor}}}'
     | 'user{organizations{pageInfo{endCursor}}}'
