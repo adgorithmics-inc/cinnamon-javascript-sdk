@@ -35,6 +35,7 @@ import {
     CatalogCreateInput,
     CatalogImportInput,
     CatalogUpdateInput,
+    CatalogSyncInput,
     Product,
     ProductInput,
     ProductUpdateInput,
@@ -1616,6 +1617,112 @@ export class Cinnamon {
         );
     }
 
+    @bind
+    async campaignTemplatesWithCurrentGCPX({
+        filter,
+        sort,
+        first,
+        last,
+        after,
+        before,
+        fields = this.defaultCampaignTemplateFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CampaignTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return (
+            await this.api<'campaignTemplatesWithCurrentGCPX'>({
+                query: pageQueryGenerator(
+                    'campaignTemplatesWithCurrentGCPX',
+                    fields,
+                    {
+                        showDeleted: 'Boolean',
+                    },
+                ),
+                variables: {
+                    filter,
+                    sort,
+                    first,
+                    last,
+                    after,
+                    before,
+                    showDeleted,
+                },
+                headers,
+                token,
+            })
+        ).data.campaignTemplatesWithCurrentGCPX;
+    }
+
+    @bind
+    campaignTemplatesWithCurrentGCPXAll({
+        filter,
+        sort,
+        fields = this.defaultCampaignTemplateFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CampaignTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.allPages<CampaignTemplate>((after: PageInfo['endCursor']) =>
+            this.campaignTemplatesWithCurrentGCPX({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
+    @bind
+    campaignTemplatesWithCurrentGCPXEach({
+        filter,
+        sort,
+        fields = this.defaultCampaignTemplateFields,
+        showDeleted,
+        headers,
+        token,
+    }: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CampaignTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    } = {}) {
+        return this.eachNode<CampaignTemplate>((after: PageInfo['endCursor']) =>
+            this.campaignTemplatesWithCurrentGCPX({
+                filter,
+                sort,
+                after,
+                fields,
+                showDeleted,
+                headers,
+                token,
+            }),
+        );
+    }
+
     // ####################################
     // Vendor
     // ####################################
@@ -2505,6 +2612,32 @@ export class Cinnamon {
                 token,
             }),
         );
+    }
+
+    @bind
+    async syncCatalog({
+        id,
+        input,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        input: CatalogSyncInput;
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'syncCatalog'>({
+                query: `mutation($id: ObjectId!, $input: CatalogSyncInput) {
+                    syncCatalog(id: $id, input: $input) {
+                        id
+                    }
+                }`,
+                variables: { id, input },
+                headers,
+                token,
+            })
+        ).data.syncCatalog;
     }
 
     @bind

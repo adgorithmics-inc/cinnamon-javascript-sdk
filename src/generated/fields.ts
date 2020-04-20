@@ -254,6 +254,7 @@ export type CampaignTemplateFields = {
                     systemStatus: 'marketingCampaigns{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
                     warnings: 'marketingCampaigns{edges{node{catalog{warnings}}}}';
                 };
@@ -951,6 +952,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'marketingCampaigns{edges{node{catalog{remoteState}}}}',
                     dataFeedId:
                         'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
                     warnings:
                         'marketingCampaigns{edges{node{catalog{warnings}}}}',
@@ -1649,6 +1652,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{catalog{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
     | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
+    | 'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}'
     | 'marketingCampaigns{edges{node{catalog{errors}}}}'
     | 'marketingCampaigns{edges{node{catalog{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'
@@ -2201,6 +2205,7 @@ export type MarketplaceFields = {
                     systemStatus: 'products{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'products{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
                     warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
@@ -2609,6 +2614,8 @@ export const MarketplaceFields: MarketplaceFields = {
                         'products{edges{node{catalog{systemStatus}}}}',
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'products{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
                     warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
@@ -2854,6 +2861,7 @@ export type MarketplaceField =
     | 'products{edges{node{catalog{systemStatus}}}}'
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
+    | 'products{edges{node{catalog{externalEventSourceIds}}}}'
     | 'products{edges{node{catalog{errors}}}}'
     | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
@@ -3540,6 +3548,7 @@ export type MediaChannelFields = {
                 systemStatus: 'catalogs{edges{node{systemStatus}}}';
                 remoteState: 'catalogs{edges{node{remoteState}}}';
                 dataFeedId: 'catalogs{edges{node{dataFeedId}}}';
+                externalEventSourceIds: 'catalogs{edges{node{externalEventSourceIds}}}';
                 errors: 'catalogs{edges{node{errors}}}';
                 warnings: 'catalogs{edges{node{warnings}}}';
                 mediaChannel: {
@@ -3792,6 +3801,8 @@ export const MediaChannelFields: MediaChannelFields = {
                 systemStatus: 'catalogs{edges{node{systemStatus}}}',
                 remoteState: 'catalogs{edges{node{remoteState}}}',
                 dataFeedId: 'catalogs{edges{node{dataFeedId}}}',
+                externalEventSourceIds:
+                    'catalogs{edges{node{externalEventSourceIds}}}',
                 errors: 'catalogs{edges{node{errors}}}',
                 warnings: 'catalogs{edges{node{warnings}}}',
                 mediaChannel: {
@@ -4109,6 +4120,7 @@ export type MediaChannelField =
     | 'catalogs{edges{node{systemStatus}}}'
     | 'catalogs{edges{node{remoteState}}}'
     | 'catalogs{edges{node{dataFeedId}}}'
+    | 'catalogs{edges{node{externalEventSourceIds}}}'
     | 'catalogs{edges{node{errors}}}'
     | 'catalogs{edges{node{warnings}}}'
     | 'catalogs{edges{node{mediaChannel{id}}}}'
@@ -4268,6 +4280,7 @@ export type CatalogFields = {
     systemStatus: 'systemStatus';
     remoteState: 'remoteState';
     dataFeedId: 'dataFeedId';
+    externalEventSourceIds: 'externalEventSourceIds';
     errors: 'errors';
     warnings: 'warnings';
     mediaChannel: {
@@ -4299,6 +4312,7 @@ export type CatalogFields = {
                     systemStatus: 'mediaChannel{catalogs{edges{node{systemStatus}}}}';
                     remoteState: 'mediaChannel{catalogs{edges{node{remoteState}}}}';
                     dataFeedId: 'mediaChannel{catalogs{edges{node{dataFeedId}}}}';
+                    externalEventSourceIds: 'mediaChannel{catalogs{edges{node{externalEventSourceIds}}}}';
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}';
                     warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}';
                 };
@@ -4439,6 +4453,7 @@ export type CatalogFields = {
                     systemStatus: 'products{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'products{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
                     warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
@@ -4473,6 +4488,7 @@ export const CatalogFields: CatalogFields = {
     systemStatus: 'systemStatus',
     remoteState: 'remoteState',
     dataFeedId: 'dataFeedId',
+    externalEventSourceIds: 'externalEventSourceIds',
     errors: 'errors',
     warnings: 'warnings',
     mediaChannel: {
@@ -4510,6 +4526,8 @@ export const CatalogFields: CatalogFields = {
                         'mediaChannel{catalogs{edges{node{remoteState}}}}',
                     dataFeedId:
                         'mediaChannel{catalogs{edges{node{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'mediaChannel{catalogs{edges{node{externalEventSourceIds}}}}',
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}',
                     warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}',
                 },
@@ -4693,6 +4711,8 @@ export const CatalogFields: CatalogFields = {
                         'products{edges{node{catalog{systemStatus}}}}',
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'products{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
                     warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
@@ -4728,6 +4748,7 @@ export type CatalogField =
     | 'systemStatus'
     | 'remoteState'
     | 'dataFeedId'
+    | 'externalEventSourceIds'
     | 'errors'
     | 'warnings'
     | 'mediaChannel{id}'
@@ -4755,6 +4776,7 @@ export type CatalogField =
     | 'mediaChannel{catalogs{edges{node{systemStatus}}}}'
     | 'mediaChannel{catalogs{edges{node{remoteState}}}}'
     | 'mediaChannel{catalogs{edges{node{dataFeedId}}}}'
+    | 'mediaChannel{catalogs{edges{node{externalEventSourceIds}}}}'
     | 'mediaChannel{catalogs{edges{node{errors}}}}'
     | 'mediaChannel{catalogs{edges{node{warnings}}}}'
     | 'mediaChannel{catalogs{edges{cursor}}}'
@@ -4839,6 +4861,7 @@ export type CatalogField =
     | 'products{edges{node{catalog{systemStatus}}}}'
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
+    | 'products{edges{node{catalog{externalEventSourceIds}}}}'
     | 'products{edges{node{catalog{errors}}}}'
     | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
@@ -4921,6 +4944,7 @@ export type ProductFields = {
                     systemStatus: 'marketingCampaigns{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
                     warnings: 'marketingCampaigns{edges{node{catalog{warnings}}}}';
                 };
@@ -4982,6 +5006,7 @@ export type ProductFields = {
         systemStatus: 'catalog{systemStatus}';
         remoteState: 'catalog{remoteState}';
         dataFeedId: 'catalog{dataFeedId}';
+        externalEventSourceIds: 'catalog{externalEventSourceIds}';
         errors: 'catalog{errors}';
         warnings: 'catalog{warnings}';
         mediaChannel: {
@@ -5319,6 +5344,8 @@ export const ProductFields: ProductFields = {
                         'marketingCampaigns{edges{node{catalog{remoteState}}}}',
                     dataFeedId:
                         'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
                     warnings:
                         'marketingCampaigns{edges{node{catalog{warnings}}}}',
@@ -5407,6 +5434,7 @@ export const ProductFields: ProductFields = {
         systemStatus: 'catalog{systemStatus}',
         remoteState: 'catalog{remoteState}',
         dataFeedId: 'catalog{dataFeedId}',
+        externalEventSourceIds: 'catalog{externalEventSourceIds}',
         errors: 'catalog{errors}',
         warnings: 'catalog{warnings}',
         mediaChannel: {
@@ -5773,6 +5801,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{catalog{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
     | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
+    | 'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}'
     | 'marketingCampaigns{edges{node{catalog{errors}}}}'
     | 'marketingCampaigns{edges{node{catalog{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'
@@ -5819,6 +5848,7 @@ export type ProductField =
     | 'catalog{systemStatus}'
     | 'catalog{remoteState}'
     | 'catalog{dataFeedId}'
+    | 'catalog{externalEventSourceIds}'
     | 'catalog{errors}'
     | 'catalog{warnings}'
     | 'catalog{mediaChannel{id}}'
@@ -6487,6 +6517,7 @@ export type MarketingCampaignFields = {
                     systemStatus: 'products{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'products{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
                     warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
@@ -6520,6 +6551,7 @@ export type MarketingCampaignFields = {
         systemStatus: 'catalog{systemStatus}';
         remoteState: 'catalog{remoteState}';
         dataFeedId: 'catalog{dataFeedId}';
+        externalEventSourceIds: 'catalog{externalEventSourceIds}';
         errors: 'catalog{errors}';
         warnings: 'catalog{warnings}';
         mediaChannel: {
@@ -6918,6 +6950,7 @@ export type MarketingCampaignFields = {
                     systemStatus: 'mediaChannel{catalogs{edges{node{systemStatus}}}}';
                     remoteState: 'mediaChannel{catalogs{edges{node{remoteState}}}}';
                     dataFeedId: 'mediaChannel{catalogs{edges{node{dataFeedId}}}}';
+                    externalEventSourceIds: 'mediaChannel{catalogs{edges{node{externalEventSourceIds}}}}';
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}';
                     warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}';
                 };
@@ -7089,6 +7122,7 @@ export type MarketingCampaignFields = {
                 status: 'notifications{edges{node{status}}}';
                 severity: 'notifications{edges{node{severity}}}';
                 code: 'notifications{edges{node{code}}}';
+                source: 'notifications{edges{node{source}}}';
                 resource: {
                     id: 'notifications{edges{node{resource{id}}}}';
                     creationDate: 'notifications{edges{node{resource{creationDate}}}}';
@@ -7777,6 +7811,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'products{edges{node{catalog{systemStatus}}}}',
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'products{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
                     warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
@@ -7811,6 +7847,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
         systemStatus: 'catalog{systemStatus}',
         remoteState: 'catalog{remoteState}',
         dataFeedId: 'catalog{dataFeedId}',
+        externalEventSourceIds: 'catalog{externalEventSourceIds}',
         errors: 'catalog{errors}',
         warnings: 'catalog{warnings}',
         mediaChannel: {
@@ -8368,6 +8405,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'mediaChannel{catalogs{edges{node{remoteState}}}}',
                     dataFeedId:
                         'mediaChannel{catalogs{edges{node{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'mediaChannel{catalogs{edges{node{externalEventSourceIds}}}}',
                     errors: 'mediaChannel{catalogs{edges{node{errors}}}}',
                     warnings: 'mediaChannel{catalogs{edges{node{warnings}}}}',
                 },
@@ -8584,6 +8623,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                 status: 'notifications{edges{node{status}}}',
                 severity: 'notifications{edges{node{severity}}}',
                 code: 'notifications{edges{node{code}}}',
+                source: 'notifications{edges{node{source}}}',
                 resource: {
                     id: 'notifications{edges{node{resource{id}}}}',
                     creationDate:
@@ -8945,6 +8985,7 @@ export type MarketingCampaignField =
     | 'products{edges{node{catalog{systemStatus}}}}'
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
+    | 'products{edges{node{catalog{externalEventSourceIds}}}}'
     | 'products{edges{node{catalog{errors}}}}'
     | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
@@ -8969,6 +9010,7 @@ export type MarketingCampaignField =
     | 'catalog{systemStatus}'
     | 'catalog{remoteState}'
     | 'catalog{dataFeedId}'
+    | 'catalog{externalEventSourceIds}'
     | 'catalog{errors}'
     | 'catalog{warnings}'
     | 'catalog{mediaChannel{id}}'
@@ -9234,6 +9276,7 @@ export type MarketingCampaignField =
     | 'mediaChannel{catalogs{edges{node{systemStatus}}}}'
     | 'mediaChannel{catalogs{edges{node{remoteState}}}}'
     | 'mediaChannel{catalogs{edges{node{dataFeedId}}}}'
+    | 'mediaChannel{catalogs{edges{node{externalEventSourceIds}}}}'
     | 'mediaChannel{catalogs{edges{node{errors}}}}'
     | 'mediaChannel{catalogs{edges{node{warnings}}}}'
     | 'mediaChannel{catalogs{edges{cursor}}}'
@@ -9338,6 +9381,7 @@ export type MarketingCampaignField =
     | 'notifications{edges{node{status}}}'
     | 'notifications{edges{node{severity}}}'
     | 'notifications{edges{node{code}}}'
+    | 'notifications{edges{node{source}}}'
     | 'notifications{edges{node{resource{id}}}}'
     | 'notifications{edges{node{resource{creationDate}}}}'
     | 'notifications{edges{node{resource{lastChangeDate}}}}'
@@ -9612,6 +9656,7 @@ export type VendorFields = {
                     systemStatus: 'products{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'products{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'products{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'products{edges{node{catalog{errors}}}}';
                     warnings: 'products{edges{node{catalog{warnings}}}}';
                 };
@@ -9972,6 +10017,8 @@ export const VendorFields: VendorFields = {
                         'products{edges{node{catalog{systemStatus}}}}',
                     remoteState: 'products{edges{node{catalog{remoteState}}}}',
                     dataFeedId: 'products{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'products{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'products{edges{node{catalog{errors}}}}',
                     warnings: 'products{edges{node{catalog{warnings}}}}',
                 },
@@ -10177,6 +10224,7 @@ export type VendorField =
     | 'products{edges{node{catalog{systemStatus}}}}'
     | 'products{edges{node{catalog{remoteState}}}}'
     | 'products{edges{node{catalog{dataFeedId}}}}'
+    | 'products{edges{node{catalog{externalEventSourceIds}}}}'
     | 'products{edges{node{catalog{errors}}}}'
     | 'products{edges{node{catalog{warnings}}}}'
     | 'products{edges{node{vendor{id}}}}'
@@ -11669,6 +11717,7 @@ export type MarketingAdFields = {
             systemStatus: 'marketingCampaign{catalog{systemStatus}}';
             remoteState: 'marketingCampaign{catalog{remoteState}}';
             dataFeedId: 'marketingCampaign{catalog{dataFeedId}}';
+            externalEventSourceIds: 'marketingCampaign{catalog{externalEventSourceIds}}';
             errors: 'marketingCampaign{catalog{errors}}';
             warnings: 'marketingCampaign{catalog{warnings}}';
             mediaChannel: {
@@ -11933,6 +11982,7 @@ export type MarketingAdFields = {
                     status: 'marketingCampaign{notifications{edges{node{status}}}}';
                     severity: 'marketingCampaign{notifications{edges{node{severity}}}}';
                     code: 'marketingCampaign{notifications{edges{node{code}}}}';
+                    source: 'marketingCampaign{notifications{edges{node{source}}}}';
                 };
                 cursor: 'marketingCampaign{notifications{edges{cursor}}}';
             };
@@ -12558,6 +12608,8 @@ export const MarketingAdFields: MarketingAdFields = {
             systemStatus: 'marketingCampaign{catalog{systemStatus}}',
             remoteState: 'marketingCampaign{catalog{remoteState}}',
             dataFeedId: 'marketingCampaign{catalog{dataFeedId}}',
+            externalEventSourceIds:
+                'marketingCampaign{catalog{externalEventSourceIds}}',
             errors: 'marketingCampaign{catalog{errors}}',
             warnings: 'marketingCampaign{catalog{warnings}}',
             mediaChannel: {
@@ -12948,6 +13000,8 @@ export const MarketingAdFields: MarketingAdFields = {
                     severity:
                         'marketingCampaign{notifications{edges{node{severity}}}}',
                     code: 'marketingCampaign{notifications{edges{node{code}}}}',
+                    source:
+                        'marketingCampaign{notifications{edges{node{source}}}}',
                 },
                 cursor: 'marketingCampaign{notifications{edges{cursor}}}',
             },
@@ -13273,6 +13327,7 @@ export type MarketingAdField =
     | 'marketingCampaign{catalog{systemStatus}}'
     | 'marketingCampaign{catalog{remoteState}}'
     | 'marketingCampaign{catalog{dataFeedId}}'
+    | 'marketingCampaign{catalog{externalEventSourceIds}}'
     | 'marketingCampaign{catalog{errors}}'
     | 'marketingCampaign{catalog{warnings}}'
     | 'marketingCampaign{catalog{mediaChannel{id}}}'
@@ -13451,6 +13506,7 @@ export type MarketingAdField =
     | 'marketingCampaign{notifications{edges{node{status}}}}'
     | 'marketingCampaign{notifications{edges{node{severity}}}}'
     | 'marketingCampaign{notifications{edges{node{code}}}}'
+    | 'marketingCampaign{notifications{edges{node{source}}}}'
     | 'marketingCampaign{notifications{edges{cursor}}}'
     | 'marketingCampaign{notifications{pageInfo{endCursor}}}'
     | 'marketingCampaign{notifications{pageInfo{startCursor}}}'
@@ -14173,6 +14229,7 @@ export type NotificationFields = {
     status: 'status';
     severity: 'severity';
     code: 'code';
+    source: 'source';
     resource: {
         id: 'resource{id}';
         creationDate: 'resource{creationDate}';
@@ -14191,6 +14248,7 @@ export const NotificationFields: NotificationFields = {
     status: 'status',
     severity: 'severity',
     code: 'code',
+    source: 'source',
     resource: {
         id: 'resource{id}',
         creationDate: 'resource{creationDate}',
@@ -14209,6 +14267,7 @@ export type NotificationField =
     | 'status'
     | 'severity'
     | 'code'
+    | 'source'
     | 'resource{id}'
     | 'resource{creationDate}'
     | 'resource{lastChangeDate}'
@@ -14469,6 +14528,7 @@ export type CreativeTemplateFields = {
                     systemStatus: 'marketingCampaigns{edges{node{catalog{systemStatus}}}}';
                     remoteState: 'marketingCampaigns{edges{node{catalog{remoteState}}}}';
                     dataFeedId: 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}';
+                    externalEventSourceIds: 'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}';
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}';
                     warnings: 'marketingCampaigns{edges{node{catalog{warnings}}}}';
                 };
@@ -14894,6 +14954,8 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                         'marketingCampaigns{edges{node{catalog{remoteState}}}}',
                     dataFeedId:
                         'marketingCampaigns{edges{node{catalog{dataFeedId}}}}',
+                    externalEventSourceIds:
+                        'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}',
                     errors: 'marketingCampaigns{edges{node{catalog{errors}}}}',
                     warnings:
                         'marketingCampaigns{edges{node{catalog{warnings}}}}',
@@ -15197,6 +15259,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{catalog{systemStatus}}}}'
     | 'marketingCampaigns{edges{node{catalog{remoteState}}}}'
     | 'marketingCampaigns{edges{node{catalog{dataFeedId}}}}'
+    | 'marketingCampaigns{edges{node{catalog{externalEventSourceIds}}}}'
     | 'marketingCampaigns{edges{node{catalog{errors}}}}'
     | 'marketingCampaigns{edges{node{catalog{warnings}}}}'
     | 'marketingCampaigns{edges{node{campaignTemplate{id}}}}'

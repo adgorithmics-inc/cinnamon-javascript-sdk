@@ -272,6 +272,8 @@ export type Catalog = {
     remoteState: Scalars['JSONObject'];
     /** Facebook data feed id referenced by the product catalog */
     dataFeedId?: Maybe<Scalars['String']>;
+    /** Facebook app and pixel ids associated to the product catalog */
+    externalEventSourceIds: Array<Scalars['String']>;
     /** Validation errors of the product catalog */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Warnings of the product catalog */
@@ -306,6 +308,8 @@ export type CatalogConnection = {
 export type CatalogCreateInput = {
     /** Name of the product catalog */
     name: Scalars['NonEmptyString'];
+    /** Facebook app and pixel ids associated to the product catalog */
+    externalEventSourceIds?: Maybe<Array<Scalars['String']>>;
     /** Media channel id referenced by the product catalog */
     mediaChannelId: Scalars['ObjectId'];
     /** Category of the products referenced by the catalog */
@@ -327,6 +331,12 @@ export type CatalogImportInput = {
     remoteId: Scalars['String'];
 };
 
+/** Product catalog sync input data */
+export type CatalogSyncInput = {
+    /** The desired state to modify during sync operation. */
+    reconcileState?: Maybe<ReconcileStateEnum>;
+};
+
 /** Category of the products referenced by the product catalog */
 export enum CatalogType {
     Bookable = 'bookable',
@@ -345,6 +355,8 @@ export enum CatalogType {
 export type CatalogUpdateInput = {
     /** Name of the product catalog */
     name?: Maybe<Scalars['NonEmptyString']>;
+    /** Facebook app and pixel ids associated to the product catalog */
+    externalEventSourceIds?: Maybe<Array<Scalars['String']>>;
 };
 
 /**
@@ -1385,6 +1397,8 @@ export type Mutation = {
     updateCatalog: Catalog;
     /** Updates a collection of product catalogs */
     updateCatalogs: CatalogConnection;
+    /** Attempt synchronization of the product catalog with mediaChannel platforms, removing all errors on success */
+    syncCatalog: Catalog;
     /**
      * Marks a product catalog and all its associated products by the catalog's given
      * id as DELETED. The catalog resource will not be deleted on the remote platform
@@ -1540,6 +1554,11 @@ export type MutationUpdateCatalogsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
     input: CatalogUpdateInput;
+};
+
+export type MutationSyncCatalogArgs = {
+    input?: Maybe<CatalogSyncInput>;
+    id: Scalars['ObjectId'];
 };
 
 export type MutationDeleteCatalogArgs = {
@@ -1884,6 +1903,8 @@ export type Notification = {
     severity: Notification_Severity;
     /** Code of the notification */
     code: Notification_Code;
+    /** The source of the notification */
+    source: Scalars['String'];
     /** Resource related to the notification */
     resource: NotificationResource;
 };
@@ -2129,6 +2150,8 @@ export type Query = {
     campaignTemplate: CampaignTemplate;
     /** Returns a collection of campaign templates */
     campaignTemplates: CampaignTemplateConnection;
+    /** Returns a collection of campaign templates that have a current GCPX */
+    campaignTemplatesWithCurrentGCPX: CampaignTemplateConnection;
     /** Returns a single product catalog identified by a given id */
     catalog: Catalog;
     /** Returns a collection of product catalogs */
@@ -2202,6 +2225,16 @@ export type QueryCampaignTemplateArgs = {
 };
 
 export type QueryCampaignTemplatesArgs = {
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
+    showDeleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type QueryCampaignTemplatesWithCurrentGcpxArgs = {
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['String']>;
@@ -3036,6 +3069,8 @@ export type ResolversTypes = {
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
     CatalogUpdateInput: CatalogUpdateInput;
+    CatalogSyncInput: CatalogSyncInput;
+    ReconcileStateEnum: ReconcileStateEnum;
     Deletion: ResolverTypeWrapper<Deletion>;
     CreativeFontCreateInput: CreativeFontCreateInput;
     CreativeFontUpdateInput: CreativeFontUpdateInput;
@@ -3050,7 +3085,6 @@ export type ResolversTypes = {
     MarketingCampaignInput: MarketingCampaignInput;
     MarketingCampaignUpdateInput: MarketingCampaignUpdateInput;
     MarketingCampaignSyncInput: MarketingCampaignSyncInput;
-    ReconcileStateEnum: ReconcileStateEnum;
     MarketplaceInput: MarketplaceInput;
     MarketplaceUpdateInput: MarketplaceUpdateInput;
     MediaChannelCreateInput: MediaChannelCreateInput;
@@ -3180,6 +3214,8 @@ export type ResolversParentTypes = {
     CatalogCreateInput: CatalogCreateInput;
     CatalogImportInput: CatalogImportInput;
     CatalogUpdateInput: CatalogUpdateInput;
+    CatalogSyncInput: CatalogSyncInput;
+    ReconcileStateEnum: ReconcileStateEnum;
     Deletion: Deletion;
     CreativeFontCreateInput: CreativeFontCreateInput;
     CreativeFontUpdateInput: CreativeFontUpdateInput;
@@ -3194,7 +3230,6 @@ export type ResolversParentTypes = {
     MarketingCampaignInput: MarketingCampaignInput;
     MarketingCampaignUpdateInput: MarketingCampaignUpdateInput;
     MarketingCampaignSyncInput: MarketingCampaignSyncInput;
-    ReconcileStateEnum: ReconcileStateEnum;
     MarketplaceInput: MarketplaceInput;
     MarketplaceUpdateInput: MarketplaceUpdateInput;
     MediaChannelCreateInput: MediaChannelCreateInput;
@@ -3349,6 +3384,11 @@ export type CatalogResolvers<
     >;
     dataFeedId?: Resolver<
         Maybe<ResolversTypes['String']>,
+        ParentType,
+        ContextType
+    >;
+    externalEventSourceIds?: Resolver<
+        Array<ResolversTypes['String']>,
         ParentType,
         ContextType
     >;
@@ -4359,6 +4399,12 @@ export type MutationResolvers<
         ContextType,
         RequireFields<MutationUpdateCatalogsArgs, 'showDeleted' | 'input'>
     >;
+    syncCatalog?: Resolver<
+        ResolversTypes['Catalog'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationSyncCatalogArgs, 'id'>
+    >;
     deleteCatalog?: Resolver<
         ResolversTypes['Deletion'],
         ParentType,
@@ -4745,6 +4791,7 @@ export type NotificationResolvers<
         ParentType,
         ContextType
     >;
+    source?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
     resource?: Resolver<
         ResolversTypes['NotificationResource'],
         ParentType,
@@ -4976,6 +5023,12 @@ export type QueryResolvers<
         ParentType,
         ContextType,
         RequireFields<QueryCampaignTemplatesArgs, 'showDeleted'>
+    >;
+    campaignTemplatesWithCurrentGCPX?: Resolver<
+        ResolversTypes['CampaignTemplateConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<QueryCampaignTemplatesWithCurrentGcpxArgs, 'showDeleted'>
     >;
     catalog?: Resolver<
         ResolversTypes['Catalog'],
