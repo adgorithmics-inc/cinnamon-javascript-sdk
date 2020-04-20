@@ -1,5 +1,5 @@
 import { AdgoError } from '@adgorithmics/adgo-errors';
-import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, SetVendorPasswordInput, LoginVendorInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingCampaignSyncInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput, RequestResetPasswordInput, ResetPasswordInput, Notification, NotificationUpdateInput } from './generated/graphql';
+import { PageInfo, Scalars, Mutation, Query, SortInput, User, UserLoginInput, UserUpdateInput, RefreshTokenInput, Organization, OrganizationInput, OrganizationUpdateInput, Marketplace, MarketplaceInput, MarketplaceUpdateInput, MediaChannel, MediaChannelCreateInput, MediaChannelUpdateInput, MediaChannelImportInput, CampaignTemplate, Vendor, VendorInput, VendorUpdateInput, VendorToken, VendorTokenInput, SetVendorPasswordInput, LoginVendorInput, Catalog, CatalogCreateInput, CatalogImportInput, CatalogUpdateInput, CatalogSyncInput, Product, ProductInput, ProductUpdateInput, MarketingCampaign, MarketingCampaignInput, MarketingCampaignUpdateInput, MarketingCampaignSyncInput, MarketingAd, Result, Entitlement, EntitlementInput, EntitlementUpdateInput, CreativeFont, CreativeFontCreateInput, CreativeFontUpdateInput, CreativeImage, CreativeImageCreateInput, CreativeImageUpdateInput, CreativeLayer, CreativeLayerCreateInput, CreativeLayerUpdateInput, CreativeTemplate, CreativeTemplateCreateInput, CreativeTemplateUpdateInput, RequestResetPasswordInput, ResetPasswordInput, Notification, NotificationUpdateInput } from './generated/graphql';
 import { OrganizationField, UserField, RequestResultField, MarketplaceField, MediaChannelField, CampaignTemplateField, VendorField, VendorTokenField, CatalogField, ProductField, MarketingCampaignField, MarketingAdField, ResultField, EntitlementField, CreativeFontField, CreativeImageField, CreativeLayerField, CreativeTemplateField, NotificationField } from './generated/fields';
 export interface Config {
     url: string;
@@ -356,6 +356,34 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<CampaignTemplate, void, unknown>;
+    campaignTemplatesWithCurrentGCPX({ filter, sort, first, last, after, before, fields, showDeleted, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        first?: number;
+        last?: number;
+        after?: PageInfo['endCursor'];
+        before?: PageInfo['startCursor'];
+        fields?: CampaignTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<import("./generated/graphql").CampaignTemplateConnection>;
+    campaignTemplatesWithCurrentGCPXAll({ filter, sort, fields, showDeleted, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CampaignTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): Promise<CampaignTemplate[]>;
+    campaignTemplatesWithCurrentGCPXEach({ filter, sort, fields, showDeleted, headers, token, }?: {
+        filter?: Scalars['FilterInput'];
+        sort?: SortInput;
+        fields?: CampaignTemplateField[];
+        showDeleted?: boolean;
+        headers?: Headers;
+        token?: string;
+    }): AsyncGenerator<CampaignTemplate, void, unknown>;
     private defaultVendorFields;
     vendor({ id, fields, headers, token, }: {
         id: Scalars['ObjectId'];
@@ -580,6 +608,12 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): AsyncGenerator<Catalog, void, unknown>;
+    syncCatalog({ id, input, headers, token, }: {
+        id: Scalars['ObjectId'];
+        input: CatalogSyncInput;
+        headers?: Headers;
+        token?: string;
+    }): Promise<Catalog>;
     deleteCatalog({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
