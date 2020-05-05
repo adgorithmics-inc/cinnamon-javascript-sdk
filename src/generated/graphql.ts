@@ -274,6 +274,8 @@ export type Catalog = {
     dataFeedId?: Maybe<Scalars['String']>;
     /** Facebook app and pixel ids associated to the product catalog */
     externalEventSourceIds: Array<Scalars['String']>;
+    /** Source of the products for this catalog */
+    productSource: Product_Source;
     /** Validation errors of the product catalog */
     errors?: Maybe<Array<Scalars['JSONObject']>>;
     /** Warnings of the product catalog */
@@ -329,6 +331,10 @@ export type CatalogImportInput = {
     mediaChannelId: Scalars['ObjectId'];
     /** Id of the product catalog on the related platform */
     remoteId: Scalars['String'];
+    /** Source of the products for this catalog */
+    productSource?: Maybe<Product_Source>;
+    /** Id of the vendor to associate with the imported products */
+    vendorId?: Maybe<Scalars['ObjectId']>;
 };
 
 /** Product catalog sync input data */
@@ -872,6 +878,7 @@ export type MarketingAd = ResultResource & {
 
 /** Marketing ad represents a specific ad on a platform belonging to a marketing campaign and associated with a single vendor */
 export type MarketingAdResultsArgs = {
+    breakdown?: Maybe<ResultBreakdownTypeEnum>;
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['String']>;
@@ -993,6 +1000,7 @@ export type MarketingCampaignProductsArgs = {
  * specifications that are launched on a provided media channel
  */
 export type MarketingCampaignResultsArgs = {
+    breakdown?: Maybe<ResultBreakdownTypeEnum>;
     first?: Maybe<Scalars['Int']>;
     last?: Maybe<Scalars['Int']>;
     after?: Maybe<Scalars['String']>;
@@ -1399,6 +1407,8 @@ export type Mutation = {
     updateCatalogs: CatalogConnection;
     /** Attempt synchronization of the product catalog with mediaChannel platforms, removing all errors on success */
     syncCatalog: Catalog;
+    /** Attempt synchronization of the products of the catalog with mediaChannel platforms, removing all errors on success */
+    syncCatalogProducts: Catalog;
     /**
      * Marks a product catalog and all its associated products by the catalog's given
      * id as DELETED. The catalog resource will not be deleted on the remote platform
@@ -1558,6 +1568,10 @@ export type MutationUpdateCatalogsArgs = {
 
 export type MutationSyncCatalogArgs = {
     input?: Maybe<CatalogSyncInput>;
+    id: Scalars['ObjectId'];
+};
+
+export type MutationSyncCatalogProductsArgs = {
     id: Scalars['ObjectId'];
 };
 
@@ -2069,13 +2083,25 @@ export enum Platform {
  * specific catalog and vendor which can be used to generate dynamic ads via a
  * marketing campaign
  */
-export type Product = {
+export type Product = ResultResource & {
     /** Unique identifier */
     id: Scalars['ObjectId'];
     /** Date and time of creation */
     creationDate: Scalars['DateISO'];
     /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
+    /** The source of the analytics used to derive results data */
+    resultsSource: Array<Scalars['NonEmptyString']>;
+    /** The custom key performance indicator used to derive results data */
+    kpi?: Maybe<Scalars['String']>;
+    /** Vendor owning the product */
+    vendor?: Maybe<Vendor>;
+    /** System status of the product */
+    systemStatus: SystemStatus;
+    /** Validation errors of the product */
+    errors?: Maybe<Array<Scalars['JSONObject']>>;
+    /** Validation warnings */
+    warnings?: Maybe<Array<Scalars['JSONObject']>>;
     /** Name of the product */
     name: Scalars['NonEmptyString'];
     /** Stock keeping unit of the product */
@@ -2084,18 +2110,29 @@ export type Product = {
     remoteState?: Maybe<Scalars['JSONObject']>;
     /** Data related to the product. [Product Metadata](https://docs.adgo.io/API/ProductMetadata) */
     metadata: Scalars['JSONObject'];
-    /** System status of the product */
-    systemStatus: SystemStatus;
-    /** Validation errors of the product */
-    errors?: Maybe<Array<Scalars['JSONObject']>>;
-    /** Validation warnings */
-    warnings?: Maybe<Array<Scalars['JSONObject']>>;
+    /** True if the product was created externally and imported */
+    imported: Scalars['Boolean'];
+    /** Results related to the product */
+    results: ResultConnection;
     /** Marketing campaigns referenced by the product */
     marketingCampaigns: MarketingCampaignConnection;
     /** Product catalog containing the product */
     catalog: Catalog;
-    /** Vendor owning the product */
-    vendor?: Maybe<Vendor>;
+};
+
+/**
+ * Product is a collection of data representing a single product associated with a
+ * specific catalog and vendor which can be used to generate dynamic ads via a
+ * marketing campaign
+ */
+export type ProductResultsArgs = {
+    breakdown?: Maybe<ResultBreakdownTypeEnum>;
+    first?: Maybe<Scalars['Int']>;
+    last?: Maybe<Scalars['Int']>;
+    after?: Maybe<Scalars['String']>;
+    before?: Maybe<Scalars['String']>;
+    sort?: Maybe<SortInput>;
+    filter?: Maybe<Scalars['FilterInput']>;
 };
 
 /**
@@ -2112,6 +2149,12 @@ export type ProductMarketingCampaignsArgs = {
     filter?: Maybe<Scalars['FilterInput']>;
     showDeleted?: Maybe<Scalars['Boolean']>;
 };
+
+/** Source of products for a catalog */
+export enum Product_Source {
+    Cinnamon = 'CINNAMON',
+    External = 'EXTERNAL',
+}
 
 export type ProductConnection = {
     /** Collection of this object */
@@ -2510,8 +2553,12 @@ export type Result = {
     analytics: ResultAnalytics;
     /** Resource type related to the result */
     type: ResultResourceTypeEnum;
+    /** Breakdown resource type related to the result */
+    breakdownType: ResultBreakdownTypeEnum;
     /** Resource related to the result */
     resource: ResultResource;
+    /** Breakdown resource related to the result */
+    breakdown: ResultResource;
     /** Vendor related to the result */
     vendor?: Maybe<Vendor>;
 };
@@ -2531,6 +2578,13 @@ export type ResultAnalytics = {
     /** Amount of purchases value */
     purchasesValue?: Maybe<Scalars['Float']>;
 };
+
+/** Breakdown related to a result */
+export enum ResultBreakdownTypeEnum {
+    MarketingAd = 'MarketingAd',
+    MarketingCampaign = 'MarketingCampaign',
+    Product = 'Product',
+}
 
 export type ResultConnection = {
     /** Collection of this object */
@@ -2574,6 +2628,7 @@ export type ResultResource = {
 export enum ResultResourceTypeEnum {
     MarketingAd = 'MarketingAd',
     MarketingCampaign = 'MarketingCampaign',
+    Product = 'Product',
 }
 
 /** Vendor reset password input data */
@@ -3011,19 +3066,27 @@ export type ResolversTypes = {
     CatalogEdge: ResolverTypeWrapper<CatalogEdge>;
     Catalog: ResolverTypeWrapper<Catalog>;
     CatalogType: CatalogType;
+    PRODUCT_SOURCE: Product_Source;
     ProductConnection: ResolverTypeWrapper<ProductConnection>;
     ProductEdge: ResolverTypeWrapper<ProductEdge>;
     Product: ResolverTypeWrapper<Product>;
-    MarketingCampaignConnection: ResolverTypeWrapper<
-        MarketingCampaignConnection
-    >;
-    MarketingCampaignEdge: ResolverTypeWrapper<MarketingCampaignEdge>;
-    MarketingCampaign: ResolverTypeWrapper<MarketingCampaign>;
     ResultResource: ResolverTypeWrapper<ResultResource>;
     Vendor: ResolverTypeWrapper<Vendor>;
     VendorTokenConnection: ResolverTypeWrapper<VendorTokenConnection>;
     VendorTokenEdge: ResolverTypeWrapper<VendorTokenEdge>;
     VendorToken: ResolverTypeWrapper<VendorToken>;
+    ResultBreakdownTypeEnum: ResultBreakdownTypeEnum;
+    ResultConnection: ResolverTypeWrapper<ResultConnection>;
+    ResultEdge: ResolverTypeWrapper<ResultEdge>;
+    Result: ResolverTypeWrapper<Result>;
+    ResultAnalytics: ResolverTypeWrapper<ResultAnalytics>;
+    Float: ResolverTypeWrapper<Scalars['Float']>;
+    ResultResourceTypeEnum: ResultResourceTypeEnum;
+    MarketingCampaignConnection: ResolverTypeWrapper<
+        MarketingCampaignConnection
+    >;
+    MarketingCampaignEdge: ResolverTypeWrapper<MarketingCampaignEdge>;
+    MarketingCampaign: ResolverTypeWrapper<MarketingCampaign>;
     NotificationResource: ResolverTypeWrapper<NotificationResource>;
     MarketingCampaignStatus: MarketingCampaignStatus;
     GCPX: ResolverTypeWrapper<Gcpx>;
@@ -3031,12 +3094,6 @@ export type ResolversTypes = {
     MarketingAdEdge: ResolverTypeWrapper<MarketingAdEdge>;
     MarketingAd: ResolverTypeWrapper<MarketingAd>;
     AdPreview: ResolverTypeWrapper<AdPreview>;
-    ResultConnection: ResolverTypeWrapper<ResultConnection>;
-    ResultEdge: ResolverTypeWrapper<ResultEdge>;
-    Result: ResolverTypeWrapper<Result>;
-    ResultAnalytics: ResolverTypeWrapper<ResultAnalytics>;
-    Float: ResolverTypeWrapper<Scalars['Float']>;
-    ResultResourceTypeEnum: ResultResourceTypeEnum;
     NotificationConnection: ResolverTypeWrapper<NotificationConnection>;
     NotificationEdge: ResolverTypeWrapper<NotificationEdge>;
     Notification: ResolverTypeWrapper<Notification>;
@@ -3158,17 +3215,25 @@ export type ResolversParentTypes = {
     CatalogEdge: CatalogEdge;
     Catalog: Catalog;
     CatalogType: CatalogType;
+    PRODUCT_SOURCE: Product_Source;
     ProductConnection: ProductConnection;
     ProductEdge: ProductEdge;
     Product: Product;
-    MarketingCampaignConnection: MarketingCampaignConnection;
-    MarketingCampaignEdge: MarketingCampaignEdge;
-    MarketingCampaign: MarketingCampaign;
     ResultResource: ResultResource;
     Vendor: Vendor;
     VendorTokenConnection: VendorTokenConnection;
     VendorTokenEdge: VendorTokenEdge;
     VendorToken: VendorToken;
+    ResultBreakdownTypeEnum: ResultBreakdownTypeEnum;
+    ResultConnection: ResultConnection;
+    ResultEdge: ResultEdge;
+    Result: Result;
+    ResultAnalytics: ResultAnalytics;
+    Float: Scalars['Float'];
+    ResultResourceTypeEnum: ResultResourceTypeEnum;
+    MarketingCampaignConnection: MarketingCampaignConnection;
+    MarketingCampaignEdge: MarketingCampaignEdge;
+    MarketingCampaign: MarketingCampaign;
     NotificationResource: NotificationResource;
     MarketingCampaignStatus: MarketingCampaignStatus;
     GCPX: Gcpx;
@@ -3176,12 +3241,6 @@ export type ResolversParentTypes = {
     MarketingAdEdge: MarketingAdEdge;
     MarketingAd: MarketingAd;
     AdPreview: AdPreview;
-    ResultConnection: ResultConnection;
-    ResultEdge: ResultEdge;
-    Result: Result;
-    ResultAnalytics: ResultAnalytics;
-    Float: Scalars['Float'];
-    ResultResourceTypeEnum: ResultResourceTypeEnum;
     NotificationConnection: NotificationConnection;
     NotificationEdge: NotificationEdge;
     Notification: Notification;
@@ -3389,6 +3448,11 @@ export type CatalogResolvers<
     >;
     externalEventSourceIds?: Resolver<
         Array<ResolversTypes['String']>,
+        ParentType,
+        ContextType
+    >;
+    productSource?: Resolver<
+        ResolversTypes['PRODUCT_SOURCE'],
         ParentType,
         ContextType
     >;
@@ -3907,7 +3971,7 @@ export type MarketingAdResolvers<
         ResolversTypes['ResultConnection'],
         ParentType,
         ContextType,
-        MarketingAdResultsArgs
+        RequireFields<MarketingAdResultsArgs, 'breakdown'>
     >;
     marketingCampaign?: Resolver<
         ResolversTypes['MarketingCampaign'],
@@ -4031,7 +4095,7 @@ export type MarketingCampaignResolvers<
         ResolversTypes['ResultConnection'],
         ParentType,
         ContextType,
-        MarketingCampaignResultsArgs
+        RequireFields<MarketingCampaignResultsArgs, 'breakdown'>
     >;
     notifications?: Resolver<
         ResolversTypes['NotificationConnection'],
@@ -4404,6 +4468,12 @@ export type MutationResolvers<
         ParentType,
         ContextType,
         RequireFields<MutationSyncCatalogArgs, 'id'>
+    >;
+    syncCatalogProducts?: Resolver<
+        ResolversTypes['Catalog'],
+        ParentType,
+        ContextType,
+        RequireFields<MutationSyncCatalogProductsArgs, 'id'>
     >;
     deleteCatalog?: Resolver<
         ResolversTypes['Deletion'],
@@ -4954,14 +5024,13 @@ export type ProductResolvers<
         ParentType,
         ContextType
     >;
-    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    sku?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-    remoteState?: Resolver<
-        Maybe<ResolversTypes['JSONObject']>,
+    resultsSource?: Resolver<
+        Array<ResolversTypes['NonEmptyString']>,
         ParentType,
         ContextType
     >;
-    metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    kpi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
     systemStatus?: Resolver<
         ResolversTypes['SystemStatus'],
         ParentType,
@@ -4977,6 +5046,21 @@ export type ProductResolvers<
         ParentType,
         ContextType
     >;
+    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    sku?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    remoteState?: Resolver<
+        Maybe<ResolversTypes['JSONObject']>,
+        ParentType,
+        ContextType
+    >;
+    metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    imported?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+    results?: Resolver<
+        ResolversTypes['ResultConnection'],
+        ParentType,
+        ContextType,
+        RequireFields<ProductResultsArgs, 'breakdown'>
+    >;
     marketingCampaigns?: Resolver<
         ResolversTypes['MarketingCampaignConnection'],
         ParentType,
@@ -4984,7 +5068,6 @@ export type ProductResolvers<
         RequireFields<ProductMarketingCampaignsArgs, 'showDeleted'>
     >;
     catalog?: Resolver<ResolversTypes['Catalog'], ParentType, ContextType>;
-    vendor?: Resolver<Maybe<ResolversTypes['Vendor']>, ParentType, ContextType>;
 };
 
 export type ProductConnectionResolvers<
@@ -5254,7 +5337,17 @@ export type ResultResolvers<
         ParentType,
         ContextType
     >;
+    breakdownType?: Resolver<
+        ResolversTypes['ResultBreakdownTypeEnum'],
+        ParentType,
+        ContextType
+    >;
     resource?: Resolver<
+        ResolversTypes['ResultResource'],
+        ParentType,
+        ContextType
+    >;
+    breakdown?: Resolver<
         ResolversTypes['ResultResource'],
         ParentType,
         ContextType
@@ -5308,7 +5401,7 @@ export type ResultResourceResolvers<
     ParentType extends ResolversParentTypes['ResultResource'] = ResolversParentTypes['ResultResource']
 > = {
     __resolveType: TypeResolveFn<
-        'MarketingCampaign' | 'MarketingAd',
+        'Product' | 'MarketingCampaign' | 'MarketingAd',
         ParentType,
         ContextType
     >;
