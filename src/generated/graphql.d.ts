@@ -883,6 +883,8 @@ export declare type MarketingCampaign = ResultResource & NotificationResource & 
     startDate: Scalars['DateISO'];
     /** End date of the campaign */
     endDate?: Maybe<Scalars['DateISO']>;
+    /** Filter of the products advertised in the marketing campaign */
+    productFilter?: Maybe<Array<Array<Scalars['JSONObject']>>>;
     /** The GCPX used for this campaign */
     GCPX?: Maybe<Gcpx>;
     /** Set to true if the marketing campaign is delivering any ads */
@@ -984,7 +986,9 @@ export declare type MarketingCampaignInput = {
     /** Marketing campaign GCPX data. [Conversion Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-conversion-specification-conversionspec) */
     conversionSpec?: Maybe<Scalars['JSONObject']>;
     /** Ids of the products advertised in the marketing campaign */
-    productIds: Array<Scalars['ObjectId']>;
+    productIds?: Maybe<Array<Scalars['ObjectId']>>;
+    /** Filter of the products advertised in the marketing campaign */
+    productFilter?: Maybe<Scalars['FilterInput']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -1050,6 +1054,8 @@ export declare type MarketingCampaignUpdateInput = {
     locationSpec?: Maybe<Scalars['JSONObject']>;
     /** Ids of the products advertised in the marketing campaign */
     productIds?: Maybe<Array<Scalars['ObjectId']>>;
+    /** Filter of the products advertised in the marketing campaign */
+    productFilter?: Maybe<Scalars['FilterInput']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -3226,6 +3232,7 @@ export declare type MarketingCampaignResolvers<ContextType = any, ParentType ext
     conversionSpec?: Resolver<Maybe<ResolversTypes['JSONObject']>, ParentType, ContextType>;
     startDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     endDate?: Resolver<Maybe<ResolversTypes['DateISO']>, ParentType, ContextType>;
+    productFilter?: Resolver<Maybe<Array<Array<ResolversTypes['JSONObject']>>>, ParentType, ContextType>;
     GCPX?: Resolver<Maybe<ResolversTypes['GCPX']>, ParentType, ContextType>;
     delivering?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
     marketingAds?: Resolver<ResolversTypes['MarketingAdConnection'], ParentType, ContextType, RequireFields<MarketingCampaignMarketingAdsArgs, 'showDeleted'>>;

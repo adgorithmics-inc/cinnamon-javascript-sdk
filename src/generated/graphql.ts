@@ -944,6 +944,8 @@ export type MarketingCampaign = ResultResource &
         startDate: Scalars['DateISO'];
         /** End date of the campaign */
         endDate?: Maybe<Scalars['DateISO']>;
+        /** Filter of the products advertised in the marketing campaign */
+        productFilter?: Maybe<Array<Array<Scalars['JSONObject']>>>;
         /** The GCPX used for this campaign */
         GCPX?: Maybe<Gcpx>;
         /** Set to true if the marketing campaign is delivering any ads */
@@ -1052,7 +1054,9 @@ export type MarketingCampaignInput = {
     /** Marketing campaign GCPX data. [Conversion Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-conversion-specification-conversionspec) */
     conversionSpec?: Maybe<Scalars['JSONObject']>;
     /** Ids of the products advertised in the marketing campaign */
-    productIds: Array<Scalars['ObjectId']>;
+    productIds?: Maybe<Array<Scalars['ObjectId']>>;
+    /** Filter of the products advertised in the marketing campaign */
+    productFilter?: Maybe<Scalars['FilterInput']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -1124,6 +1128,8 @@ export type MarketingCampaignUpdateInput = {
     locationSpec?: Maybe<Scalars['JSONObject']>;
     /** Ids of the products advertised in the marketing campaign */
     productIds?: Maybe<Array<Scalars['ObjectId']>>;
+    /** Filter of the products advertised in the marketing campaign */
+    productFilter?: Maybe<Scalars['FilterInput']>;
     /** Delivering status of the marketing campaign */
     status?: Maybe<MarketingCampaignStatus>;
     /** Name of the marketing campaign */
@@ -4063,6 +4069,11 @@ export type MarketingCampaignResolvers<
     startDate?: Resolver<ResolversTypes['DateISO'], ParentType, ContextType>;
     endDate?: Resolver<
         Maybe<ResolversTypes['DateISO']>,
+        ParentType,
+        ContextType
+    >;
+    productFilter?: Resolver<
+        Maybe<Array<Array<ResolversTypes['JSONObject']>>>,
         ParentType,
         ContextType
     >;

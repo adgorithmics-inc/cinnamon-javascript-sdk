@@ -229,6 +229,7 @@ export type CampaignTemplateFields = {
                 conversionSpec: 'marketingCampaigns{edges{node{conversionSpec}}}';
                 startDate: 'marketingCampaigns{edges{node{startDate}}}';
                 endDate: 'marketingCampaigns{edges{node{endDate}}}';
+                productFilter: 'marketingCampaigns{edges{node{productFilter}}}';
                 GCPX: {
                     id: 'marketingCampaigns{edges{node{GCPX{id}}}}';
                     creationDate: 'marketingCampaigns{edges{node{GCPX{creationDate}}}}';
@@ -606,6 +607,7 @@ export type CampaignTemplateFields = {
                     conversionSpec: 'currentGCPX{marketingCampaigns{edges{node{conversionSpec}}}}';
                     startDate: 'currentGCPX{marketingCampaigns{edges{node{startDate}}}}';
                     endDate: 'currentGCPX{marketingCampaigns{edges{node{endDate}}}}';
+                    productFilter: 'currentGCPX{marketingCampaigns{edges{node{productFilter}}}}';
                     delivering: 'currentGCPX{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'currentGCPX{marketingCampaigns{edges{cursor}}}';
@@ -918,6 +920,7 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                     'marketingCampaigns{edges{node{conversionSpec}}}',
                 startDate: 'marketingCampaigns{edges{node{startDate}}}',
                 endDate: 'marketingCampaigns{edges{node{endDate}}}',
+                productFilter: 'marketingCampaigns{edges{node{productFilter}}}',
                 GCPX: {
                     id: 'marketingCampaigns{edges{node{GCPX{id}}}}',
                     creationDate:
@@ -1463,6 +1466,8 @@ export const CampaignTemplateFields: CampaignTemplateFields = {
                         'currentGCPX{marketingCampaigns{edges{node{startDate}}}}',
                     endDate:
                         'currentGCPX{marketingCampaigns{edges{node{endDate}}}}',
+                    productFilter:
+                        'currentGCPX{marketingCampaigns{edges{node{productFilter}}}}',
                     delivering:
                         'currentGCPX{marketingCampaigns{edges{node{delivering}}}}',
                 },
@@ -1644,6 +1649,7 @@ export type CampaignTemplateField =
     | 'marketingCampaigns{edges{node{conversionSpec}}}'
     | 'marketingCampaigns{edges{node{startDate}}}'
     | 'marketingCampaigns{edges{node{endDate}}}'
+    | 'marketingCampaigns{edges{node{productFilter}}}'
     | 'marketingCampaigns{edges{node{GCPX{id}}}}'
     | 'marketingCampaigns{edges{node{GCPX{creationDate}}}}'
     | 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}'
@@ -1900,6 +1906,7 @@ export type CampaignTemplateField =
     | 'currentGCPX{marketingCampaigns{edges{node{conversionSpec}}}}'
     | 'currentGCPX{marketingCampaigns{edges{node{startDate}}}}'
     | 'currentGCPX{marketingCampaigns{edges{node{endDate}}}}'
+    | 'currentGCPX{marketingCampaigns{edges{node{productFilter}}}}'
     | 'currentGCPX{marketingCampaigns{edges{node{delivering}}}}'
     | 'currentGCPX{marketingCampaigns{edges{cursor}}}'
     | 'currentGCPX{marketingCampaigns{pageInfo{endCursor}}}'
@@ -5205,6 +5212,7 @@ export type ProductFields = {
                 conversionSpec: 'marketingCampaigns{edges{node{conversionSpec}}}';
                 startDate: 'marketingCampaigns{edges{node{startDate}}}';
                 endDate: 'marketingCampaigns{edges{node{endDate}}}';
+                productFilter: 'marketingCampaigns{edges{node{productFilter}}}';
                 GCPX: {
                     id: 'marketingCampaigns{edges{node{GCPX{id}}}}';
                     creationDate: 'marketingCampaigns{edges{node{GCPX{creationDate}}}}';
@@ -5705,6 +5713,7 @@ export const ProductFields: ProductFields = {
                     'marketingCampaigns{edges{node{conversionSpec}}}',
                 startDate: 'marketingCampaigns{edges{node{startDate}}}',
                 endDate: 'marketingCampaigns{edges{node{endDate}}}',
+                productFilter: 'marketingCampaigns{edges{node{productFilter}}}',
                 GCPX: {
                     id: 'marketingCampaigns{edges{node{GCPX{id}}}}',
                     creationDate:
@@ -6140,6 +6149,7 @@ export type ProductField =
     | 'marketingCampaigns{edges{node{conversionSpec}}}'
     | 'marketingCampaigns{edges{node{startDate}}}'
     | 'marketingCampaigns{edges{node{endDate}}}'
+    | 'marketingCampaigns{edges{node{productFilter}}}'
     | 'marketingCampaigns{edges{node{GCPX{id}}}}'
     | 'marketingCampaigns{edges{node{GCPX{creationDate}}}}'
     | 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}'
@@ -9314,6 +9324,7 @@ export type MarketingCampaignFields = {
     conversionSpec: 'conversionSpec';
     startDate: 'startDate';
     endDate: 'endDate';
+    productFilter: 'productFilter';
     GCPX: {
         id: 'GCPX{id}';
         creationDate: 'GCPX{creationDate}';
@@ -9559,6 +9570,7 @@ export type MarketingCampaignFields = {
                     conversionSpec: 'GCPX{marketingCampaigns{edges{node{conversionSpec}}}}';
                     startDate: 'GCPX{marketingCampaigns{edges{node{startDate}}}}';
                     endDate: 'GCPX{marketingCampaigns{edges{node{endDate}}}}';
+                    productFilter: 'GCPX{marketingCampaigns{edges{node{productFilter}}}}';
                     delivering: 'GCPX{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'GCPX{marketingCampaigns{edges{cursor}}}';
@@ -9620,6 +9632,7 @@ export type MarketingCampaignFields = {
                     conversionSpec: 'marketingAds{edges{node{marketingCampaign{conversionSpec}}}}';
                     startDate: 'marketingAds{edges{node{marketingCampaign{startDate}}}}';
                     endDate: 'marketingAds{edges{node{marketingCampaign{endDate}}}}';
+                    productFilter: 'marketingAds{edges{node{marketingCampaign{productFilter}}}}';
                     delivering: 'marketingAds{edges{node{marketingCampaign{delivering}}}}';
                 };
             };
@@ -9933,6 +9946,7 @@ export type MarketingCampaignFields = {
                     conversionSpec: 'campaignTemplate{marketingCampaigns{edges{node{conversionSpec}}}}';
                     startDate: 'campaignTemplate{marketingCampaigns{edges{node{startDate}}}}';
                     endDate: 'campaignTemplate{marketingCampaigns{edges{node{endDate}}}}';
+                    productFilter: 'campaignTemplate{marketingCampaigns{edges{node{productFilter}}}}';
                     delivering: 'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'campaignTemplate{marketingCampaigns{edges{cursor}}}';
@@ -10516,6 +10530,7 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
     conversionSpec: 'conversionSpec',
     startDate: 'startDate',
     endDate: 'endDate',
+    productFilter: 'productFilter',
     GCPX: {
         id: 'GCPX{id}',
         creationDate: 'GCPX{creationDate}',
@@ -10854,6 +10869,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                     startDate:
                         'GCPX{marketingCampaigns{edges{node{startDate}}}}',
                     endDate: 'GCPX{marketingCampaigns{edges{node{endDate}}}}',
+                    productFilter:
+                        'GCPX{marketingCampaigns{edges{node{productFilter}}}}',
                     delivering:
                         'GCPX{marketingCampaigns{edges{node{delivering}}}}',
                 },
@@ -10936,6 +10953,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'marketingAds{edges{node{marketingCampaign{startDate}}}}',
                     endDate:
                         'marketingAds{edges{node{marketingCampaign{endDate}}}}',
+                    productFilter:
+                        'marketingAds{edges{node{marketingCampaign{productFilter}}}}',
                     delivering:
                         'marketingAds{edges{node{marketingCampaign{delivering}}}}',
                 },
@@ -11341,6 +11360,8 @@ export const MarketingCampaignFields: MarketingCampaignFields = {
                         'campaignTemplate{marketingCampaigns{edges{node{startDate}}}}',
                     endDate:
                         'campaignTemplate{marketingCampaigns{edges{node{endDate}}}}',
+                    productFilter:
+                        'campaignTemplate{marketingCampaigns{edges{node{productFilter}}}}',
                     delivering:
                         'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}',
                 },
@@ -11956,6 +11977,7 @@ export type MarketingCampaignField =
     | 'conversionSpec'
     | 'startDate'
     | 'endDate'
+    | 'productFilter'
     | 'GCPX{id}'
     | 'GCPX{creationDate}'
     | 'GCPX{lastChangeDate}'
@@ -12115,6 +12137,7 @@ export type MarketingCampaignField =
     | 'GCPX{marketingCampaigns{edges{node{conversionSpec}}}}'
     | 'GCPX{marketingCampaigns{edges{node{startDate}}}}'
     | 'GCPX{marketingCampaigns{edges{node{endDate}}}}'
+    | 'GCPX{marketingCampaigns{edges{node{productFilter}}}}'
     | 'GCPX{marketingCampaigns{edges{node{delivering}}}}'
     | 'GCPX{marketingCampaigns{edges{cursor}}}'
     | 'GCPX{marketingCampaigns{pageInfo{endCursor}}}'
@@ -12160,6 +12183,7 @@ export type MarketingCampaignField =
     | 'marketingAds{edges{node{marketingCampaign{conversionSpec}}}}'
     | 'marketingAds{edges{node{marketingCampaign{startDate}}}}'
     | 'marketingAds{edges{node{marketingCampaign{endDate}}}}'
+    | 'marketingAds{edges{node{marketingCampaign{productFilter}}}}'
     | 'marketingAds{edges{node{marketingCampaign{delivering}}}}'
     | 'marketingAds{edges{cursor}}'
     | 'marketingAds{pageInfo{endCursor}}'
@@ -12369,6 +12393,7 @@ export type MarketingCampaignField =
     | 'campaignTemplate{marketingCampaigns{edges{node{conversionSpec}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{startDate}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{endDate}}}}'
+    | 'campaignTemplate{marketingCampaigns{edges{node{productFilter}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{node{delivering}}}}'
     | 'campaignTemplate{marketingCampaigns{edges{cursor}}}'
     | 'campaignTemplate{marketingCampaigns{pageInfo{endCursor}}}'
@@ -12933,6 +12958,7 @@ export type MarketingAdFields = {
         conversionSpec: 'marketingCampaign{conversionSpec}';
         startDate: 'marketingCampaign{startDate}';
         endDate: 'marketingCampaign{endDate}';
+        productFilter: 'marketingCampaign{productFilter}';
         GCPX: {
             id: 'marketingCampaign{GCPX{id}}';
             creationDate: 'marketingCampaign{GCPX{creationDate}}';
@@ -13776,6 +13802,7 @@ export const MarketingAdFields: MarketingAdFields = {
         conversionSpec: 'marketingCampaign{conversionSpec}',
         startDate: 'marketingCampaign{startDate}',
         endDate: 'marketingCampaign{endDate}',
+        productFilter: 'marketingCampaign{productFilter}',
         GCPX: {
             id: 'marketingCampaign{GCPX{id}}',
             creationDate: 'marketingCampaign{GCPX{creationDate}}',
@@ -14638,6 +14665,7 @@ export type MarketingAdField =
     | 'marketingCampaign{conversionSpec}'
     | 'marketingCampaign{startDate}'
     | 'marketingCampaign{endDate}'
+    | 'marketingCampaign{productFilter}'
     | 'marketingCampaign{GCPX{id}}'
     | 'marketingCampaign{GCPX{creationDate}}'
     | 'marketingCampaign{GCPX{lastChangeDate}}'
@@ -15225,6 +15253,7 @@ export type CreativeTemplateFields = {
                 conversionSpec: 'marketingCampaigns{edges{node{conversionSpec}}}';
                 startDate: 'marketingCampaigns{edges{node{startDate}}}';
                 endDate: 'marketingCampaigns{edges{node{endDate}}}';
+                productFilter: 'marketingCampaigns{edges{node{productFilter}}}';
                 GCPX: {
                     id: 'marketingCampaigns{edges{node{GCPX{id}}}}';
                     creationDate: 'marketingCampaigns{edges{node{GCPX{creationDate}}}}';
@@ -15642,6 +15671,7 @@ export const CreativeTemplateFields: CreativeTemplateFields = {
                     'marketingCampaigns{edges{node{conversionSpec}}}',
                 startDate: 'marketingCampaigns{edges{node{startDate}}}',
                 endDate: 'marketingCampaigns{edges{node{endDate}}}',
+                productFilter: 'marketingCampaigns{edges{node{productFilter}}}',
                 GCPX: {
                     id: 'marketingCampaigns{edges{node{GCPX{id}}}}',
                     creationDate:
@@ -15973,6 +16003,7 @@ export type CreativeTemplateField =
     | 'marketingCampaigns{edges{node{conversionSpec}}}'
     | 'marketingCampaigns{edges{node{startDate}}}'
     | 'marketingCampaigns{edges{node{endDate}}}'
+    | 'marketingCampaigns{edges{node{productFilter}}}'
     | 'marketingCampaigns{edges{node{GCPX{id}}}}'
     | 'marketingCampaigns{edges{node{GCPX{creationDate}}}}'
     | 'marketingCampaigns{edges{node{GCPX{lastChangeDate}}}}'
@@ -16206,6 +16237,7 @@ export type CreativeLayerFields = {
                     conversionSpec: 'creativeTemplate{marketingCampaigns{edges{node{conversionSpec}}}}';
                     startDate: 'creativeTemplate{marketingCampaigns{edges{node{startDate}}}}';
                     endDate: 'creativeTemplate{marketingCampaigns{edges{node{endDate}}}}';
+                    productFilter: 'creativeTemplate{marketingCampaigns{edges{node{productFilter}}}}';
                     delivering: 'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}';
                 };
                 cursor: 'creativeTemplate{marketingCampaigns{edges{cursor}}}';
@@ -16449,6 +16481,8 @@ export const CreativeLayerFields: CreativeLayerFields = {
                         'creativeTemplate{marketingCampaigns{edges{node{startDate}}}}',
                     endDate:
                         'creativeTemplate{marketingCampaigns{edges{node{endDate}}}}',
+                    productFilter:
+                        'creativeTemplate{marketingCampaigns{edges{node{productFilter}}}}',
                     delivering:
                         'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}',
                 },
@@ -16605,6 +16639,7 @@ export type CreativeLayerField =
     | 'creativeTemplate{marketingCampaigns{edges{node{conversionSpec}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{startDate}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{endDate}}}}'
+    | 'creativeTemplate{marketingCampaigns{edges{node{productFilter}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{node{delivering}}}}'
     | 'creativeTemplate{marketingCampaigns{edges{cursor}}}'
     | 'creativeTemplate{marketingCampaigns{pageInfo{endCursor}}}'

@@ -614,6 +614,11 @@ export declare class Cinnamon {
         headers?: Headers;
         token?: string;
     }): Promise<Catalog>;
+    syncCatalogProducts({ id, headers, token, }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }): Promise<Catalog>;
     deleteCatalog({ id, headers, token, }: {
         id: Scalars['ObjectId'];
         headers?: Headers;
