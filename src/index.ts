@@ -2641,6 +2641,30 @@ export class Cinnamon {
     }
 
     @bind
+    async syncCatalogProducts({
+        id,
+        headers,
+        token,
+    }: {
+        id: Scalars['ObjectId'];
+        headers?: Headers;
+        token?: string;
+    }) {
+        return (
+            await this.api<'syncCatalogProducts'>({
+                query: `mutation($id: ObjectId!) {
+                    syncCatalogProducts(id: $id) {
+                        id
+                    }
+                }`,
+                variables: { id },
+                headers,
+                token,
+            })
+        ).data.syncCatalogProducts;
+    }
+
+    @bind
     async deleteCatalog({
         id,
         headers,
