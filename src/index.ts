@@ -270,18 +270,19 @@ export class Cinnamon {
         }>,
     ) {
         const result: T[] = [];
-        const getPage = async (
-            after: PageInfo['endCursor'] = '',
-        ): Promise<void> => {
-            const { edges = [], pageInfo } = await fetchRelayConnection(after);
 
-            edges.forEach(edge => edge.node && result.push(edge.node));
-
-            if (pageInfo.hasNextPage) {
-                await getPage(pageInfo.endCursor);
-            }
+        let pageInfo: Partial<PageInfo> = {
+            endCursor: '',
         };
-        await getPage();
+
+        do {
+            const connection = await fetchRelayConnection(pageInfo.endCursor);
+            (connection.edges || []).forEach(
+                edge => edge.node && result.push(edge.node),
+            );
+            pageInfo = connection.pageInfo;
+        } while (pageInfo.hasNextPage);
+
         return result;
     }
 
@@ -294,22 +295,19 @@ export class Cinnamon {
             edges?: Array<{ node?: T }>;
         }>,
     ) {
-        const getPage = async function*(
-            after: PageInfo['endCursor'] = '',
-        ): AsyncGenerator<T> {
-            const { edges = [], pageInfo } = await fetchRelayConnection(after);
+        let pageInfo: Partial<PageInfo> = {
+            endCursor: '',
+        };
 
-            for (const edge of edges) {
+        do {
+            const connection = await fetchRelayConnection(pageInfo.endCursor);
+            for (const edge of connection.edges || []) {
                 if (edge.node) {
                     yield edge.node;
                 }
             }
-
-            if (pageInfo.hasNextPage) {
-                yield* getPage(pageInfo.endCursor);
-            }
-        };
-        yield* getPage();
+            pageInfo = connection.pageInfo;
+        } while (pageInfo.hasNextPage);
     }
 
     // ####################################
