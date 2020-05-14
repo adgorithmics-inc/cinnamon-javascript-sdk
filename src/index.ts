@@ -270,10 +270,7 @@ export class Cinnamon {
         }>,
     ) {
         const result: T[] = [];
-
-        let pageInfo: Partial<PageInfo> = {
-            endCursor: '',
-        };
+        let pageInfo: Partial<PageInfo> = {};
 
         do {
             const connection = await fetchRelayConnection(pageInfo.endCursor);
@@ -295,9 +292,7 @@ export class Cinnamon {
             edges?: Array<{ node?: T }>;
         }>,
     ) {
-        let pageInfo: Partial<PageInfo> = {
-            endCursor: '',
-        };
+        let pageInfo: Partial<PageInfo> = {};
 
         do {
             const connection = await fetchRelayConnection(pageInfo.endCursor);
