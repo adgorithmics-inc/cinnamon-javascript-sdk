@@ -702,7 +702,7 @@ export type CreativeTemplateUpdateInput = {
 /** Object deletion operation result */
 export type Deletion = {
     /** Id of the deleted object */
-    id: Scalars['String'];
+    id: Scalars['ObjectId'];
 };
 
 /** A set of user permissions related to a resource */
@@ -3780,7 +3780,7 @@ export type DeletionResolvers<
     ContextType = any,
     ParentType extends ResolversParentTypes['Deletion'] = ResolversParentTypes['Deletion']
 > = {
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
 };
 
 export type EntitlementResolvers<

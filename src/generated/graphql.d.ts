@@ -659,7 +659,7 @@ export declare type CreativeTemplateUpdateInput = {
 /** Object deletion operation result */
 export declare type Deletion = {
     /** Id of the deleted object */
-    id: Scalars['String'];
+    id: Scalars['ObjectId'];
 };
 /** A set of user permissions related to a resource */
 export declare type Entitlement = {
@@ -3130,7 +3130,7 @@ export interface DateIsoScalarConfig extends GraphQLScalarTypeConfig<ResolversTy
     name: 'DateISO';
 }
 export declare type DeletionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Deletion'] = ResolversParentTypes['Deletion']> = {
-    id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+    id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
 };
 export declare type EntitlementResolvers<ContextType = any, ParentType extends ResolversParentTypes['Entitlement'] = ResolversParentTypes['Entitlement']> = {
     id?: Resolver<ResolversTypes['ObjectId'], ParentType, ContextType>;
