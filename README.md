@@ -53,7 +53,7 @@ need to hotfix the hotfix, create a new branch from the hotfix branch (eg. `1.0.
 To publish a pre-release, create a new branch that is called like the version
 the pre-release is for (eg. `2.0.0`). Don't add `v` in branchnames.
 Make a new GitHub pre-release from that branch. The GitHub tag will become the npm version.
-Make sure the tag includes `-rc.X` where `X` is a semversion (eg. `1.2.3`) so CircleCI knows
+Make sure the tag includes `-alpha.X` where `X` is a semversion (eg. `1.2.3`) so CircleCI knows
 that this is a pre-release.
 CircleCI will update the pre-release branch with the new version. You can use
 the same branch to publish multiple pre-release versions before releasing the actual release.
