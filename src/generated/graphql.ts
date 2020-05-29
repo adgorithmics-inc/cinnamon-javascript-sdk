@@ -200,7 +200,7 @@ export type CampaignTemplate = {
     /** The custom key performance indicator used to derive results data */
     kpi?: Maybe<Scalars['String']>;
     /** Marketplace the campaign template was created for */
-    marketplace: Marketplace;
+    marketplace?: Maybe<Marketplace>;
     /** Marketing campaigns that are using this campaign template */
     marketingCampaigns: MarketingCampaignConnection;
     /** Historical list of GCPX rates */
@@ -261,15 +261,15 @@ export type Catalog = {
     /** Date and time of last updated */
     lastChangeDate: Scalars['DateISO'];
     /** Name of the product catalog */
-    name: Scalars['NonEmptyString'];
+    name?: Maybe<Scalars['String']>;
     /** Category of the products referenced by the product catalog */
-    catalogType: CatalogType;
+    catalogType?: Maybe<CatalogType>;
     /** Id of the product catalog on the related platform */
     remoteId?: Maybe<Scalars['String']>;
     /** System status of the product catalog */
     systemStatus: SystemStatus;
     /** Data related to the product catalog stored on the remote platform */
-    remoteState: Scalars['JSONObject'];
+    remoteState?: Maybe<Scalars['JSONObject']>;
     /** Facebook data feed id referenced by the product catalog */
     dataFeedId?: Maybe<Scalars['String']>;
     /** Facebook app and pixel ids associated to the product catalog */
@@ -937,7 +937,7 @@ export type MarketingCampaign = ResultResource &
         /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
         runTimeSpec?: Maybe<Scalars['JSONObject']>;
         /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
-        locationSpec: Scalars['JSONObject'];
+        locationSpec?: Maybe<Scalars['JSONObject']>;
         /** Marketing campaign GCPX data. [Conversion Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-conversion-specification-conversionspec) */
         conversionSpec?: Maybe<Scalars['JSONObject']>;
         /** Start date of the campaign */
@@ -1083,7 +1083,7 @@ export type MarketingCampaignSnapshot = {
     /** Marketing campaign scheduling data. [Run Time Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-run-time-specification-runtimespec) */
     runTimeSpec?: Maybe<Scalars['JSONObject']>;
     /** Marketing campaign location data. [Location Specification](https://docs.adgo.io/API/MarketingCampaign#marketingcampaign-location-specification-locationspec) */
-    locationSpec: Scalars['JSONObject'];
+    locationSpec?: Maybe<Scalars['JSONObject']>;
     /** The key performance indicator used to determine analytics results */
     kpi?: Maybe<Scalars['String']>;
     /** Product ids */
@@ -1320,7 +1320,7 @@ export type MediaChannel = EntitlementResource & {
     /** Id of the media channel on the corresponding platform */
     remoteId?: Maybe<Scalars['String']>;
     /** Data related to the media channel stored on the remote platform */
-    remoteState: Scalars['JSONObject'];
+    remoteState?: Maybe<Scalars['JSONObject']>;
     /** Currency code of the media channel */
     currency?: Maybe<Scalars['NonEmptyString']>;
     /** Currency code of the media channel */
@@ -2115,7 +2115,7 @@ export type Product = ResultResource & {
     /** Data related to the product stored on the remote platform */
     remoteState?: Maybe<Scalars['JSONObject']>;
     /** Data related to the product. [Product Metadata](https://docs.adgo.io/API/ProductMetadata) */
-    metadata: Scalars['JSONObject'];
+    metadata?: Maybe<Scalars['JSONObject']>;
     /** True if the product was created externally and imported */
     imported: Scalars['Boolean'];
     /** Results related to the product */
@@ -3367,7 +3367,7 @@ export type CampaignTemplateResolvers<
     >;
     kpi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     marketplace?: Resolver<
-        ResolversTypes['Marketplace'],
+        Maybe<ResolversTypes['Marketplace']>,
         ParentType,
         ContextType
     >;
@@ -3426,9 +3426,9 @@ export type CatalogResolvers<
         ParentType,
         ContextType
     >;
-    name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+    name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
     catalogType?: Resolver<
-        ResolversTypes['CatalogType'],
+        Maybe<ResolversTypes['CatalogType']>,
         ParentType,
         ContextType
     >;
@@ -3443,7 +3443,7 @@ export type CatalogResolvers<
         ContextType
     >;
     remoteState?: Resolver<
-        ResolversTypes['JSONObject'],
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -4057,7 +4057,7 @@ export type MarketingCampaignResolvers<
         ContextType
     >;
     locationSpec?: Resolver<
-        ResolversTypes['JSONObject'],
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -4175,7 +4175,7 @@ export type MarketingCampaignSnapshotResolvers<
         ContextType
     >;
     locationSpec?: Resolver<
-        ResolversTypes['JSONObject'],
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -4366,7 +4366,7 @@ export type MediaChannelResolvers<
         ContextType
     >;
     remoteState?: Resolver<
-        ResolversTypes['JSONObject'],
+        Maybe<ResolversTypes['JSONObject']>,
         ParentType,
         ContextType
     >;
@@ -5064,7 +5064,11 @@ export type ProductResolvers<
         ParentType,
         ContextType
     >;
-    metadata?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
+    metadata?: Resolver<
+        Maybe<ResolversTypes['JSONObject']>,
+        ParentType,
+        ContextType
+    >;
     imported?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
     results?: Resolver<
         ResolversTypes['ResultConnection'],

@@ -90,7 +90,7 @@ jobs:
             - run:
                   name: Set branch environemnt variable
                   command: |
-                      echo '(echo "$CIRCLE_TAG" | grep -Eq  ^.*-rc.*$) && export BRANCH=$(echo "$CIRCLE_TAG" | sed "s/^v//" | sed "s/-rc.*//") || export BRANCH="master"' >> $BASH_ENV
+                      echo '(echo "$CIRCLE_TAG" | grep -Eq  ^.*-alpha.*$) && export BRANCH=$(echo "$CIRCLE_TAG" | sed "s/^v//" | sed "s/-alpha.*//") export ALPHA=true || export BRANCH="master"' >> $BASH_ENV
                       source $BASH_ENV
             - run: npm version --no-git-tag-version ${CIRCLE_TAG}
             - run: git add package.json package-lock.json
@@ -98,7 +98,7 @@ jobs:
             - run: git checkout -b temp
             - run: git push origin temp:$BRANCH
             - run: npm config set '//registry.npmjs.org/:_authToken' '${NPM_TOKEN}'
-            - run: npm publish --access public
+            - run: npm publish --access public $([ ! -z "$ALPHA" ] && echo '--preid=alpha')
 
     publish-hot:
         docker:
@@ -135,7 +135,7 @@ workflows:
                       - check-build
                   filters:
                       tags:
-                          only: /^v[0-9]+(\.[0-9]+)*(-rc\.[0-9]*)*/
+                          only: /^v[0-9]+(\.[0-9]+)*(-alpha\.[0-9]*)*/
                       branches:
                           ignore: /.*/
             - publish-hot:
